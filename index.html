@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Arinda Hijab - Aeni</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial; background: #fff8f0; margin: 0; padding: 0; }
+        body { font-family: 'Arial'; background: #fff8f0; margin: 0; padding: 0; }
         .banner { background: linear-gradient(90deg, #d97706, #f59e0b); color: white; text-align: center; padding: 25px 20px; }
         .banner h2 { margin: 0; font-size: 28px; }
-        .banner p { margin: 5px 0 0; font-size: 16px; }
-        h1 { text-align: center; color: #d97706; margin-top: 20px; }
+        nav { background: white; padding: 10px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        nav a { margin: 0 15px; text-decoration: none; color: #d97706; font-weight: bold; }
+        h1 { text-align: center; color: #d97706; margin-top: 20px; font-family: 'Playfair Display', serif; font-size: 42px; }
         .produk-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 20px; }
-        .produk { background: white; padding: 15px; border-radius: 10px; width: 220px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.2s; position: relative; }
-        .produk:hover { transform: scale(1.03); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
-        .produk-icon { font-size: 60px; margin-bottom: 10px; cursor: pointer; text-decoration: none; display: block; }
+        .produk { background: white; padding: 15px; border-radius: 15px; width: 220px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; }
+        .produk-icon { font-size: 60px; margin-bottom: 10px; display: block; }
         .harga { color: #d97706; font-weight: bold; font-size: 18px; }
-        .btn-wa { margin-top: 10px; display: inline-block; background: #25D366; color: white; padding: 8px 15px; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: bold; }
+        .rating { color: #fbbf24; font-size: 14px; margin: 5px 0; }
+        .stok { font-size: 12px; color: #16a34a; font-weight: bold; }
+        .btn-wa { margin-top: 10px; display: inline-block; background: #25D366; color: white; padding: 10px 15px; text-decoration: none; border-radius: 12px; font-size: 14px; font-weight: bold; }
         .btn-wa:hover { background: #1ebe5c; }
+        .best-seller { position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; padding: 5px 10px; font-size: 12px; font-weight: bold; border-radius: 5px; }
         .footer-wa { margin-top: 30px; text-align: center; padding-bottom: 30px; }
-        /* LABEL BEST SELLER BARU */
-        .best-seller { position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; padding: 5px 10px; font-size: 12px; font-weight: bold; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
@@ -28,81 +30,41 @@
         <p>DISKON 10% MIN BELANJA 100RB</p>
     </div>
 
+    <nav>
+        <a href="#">Beranda</a>
+        <a href="#">Produk</a>
+        <a href="#">Kontak</a>
+    </nav>
+
     <h1>Arinda Hijab</h1>
     <p style="text-align:center; color:#666;">Koleksi Hijab Terlaris & Berkualitas</p>
 
     <div class="produk-container">
-        <!-- PRODUK 1 BEST SELLER -->
         <div class="produk">
             <div class="best-seller">BEST SELLER</div>
             <a class="produk-icon" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Segiempat%20Voal%20Miracle%20Plain%20Rp29.990">🧕</a>
             <h3>Segiempat Voal Miracle Plain</h3>
+            <div class="rating">⭐⭐⭐⭐⭐ 4.9</div>
+            <p class="stok">Stok: 50+</p>
             <p class="harga">Rp 29.990</p>
-            <a class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Segiempat%20Voal%20Miracle%20Plain%20Rp29.990" target="_blank">Pesan via WA</a>
+            <a class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Segiempat%20Voal%20Miracle%20Plain%20Rp29.990" target="_blank">💬 Pesan via WA</a>
         </div>
 
-        <!-- PRODUK 2 BEST SELLER -->
         <div class="produk">
             <div class="best-seller">BEST SELLER</div>
             <a class="produk-icon" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Pashmina%20Diamond%20Rp35.000">🧕</a>
             <h3>Pashmina Diamond</h3>
+            <div class="rating">⭐ 4.8</div>
+            <p class="stok">Stok: 30+</p>
             <p class="harga">Rp 35.000</p>
-            <a class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Pashmina%20Diamond%20Rp35.000" target="_blank">Pesan via WA</a>
+            <a class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Pashmina%20Diamond%20Rp35.000" target="_blank">💬 Pesan via WA</a>
         </div>
-
-        <div class="produk">
-            <a class="produk-icon" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Hijab%20Rayon%20Rp25.000">🧕</a>
-            <h3>Hijab Rayon</h3>
-            <p class="harga">Rp 25.000</p>
-            <a class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Hijab%20Rayon%20Rp25.000" target="_blank">Pesan via WA</a>
-        </div>
-        <div class="produk">
-            <a class="produk-icon" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Pashmina%20Jumbo%20Rp40.000">🧕</a>
-            <h3>Pashmina Jumbo</h3>
-            <p class="harga">Rp 40.000</p>
-            <a class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Pashmina%20Jumbo%20Rp40.000" target="_blank">Pesan via WA</a>
-        </div>
-        <div class="produk">
-            <a class="produk-icon" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Segiempat%20Ultrafine%20Rp32.000">🧕</a>
-            <h3>Segiempat Ultrafine</h3>
-            <p class="harga">Rp 32.000</p>
-            <a class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Segiempat%20Ultrafine%20Rp32.000" target="_blank">Pesan via WA</a>
-        </div>
-        <div class="produk">
-            <a class="produk-icon" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Pashmina%20Ceruty%20Rp38.000">🧕</a>
-            <h3>Pashmina Ceruty</h3>
-            <p class="harga">Rp 38.000</p>
-            <a class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Pashmina%20Ceruty%20Rp38.000" target="_blank">Pesan via WA</a>
-        </div>
-        <div class="produk">
-            <a class="produk-icon" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Hijab%20Instan%20Jersey%20Rp28.000">🧕</a>
-            <h3>Hijab Instan Jersey</h3>
-            <p class="harga">Rp 28.000</p>
-            <a class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Hijab%20Instan%20Jersey%20Rp28.000" target="_blank">Pesan via WA</a>
-        </div>
-        <div class="produk">
-            <a class="produk-icon" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Kerudung%20Anak%20Rp20.000">🧕</a>
-            <h3>Kerudung Anak</h3>
-            <p class="harga">Rp 20.000</p>
-            <a class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Kerudung%20Anak%20Rp20.000" target="_blank">Pesan via WA</a>
-        </div>
-        <div class="produk">
-            <a class="produk-icon" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Pashmina%20Plisket%20Rp42.000">🧕</a>
-            <h3>Pashmina Plisket</h3>
-            <p class="harga">Rp 42.000</p>
-            <a class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Pashmina%20Plisket%20Rp42.000" target="_blank">Pesan via WA</a>
-        </div>
-        <div class="produk">
-            <a class="produk-icon" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Hijab%20Sport%20Rp30.000">🧕</a>
-            <h3>Hijab Sport</h3>
-            <p class="harga">Rp 30.000</p>
-            <a class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Hijab%20Sport%20Rp30.000" target="_blank">Pesan via WA</a>
-        </div>
+        <!-- Produk lain tinggal copy format di atas -->
     </div>
 
     <div class="footer-wa">
         <h2>Atau Chat Langsung</h2>
-        <a class="btn-wa" href="https://wa.me/6285178098354" target="_blank">Chat WA: 0851-7809-8354</a>
+        <a class="btn-wa" href="https://wa.me/6285178098354" target="_blank">💬 Chat WA: 0851-7809-8354</a>
     </div>
 
 </body>
