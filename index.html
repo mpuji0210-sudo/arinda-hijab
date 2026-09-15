@@ -10,18 +10,19 @@
         .banner p { margin: 5px 0 0; font-size: 16px; }
         h1 { text-align: center; color: #d97706; margin-top: 20px; }
         .produk-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 20px; }
-        .produk { background: white; padding: 15px; border-radius: 10px; width: 220px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.2s; }
+        .produk { background: white; padding: 15px; border-radius: 10px; width: 220px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.2s; position: relative; }
         .produk:hover { transform: scale(1.03); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
         .produk-icon { font-size: 60px; margin-bottom: 10px; cursor: pointer; text-decoration: none; display: block; }
         .harga { color: #d97706; font-weight: bold; font-size: 18px; }
         .btn-wa { margin-top: 10px; display: inline-block; background: #25D366; color: white; padding: 8px 15px; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: bold; }
         .btn-wa:hover { background: #1ebe5c; }
         .footer-wa { margin-top: 30px; text-align: center; padding-bottom: 30px; }
+        /* LABEL BEST SELLER BARU */
+        .best-seller { position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; padding: 5px 10px; font-size: 12px; font-weight: bold; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
 
-    <!-- BANNER PROMO BARU -->
     <div class="banner">
         <h2>🎉 ARINDA HIJAB PROMO 🎉</h2>
         <p>DISKON 10% MIN BELANJA 100RB</p>
@@ -31,18 +32,24 @@
     <p style="text-align:center; color:#666;">Koleksi Hijab Terlaris & Berkualitas</p>
 
     <div class="produk-container">
+        <!-- PRODUK 1 BEST SELLER -->
         <div class="produk">
+            <div class="best-seller">BEST SELLER</div>
             <a class="produk-icon" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Segiempat%20Voal%20Miracle%20Plain%20Rp29.990">🧕</a>
             <h3>Segiempat Voal Miracle Plain</h3>
             <p class="harga">Rp 29.990</p>
             <a class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Segiempat%20Voal%20Miracle%20Plain%20Rp29.990" target="_blank">Pesan via WA</a>
         </div>
+
+        <!-- PRODUK 2 BEST SELLER -->
         <div class="produk">
+            <div class="best-seller">BEST SELLER</div>
             <a class="produk-icon" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Pashmina%20Diamond%20Rp35.000">🧕</a>
             <h3>Pashmina Diamond</h3>
             <p class="harga">Rp 35.000</p>
             <a class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Pashmina%20Diamond%20Rp35.000" target="_blank">Pesan via WA</a>
         </div>
+
         <div class="produk">
             <a class="produk-icon" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Hijab%20Rayon%20Rp25.000">🧕</a>
             <h3>Hijab Rayon</h3>
