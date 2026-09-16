@@ -1,128 +1,26 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arinda Hijab Premium - 10 Produk</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-<style>
-html{scroll-behavior:smooth}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:#fffbf7;margin:0;padding:0;color:#1f2937}
-.banner{background:linear-gradient(90deg,#d97706,#f59e0b);color:white;text-align:center;padding:28px 20px}
-.banner h2{font-family:'Poppins',sans-serif;letter-spacing:1px;margin:0}
-nav{background:white;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:20}
-nav a{margin:0 15px;text-decoration:none;color:#92400e;font-weight:600;font-size:14px;padding:6px 10px;border-radius:8px}
-nav a:hover{background:#fffbeb}
-h1{font-family:'Poppins',sans-serif;text-align:center;color:#92400e;font-size:44px;font-weight:700;margin:25px 0 5px}
-.subtitle{text-align:center;color:#9ca3af;font-size:14px}
-.filter-wrap{text-align:center;margin:15px auto 25px;max-width:750px;padding:0 15px}
-.filter-btn{padding:9px 20px;margin:4px;border:1.5px solid #fcd34d;background:white;color:#92400e;border-radius:30px;cursor:pointer;font-family:'Poppins',sans-serif;font-weight:600;font-size:13px;transition:.2s}
-.filter-btn.active,.filter-btn:hover{background:#d97706;color:white;border-color:#d97706;box-shadow:0 4px 12px rgba(217,119,6,.25)}
-#searchInput{width:85%;max-width:380px;padding:12px 18px;border-radius:30px;border:1.5px solid #fde68a;margin-top:14px;outline:none;font-family:'Plus Jakarta Sans'}
-#searchInput:focus{border-color:#d97706}
-.produk-container{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;padding:10px 20px 40px;max-width:1350px;margin:auto}
-.produk{background:white;padding:16px;border-radius:18px;width:240px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.05);position:relative;cursor:pointer;transition:.3s;border:1px solid #fef3c7}
-.produk:hover{transform:translateY(-6px)}
-.produk.hidden{display:none}
-.produk h3{font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;margin:10px 0;min-height:36px;line-height:1.3}
-.spek{background:#fffbeb;border-radius:10px;padding:10px;margin:10px 0;font-size:11px;text-align:left;line-height:1.7;color:#57534e}
-.spek b{color:#d97706}
-.produk-icon{font-size:58px}
-.harga{font-family:'Poppins',sans-serif;color:#d97706;font-weight:700;font-size:18px;margin:8px 0}
-.btn-wa{margin-top:10px;display:inline-block;background:#25D366;color:white;padding:11px 15px;text-decoration:none;border-radius:12px;font-size:13px;font-weight:700;width:88%;font-family:'Poppins'}
-.swatch-container{display:flex;gap:7px;justify-content:center;margin:8px 0;flex-wrap:wrap}
-.swatch{width:22px;height:22px;border-radius:50%;border:2px solid #f3f4f6;cursor:pointer}
-.swatch-active{border-color:#d97706!important;box-shadow:0 0 0 3px #fde68a;transform:scale(1.1)}
-.best-seller{position:absolute;top:-10px;right:-10px;background:#ef4444;color:white;padding:5px 10px;font-size:10px;font-weight:700;border-radius:8px;font-family:'Poppins'}
-#modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:99;justify-content:center;align-items:center;backdrop-filter:blur(4px)}
-#modal-content{background:white;padding:26px;border-radius:18px;width:90%;max-width:360px;text-align:center;position:relative}
-</style>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arinda Hijab - Beranda</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
+<style>body{font-family:'Plus Jakarta Sans',sans-serif;margin:0;background:#fffbf7}nav{background:white;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06);position:sticky;top:0}nav a{margin:0 15px;text-decoration:none;color:#92400e;font-weight:600;padding:8px 16px;border-radius:20px}nav a.active{background:#d97706;color:white}.hero{background:linear-gradient(135deg,#d97706,#f59e0b);color:white;text-align:center;padding:70px 20px}.hero h1{font-family:'Poppins';font-size:50px;margin:0}.btn{font-family:'Poppins';background:white;color:#d97706;padding:14px 28px;border-radius:30px;text-decoration:none;font-weight:700;display:inline-block;margin-top:20px}</style>
 </head>
 <body>
-
-<div id="beranda"></div>
-<div class="banner"><h2>ARINDA HIJAB PREMIUM</h2><p style="margin:5px 0 0;opacity:.9">Elegan • Adem • Premium</p></div>
 <nav>
-  <a href="#beranda">Beranda</a>
-  <a href="#produk">Produk</a>
-  <a href="#kontak">Kontak</a>
+  <a href="index.html" class="active">Beranda</a>
+  <a href="produk.html">Produk</a>
+  <a href="kontak.html">Kontak</a>
 </nav>
-
-<h1>Arinda Hijab</h1>
-<p class="subtitle">Koleksi 10 Hijab Terlaris • Bahan Premium</p>
-
-<div class="filter-wrap">
-    <button class="filter-btn active" onclick="filterProduk('semua',this)">Semua</button>
-    <button class="filter-btn" onclick="filterProduk('segiempat',this)">Segiempat</button>
-    <button class="filter-btn" onclick="filterProduk('pashmina',this)">Pashmina</button>
-    <button class="filter-btn" onclick="filterProduk('bergo',this)">Bergo</button>
-    <button class="filter-btn" onclick="filterProduk('anak',this)">Anak</button>
-    <br>
-    <input type="text" id="searchInput" placeholder="🔍 Cari: voal, diamond, hitam..." onkeyup="cariProduk()">
+<div class="hero">
+  <h1>Arinda Hijab Premium</h1>
+  <p style="font-size:18px;opacity:.95">Elegan • Adem • Tidak Mudah Kusut • Harga Mulai 18rb</p>
+  <a class="btn" href="produk.html">Lihat 10 Koleksi →</a>
+  <p style="margin-top:15px">⭐ 4.9/5 dari 1.200+ pembeli</p>
 </div>
-
-<div id="produk"></div>
-<div class="produk-container" id="produkList">
-
-    <!-- 1 -->
-    <div class="produk" data-kategori="segiempat" data-nama="segiempat voal miracle plain"><div class="best-seller">BEST</div><div class="produk-icon">🧕</div><h3>Segiempat Voal Miracle Plain</h3><div class="spek"><b>📏</b> 115x115 | <b>🧵</b> Voal Ultrafine | <b>✂️</b> Laser Cut</div><p style="font-size:11px">Warna: <span id="warna-terpilih-1" style="font-weight:700;color:#d97706">Pilih</span></p><div class="swatch-container" onclick="event.stopPropagation()"><div class="swatch" style="background:#111" onclick="pilihWarna('Hitam','1','Voal Miracle',this)"></div><div class="swatch" style="background:#D2B48C" onclick="pilihWarna('Cream','1','Voal Miracle',this)"></div><div class="swatch" style="background:#1e3a8a" onclick="pilihWarna('Navy','1','Voal Miracle',this)"></div><div class="swatch" style="background:#7f1d1d" onclick="pilihWarna('Maron','1','Voal Miracle',this)"></div></div><p class="harga">Rp 29.990</p><a id="btn-wa-1" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Voal%20Miracle" target="_blank" onclick="event.stopPropagation()">💬 Pesan WA</a></div>
-
-    <!-- 2 -->
-    <div class="produk" data-kategori="pashmina" data-nama="pashmina diamond premium"><div class="best-seller">BEST</div><div class="produk-icon">✨</div><h3>Pashmina Diamond Premium</h3><div class="spek"><b>📏</b> 175x75 | <b>🧵</b> Diamond | <b>✂️</b> Jahit Tepi</div><p style="font-size:11px">Warna: <span id="warna-terpilih-2" style="font-weight:700;color:#d97706">Pilih</span></p><div class="swatch-container" onclick="event.stopPropagation()"><div class="swatch" style="background:#D8BFD8" onclick="pilihWarna('Dusty Pink','2','Pashmina Diamond',this)"></div><div class="swatch" style="background:#556B2F" onclick="pilihWarna('Sage','2','Pashmina Diamond',this)"></div><div class="swatch" style="background:#111" onclick="pilihWarna('Hitam','2','Pashmina Diamond',this)"></div></div><p class="harga">Rp 35.000</p><a id="btn-wa-2" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Pashmina%20Diamond" target="_blank" onclick="event.stopPropagation()">💬 Pesan WA</a></div>
-
-    <!-- 3 -->
-    <div class="produk" data-kategori="segiempat" data-nama="segiempat paris motif"><div class="produk-icon">🌸</div><h3>Segiempat Paris Motif</h3><div class="spek"><b>📏</b> 110x110 | <b>🧵</b> Paris Premium | <b>✂️</b> Jahit Tepi</div><p style="font-size:11px">Warna: <span id="warna-terpilih-3" style="font-weight:700;color:#d97706">Pilih</span></p><div class="swatch-container" onclick="event.stopPropagation()"><div class="swatch" style="background:#FFB6C1" onclick="pilihWarna('Pink','3','Paris Motif',this)"></div><div class="swatch" style="background:#87CEEB" onclick="pilihWarna('Biru','3','Paris Motif',this)"></div><div class="swatch" style="background:#98FB98" onclick="pilihWarna('Mint','3','Paris Motif',this)"></div></div><p class="harga">Rp 27.500</p><a id="btn-wa-3" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Paris%20Motif" target="_blank" onclick="event.stopPropagation()">💬 Pesan WA</a></div>
-
-    <!-- 4 -->
-    <div class="produk" data-kategori="pashmina" data-nama="pashmina ceruty babydoll"><div class="produk-icon">🤎</div><h3>Pashmina Ceruty Babydoll</h3><div class="spek"><b>📏</b> 175x75 | <b>🧵</b> Ceruty | <b>✂️</b> Jahit Tepi</div><p style="font-size:11px">Warna: <span id="warna-terpilih-4" style="font-weight:700;color:#d97706">Pilih</span></p><div class="swatch-container" onclick="event.stopPropagation()"><div class="swatch" style="background:#8B4513" onclick="pilihWarna('Choco','4','Ceruty',this)"></div><div class="swatch" style="background:#A9A9A9" onclick="pilihWarna('Grey','4','Ceruty',this)"></div><div class="swatch" style="background:#CD853F" onclick="pilihWarna('Caramel','4','Ceruty',this)"></div></div><p class="harga">Rp 32.000</p><a id="btn-wa-4" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Ceruty" target="_blank" onclick="event.stopPropagation()">💬 Pesan WA</a></div>
-
-    <!-- 5 -->
-    <div class="produk" data-kategori="segiempat" data-nama="hijab voal rayon premium"><div class="produk-icon">☁️</div><h3>Hijab Voal Rayon Premium</h3><div class="spek"><b>📏</b> 115x115 | <b>🧵</b> Voal Rayon | <b>✂️</b> Laser Cut</div><p style="font-size:11px">Warna: <span id="warna-terpilih-5" style="font-weight:700;color:#d97706">Pilih</span></p><div class="swatch-container" onclick="event.stopPropagation()"><div class="swatch" style="background:#E6E6FA" onclick="pilihWarna('Lavender','5','Voal Rayon',this)"></div><div class="swatch" style="background:#111" onclick="pilihWarna('Hitam','5','Voal Rayon',this)"></div></div><p class="harga">Rp 25.000</p><a id="btn-wa-5" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Voal%20Rayon" target="_blank" onclick="event.stopPropagation()">💬 Pesan WA</a></div>
-
-    <!-- 6 -->
-    <div class="produk" data-kategori="bergo" data-nama="bergo maryam pet antem"><div class="best-seller">NEW</div><div class="produk-icon">👑</div><h3>Bergo Maryam Pet Antem</h3><div class="spek"><b>📏</b> All Size | <b>🧵</b> Jersey | <b>✂️</b> Pet Antem</div><p style="font-size:11px">Warna: <span id="warna-terpilih-6" style="font-weight:700;color:#d97706">Pilih</span></p><div class="swatch-container" onclick="event.stopPropagation()"><div class="swatch" style="background:#111" onclick="pilihWarna('Hitam','6','Bergo Maryam',this)"></div><div class="swatch" style="background:#800000" onclick="pilihWarna('Maroon','6','Bergo Maryam',this)"></div></div><p class="harga">Rp 28.000</p><a id="btn-wa-6" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Bergo%20Maryam" target="_blank" onclick="event.stopPropagation()">💬 Pesan WA</a></div>
-
-    <!-- 7 -->
-    <div class="produk" data-kategori="pashmina" data-nama="pashmina kaos jersey"><div class="produk-icon">🌿</div><h3>Pashmina Kaos Jersey</h3><div class="spek"><b>📏</b> 180x75 | <b>🧵</b> Kaos Jersey | <b>✂️</b> Jahit Tepi</div><p style="font-size:11px">Warna: <span id="warna-terpilih-7" style="font-weight:700;color:#d97706">Pilih</span></p><div class="swatch-container" onclick="event.stopPropagation()"><div class="swatch" style="background:#2F4F4F" onclick="pilihWarna('Dark Grey','7','Kaos Jersey',this)"></div><div class="swatch" style="background:#D2B48C" onclick="pilihWarna('Milo','7','Kaos Jersey',this)"></div></div><p class="harga">Rp 30.000</p><a id="btn-wa-7" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Kaos%20Jersey" target="_blank" onclick="event.stopPropagation()">💬 Pesan WA</a></div>
-
-    <!-- 8 -->
-    <div class="produk" data-kategori="segiempat" data-nama="segiempat voal polycotton"><div class="produk-icon">💎</div><h3>Segiempat Voal Polycotton</h3><div class="spek"><b>📏</b> 115x115 | <b>🧵</b> Polycotton | <b>✂️</b> Laser Cut</div><p style="font-size:11px">Warna: <span id="warna-terpilih-8" style="font-weight:700;color:#d97706">Pilih</span></p><div class="swatch-container" onclick="event.stopPropagation()"><div class="swatch" style="background:#FFF" onclick="pilihWarna('Putih','8','Polycotton',this)"></div><div class="swatch" style="background:#111" onclick="pilihWarna('Hitam','8','Polycotton',this)"></div></div><p class="harga">Rp 26.500</p><a id="btn-wa-8" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Polycotton" target="_blank" onclick="event.stopPropagation()">💬 Pesan WA</a></div>
-
-    <!-- 9 -->
-    <div class="produk" data-kategori="anak" data-nama="hijab anak sekolah"><div class="produk-icon">🎀</div><h3>Hijab Anak Sekolah SD-SMP</h3><div class="spek"><b>📏</b> 90x90 | <b>🧵</b> Voal | <b>✂️</b> Jahit Tepi</div><p style="font-size:11px">Warna: <span id="warna-terpilih-9" style="font-weight:700;color:#d97706">Pilih</span></p><div class="swatch-container" onclick="event.stopPropagation()"><div class="swatch" style="background:#FFF" onclick="pilihWarna('Putih','9','Hijab Anak',this)"></div><div class="swatch" style="background:#000080" onclick="pilihWarna('Navy','9','Hijab Anak',this)"></div><div class="swatch" style="background:#B22222" onclick="pilihWarna('Merah','9','Hijab Anak',this)"></div></div><p class="harga">Rp 18.000</p><a id="btn-wa-9" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Hijab%20Anak" target="_blank" onclick="event.stopPropagation()">💬 Pesan WA</a></div>
-
-    <!-- 10 -->
-    <div class="produk" data-kategori="segiempat" data-nama="paket 3 hijab hemat"><div class="best-seller">PROMO</div><div class="produk-icon">📦</div><h3>Paket 3 Hijab Hemat Mix</h3><div class="spek"><b>📏</b> Mix Size | <b>🧵</b> Mix Bahan | <b>✂️</b> Mix</div><p style="font-size:11px">Warna: <span id="warna-terpilih-10" style="font-weight:700;color:#d97706">Pilih Mix</span></p><div class="swatch-container" onclick="event.stopPropagation()"><div class="swatch" style="background:linear-gradient(45deg,#111,#D2B48C,#C0C0C0)" onclick="pilihWarna('Mix 3 Warna','10','Paket Hemat',this)"></div><div class="swatch" style="background:linear-gradient(45deg,#D8BFD8,#556B2F,#1e3a8a)" onclick="pilihWarna('Mix Pastel','10','Paket Hemat',this)"></div></div><p class="harga">Rp 75.000</p><a id="btn-wa-10" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Paket%203%20Hijab" target="_blank" onclick="event.stopPropagation()">💬 Pesan WA</a></div>
-
+<div style="text-align:center;padding:40px 20px">
+  <h2 style="font-family:'Poppins';color:#92400e">Kenapa Arinda Hijab?</h2>
+  <p>✅ Bahan Voal & Diamond Premium<br>✅ Finishing Laser Cut Rapi<br>✅ Pengiriman Cepat dari Jakarta<br>✅ Bisa COD & QRIS</p>
+  <a href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20tanya%20Arinda%20Hijab" style="display:inline-block;background:#25D366;color:white;padding:12px 24px;border-radius:30px;text-decoration:none;font-weight:700;margin-top:15px">Chat Kak Aeni di WA</a>
 </div>
-
-<footer id="kontak" style="background:#1f2937;color:white;padding:40px 20px;margin-top:30px;text-align:center;font-family:'Poppins',sans-serif">
-  <h3 style="margin:0 0 8px">Arinda Hijab Premium</h3>
-  <p style="margin:5px 0;font-size:14px;opacity:.9">📍 Pengiriman dari Jakarta | 💳 BCA, Mandiri, QRIS, COD</p>
-  <p style="margin:5px 0;font-size:14px">💬 WA: 0851-7809-8354 (Kak Aeni)</p>
-  <a href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20tanya%20Arinda%20Hijab" style="display:inline-block;background:#25D366;color:white;padding:12px 24px;border-radius:30px;text-decoration:none;margin-top:12px;font-weight:700">Chat Sekarang</a>
-  <p style="margin-top:20px;font-size:11px;opacity:.5">© 2026 Arinda Hijab • Elegan Adem Premium</p>
-</footer>
-
-<script>
-function filterProduk(kategori,btn){
-    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
-    document.querySelectorAll('.produk').forEach(p=>{
-        if(kategori==='semua'||p.dataset.kategori===kategori){p.classList.remove('hidden')}else{p.classList.add('hidden')}
-    });
-}
-function cariProduk(){
-    let k=document.getElementById('searchInput').value.toLowerCase();
-    document.querySelectorAll('.produk').forEach(p=>{
-        if(p.dataset.nama.includes(k)){p.classList.remove('hidden')}else{p.classList.add('hidden')}
-    });
-}
-function pilihWarna(warna,id,nama,el){
-    let label=document.getElementById('warna-terpilih-'+id);
-    if(label) label.innerText=warna;
-    el.parentElement.querySelectorAll('.swatch').forEach(s=>s.classList.remove('swatch-active'));el.classList.add('swatch-active');
-    let pesan=`Halo Kak Aeni, saya mau pesan ${nama} Warna ${warna}`;
-    document.getElementById('btn-wa-'+id).href=`https://wa.me/6285178098354?text=${encodeURIComponent(pesan)}`;
-}
-</script>
 </body>
 </html>
