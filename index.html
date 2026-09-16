@@ -1,94 +1,114 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arinda Hijab - Koleksi Terlaris</title>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arinda Hijab - Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; background: #fff8f0; margin: 0; padding: 0; }
+        body { font-family: Arial; background: #fff8f0; margin: 0; padding: 0; }
         .banner { background: linear-gradient(90deg, #d97706, #f59e0b); color: white; text-align: center; padding: 25px 20px; }
-        .banner h2 { margin: 0; font-size: 26px; }
         nav { background: white; padding: 12px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 10; }
         nav a { margin: 0 15px; text-decoration: none; color: #d97706; font-weight: bold; }
-        h1 { text-align: center; color: #d97706; margin-top: 25px; font-family: 'Playfair Display', serif; font-size: 42px; }
+        h1 { text-align: center; color: #d97706; font-family: 'Playfair Display', serif; font-size: 42px; }
         .produk-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 20px; max-width: 1300px; margin: auto; }
-        .produk { background: white; padding: 15px; border-radius: 15px; width: 240px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; transition: 0.3s; }
+        .produk { background: white; padding: 15px; border-radius: 15px; width: 240px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: relative; cursor: pointer; transition: 0.3s; }
         .produk:hover { transform: translateY(-5px); }
-        .produk-icon { font-size: 70px; margin-bottom: 10px; display: block; }
-        .produk h3 { font-size: 16px; margin: 10px 0 5px; min-height: 40px; }
-        .harga { color: #d97706; font-weight: bold; font-size: 18px; margin: 5px 0; }
-        .rating { color: #fbbf24; font-size: 14px; margin: 5px 0; }
-        .stok { font-size: 12px; color: #16a34a; font-weight: bold; margin: 2px 0; }
-        .btn-wa { margin-top: 12px; display: inline-block; background: #25D366; color: white; padding: 10px 15px; text-decoration: none; border-radius: 12px; font-size: 14px; font-weight: bold; width: 85%; }
-        .btn-wa:hover { background: #1ebe5c; }
-        .best-seller { position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; padding: 5px 10px; font-size: 11px; font-weight: bold; border-radius: 5px; }
-        .swatch-container { display: flex; gap: 7px; justify-content: center; margin: 8px 0 10px; flex-wrap: wrap; }
-        .swatch { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #eee; cursor: pointer; transition: 0.2s; }
-        .swatch:hover { transform: scale(1.2); border-color: #d97706; }
+        .spek { background: #fffbeb; border-radius: 8px; padding: 8px; margin: 8px 0; font-size: 11px; text-align: left; line-height: 1.6; color: #444; }
+        .spek b { color: #d97706; }
+        .produk-icon { font-size: 60px; }
+        .harga { color: #d97706; font-weight: bold; font-size: 18px; }
+        .btn-wa { margin-top: 10px; display: inline-block; background: #25D366; color: white; padding: 10px 15px; text-decoration: none; border-radius: 12px; font-size: 14px; font-weight: bold; width: 85%; }
+        .swatch-container { display: flex; gap: 7px; justify-content: center; margin: 8px 0; flex-wrap: wrap; }
+        .swatch { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #eee; cursor: pointer; }
         .swatch-active { border-color: #d97706 !important; box-shadow: 0 0 0 2px #fde68a; }
+        .best-seller { position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; padding: 5px 10px; font-size: 11px; font-weight: bold; border-radius: 5px; }
+        /* MODAL POP-UP */
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 99; justify-content: center; align-items: center; }
+        #modal-content { background: white; padding: 25px; border-radius: 15px; width: 90%; max-width: 350px; text-align: center; position: relative; }
+        #modal-close { position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="banner">
-        <h2>🎉 ARINDA HIJAB PROMO 🎉</h2>
-        <p>DISKON 10% MIN BELANJA 100RB | Pengiriman dari Jakarta</p>
-    </div>
-    <nav><a href="#">Beranda</a><a href="#">Produk</a><a href="#">Kontak</a></nav>
-    <h1>Arinda Hijab</h1>
-    <p style="text-align:center; color:#666; margin-top:-10px">Koleksi Hijab Terlaris & Berkualitas</p>
+<div class="banner"><h2>🎉 ARINDA HIJAB PREMIUM 🎉</h2><p>Klik produk untuk detail bahan & ukuran</p></div>
+<nav><a href="#">Beranda</a><a href="#">Produk</a><a href="#">Kontak</a></nav>
+<h1>Arinda Hijab</h1>
 
-    <div class="produk-container">
+<div class="produk-container">
 
-        <!-- 1 -->
-        <div class="produk"><div class="best-seller">BEST SELLER</div><div class="produk-icon">🧕</div><h3>Segiempat Voal Miracle Plain</h3><p style="font-size:11px">Warna: <span id="warna-terpilih-1" style="font-weight:bold; color:#d97706">Pilih</span></p><div class="swatch-container"><div class="swatch" style="background:#000" title="Hitam" onclick="pilihWarna('Hitam','1','Segiempat Voal Miracle Plain',this)"></div><div class="swatch" style="background:#D2B48C" title="Cream" onclick="pilihWarna('Cream','1','Segiempat Voal Miracle Plain',this)"></div><div class="swatch" style="background:#C0C0C0" title="Abu-abu" onclick="pilihWarna('Abu-abu','1','Segiempat Voal Miracle Plain',this)"></div><div class="swatch" style="background:#8B0000" title="Maron" onclick="pilihWarna('Maron','1','Segiempat Voal Miracle Plain',this)"></div><div class="swatch" style="background:#000080" title="Navy" onclick="pilihWarna('Navy','1','Segiempat Voal Miracle Plain',this)"></div></div><div class="rating">⭐ 4.9 (1.2k)</div><p class="stok">Stok: 50+</p><p class="harga">Rp 29.990</p><a id="btn-wa-1" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Segiempat%20Voal%20Miracle%20Plain" target="_blank">💬 Pesan via WA</a></div>
-
-        <!-- 2 -->
-        <div class="produk"><div class="best-seller">BEST SELLER</div><div class="produk-icon">✨</div><h3>Pashmina Diamond Premium</h3><p style="font-size:11px">Warna: <span id="warna-terpilih-2" style="font-weight:bold; color:#d97706">Pilih</span></p><div class="swatch-container"><div class="swatch" style="background:#F5F5DC" title="Broken White" onclick="pilihWarna('Broken White','2','Pashmina Diamond Premium',this)"></div><div class="swatch" style="background:#D8BFD8" title="Dusty Pink" onclick="pilihWarna('Dusty Pink','2','Pashmina Diamond Premium',this)"></div><div class="swatch" style="background:#556B2F" title="Sage" onclick="pilihWarna('Sage','2','Pashmina Diamond Premium',this)"></div><div class="swatch" style="background:#000" title="Hitam" onclick="pilihWarna('Hitam','2','Pashmina Diamond Premium',this)"></div></div><div class="rating">⭐ 4.8 (890)</div><p class="stok">Stok: 30+</p><p class="harga">Rp 35.000</p><a id="btn-wa-2" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Pashmina%20Diamond%20Premium" target="_blank">💬 Pesan via WA</a></div>
-
-        <!-- 3 -->
-        <div class="produk"><div class="produk-icon">🌸</div><h3>Segiempat Paris Motif</h3><p style="font-size:11px">Warna: <span id="warna-terpilih-3" style="font-weight:bold; color:#d97706">Pilih</span></p><div class="swatch-container"><div class="swatch" style="background:#FFB6C1" title="Pink" onclick="pilihWarna('Pink','3','Segiempat Paris Motif',this)"></div><div class="swatch" style="background:#87CEEB" title="Biru" onclick="pilihWarna('Biru','3','Segiempat Paris Motif',this)"></div><div class="swatch" style="background:#98FB98" title="Mint" onclick="pilihWarna('Mint','3','Segiempat Paris Motif',this)"></div><div class="swatch" style="background:#FFFFE0" title="Kuning" onclick="pilihWarna('Kuning','3','Segiempat Paris Motif',this)"></div></div><div class="rating">⭐ 4.7 (650)</div><p class="stok">Stok: 40+</p><p class="harga">Rp 27.500</p><a id="btn-wa-3" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Segiempat%20Paris%20Motif" target="_blank">💬 Pesan via WA</a></div>
-
-        <!-- 4 -->
-        <div class="produk"><div class="produk-icon">🤎</div><h3>Pashmina Ceruty Babydoll</h3><p style="font-size:11px">Warna: <span id="warna-terpilih-4" style="font-weight:bold; color:#d97706">Pilih</span></p><div class="swatch-container"><div class="swatch" style="background:#8B4513" title="Choco" onclick="pilihWarna('Choco','4','Pashmina Ceruty Babydoll',this)"></div><div class="swatch" style="background:#A9A9A9" title="Grey" onclick="pilihWarna('Grey','4','Pashmina Ceruty Babydoll',this)"></div><div class="swatch" style="background:#2F4F4F" title="Army" onclick="pilihWarna('Army','4','Pashmina Ceruty Babydoll',this)"></div><div class="swatch" style="background:#CD853F" title="Caramel" onclick="pilihWarna('Caramel','4','Pashmina Ceruty Babydoll',this)"></div></div><div class="rating">⭐ 4.9 (1k)</div><p class="stok">Stok: 25+</p><p class="harga">Rp 32.000</p><a id="btn-wa-4" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Pashmina%20Ceruty%20Babydoll" target="_blank">💬 Pesan via WA</a></div>
-
-        <!-- 5 -->
-        <div class="produk"><div class="produk-icon">☁️</div><h3>Hijab Voal Rayon Premium</h3><p style="font-size:11px">Warna: <span id="warna-terpilih-5" style="font-weight:bold; color:#d97706">Pilih</span></p><div class="swatch-container"><div class="swatch" style="background:#E6E6FA" title="Lavender" onclick="pilihWarna('Lavender','5','Hijab Voal Rayon Premium',this)"></div><div class="swatch" style="background:#F0E68C" title="Khaki" onclick="pilihWarna('Khaki','5','Hijab Voal Rayon Premium',this)"></div><div class="swatch" style="background:#000" title="Hitam" onclick="pilihWarna('Hitam','5','Hijab Voal Rayon Premium',this)"></div></div><div class="rating">⭐ 4.6 (400)</div><p class="stok">Stok: 100+</p><p class="harga">Rp 25.000</p><a id="btn-wa-5" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Hijab%20Voal%20Rayon%20Premium" target="_blank">💬 Pesan via WA</a></div>
-
-        <!-- 6 -->
-        <div class="produk"><div class="best-seller">NEW</div><div class="produk-icon">👑</div><h3>Bergo Maryam Pet Antem</h3><p style="font-size:11px">Warna: <span id="warna-terpilih-6" style="font-weight:bold; color:#d97706">Pilih</span></p><div class="swatch-container"><div class="swatch" style="background:#000" title="Hitam" onclick="pilihWarna('Hitam','6','Bergo Maryam Pet Antem',this)"></div><div class="swatch" style="background:#800000" title="Maroon" onclick="pilihWarna('Maroon','6','Bergo Maryam Pet Antem',this)"></div><div class="swatch" style="background:#483D8B" title="Denim" onclick="pilihWarna('Denim','6','Bergo Maryam Pet Antem',this)"></div></div><div class="rating">⭐ 4.8 (320)</div><p class="stok">Stok: 20+</p><p class="harga">Rp 28.000</p><a id="btn-wa-6" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Bergo%20Maryam%20Pet%20Antem" target="_blank">💬 Pesan via WA</a></div>
-
-        <!-- 7 -->
-        <div class="produk"><div class="produk-icon">🌿</div><h3>Pashmina Kaos Jersey</h3><p style="font-size:11px">Warna: <span id="warna-terpilih-7" style="font-weight:bold; color:#d97706">Pilih</span></p><div class="swatch-container"><div class="swatch" style="background:#2F4F4F" title="Dark Grey" onclick="pilihWarna('Dark Grey','7','Pashmina Kaos Jersey',this)"></div><div class="swatch" style="background:#D2B48C" title="Milo" onclick="pilihWarna('Milo','7','Pashmina Kaos Jersey',this)"></div><div class="swatch" style="background:#B0C4DE" title="Dusty Blue" onclick="pilihWarna('Dusty Blue','7','Pashmina Kaos Jersey',this)"></div></div><div class="rating">⭐ 4.7 (510)</div><p class="stok">Stok: 60+</p><p class="harga">Rp 30.000</p><a id="btn-wa-7" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Pashmina%20Kaos%20Jersey" target="_blank">💬 Pesan via WA</a></div>
-
-        <!-- 8 -->
-        <div class="produk"><div class="produk-icon">💎</div><h3>Segiempat Voal Polycotton</h3><p style="font-size:11px">Warna: <span id="warna-terpilih-8" style="font-weight:bold; color:#d97706">Pilih</span></p><div class="swatch-container"><div class="swatch" style="background:#FFF" title="Putih" onclick="pilihWarna('Putih','8','Segiempat Voal Polycotton',this)"></div><div class="swatch" style="background:#000" title="Hitam" onclick="pilihWarna('Hitam','8','Segiempat Voal Polycotton',this)"></div><div class="swatch" style="background:#FFE4E1" title="Misty Rose" onclick="pilihWarna('Misty Rose','8','Segiempat Voal Polycotton',this)"></div></div><div class="rating">⭐ 4.8 (700)</div><p class="stok">Stok: 80+</p><p class="harga">Rp 26.500</p><a id="btn-wa-8" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Segiempat%20Voal%20Polycotton" target="_blank">💬 Pesan via WA</a></div>
-
-        <!-- 9 -->
-        <div class="produk"><div class="produk-icon">🎀</div><h3>Hj. Anak Sekolah SD-SMP</h3><p style="font-size:11px">Warna: <span id="warna-terpilih-9" style="font-weight:bold; color:#d97706">Pilih</span></p><div class="swatch-container"><div class="swatch" style="background:#FFF" title="Putih" onclick="pilihWarna('Putih','9','Hijab Anak Sekolah',this)"></div><div class="swatch" style="background:#000080" title="Navy" onclick="pilihWarna('Navy','9','Hijab Anak Sekolah',this)"></div><div class="swatch" style="background:#B22222" title="Merah" onclick="pilihWarna('Merah','9','Hijab Anak Sekolah',this)"></div></div><div class="rating">⭐ 4.9 (300)</div><p class="stok">Stok: 120+</p><p class="harga">Rp 18.000</p><a id="btn-wa-9" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Hijab%20Anak%20Sekolah" target="_blank">💬 Pesan via WA</a></div>
-
-        <!-- 10 -->
-        <div class="produk"><div class="best-seller">PROMO</div><div class="produk-icon">📦</div><h3>Paket 3 Hijab Hemat</h3><p style="font-size:11px">Warna: <span id="warna-terpilih-10" style="font-weight:bold; color:#d97706">Pilih Mix</span></p><div class="swatch-container"><div class="swatch" style="background:linear-gradient(45deg, #000, #D2B48C, #C0C0C0)" title="Mix Random" onclick="pilihWarna('Mix 3 Warna','10','Paket 3 Hijab Hemat',this)"></div><div class="swatch" style="background:linear-gradient(45deg, #D8BFD8, #556B2F, #000080)" title="Mix Pastel" onclick="pilihWarna('Mix Pastel','10','Paket 3 Hijab Hemat',this)"></div></div><div class="rating">⭐ 5.0 (2k)</div><p class="stok">Stok: 15 Paket</p><p class="harga">Rp 75.000</p><a id="btn-wa-10" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20saya%20mau%20pesan%20Paket%203%20Hijab%20Hemat" target="_blank">💬 Pesan via WA</a></div>
-
+    <!-- PRODUK 1 CONTOH LENGKAP -->
+    <div class="produk" onclick="bukaModal('Segiempat Voal Miracle Plain','115 x 115 cm','Voal Ultrafine Premium','Laser Cut','Tegak di dahi, adem, tidak terawang')">
+        <div class="best-seller">BEST SELLER</div>
+        <div class="produk-icon">🧕</div>
+        <h3>Segiempat Voal Miracle Plain</h3>
+        <div class="spek">
+            <b>📏 Ukuran:</b> 115 x 115 cm<br>
+            <b>🧵 Bahan:</b> Voal Ultrafine Premium<br>
+            <b>✂️ Finishing:</b> Laser Cut
+        </div>
+        <p style="font-size:11px">Warna: <span id="warna-terpilih-1" style="font-weight:bold;color:#d97706">Pilih</span></p>
+        <div class="swatch-container" onclick="event.stopPropagation()">
+            <div class="swatch" style="background:#000" onclick="pilihWarna('Hitam','1','Segiempat Voal Miracle Plain',this)"></div>
+            <div class="swatch" style="background:#D2B48C" onclick="pilihWarna('Cream','1','Segiempat Voal Miracle Plain',this)"></div>
+            <div class="swatch" style="background:#000080" onclick="pilihWarna('Navy','1','Segiempat Voal Miracle Plain',this)"></div>
+            <div class="swatch" style="background:#8B0000" onclick="pilihWarna('Maron','1','Segiempat Voal Miracle Plain',this)"></div>
+        </div>
+        <p class="harga">Rp 29.990</p>
+        <a id="btn-wa-1" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Voal%20Miracle" target="_blank" onclick="event.stopPropagation()">💬 Pesan via WA</a>
     </div>
 
-    <footer style="background:#1f2937; color:white; padding:40px 20px; margin-top:50px; text-align:center">
-        <p>© 2026 Arinda Hijab | Pengiriman Jakarta | BCA, Mandiri, QRIS</p>
-    </footer>
+    <!-- PRODUK 2 -->
+    <div class="produk" onclick="bukaModal('Pashmina Diamond Premium','175 x 75 cm','Diamond Georgette Premium','Jahit Tepi Rapi','Flowly, tidak licin, mudah dibentuk')">
+        <div class="best-seller">BEST SELLER</div><div class="produk-icon">✨</div><h3>Pashmina Diamond Premium</h3>
+        <div class="spek"><b>📏 Ukuran:</b> 175 x 75 cm<br><b>🧵 Bahan:</b> Diamond Georgette<br><b>✂️ Finishing:</b> Jahit Tepi Rapi</div>
+        <p style="font-size:11px">Warna: <span id="warna-terpilih-2" style="font-weight:bold;color:#d97706">Pilih</span></p>
+        <div class="swatch-container" onclick="event.stopPropagation()"><div class="swatch" style="background:#D8BFD8" onclick="pilihWarna('Dusty Pink','2','Pashmina Diamond Premium',this)"></div><div class="swatch" style="background:#556B2F" onclick="pilihWarna('Sage','2','Pashmina Diamond Premium',this)"></div><div class="swatch" style="background:#000" onclick="pilihWarna('Hitam','2','Pashmina Diamond Premium',this)"></div></div>
+        <p class="harga">Rp 35.000</p><a id="btn-wa-2" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Pashmina%20Diamond" target="_blank" onclick="event.stopPropagation()">💬 Pesan via WA</a>
+    </div>
 
-    <script>
-    function pilihWarna(warna, id, namaProduk, elemen){
-        document.getElementById('warna-terpilih-'+id).innerText = warna;
-        // hapus active di produk yang sama
-        let container = elemen.parentElement;
-        container.querySelectorAll('.swatch').forEach(s => s.classList.remove('swatch-active'));
-        elemen.classList.add('swatch-active');
-        // update link WA
-        let pesan = `Halo Kak Aeni, saya mau pesan ${namaProduk} Warna ${warna}`;
-        let link = `https://wa.me/6285178098354?text=${encodeURIComponent(pesan)}`;
-        document.getElementById('btn-wa-'+id).href = link;
-    }
-    </script>
+    <!-- COPY FORMAT DI ATAS UNTUK PRODUK 3-10, GANTI SPEK NYA AJA -->
+    <!-- PRODUK 3 -->
+    <div class="produk" onclick="bukaModal('Segiempat Paris Motif','110 x 110 cm','Paris Premium','Jahit Tepi Kecil','Bahan lembut, motif cantik, tidak mudah kusut')">
+        <div class="produk-icon">🌸</div><h3>Segiempat Paris Motif</h3>
+        <div class="spek"><b>📏 Ukuran:</b> 110 x 110 cm<br><b>🧵 Bahan:</b> Paris Premium<br><b>✂️ Finishing:</b> Jahit Tepi</div>
+        <p style="font-size:11px">Warna: <span id="warna-terpilih-3" style="font-weight:bold;color:#d97706">Pilih</span></p>
+        <div class="swatch-container" onclick="event.stopPropagation()"><div class="swatch" style="background:#FFB6C1" onclick="pilihWarna('Pink','3','Paris Motif',this)"></div><div class="swatch" style="background:#87CEEB" onclick="pilihWarna('Biru','3','Paris Motif',this)"></div></div>
+        <p class="harga">Rp 27.500</p><a id="btn-wa-3" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Paris%20Motif" target="_blank" onclick="event.stopPropagation()">💬 Pesan via WA</a>
+    </div>
+
+    <!-- PRODUK 4-10 TINGGAL DUPLIKAT, GANTI NAMA & SPEK -->
+    <div class="produk" onclick="bukaModal('Pashmina Ceruty Babydoll','175 x 75 cm','Ceruty Babydoll Premium','Jahit Tepi','Adem, ringan, tidak panas')"><div class="produk-icon">🤎</div><h3>Pashmina Ceruty Babydoll</h3><div class="spek"><b>📏 Ukuran:</b> 175 x 75 cm<br><b>🧵 Bahan:</b> Ceruty Babydoll<br><b>✂️ Finishing:</b> Jahit Tepi</div><p class="harga">Rp 32.000</p><a id="btn-wa-4" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Ceruty" target="_blank" onclick="event.stopPropagation()">💬 Pesan via WA</a></div>
+    <div class="produk" onclick="bukaModal('Hijab Voal Rayon','115 x 115 cm','Voal Rayon Premium','Laser Cut','Super adem, cocok daily')"><div class="produk-icon">☁️</div><h3>Hijab Voal Rayon</h3><div class="spek"><b>📏 Ukuran:</b> 115 x 115 cm<br><b>🧵 Bahan:</b> Voal Rayon<br><b>✂️ Finishing:</b> Laser Cut</div><p class="harga">Rp 25.000</p><a id="btn-wa-5" class="btn-wa" href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20pesan%20Voal%20Rayon" target="_blank" onclick="event.stopPropagation()">💬 Pesan via WA</a></div>
+
+</div>
+
+<!-- MODAL POP UP -->
+<div id="modal" onclick="tutupModal()">
+    <div id="modal-content" onclick="event.stopPropagation()">
+        <span id="modal-close" onclick="tutupModal()">❌</span>
+        <div id="modal-icon" style="font-size:60px">🧕</div>
+        <h2 id="modal-nama" style="color:#d97706"></h2>
+        <div id="modal-spek" style="text-align:left; background:#fffbeb; padding:15px; border-radius:10px; font-size:14px; line-height:1.8"></div>
+        <a id="modal-wa" class="btn-wa" href="" target="_blank" style="margin-top:15px; width:90%">💬 Pesan Sekarang</a>
+    </div>
+</div>
+
+<script>
+function pilihWarna(warna, id, namaProduk, el){
+    document.getElementById('warna-terpilih-'+id).innerText = warna;
+    el.parentElement.querySelectorAll('.swatch').forEach(s=>s.classList.remove('swatch-active'));
+    el.classList.add('swatch-active');
+    let pesan = `Halo Kak Aeni, saya mau pesan ${namaProduk} Warna ${warna}`;
+    document.getElementById('btn-wa-'+id).href = `https://wa.me/6285178098354?text=${encodeURIComponent(pesan)}`;
+}
+function bukaModal(nama, ukuran, bahan, finishing, desk){
+    document.getElementById('modal-nama').innerText = nama;
+    document.getElementById('modal-spek').innerHTML = `<b>📏 Ukuran:</b> ${ukuran}<br><b>🧵 Bahan:</b> ${bahan}<br><b>✂️ Finishing:</b> ${finishing}<br><br>📝 <i>${desk}</i>`;
+    document.getElementById('modal-wa').href = `https://wa.me/6285178098354?text=${encodeURIComponent('Halo Kak Aeni, saya mau tanya detail '+nama+' - '+bahan+' '+ukuran)}`;
+    document.getElementById('modal').style.display = 'flex';
+}
+function tutupModal(){ document.getElementById('modal').style.display = 'none'; }
+</script>
+
 </body>
 </html>
