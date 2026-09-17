@@ -2,86 +2,109 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Produk - Arinda Hijab</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<title>Arinda Hijab</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}body{font-family:'Plus Jakarta Sans',sans-serif;margin:0;background:#fffbf7}
-.container{max-width:1100px;margin:0 auto;padding:20px 24px}
-nav{background:white;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:20}
-nav a{text-decoration:none;color:#92400e;font-weight:600;font-size:14px;padding:8px 18px;border-radius:25px}
-nav a.active{background:#d97706;color:white}
-.cart-badge{background:#c9a86a;color:white;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
-@media(min-width:768px){.grid{grid-template-columns:1fr 1fr 1fr 1fr}}
-.card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.06);border:1px solid #fef3c7}
-.card img{width:100%;height:160px;object-fit:cover}
-.card-body{padding:12px}
-.card-body h3{font-size:14px;margin:0 0 4px;font-family:'Poppins'}
-.harga{color:#d97706;font-weight:700;font-size:16px}
-.btn-cart{width:100%;background:#d97706;color:white;border:0;padding:10px;border-radius:10px;font-weight:700;margin-top:8px;cursor:pointer}
-.btn-cart:hover{background:#92400e}
-#cartModal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:50;justify-content:center;align-items:center}
-#cartBox{background:white;width:90%;max-width:400px;border-radius:20px;padding:20px;max-height:80vh;overflow:auto}
-.cart-item{display:flex;justify-content:space-between;margin:10px 0;font-size:14px}
-.btn-wa{width:100%;background:#25D366;color:white;padding:14px;border-radius:12px;text-align:center;text-decoration:none;display:block;font-weight:700;margin-top:15px}
+*{box-sizing:border-box}body{font-family:'Plus Jakarta Sans',sans-serif;margin:0;background:#f5f5f5;color:#222;padding-bottom:80px}
+.topbar{position:sticky;top:0;z-index:20;background:white;display:flex;align-items:center;gap:10px;padding:10px 12px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.topbar .search{flex:1;background:#f0f0f0;border-radius:20px;padding:8px 14px;font-size:13px;color:#999}
+.badge-cart{position:absolute;top:-6px;right:-6px;background:#ee4d2d;color:white;font-size:10px;padding:2px 5px;border-radius:10px;font-weight:700}
+.galeri{background:white;display:flex;justify-content:center;align-items:center;height:380px;font-size:120px}
+.hargaBox{background:white;padding:12px 14px}
+.harga{color:#ee4d2d;font-size:26px;font-weight:800}
+.judul{background:white;padding:10px 14px;font-size:14px;font-weight:600;line-height:1.4;margin-top:6px}
+.label{font-size:14px;font-weight:700;margin:16px 0 8px}
+.warnaBox{background:white;padding:12px 14px;margin-top:6px}
+.warna-list{display:flex;gap:10px}
+.warna-item{width:60px;height:60px;border-radius:8px;border:2px solid #eee;display:flex;justify-content:center;align-items:center;font-size:30px;cursor:pointer;background:#fafafa}
+.warna-item.active{border-color:#ee4d2d;background:#fff5f2}
+.ukuranBox{background:white;padding:12px 14px;margin-top:6px}
+.ukur-btn{border:1px solid #ddd;padding:8px 16px;border-radius:6px;background:white;margin-right:8px;font-size:13px;cursor:pointer}
+.ukur-btn.active{border-color:#ee4d2d;color:#ee4d2d;background:#fff5f2}
+.infoCard{background:white;padding:12px 14px;margin-top:6px;display:flex;justify-content:space-between;align-items:center}
+.bottomBar{position:fixed;bottom:0;left:0;right:0;display:flex;height:60px;z-index:30}
+.bottomBar button{border:0;color:white;font-weight:700;font-size:13px}
+.chat{background:#00bfa5;width:25%}
+.cart{background:#00bfa5;width:30%;border-left:1px solid rgba(255,255,255,.3)!important}
+.beli{background:#ee4d2d;width:45%;line-height:1.2}
+.beli b{font-size:15px;display:block}
 </style>
 </head>
 <body>
-<nav>
-  <div>
-    <a href="index.html">Beranda</a>
-    <a href="produk.html" class="active">Produk</a>
-    <a href="kontak.html">Kontak</a>
-  </div>
-  <div class="cart-badge" id="cartBadge" onclick="openCart()">🛒 0</div>
-</nav>
 
-<div class="container">
-  <h2 style="font-family:'Poppins';color:#78350f">Koleksi Best Seller - Mulai 18rb</h2>
-  <div class="grid" id="produkGrid"></div>
+<div class="topbar">
+  <span onclick="location.href='index.html'">←</span>
+  <div class="search">🔍 Arinda Hijab Premium Adem</div>
+  <div style="position:relative">🛒<span class="badge-cart" id="cartBadge">0</span></div>
 </div>
 
-<div id="cartModal" onclick="if(event.target==this) closeCart()">
-  <div id="cartBox">
-    <h3 style="font-family:'Poppins'">Keranjang Kamu 🛒</h3>
-    <div id="cartList"></div>
-    <hr>
-    <div style="display:flex;justify-content:space-between;font-weight:700"><span>Total:</span><span id="cartTotal">Rp 0</span></div>
-    <a id="waCheckout" class="btn-wa" href="#" target="_blank">Checkout via WA →</a>
-    <button onclick="closeCart()" style="width:100%;margin-top:10px;padding:10px;border:0;background:#eee;border-radius:10px">Tutup</button>
+<div class="galeri" id="mainImg">🧕</div>
+
+<div class="hargaBox">
+  <div><span class="harga"><small>Rp</small><span id="hargaText">18.000</span></span></div>
+  <div style="text-align:right;font-size:12px;color:#777;margin-top:6px"><span>482</span> Terjual ❤️</div>
+</div>
+
+<div class="judul">
+  <span style="background:#ee4d2d;color:white;padding:2px 6px;border-radius:4px;font-size:11px">Star+</span>
+  Arinda Hijab Premium - Voal & Diamond Adem Anti Kusut 4 Warna Best Seller
+</div>
+
+<div class="warnaBox">
+  <div class="label">Warna</div>
+  <div class="warna-list">
+    <div class="warna-item active" onclick="pilihWarna(this,'🧕','Hitam')">🖤</div>
+    <div class="warna-item" onclick="pilihWarna(this,'👩‍🦰','Krem')">🤎</div>
+    <div class="warna-item" onclick="pilihWarna(this,'🧕🏻','Maroon')">❤️</div>
+    <div class="warna-item" onclick="pilihWarna(this,'👩‍🦱','Navy')">💙</div>
   </div>
+  <div style="font-size:13px;margin-top:10px">Pilihan: <b id="warnaText">Hitam</b></div>
+</div>
+
+<div class="ukuranBox">
+  <div class="label">Ukuran</div>
+  <button class="ukur-btn active" onclick="pilihUkuran(this)">STANDAR</button>
+  <button class="ukur-btn" onclick="pilihUkuran(this)">SYARI</button>
+</div>
+
+<div class="infoCard"><span>🏆 Top 5 terlaris di Hijab Segi Empat</span><span>></span></div>
+
+<div class="bottomBar">
+  <button class="chat" onclick="chatWA()">💬<br>Chat Sekarang</button>
+  <button class="cart" onclick="addToCart()">🛒<br>Masukkan Keranjang</button>
+  <button class="beli" onclick="beliLangsung()"><b>Beli Sekarang<br>Rp<span id="hargaBawah">18.000</span></b></button>
 </div>
 
 <script>
-const products=[
- {id:1,name:'Arinda Hijab Hitam Pekat',price:18000,img:'testi1.jpg'},
- {id:2,name:'Arinda Hijab Krem Elegan',price:18000,img:'testi2.jpg'},
- {id:3,name:'Arinda Hijab Maroon',price:18000,img:'banner-v2.jpg'},
- {id:4,name:'Arinda Hijab Navy',price:18000,img:'banner-v2.jpg'},
- {id:5,name:'Paket 4 Warna Best Seller',price:65000,img:'banner-v2.jpg'},
-];
 let cart=JSON.parse(localStorage.getItem('cart'))||[];
-const grid=document.getElementById('produkGrid');
-products.forEach(p=>{
- grid.innerHTML+=`<div class="card"><img src="${p.img}"><div class="card-body"><h3>${p.name}</h3><div class="harga">Rp ${p.price.toLocaleString('id-ID')}</div><button class="btn-cart" onclick="addCart(${p.id})">+ Keranjang</button></div></div>`;
-});
-function updateBadge(){document.getElementById('cartBadge').innerText='🛒 '+cart.length;localStorage.setItem('cart',JSON.stringify(cart));}
-function addCart(id){const prod=products.find(x=>x.id==id);cart.push(prod);updateBadge();openCart();}
-function openCart(){renderCart();document.getElementById('cartModal').style.display='flex';}
-function closeCart(){document.getElementById('cartModal').style.display='none';}
-function renderCart(){
- const list=document.getElementById('cartList');list.innerHTML='';let total=0;let textWA='Halo Kak Aeni, mau order:%0A';
- if(cart.length==0){list.innerHTML='<p>Keranjang masih kosong</p>';}
- cart.forEach((c,i)=>{
-   total+=c.price;
-   textWA+=`%0A${i+1}. ${c.name} - Rp ${c.price.toLocaleString('id-ID')}`;
-   list.innerHTML+=`<div class="cart-item"><span>${c.name}</span><span><b>Rp ${c.price.toLocaleString('id-ID')}</b> <a href="#" onclick="removeItem(${i});return false" style="color:red">x</a></span></div>`;
- });
- document.getElementById('cartTotal').innerText='Rp '+total.toLocaleString('id-ID');
- textWA+=`%0A%0ATotal: Rp ${total.toLocaleString('id-ID')}%0A%0Adari website: s.id/arinda_hijab`;
- document.getElementById('waCheckout').href=`https://wa.me/6285178098354?text=${textWA}`;
+let selectedEmot='🧕',selectedHarga=18000,selectedWarna='Hitam',selectedUkuran='STANDAR';
+function updateBadge(){document.getElementById('cartBadge').innerText=cart.length;localStorage.setItem('cart',JSON.stringify(cart));}
+function pilihWarna(el,emot,warna){
+ document.querySelectorAll('.warna-item').forEach(x=>x.classList.remove('active'));
+ el.classList.add('active');
+ document.getElementById('mainImg').innerText=emot;
+ selectedEmot=emot;selectedWarna=warna;
+ document.getElementById('warnaText').innerText=warna;
 }
-function removeItem(i){cart.splice(i,1);updateBadge();renderCart();}
+function pilihUkuran(el){
+ document.querySelectorAll('.ukur-btn').forEach(x=>x.classList.remove('active'));
+ el.classList.add('active');selectedUkuran=el.innerText;
+}
+function addToCart(){
+ cart.push({name:`Arinda Hijab ${selectedWarna} - ${selectedUkuran}`,price:selectedHarga});
+ updateBadge();alert('Berhasil masuk keranjang! 🛒 '+selectedWarna);
+}
+function beliLangsung(){
+ addToCart();
+ let total=cart.reduce((a,b)=>a+b.price,0);
+ let txt=`Halo Kak Aeni, mau order:%0A`;
+ cart.forEach((c,i)=>{txt+=`${i+1}. ${c.name} - Rp ${c.price.toLocaleString('id-ID')}%0A`});
+ txt+=`Total: Rp ${total.toLocaleString('id-ID')}`;
+ window.open(`https://wa.me/6285178098354?text=${txt}`,'_blank');
+}
+function chatWA(){
+ window.open(`https://wa.me/6285178098354?text=Halo Kak, mau tanya Arinda Hijab ${selectedWarna} ukuran ${selectedUkuran}`,'_blank');
+}
 updateBadge();
 </script>
 </body>
