@@ -13,22 +13,27 @@ nav{position:sticky;top:0;z-index:99;display:flex;justify-content:space-between;
 .menu a.active{color:var(--esp);border-color:var(--esp)}
 h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:56px;line-height:0.9;letter-spacing:-1px;margin:0}
 h1 i{font-weight:400;font-style:italic}
-.wrap{max-width:1120px;margin:0 auto;padding:40px 24px 80px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px}
-@media(max-width:850px){.wrap{grid-template-columns:1fr;padding:24px 16px}h1{font-size:42px}nav{padding:14px 16px}.menu{gap:14px}.menu a{font-size:10.5px;letter-spacing:1.8px}.logo{font-size:18px;letter-spacing:3px}}
-</style></head><body>
-<nav><div class="logo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kontak.html" class="active">KONTAK</a></div><div style="width:34px"></div></nav>
+.wrap{max-width:1120px;margin:0 auto;padding:40px 24px 80px;display:grid;grid-template-columns:1.1fr .9fr;gap:32px}
+@media(max-width:850px){.wrap{grid-template-columns:1fr;padding:24px 16px}h1{font-size:42px}nav{padding:14px 16px}}
+html{scroll-behavior:smooth}body{opacity:0;animation:fadeIn .45s ease forwards}@keyframes fadeIn{to{opacity:1}}body.fadeOut{opacity:0;transition:opacity .28s ease}
+</style>
+<script>document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('a[href$=".html"]').forEach(a=>{a.addEventListener('click',e=>{const h=a.getAttribute('href');if(h.startsWith('http'))return;e.preventDefault();document.body.classList.add('fadeOut');setTimeout(()=>window.location.href=h,280)})})})</script>
+</head><body>
+<nav><div class="logo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kontak.html" class="active">KONTAK</a></div></nav>
 <div class="wrap">
 <div>
 <h1>Hubungi Kami<br><i>Arinda Hijab</i></h1>
-<p style="color:var(--taupe);line-height:1.7;margin:18px 0 26px;font-size:14px">Konsultasi warna, stok & pengiriman. Kami balas cepat 09.00-20.00 WIB.</p>
+<p style="color:var(--taupe);line-height:1.7;margin:18px 0 26px;font-size:14px">Konsultasi warna, ukuran, dan pre-order koleksi terbaru. Kami balas dalam 1 jam kerja.</p>
 <div style="display:grid;gap:12px">
-<div style="border:1px solid var(--champ);background:#fff;padding:14px 16px;display:flex;gap:14px"><span>📞</span><div><b style="font-size:14px">WhatsApp</b><div style="color:var(--taupe);font-size:13px">0851-7809-8354 - Chat Sekarang</div></div></div>
-<div style="border:1px solid var(--champ);background:#fff;padding:14px 16px;display:flex;gap:14px"><span>📷</span><div><b style="font-size:14px">Instagram</b><div style="color:var(--taupe);font-size:13px">@arinda.hijab</div></div></div>
-<div style="border:1px solid var(--champ);background:#fff;padding:14px 16px;display:flex;gap:14px"><span>📍</span><div><b style="font-size:14px">Pengiriman</b><div style="color:var(--taupe);font-size:13px">Jakarta - Kirim ke seluruh Indonesia</div></div></div>
+<div style="border:1px solid var(--champ);background:#fff;padding:14px 16px;display:flex;gap:14px"><div>📍</div><div><b style="font-size:12px;letter-spacing:2px">STUDIO</b><br><span style="font-size:13px">Jakarta Selatan, Indonesia (by appointment)</span></div></div>
+<div style="border:1px solid var(--champ);background:#fff;padding:14px 16px;display:flex;gap:14px"><div>💬</div><div><b style="font-size:12px;letter-spacing:2px">WHATSAPP</b><br><span style="font-size:13px">+62 812-xxxx-xxxx (fast response)</span></div></div>
+<div style="border:1px solid var(--champ);background:#fff;padding:14px 16px;display:flex;gap:14px"><div>✉️</div><div><b style="font-size:12px;letter-spacing:2px">EMAIL</b><br><span style="font-size:13px">halo@arinda.id</span></div></div>
 </div></div>
 <div style="border:1px solid var(--champ);background:#fff;padding:26px">
 <h2 style="font-family:'Cormorant Garamond';font-size:26px;margin:0 0 20px">Kirim Pesan Cepat</h2>
-<label style="font-size:10px;letter-spacing:2px">NAMA</label><input id="nama" style="width:100%;padding:14px;border:1px solid var(--champ);background:var(--off);margin:8px 0 16px" placeholder="Nama kamu">
-<label style="font-size:10px;letter-spacing:2px">PESAN</label><textarea id="pesan" style="width:100%;padding:14px;border:1px solid var(--champ);background:var(--off);margin:8px 0 16px;height:110px" placeholder="Halo kak, mau tanya pashmina warna Sage ready?"></textarea>
-<button onclick="let n=document.getElementById('nama').value||'Kak';let p=document.getElementById('pesan').value;if(!p){alert('Tulis pesan dulu');return}window.open(`https://wa.me/6285178098354?text=Halo Arinda, saya ${n}%0A%0A${p}`,'_blank')" style="width:100%;background:#2B1B12;color:#fff;padding:16px;border:none;letter-spacing:2px;font-size:11px">KIRIM KE WHATSAPP →</button>
-</div></div></body></html>
+<label style="font-size:10px;letter-spacing:2px">NAMA</label><input id="nama" style="width:100%;padding:12px;border:1px solid var(--champ);margin:6px 0 14px">
+<label style="font-size:10px;letter-spacing:2px">PESAN</label><textarea id="pesan" style="width:100%;padding:12px;border:1px solid var(--champ);height:120px;margin:6px 0 18px"></textarea>
+<button onclick="const n=document.getElementById('nama').value;const p=document.getElementById('pesan').value;window.open('https://wa.me/62812xxxx?text='+encodeURIComponent('Halo Arinda, saya '+n+': '+p))" style="width:100%;padding:14px;background:var(--esp);color:#fff;border:none;letter-spacing:2.5px;font-size:11px;cursor:pointer">KIRIM KE WHATSAPP</button>
+</div>
+</div>
+</body></html>
