@@ -32,7 +32,26 @@ nav a{font-size:10px!important;margin-left:8px!important;letter-spacing:1px!impo
 .badge{padding:6px 10px;font-size:11px}
 }
 .hero-img img{width:100%;height:auto;display:block;object-fit:cover}
+
+html{scroll-behavior:smooth}
+body{opacity:0;animation:fadeIn .45s ease forwards}
+@keyframes fadeIn{to{opacity:1}}
+body.fadeOut{opacity:0;transition:opacity .28s ease}
+nav .menu a{transition:all .2s ease}
 </style>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('a[href$=".html"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const href=a.getAttribute('href');
+      if(href.startsWith('http')) return;
+      e.preventDefault();
+      document.body.classList.add('fadeOut');
+      setTimeout(()=>{window.location.href=href},280);
+    });
+  });
+});
+</script>
 </head>
 <body>
 <nav style="display:flex;justify-content:space-between;align-items:center;padding:18px 24px;background:rgba(255,252,249,.95);backdrop-filter:blur(12px);border-bottom:1px solid #EAE6E1;position:sticky;top:0;z-index:20"><div style="font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:4px;font-size:22px">ARINDA</div><div style="display:flex;gap:22px"><a href="index.html" style="text-decoration:none;font-size:11.5px;letter-spacing:2.8px;color:#2B1B12;border-bottom:1.5px solid #2B1B12;padding-bottom:4px">BERANDA</a><a href="produk.html" style="text-decoration:none;font-size:11.5px;letter-spacing:2.8px;color:#8C7A6B">PRODUK</a><a href="kontak.html" style="text-decoration:none;font-size:11.5px;letter-spacing:2.8px;color:#8C7A6B">KONTAK</a></div></nav>
