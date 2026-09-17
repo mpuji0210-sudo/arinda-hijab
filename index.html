@@ -1,30 +1,103 @@
 <!DOCTYPE html>
-<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Arinda Hijab</title>
+<html lang="id">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arinda Hijab - Premium Elegan & Adem</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 <style>
-body{font-family:sans-serif;margin:0;background:#fffbf7}
+*{box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',sans-serif;margin:0;background:#fffbf7;color:#1f2937}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+nav{background:white;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:20}
+.nav-links{display:flex;gap:8px}
+nav a{text-decoration:none;color:#92400e;font-weight:600;font-size:14px;padding:8px 18px;border-radius:25px}
+nav a.active{background:#d97706;color:white}
+.cart-badge{background:#c9a86a;color:white;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:700}
 .banner-wrap{max-width:1100px;margin:20px auto;padding:0 24px}
-.banner-wrap img{width:100%;border-radius:20px;display:block}
-.hero{background:linear-gradient(135deg,#d97706,#f59e0b);color:white;text-align:center;padding:50px 20px;border-radius:20px;margin:20px auto;max-width:1100px}
-.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px}
+.banner-wrap img{width:100%;border-radius:20px;box-shadow:0 8px 30px rgba(0,0,0,.08);display:block}
+.hero{background:linear-gradient(135deg,#d97706,#f59e0b);color:white;text-align:center;padding:50px 20px 45px;border-radius:20px;margin:20px auto;max-width:1100px}
+.hero h1{font-family:'Poppins';font-size:clamp(30px,8vw,48px);margin:0;line-height:1.1}
+.hero p{font-size:16px;opacity:.95;line-height:1.5;margin:15px 0 0}
+.btn{font-family:'Poppins';background:white;color:#d97706;padding:14px 28px;border-radius:30px;text-decoration:none;font-weight:700;display:inline-block;margin-top:22px}
+.fitur{max-width:700px;margin:0 auto;padding:40px 20px;text-align:center}
+.fitur h2{font-family:'Poppins';color:#78350f;font-size:28px;margin-bottom:20px}
+.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:25px;text-align:left}
 .testi-card{background:white;padding:14px;border-radius:16px;box-shadow:0 4px 18px rgba(0,0,0,.06);border:1px solid #fef3c7}
-.testi-card img{width:100%;border-radius:12px;height:220px;object-fit:cover}
-details{background:white;margin:12px 0;padding:0 18px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.05);border:1px solid #fef3c7}
-summary{padding:18px 0;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between}
-summary:after{content:'+';color:#d97706;font-size:20px}
-details[open] summary:after{content:'-'}
-details p{padding:0 0 18px;margin:0;color:#666}
-</style></head><body>
-<div class="banner-wrap"><img src="banner.jpg" alt="Arinda Hijab"></div>
-<div class="hero"><h1>Arinda Hijab Premium</h1></div>
-<div style="max-width:700px;margin:0 auto;padding:20px;text-align:center">
-<h2>Apa Kata Pembeli? 💬</h2>
-<div class="testi-grid">
-<div class="testi-card"><img src="testi1.jpg"><p>"Hitam pekat gak nerawang, adem dipakai seharian ⭐⭐⭐⭐⭐" - Aeni, Jakarta</p></div>
-<div class="testi-card"><img src="testi2.jpg"><p>"Krem-nya elegan cocok buat kondangan. Suka banget!" - Siti, Bogor</p></div>
+.testi-card img{width:100%;border-radius:12px;height:180px;object-fit:cover;object-position:top}
+.testi-card p{font-size:13px;margin:10px 0 0;line-height:1.5}
+.faq{max-width:700px;margin:0 auto;padding:20px 20px 40px}
+.faq h2{font-family:'Poppins';color:#78350f;text-align:center;font-size:28px}
+details{background:white;margin:12px 0;padding:0;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.05);border:1px solid #fef3c7;overflow:hidden}
+summary{font-weight:600;cursor:pointer;list-style:none;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary:after{content:'+';font-size:20px;color:#d97706;font-weight:700}
+details[open] summary:after{content:'−'}
+details p{padding:0 20px 18px;margin:0;color:#6b7280;line-height:1.6;font-size:14px}
+.sosmed{display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.sosmed a{text-decoration:none;background:white;padding:8px 14px;border-radius:20px;font-size:13px;font-weight:600;color:#92400e}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-links">
+    <a href="index.html" class="active">Beranda</a>
+    <a href="produk.html">Produk</a>
+    <a href="kontak.html">Kontak</a>
+  </div>
+  <div class="cart-badge" id="cartBadge">🛒 0</div>
+</nav>
+
+<div class="banner-wrap">
+  <img src="banner.jpg" alt="Arinda Hijab 4 Warna Best Seller">
 </div>
-<h2>FAQ - Tanya Jawab ❓</h2>
-<details><summary>🧼 Bagaimana cara perawatan hijab?</summary><p>Cuci tangan air dingin, jangan disikat kasar.</p></details>
-<details><summary>🚚 Berapa lama pengiriman?</summary><p>Jabodetabek 1-2 hari, luar Jawa 2-5 hari.</p></details>
-<details><summary>🔄 Kalau warna tidak sesuai?</summary><p>Bisa tukar 2 hari setelah diterima.</p></details>
+
+<div class="container">
+  <div class="hero">
+    <h1>Arinda Hijab<br>Premium</h1>
+    <p>Elegan • Adem • Tidak Mudah Kusut •<br>Harga Mulai 18rb</p>
+    <a class="btn" href="produk.html">Lihat Koleksi Lengkap →</a>
+    <p style="margin-top:18px;font-size:16px">⭐ 4.9/5 dari 1.200+ pembeli</p>
+    <div class="sosmed">
+      <a href="https://instagram.com/arinda_hijab" target="_blank">📸@arinda_hijab</a>
+      <a href="https://s.id/arinda_hijab" target="_blank">🛍️ s.id/arinda_hijab</a>
+    </div>
+  </div>
 </div>
-</body></html> 
+
+<div class="fitur">
+  <h2>Kenapa Arinda Hijab?</h2>
+  <ul style="list-style:none;padding:0;text-align:left;display:inline-block">
+    <li>✅ Bahan Voal & Diamond Premium - Adem Seharian</li>
+    <li>✅ Finishing Laser Cut Rapi</li>
+    <li>✅ 4 Warna Best Seller: Hitam, Krem, Maroon, Navy</li>
+    <li>✅ Pengiriman Cepat dari Jakarta + Bisa COD & QRIS</li>
+  </ul>
+
+  <h2 style="margin-top:45px">Apa Kata Pembeli? 💬</h2>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <img src="testi1.jpg" alt="pembeli hijab hitam">
+      <p>"<b>Warna Hitam pekat</b> gak nerawang. Adem dipakai seharian ⭐⭐⭐⭐⭐" - <i>Aisyah, Jakarta</i></p>
+    </div>
+    <div class="testi-card">
+      <img src="testi2.jpg" alt="pembeli hijab krem">
+      <p>"<b>Krem-nya elegan</b> cocok buat kondangan. Suka banget!" - <i>Siti, Bogor</i></p>
+    </div>
+  </div>
+  <br>
+  <a href="https://wa.me/6285178098354?text=Halo%20Kak%20Aeni,%20mau%20tanya%20Arinda%20Hijab" style="display:inline-block;background:#25D366;color:white;padding:14px 28px;border-radius:30px;text-decoration:none;font-weight:700;margin-top:20px;font-family:'Poppins'">💬 Chat Kak Aeni di WA</a>
+</div>
+
+<div class="faq">
+  <h2>FAQ - Tanya Jawab ❓</h2>
+  <details><summary>🧼 Bagaimana cara perawatan hijab?</summary><p>Cuci dengan air dingin, jangan disikat kasar, dan jemur di tempat teduh agar warna tetap awet.</p></details>
+  <details><summary>🚚 Berapa lama pengiriman?</summary><p>Jabodetabek 1-2 hari, Luar Jawa 2-5 hari kerja. Dikirim dari Jakarta, semua bisa COD.</p></details>
+  <details><summary>🔄 Kalau warna tidak sesuai gimana?</summary><p>Bisa tukar dalam 2 hari setelah barang diterima. Fotoin dulu ya, chat Kak Aeni.</p></details>
+  <details><summary>💳 Bisa bayar apa aja?</summary><p>Bisa COD, Transfer BCA, dan QRIS. Semua aman dan ada bukti transaksi.</p></details>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+document.getElementById('cartBadge').innerText = '🛒 ' + cart.length;
+</script>
+</body>
+</html>
