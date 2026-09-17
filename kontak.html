@@ -3,26 +3,28 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kontak - ARINDA Hijab</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;600i&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--off:#FFFCF9}
-*{box-sizing:border-box}body{margin:0;background:var(--off);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
-h1,h2{font-family:'Cormorant Garamond',serif}
-nav{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:18px 32px;background:rgba(255,252,249,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--champ)}
-nav a{text-decoration:none;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-left:20px}
-nav a.active{color:var(--esp);border-bottom:1px solid var(--esp);padding-bottom:2px}
-.wrap{max-width:1120px;margin:0 auto;padding:60px 20px;display:grid;grid-template-columns:1fr 1fr;gap:50px}
-.box{border:1px solid var(--champ);background:white;padding:32px}
-.inp{width:100%;padding:14px 16px;border:1px solid var(--champ);background:var(--off);margin-top:8px;margin-bottom:18px;font-family:inherit;outline:none}
+*{box-sizing:border-box}body{margin:0;background:var(--off);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased}
+h1{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:.95;letter-spacing:-1px}
+nav{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:rgba(255,252,249,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--champ)}
+nav a{text-decoration:none;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--taupe);margin-left:16px}
+nav a.active{color:var(--esp);border-bottom:1.5px solid var(--esp);padding-bottom:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 16px 60px;display:grid;grid-template-columns:1.1fr .9fr;gap:32px}
+.sub{color:var(--taupe);font-size:14px;line-height:1.7;margin:16px 0 24px;max-width:34ch}
+.card{border:1px solid var(--champ);background:#fff;padding:14px 16px;display:flex;gap:14px;align-items:center}
+.card b{font-size:15px;display:block}.card span{font-size:13px;color:var(--taupe);line-height:1.4;display:block;margin-top:2px;word-break:break-word}
+.box{border:1px solid var(--champ);background:#fff;padding:24px}
+.inp{width:100%;padding:14px 14px;border:1px solid var(--champ);background:var(--off);margin-top:8px;margin-bottom:16px;font-family:inherit;font-size:14px;outline:none;border-radius:0}
 .inp:focus{border-color:var(--esp)}
-.btn{display:inline-flex;gap:8px;background:var(--esp);color:white;padding:14px 28px;font-size:11px;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;width:100%;justify-content:center}
-@media(max-width:860px){.wrap{grid-template-columns:1fr;padding:24px 16px;gap:24px}nav{padding:12px 14px;flex-wrap:wrap;gap:8px}nav a{font-size:10px!important;margin-left:8px!important}}
+.btn{display:flex;gap:8px;background:var(--esp);color:white;padding:15px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;width:100%;justify-content:center;align-items:center}
+@media(max-width:900px){.wrap{grid-template-columns:1fr;gap:20px;padding:20px 14px 40px}h1{font-size:38px!important}nav{padding:12px 14px}nav a{margin-left:10px;font-size:10px}}
 </style>
 </head>
 <body>
 <nav>
-<div style="font-family:'Cormorant Garamond';font-weight:700;letter-spacing:3px">ARINDA</div>
+<div style="font-family:'Cormorant Garamond';font-weight:700;letter-spacing:3px;font-size:18px">ARINDA</div>
 <div>
 <a href="index.html">BERANDA</a>
 <a href="produk.html">PRODUK</a>
@@ -32,44 +34,45 @@ nav a.active{color:var(--esp);border-bottom:1px solid var(--esp);padding-bottom:
 
 <div class="wrap">
 <div>
-<h1 style="font-size:48px;line-height:.9;margin:0">Hubungi Kami<br><i style="font-weight:400">Arinda Hijab</i></h1>
-<p style="color:var(--taupe);margin:20px 0 30px;line-height:1.6">Konsultasi warna, stok & pengiriman. Kami balas cepat di jam kerja 09.00-20.00 WIB.</p>
+<h1 style="font-size:56px;margin:0">Hubungi Kami<br><i style="font-weight:600;font-family:'Cormorant Garamond'">Arinda Hijab</i></h1>
+<p class="sub">Konsultasi warna, stok & pengiriman. Kami balas cepat di jam kerja 09.00-20.00 WIB.</p>
 
-<div style="display:grid;gap:14px">
+<div style="display:grid;gap:12px">
 <a href="https://wa.me/6285178098354" target="_blank" style="text-decoration:none;color:inherit">
-<div class="box" style="padding:16px 20px;display:flex;gap:14px;align-items:center">
-<i data-lucide="phone"></i> <div><b>WhatsApp</b><br><span style="color:var(--taupe)">0851-7809-8354 - Chat Sekarang</span></div>
+<div class="card">
+<span style="font-size:20px">📞</span>
+<div><b>WhatsApp</b><span>0851-7809-8354 - Chat Sekarang</span></div>
 </div>
 </a>
-<div class="box" style="padding:16px 20px;display:flex;gap:14px;align-items:center">
-<i data-lucide="instagram"></i> <div><b>Instagram</b><br><span style="color:var(--taupe)">@arinda.hijab</span></div>
+<div class="card">
+<span style="font-size:20px">📷</span>
+<div><b>Instagram</b><span>@arinda.hijab</span></div>
 </div>
-<div class="box" style="padding:16px 20px;display:flex;gap:14px;align-items:center">
-<i data-lucide="map-pin"></i> <div><b>Pengiriman</b><br><span style="color:var(--taupe)">Jakarta - Kirim ke seluruh Indonesia</span></div>
+<div class="card">
+<span style="font-size:20px">📍</span>
+<div><b>Pengiriman</b><span>Jakarta - Kirim ke seluruh Indonesia</span></div>
 </div>
 </div>
 </div>
 
 <div class="box">
-<h2 style="margin:0 0 20px">Kirim Pesan Cepat</h2>
-<label style="font-size:12px;letter-spacing:1px">NAMA</label>
+<h2 style="font-family:'Cormorant Garamond';font-size:28px;margin:0 0 18px;font-weight:600">Kirim Pesan Cepat</h2>
+<label style="font-size:11px;letter-spacing:1.5px">NAMA</label>
 <input id="nama" class="inp" placeholder="Nama kamu">
-<label style="font-size:12px;letter-spacing:1px">PESAN</label>
-<textarea id="pesan" class="inp" style="height:120px" placeholder="Halo kak, mau tanya pashmina warna Sage ready?"></textarea>
-<button class="btn" onclick="kirimWA()">KIRIM KE WHATSAPP <i data-lucide="send" style="width:14px"></i></button>
-<p style="font-size:11px;color:var(--taupe);margin-top:12px;text-align:center">Otomatis kebuka WA ke 0851-7809-8354</p>
+<label style="font-size:11px;letter-spacing:1.5px">PESAN</label>
+<textarea id="pesan" class="inp" style="height:110px;resize:none" placeholder="Halo kak, mau tanya pashmina warna Sage ready?"></textarea>
+<button class="btn" onclick="kirimWA()">KIRIM KE WHATSAPP →</button>
+<p style="font-size:11px;color:var(--taupe);margin:12px 0 0;text-align:center">Otomatis ke WA 0851-7809-8354</p>
 </div>
 </div>
 
 <script>
-lucide.createIcons();
 function kirimWA(){
 let n=document.getElementById('nama').value||'Kak';
 let p=document.getElementById('pesan').value;
-if(!p){alert('Tulis pesan dulu ya Puji');return}
-let nomor="6285178098354";
+if(!p){alert('Tulis pesan dulu ya');return}
 let text=`Halo Arinda Hijab, saya ${n}%0A%0A${p}`;
-window.open(`https://wa.me/${nomor}?text=${text}`,'_blank');
+window.open(`https://wa.me/6285178098354?text=${text}`,'_blank');
 }
 </script>
 </body>
