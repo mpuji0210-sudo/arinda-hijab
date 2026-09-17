@@ -1,39 +1,30 @@
-<!DOCTYPE html>
-<html lang="id"><head>
+<!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kontak - ARINDA</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Produk - ARINDA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Plus+Jakarta+Sans:wght@500&display=swap" rel="stylesheet">
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--off:#FFFCF9}
 *{box-sizing:border-box}body{margin:0;background:var(--off);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
 nav{position:sticky;top:0;z-index:99;display:flex;justify-content:space-between;align-items:center;padding:18px 24px;background:rgba(255,252,249,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--champ)}
-.logo{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:4px;font-size:22px;color:var(--esp)}
-.menu{display:flex;align-items:center;gap:22px}
-.menu a{text-decoration:none;font-size:11.5px;font-weight:500;letter-spacing:2.8px;color:var(--taupe);padding-bottom:4px;border-bottom:1.5px solid transparent}
-.menu a.active{color:var(--esp);border-color:var(--esp)}
-h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:56px;line-height:0.9;letter-spacing:-1px;margin:0}
-h1 i{font-weight:400;font-style:italic}
-.wrap{max-width:1120px;margin:0 auto;padding:40px 24px 80px;display:grid;grid-template-columns:1.1fr .9fr;gap:32px}
-@media(max-width:850px){.wrap{grid-template-columns:1fr;padding:24px 16px}h1{font-size:42px}nav{padding:14px 16px}}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:4px;font-size:22px}.menu{display:flex;gap:22px}.menu a{text-decoration:none;font-size:11.5px;letter-spacing:2.8px;color:var(--taupe);padding-bottom:4px;border-bottom:1.5px solid transparent}.menu a.active{color:var(--esp);border-color:var(--esp)}
+.wrap{max-width:900px;margin:0 auto;padding:20px}
+.circle{width:280px;height:280px;background:#111;border-radius:50%;margin:20px auto}
 html{scroll-behavior:smooth}body{opacity:0;animation:fadeIn .45s ease forwards}@keyframes fadeIn{to{opacity:1}}body.fadeOut{opacity:0;transition:opacity .28s ease}
 </style>
-<script>document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('a[href$=".html"]').forEach(a=>{a.addEventListener('click',e=>{const h=a.getAttribute('href');if(h.startsWith('http'))return;e.preventDefault();document.body.classList.add('fadeOut');setTimeout(()=>window.location.href=h,280)})})})</script>
+<script>document.addEventListener('DOMContentLoaded',()=>{const s=!!document.startViewTransition;document.querySelectorAll('a[href$=".html"]').forEach(a=>{a.addEventListener('click',e=>{const h=a.getAttribute('href');if(h.startsWith('http'))return;e.preventDefault();if(s){document.startViewTransition(()=>window.location.href=h)}else{document.body.classList.add('fadeOut');setTimeout(()=>window.location.href=h,280)}})})})</script>
 </head><body>
-<nav><div class="logo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kontak.html" class="active">KONTAK</a></div></nav>
+<nav><div class="logo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html" class="active">PRODUK</a><a href="kontak.html">KONTAK</a></div></nav>
 <div class="wrap">
-<div>
-<h1>Hubungi Kami<br><i>Arinda Hijab</i></h1>
-<p style="color:var(--taupe);line-height:1.7;margin:18px 0 26px;font-size:14px">Konsultasi warna, ukuran, dan pre-order koleksi terbaru. Kami balas dalam 1 jam kerja.</p>
-<div style="display:grid;gap:12px">
-<div style="border:1px solid var(--champ);background:#fff;padding:14px 16px;display:flex;gap:14px"><div>📍</div><div><b style="font-size:12px;letter-spacing:2px">STUDIO</b><br><span style="font-size:13px">Jakarta Selatan, Indonesia (by appointment)</span></div></div>
-<div style="border:1px solid var(--champ);background:#fff;padding:14px 16px;display:flex;gap:14px"><div>💬</div><div><b style="font-size:12px;letter-spacing:2px">WHATSAPP</b><br><span style="font-size:13px">+62 812-xxxx-xxxx (fast response)</span></div></div>
-<div style="border:1px solid var(--champ);background:#fff;padding:14px 16px;display:flex;gap:14px"><div>✉️</div><div><b style="font-size:12px;letter-spacing:2px">EMAIL</b><br><span style="font-size:13px">halo@arinda.id</span></div></div>
-</div></div>
-<div style="border:1px solid var(--champ);background:#fff;padding:26px">
-<h2 style="font-family:'Cormorant Garamond';font-size:26px;margin:0 0 20px">Kirim Pesan Cepat</h2>
-<label style="font-size:10px;letter-spacing:2px">NAMA</label><input id="nama" style="width:100%;padding:12px;border:1px solid var(--champ);margin:6px 0 14px">
-<label style="font-size:10px;letter-spacing:2px">PESAN</label><textarea id="pesan" style="width:100%;padding:12px;border:1px solid var(--champ);height:120px;margin:6px 0 18px"></textarea>
-<button onclick="const n=document.getElementById('nama').value;const p=document.getElementById('pesan').value;window.open('https://wa.me/62812xxxx?text='+encodeURIComponent('Halo Arinda, saya '+n+': '+p))" style="width:100%;padding:14px;background:var(--esp);color:#fff;border:none;letter-spacing:2.5px;font-size:11px;cursor:pointer">KIRIM KE WHATSAPP</button>
+<div class="circle"></div>
+<div style="text-align:center"><div style="font-weight:600">Hitam Pekat</div><div style="font-size:10px;letter-spacing:2px;color:var(--taupe)">PREMIUM VOAL • 110X110 • LASER CUT</div></div>
+<div style="margin-top:24px"><div style="font-size:10px;letter-spacing:2px;color:var(--taupe)">BESTSELLER • PREMIUM VOAL</div><div style="font-family:'Cormorant Garamond';font-size:32px">Rp18.000</div><div style="font-size:14px;margin:8px 0">Arinda Hijab Premium - Adem, Tidak Mudah Kusut, Jahit Rapi</div>
+<div style="font-size:11px;letter-spacing:2px;margin:16px 0 8px">PILIH WARNA</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px"><div style="border:1.5px solid var(--esp);padding:8px;text-align:center"><div style="width:24px;height:24px;background:#111;border-radius:50%;margin:0 auto"></div><div style="font-size:9px;margin-top:4px">HITAM</div></div><div style="border:1px solid var(--champ);padding:8px;text-align:center;background:#fff"><div style="width:24px;height:24px;background:#E8DCCF;border-radius:50%;margin:0 auto"></div><div style="font-size:9px;margin-top:4px">KREM</div></div><div style="border:1px solid var(--champ);padding:8px;text-align:center;background:#fff"><div style="width:24px;height:24px;background:#7a1a1a;border-radius:50%;margin:0 auto"></div><div style="font-size:9px;margin-top:4px">MAROON</div></div><div style="border:1px solid var(--champ);padding:8px;text-align:center;background:#fff"><div style="width:24px;height:24px;background:#1a2a4a;border-radius:50%;margin:0 auto"></div><div style="font-size:9px;margin-top:4px">NAVY</div></div></div>
+<div style="font-size:11px;letter-spacing:2px;margin:16px 0 8px">UKURAN</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="border:1px solid var(--champ);padding:10px;text-align:center;background:#fff;font-size:11px">STANDAR 110X110</div><div style="border:1px solid var(--champ);padding:10px;text-align:center;background:#fff;font-size:11px">SYARI 130X130</div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><div style="border:1px solid var(--esp);padding:12px;text-align:center;font-size:11px;letter-spacing:1px">CHAT</div><div style="border:1px solid var(--esp);padding:12px;text-align:center;font-size:11px;letter-spacing:1px">KERANJANG</div></div>
+<div style="background:var(--esp);color:#fff;padding:14px;text-align:center;font-size:11px;letter-spacing:2px;margin-top:8px">BELI SEKARANG - RP18.000</div>
+<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--taupe);margin-top:8px"><span>Kirim dari Jakarta</span><span>COD & QRIS</span></div>
 </div>
 </div>
 </body></html>
