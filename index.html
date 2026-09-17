@@ -2,76 +2,75 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Produk - ARINDA</title>
+<title>ARINDA - Premium Voal</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Plus+Jakarta+Sans:wght@500&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--off:#FFFCF9}
 *{box-sizing:border-box}body{margin:0;background:var(--off);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
 h1,h2{font-family:'Cormorant Garamond',serif}
-nav{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;padding:14px 20px;background:rgba(255,252,249,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--champ)}
-nav a{font-size:10px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--taupe);margin-left:18px}
-.badge{border:1px solid var(--champ);padding:8px 14px;border-radius:100px;font-size:11px;cursor:pointer;display:flex;gap:6px}
-.detail{max-width:1120px;margin:20px auto;display:grid;background:white;border:1px solid var(--champ)}
-@media(min-width:860px){.detail{grid-template-columns:440px 1fr}}
-.galeri{background:#F7F3EF;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px;min-height:380px}
-.big{width:240px;height:240px;border-radius:50%;border:1px solid var(--champ);box-shadow:0 20px 40px rgba(0,0,0,.06)}
-.info{padding:28px}
-.eye{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);display:block;margin-bottom:10px}
-.price{font-family:'Cormorant Garamond';font-size:36px}
-.lab{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin:28px 0 12px;font-weight:600}
-.colors{display:flex;gap:10px}
-.c{width:80px;height:80px;border:1px solid var(--champ);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:white}
-.c.active{border-color:var(--esp)}
-.dot{width:30px;height:30px;border-radius:50%}
-.c span{font-size:9px;letter-spacing:1.5px;margin-top:8px;text-transform:uppercase;color:var(--taupe)}
+nav{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:rgba(255,252,249,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--champ)}
+nav a{text-decoration:none;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-left:20px;font-weight:600}
+nav a.active{color:var(--esp)}
+.badge{display:flex;align-items:center;gap:6px;border:1px solid var(--champ);padding:8px 14px;border-radius:100px;font-size:11px;cursor:pointer;background:white}
+.hero{max-width:1120px;margin:0 auto;padding:32px 20px;display:grid;gap:28px}
+@media(min-width:860px){.hero{grid-template-columns:1fr 1fr;align-items:center;padding:60px 20px}}
+.hero-img{border:1px solid var(--champ);background:white;padding:12px}
+.eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);display:block;margin-bottom:14px}
+.hero h1{font-size:48px;line-height:.9;margin:0;font-weight:600}
+.btn{display:inline-flex;gap:8px;background:var(--esp);color:white;padding:16px 28px;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;margin-top:20px}
+.section{max-width:1120px;margin:0 auto;padding:48px 20px}
+.div{width:40px;height:1px;background:#C4B5A7;margin:16px 0 28px}
 </style>
 </head>
 <body>
-<nav><div style="font-family:'Cormorant Garamond';font-weight:700;letter-spacing:3px">ARINDA</div><div><a href="index.html">BERANDA</a><a href="produk.html" style="color:#2B1B12">PRODUK</a></div><div class="badge" id="cartBadge" onclick="openCart()"><i data-lucide="shopping-bag" style="width:14px"></i> <span id="cnt">0</span></div></nav>
-<div class="detail">
-<div class="galeri"><div class="big" id="mainCircle" style="background:#111"></div><div id="warnaName" style="font-family:'Cormorant Garamond';font-size:18px;margin-top:16px">Hitam Pekat</div><div style="font-size:10px;letter-spacing:2px;color:#8C7A6B;text-transform:uppercase">Premium Voal • 110x110</div></div>
-<div class="info">
-<span class="eye">Bestseller • Premium Voal</span>
-<div class="price">Rp<span id="harga">18.000</span></div>
-<div style="font-family:'Cormorant Garamond';font-size:20px;margin-top:6px">Arinda Hijab Premium - Adem, Tidak Mudah Kusut</div>
-<div class="lab">Pilih Warna</div>
-<div class="colors">
-<div class="c active" onclick="pickW(this,'#111','Hitam Pekat')"><div class="dot" style="background:#111"></div><span>Hitam</span></div>
-<div class="c" onclick="pickW(this,'#E8D5B5','Krem Elegan')"><div class="dot" style="background:#E8D5B5"></div><span>Krem</span></div>
-<div class="c" onclick="pickW(this,'#7A1C1C','Maroon')"><div class="dot" style="background:#7A1C1C"></div><span>Maroon</span></div>
-<div class="c" onclick="pickW(this,'#1E2A4A','Navy')"><div class="dot" style="background:#1E2A4A"></div><span>Navy</span></div>
+<nav><div style="font-family:'Cormorant Garamond';font-weight:700;letter-spacing:3px">ARINDA</div><div><a href="index.html" class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="#kontak">KONTAK</a></div><div class="badge" id="cartBadge" onclick="openCart()"><i data-lucide="shopping-bag" style="width:14px"></i> <span id="cnt">0</span></div></nav>
+<div class="hero">
+<div class="hero-img"><img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=800"><div style="display:flex;justify-content:space-between;font-size:9px;letter-spacing:2px;margin-top:10px;color:#8C7A6B"><span>HITAM</span><span>KREM</span><span>MAROON</span><span>NAVY</span></div></div>
+<div><span class="eyebrow">Premium Voal • 2026 Collection</span><h1>Arinda Hijab<br>Premium</h1><p style="color:#8C7A6B;line-height:1.7;font-size:13px;margin-top:14px">Elegan • Adem • Tidak Mudah Kusut • Jahit Rapi. 4 warna best seller.</p><a class="btn" href="produk.html">Lihat Koleksi <i data-lucide="arrow-right" style="width:14px"></i></a></div>
 </div>
-<style>
-.size{display:flex;gap:8px}
-.size button{padding:11px 16px;border:1px solid var(--champ);background:white;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
-.size button.active{background:var(--esp);color:white}
-.btns{display:flex;gap:10px;margin-top:28px}
-.btn{flex:1;padding:15px;border:1px solid var(--champ);font-size:11px;letter-spacing:2px;text-transform:uppercase;background:white;cursor:pointer;display:flex;justify-content:center;gap:6px}
-.btn-dark{background:var(--esp);color:white;border-color:var(--esp)}
-.buy{width:100%;margin-top:10px;padding:16px;background:var(--esp);color:white;border:0;font-size:11px;letter-spacing:2px;text-transform:uppercase}
-#cartModal{display:none;position:fixed;inset:0;background:rgba(43,27,18,.15);backdrop-filter:blur(8px);z-index:30;justify-content:flex-end}
-#cartBox{background:white;width:100%;max-width:380px;height:100%;padding:24px;display:flex;flex-direction:column;border-left:1px solid var(--champ)}
-</style>
-<div class="lab">Ukuran</div>
-<div class="size"><button class="active" onclick="pickS(this)">Standar 110x110</button><button onclick="pickS(this)">Syari 130x130</button></div>
-<div class="btns"><button class="btn" onclick="chatWA()"><i data-lucide="message-circle" style="width:14px"></i> Chat</button><button class="btn btn-dark" onclick="addCart()"><i data-lucide="shopping-bag" style="width:14px"></i> Keranjang</button></div>
-<button class="buy" onclick="addCart()">Beli Sekarang - Rp<span id="hargaB">18.000</span></button>
-</div></div>
-<div id="cartModal" onclick="if(event.target==this)closeCart()"><div id="cartBox"><div style="display:flex;justify-content:space-between"><h3 style="font-family:'Cormorant Garamond';margin:0;font-size:24px">Keranjang</h3><button onclick="closeCart()" style="border:1px solid #EAE6E1;background:white;width:32px;height:32px"><i data-lucide="x" style="width:14px"></i></button></div><div id="list" style="flex:1;overflow:auto;margin-top:20px"></div><div style="border-top:1px solid #EAE6E1;padding-top:12px;display:flex;justify-content:space-between;font-family:'Cormorant Garamond';font-size:18px"><span>Total</span><span id="tot">Rp 0</span></div><a id="waLink" style="display:block;text-align:center;background:#2B1B12;color:white;padding:15px;margin-top:12px;text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase">Checkout WhatsApp</a></div></div>
+<div class="section">
+<span class="eyebrow">Mengapa Arinda</span><h2 style="font-size:36px;margin:0">Kenapa Arinda Hijab?</h2><div class="div"></div>
+<div style="display:grid;gap:12px;max-width:520px">
+<div style="font-size:13px;color:#8C7A6B;display:flex;gap:12px"><i data-lucide="check" style="width:16px"></i> Bahan Voal & Diamond Premium - Adem Seharian</div>
+<div style="font-size:13px;color:#8C7A6B;display:flex;gap:12px"><i data-lucide="check" style="width:16px"></i> Finishing Laser Cut Rapi</div>
+<div style="font-size:13px;color:#8C7A6B;display:flex;gap:12px"><i data-lucide="check" style="width:16px"></i> 4 Warna Best Seller: Hitam, Krem, Maroon, Navy</div>
+<div style="font-size:13px;color:#8C7A6B;display:flex;gap:12px"><i data-lucide="check" style="width:16px"></i> Pengiriman Cepat dari Jakarta + Bisa COD & QRIS</div>
+</div>
+</div>
+<div class="section">
+<span class="eyebrow">Testimoni</span><h2 style="font-size:36px;margin:0">Apa Kata Pembeli?</h2><div class="div"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#EAE6E1;border:1px solid #EAE6E1">
+<div style="background:white;padding:18px;text-align:center"><img src="https://images.unsplash.com/photo-1584004211872-0f47c1f2a3f0?q=80&w=400" style="width:100%;aspect-ratio:1;object-fit:cover"><div style="font-family:'Cormorant Garamond';font-size:18px;margin-top:12px">"Hitam pekat gak nerawang"</div><div style="color:#C9A86A;font-size:11px;margin-top:8px">★★★★★</div><div style="font-size:10px;color:#8C7A6B;margin-top:6px">AISYAH, JAKARTA</div></div>
+<div style="background:white;padding:18px;text-align:center"><img src="https://images.unsplash.com/photo-1602233158242-3ba0ac4d2167?q=80&w=400" style="width:100%;aspect-ratio:1;object-fit:cover"><div style="font-family:'Cormorant Garamond';font-size:18px;margin-top:12px">"Krem elegan buat kondangan"</div><div style="color:#C9A86A;font-size:11px;margin-top:8px">★★★★★</div><div style="font-size:10px;color:#8C7A6B;margin-top:6px">SITI, BOGOR</div></div>
+</div>
+</div>
+<div class="section">
+<span class="eyebrow">FAQ</span><h2 style="font-size:36px;margin:0">Tanya Jawab</h2><div class="div"></div>
+<div style="border-top:1px solid #EAE6E1">
+<div style="border-bottom:1px solid #EAE6E1;padding:22px 0;display:flex;justify-content:space-between"><div><div style="font-family:'Cormorant Garamond';font-size:18px">Cara perawatan hijab?</div><div style="font-size:13px;color:#8C7A6B;margin-top:8px">Cuci air dingin, jangan sikat kasar, jemur teduh.</div></div><i data-lucide="minus" style="width:16px"></i></div>
+<div style="border-bottom:1px solid #EAE6E1;padding:22px 0;display:flex;justify-content:space-between"><div><div style="font-family:'Cormorant Garamond';font-size:18px">Berapa lama pengiriman?</div><div style="font-size:13px;color:#8C7A6B;margin-top:8px">Jabodetabek 1-2 hari, Luar Jawa 2-5 hari. Bisa COD.</div></div><i data-lucide="minus" style="width:16px"></i></div>
+</div>
+</div>
+<div class="section" id="kontak">
+<span class="eyebrow">Hubungi Kami</span><h2 style="font-size:36px;margin:0">Kontak & Order</h2><div class="div"></div>
+<div style="display:grid;gap:12px;padding:24px;border:1px solid #EAE6E1;background:white">
+<div style="display:flex;gap:12px;font-size:13px"><i data-lucide="map-pin" style="width:16px"></i> Jakarta, Indonesia - Kirim dari Jakarta</div>
+<div style="display:flex;gap:12px;font-size:13px"><i data-lucide="phone" style="width:16px"></i> 0851-7809-8354 (Kak Aeni)</div>
+<div style="display:flex;gap:12px;font-size:13px"><i data-lucide="clock" style="width:16px"></i> Buka Setiap Hari 08.00 - 21.00 WIB</div>
+<a class="btn" href="https://wa.me/6285178098354" target="_blank"><i data-lucide="message-circle" style="width:14px"></i> Chat WhatsApp Sekarang</a>
+</div>
+</div>
+<div id="cartModal" style="display:none;position:fixed;inset:0;background:rgba(43,27,18,.15);backdrop-filter:blur(8px);z-index:50;justify-content:flex-end"><div id="cartBox" style="background:white;width:100%;max-width:380px;height:100%;padding:24px;display:flex;flex-direction:column;border-left:1px solid #EAE6E1"><div style="display:flex;justify-content:space-between"><h3 style="font-family:'Cormorant Garamond';margin:0;font-size:24px">Keranjang</h3><button onclick="closeCart()" style="border:1px solid #EAE6E1;background:white;width:32px;height:32px"><i data-lucide="x" style="width:14px"></i></button></div><div id="list" style="flex:1;overflow:auto;margin-top:20px"></div><div style="border-top:1px solid #EAE6E1;padding-top:12px;display:flex;justify-content:space-between;font-family:'Cormorant Garamond';font-size:18px"><span>Total</span><span id="tot">Rp 0</span></div><a id="waLink" style="display:block;text-align:center;background:#2B1B12;color:white;padding:15px;margin-top:12px;text-decoration:none;font-size:11px;letter-spacing:2px">Checkout WhatsApp</a></div></div>
 <script>
-let cart=JSON.parse(localStorage.getItem('cart'))||[],warna='Hitam Pekat',ukuran='STANDAR 110x110',harga=18000;
+let cart=JSON.parse(localStorage.getItem('cart'))||[];
 function upd(){document.getElementById('cnt').innerText=cart.reduce((a,b)=>a+b.qty,0);localStorage.setItem('cart',JSON.stringify(cart))}
-function pickW(el,hex,nama){document.querySelectorAll('.c').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.getElementById('mainCircle').style.background=hex;document.getElementById('warnaName').innerText=nama;warna=nama}
-function pickS(el){document.querySelectorAll('.size button').forEach(x=>x.classList.remove('active'));el.classList.add('active');ukuran=el.innerText;harga=ukuran.toLowerCase().includes('syari')?25000:18000;document.getElementById('harga').innerText=harga.toLocaleString('id-ID');document.getElementById('hargaB').innerText=harga.toLocaleString('id-ID')}
-function addCart(){let k=warna+'-'+ukuran;let f=cart.find(c=>c.key==k);if(f)f.qty++;else cart.push({key:k,name:`Arinda ${warna} - ${ukuran}`,price:harga,qty:1});upd();openCart()}
 function openCart(){render();document.getElementById('cartModal').style.display='flex'}
 function closeCart(){document.getElementById('cartModal').style.display='none'}
 function kurang(i){if(cart[i].qty>1)cart[i].qty--;else cart.splice(i,1);upd();render()}
 function tambah(i){cart[i].qty++;upd();render()}
 function hapus(i){cart.splice(i,1);upd();render()}
 function render(){let l=document.getElementById('list');l.innerHTML='';let total=0;let txt='Halo Kak Aeni, mau order:%0A';if(!cart.length)l.innerHTML='<p style="color:#8C7A6B;text-align:center;padding:20px;font-size:13px">Kosong</p>';cart.forEach((c,i)=>{let sub=c.price*c.qty;total+=sub;txt+=`${i+1}. ${c.name} x${c.qty} - Rp ${sub.toLocaleString('id-ID')}%0A`;l.innerHTML+=`<div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0;padding-bottom:14px;border-bottom:1px solid #EAE6E1"><div><div style="font-family:Cormorant Garamond">${c.name}</div><div style="font-size:11px;color:#8C7A6B">Rp${c.price.toLocaleString('id-ID')} x ${c.qty}</div></div><div style="display:flex;align-items:center;gap:6px"><button onclick="kurang(${i})" style="width:28px;height:28px;border:1px solid #EAE6E1;background:white">−</button><span style="min-width:16px;text-align:center;font-size:12px">${c.qty}</span><button onclick="tambah(${i})" style="width:28px;height:28px;background:#2B1B12;color:white;border:0">+</button><button onclick="hapus(${i})" style="margin-left:6px;width:32px;height:32px;border:1px solid #EAE6E1;background:white"><i data-lucide="trash-2" style="width:14px"></i></button></div></div>`});document.getElementById('tot').innerText='Rp '+total.toLocaleString('id-ID');document.getElementById('waLink').href=`https://wa.me/6285178098354?text=${txt}%0ATotal: Rp ${total.toLocaleString('id-ID')}`;lucide.createIcons()}
-function chatWA(){window.open(`https://wa.me/6285178098354?text=Halo Kak, mau tanya ${warna} ${ukuran}`,'_blank')}
 upd();lucide.createIcons()
 </script>
 </body>
