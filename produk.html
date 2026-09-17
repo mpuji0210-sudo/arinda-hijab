@@ -1,198 +1,71 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Produk - Arinda Hijab</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Produk - ARINDA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Plus+Jakarta+Sans:wght@500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
 <style>
-*{box-sizing:border-box}
-body{font-family:'Plus Jakarta Sans',sans-serif;margin:0;background:#FFFBF7;color:#451A03}
-nav{background:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 0 #FEF3C7;position:sticky;top:0;z-index:20}
-nav a{text-decoration:none;color:#78350F;font-weight:600;font-size:14px;padding:7px 16px;border-radius:20px;font-family:'Poppins'}
-nav a.active{background:#D97706;color:white}
-.badge{background:#D97706;color:white;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer}
-.container{max-width:1100px;margin:0 auto;padding:12px 12px 100px}
-.detail{background:white;border-radius:24px;box-shadow:0 4px 20px rgba(120,53,15,.06);border:1px solid #FEF3C7;overflow:hidden;display:grid}
-@media(min-width:800px){.detail{grid-template-columns:380px 1fr}}
-.galeri{background:#FEF9C3;display:flex;justify-content:center;align-items:center;height:320px;flex-direction:column}
-.circle-big{width:180px;height:180px;border-radius:50%;box-shadow:0 12px 24px rgba(0,0,0,.12);border:5px solid white}
-.info{padding:18px}
-.harga{color:#B45309;font-size:26px;font-weight:800;font-family:'Poppins'}
-.judul{font-family:'Poppins';font-size:15px;line-height:1.35;color:#451A03;margin:6px 0 0;font-weight:600}
-.terjual{font-size:11px;color:#92400E;background:#FEF3C7;padding:5px 10px;border-radius:20px;display:inline-block;margin:10px 0;font-weight:600}
-.label{font-family:'Poppins';font-weight:700;margin:20px 0 10px;font-size:12px;letter-spacing:.6px;color:#78350F}
-.warna-list{display:flex;gap:10px;flex-wrap:wrap}
-.warna{width:74px;height:74px;border-radius:18px;border:1.5px solid #FDE68A;display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer;background:#FFFFFE}
-.warna.active{border-color:#D97706;background:#FFFBEB}
-.dot{width:36px;height:36px;border-radius:50%;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,.12)}
-.warna span{font-size:9px;margin-top:7px;font-weight:700;color:#78350F;letter-spacing:.8px;font-family:'Poppins'}
-.ukur{display:flex;gap:8px}
-.ukur button{padding:9px 14px;border-radius:100px;border:1.5px solid #FDE68A;background:white;font-weight:600;cursor:pointer;font-size:11px;font-family:'Poppins'}
-.ukur button.active{background:#451A03;color:white;border-color:#451A03}
-.btns{display:flex;gap:10px;margin-top:22px}
-.btn{flex:1;padding:13px;border-radius:14px;border:0;font-weight:700;cursor:pointer;font-size:13px;font-family:'Poppins'}
-.btn-chat{background:#FEF3C7;color:#78350F}
-.btn-cart{background:#D97706;color:white}
-.btn-beli{background:#451A03;color:white;width:100%;margin-top:10px;padding:15px;font-size:14px;border-radius:14px}
-#cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:50;justify-content:center;align-items:center}
-#cartBox{background:white;width:92%;max-width:400px;border-radius:20px;padding:20px}
+:root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--off:#FFFCF9}
+*{box-sizing:border-box}body{margin:0;background:var(--off);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
+h1,h2{font-family:'Cormorant Garamond',serif}
+nav{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:rgba(255,252,249,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--champ)}
+nav a{font-size:10px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;color:var(--taupe);margin-left:20px;font-weight:600}
+nav a.active{color:var(--esp)}
+.badge{display:flex;align-items:center;gap:6px;border:1px solid var(--champ);padding:8px 14px;border-radius:100px;font-size:11px;background:white;cursor:pointer}
+.detail{max-width:1120px;margin:24px auto;display:grid;background:white;border:1px solid var(--champ)}
+@media(min-width:860px){.detail{grid-template-columns:440px 1fr}}
+.galeri{background:#F7F3EF;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px;min-height:420px}
+.big{width:260px;height:260px;border-radius:50%;border:1px solid var(--champ);box-shadow:0 20px 40px rgba(0,0,0,.06)}
+.eye{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);display:block;margin-bottom:10px}
+.price{font-family:'Cormorant Garamond';font-size:38px;font-weight:600}
+.lab{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin:28px 0 12px;font-weight:600}
+.c{width:86px;height:86px;border:1px solid var(--champ);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:white}
+.c.active{border-color:var(--esp);border-width:1.5px}
+.dot{width:32px;height:32px;border-radius:50%}
+.btn{flex:1;padding:15px;border:1px solid var(--champ);font-size:11px;letter-spacing:2px;text-transform:uppercase;background:white;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:6px}
+.btn-dark{background:var(--esp);color:white;border-color:var(--esp)}
 </style>
 </head>
 <body>
-<nav><div><a href="index.html">Beranda</a><a href="produk.html" class="active">Produk</a><a href="kontak.html">Kontak</a></div><div class="badge" id="cartBadge" onclick="openCart()">🛒 0</div></nav>
-<div class="container"><div class="detail">
-<div class="galeri"><div class="circle-big" id="mainCircle" style="background:#111111"></div><div style="margin-top:14px;font-family:'Poppins';font-weight:700" id="warnaNameBig">Hitam Pekat</div></div>
-<div class="info">
-<div class="harga">Rp<span id="hargaText">18.000</span></div>
-<div class="judul">Arinda Hijab Premium - Adem, Tidak Mudah Kusut, Jahit Rapi</div>
-<div class="terjual">⭐ 4.9 • 482 Terjual • Premium Voal</div>
-<div class="label">PILIH WARNA</div>
-<div class="warna-list">
-<div class="warna active" onclick="pilihWarna(this,'#111111','Hitam Pekat')"><div class="dot" style="background:#111111"></div><span>HITAM</span></div>
-<div class="warna" onclick="pilihWarna(this,'#E8D5B5','Krem Elegan')"><div class="dot" style="background:#E8D5B5"></div><span>KREM</span></div>
-<div class="warna" onclick="pilihWarna(this,'#7A1C1C','Maroon')"><div class="dot" style="background:#7A1C1C"></div><span>MAROON</span></div>
-<div class="warna" onclick="pilihWarna(this,'#1E2A4A','Navy')"><div class="dot" style="background:#1E2A4A"></div><span>NAVY</span></div>
+<nav><div style="font-family:'Cormorant Garamond';font-weight:700;letter-spacing:3px">ARINDA</div><div><a href="index.html">BERANDA</a><a href="produk.html" class="active">PRODUK</a><a href="index.html#kontak">KONTAK</a></div><div class="badge" onclick="openCart()"><i data-lucide="shopping-bag" style="width:14px"></i> <span id="cnt">0</span></div></nav>
+<div class="detail">
+<div class="galeri"><div class="big" id="mainCircle" style="background:#111"></div><div id="warnaName" style="font-family:'Cormorant Garamond';font-size:20px;margin-top:18px">Hitam Pekat</div><div style="font-size:10px;letter-spacing:2px;color:#8C7A6B;text-transform:uppercase;margin-top:4px">Premium Voal • 110x110 • Laser Cut</div></div>
+<div style="padding:28px">
+<span class="eye">Bestseller • Premium Voal</span>
+<div class="price">Rp<span id="harga">18.000</span></div>
+<div style="font-family:'Cormorant Garamond';font-size:22px;margin-top:8px;line-height:1.3">Arinda Hijab Premium - Adem, Tidak Mudah Kusut, Jahit Rapi</div>
+<div class="lab">Pilih Warna</div>
+<div style="display:flex;gap:10px">
+<div class="c active" onclick="pickW(this,'#111','Hitam Pekat')"><div class="dot" style="background:#111"></div><span style="font-size:9px;margin-top:8px;color:#8C7A6B">HITAM</span></div>
+<div class="c" onclick="pickW(this,'#E8D5B5','Krem Elegan')"><div class="dot" style="background:#E8D5B5"></div><span style="font-size:9px;margin-top:8px;color:#8C7A6B">KREM</span></div>
+<div class="c" onclick="pickW(this,'#7A1C1C','Maroon')"><div class="dot" style="background:#7A1C1C"></div><span style="font-size:9px;margin-top:8px;color:#8C7A6B">MAROON</span></div>
+<div class="c" onclick="pickW(this,'#1E2A4A','Navy')"><div class="dot" style="background:#1E2A4A"></div><span style="font-size:9px;margin-top:8px;color:#8C7A6B">NAVY</span></div>
 </div>
-<div class="label">UKURAN</div>
-<div class="ukur"><button class="active" onclick="pilihUkuran(this)">STANDAR 110x110</button><button onclick="pilihUkuran(this)">SYARI 130x130</button></div>
-<div class="btns"><button class="btn btn-chat" onclick="chatWA()">💬 Chat</button><button class="btn btn-cart" onclick="addCart()">+ Keranjang</button></div>
-<button class="btn btn-beli" onclick="beli()">Beli Sekarang - Rp<span id="hargaBeli">18.000</span></button>
-</div></div></div>
-<div id="cartModal" onclick="if(event.target==this)closeCart()"><div id="cartBox"><h3 style="font-family:Poppins;margin:0 0 10px">Keranjang 🛒</h3><div id="cartList"></div><hr><div style="display:flex;justify-content:space-between;font-weight:800"><span>Total</span><span id="cartTotal">Rp 0</span></div><a id="waLink" class="btn btn-beli" style="display:block;text-align:center;text-decoration:none;margin-top:12px" target="_blank">Checkout WA →</a><button onclick="closeCart()" style="width:100%;margin-top:8px;padding:10px;border-radius:10px;border:0;background:#eee">Tutup</button></div></div>
+<div class="lab">Ukuran</div>
+<div style="display:flex;gap:8px"><button id="b1" class="btn" onclick="pickS(this)">STANDAR 110X110</button><button id="b2" class="btn" onclick="pickS(this)">SYARI 130X130</button></div>
+<style>.buy{width:100%;margin-top:10px;padding:16px;background:#2B1B12;color:white;border:0;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer}
+#cartModal{display:none;position:fixed;inset:0;background:rgba(43,27,18,.15);backdrop-filter:blur(8px);z-index:50;justify-content:flex-end}
+#cartBox{background:white;width:100%;max-width:380px;height:100%;padding:24px;display:flex;flex-direction:column;border-left:1px solid #EAE6E1}</style>
+<div style="display:flex;gap:10px;margin-top:28px"><button class="btn" onclick="chatWA()"><i data-lucide="message-circle" style="width:14px"></i> Chat</button><button class="btn btn-dark" onclick="addCart()"><i data-lucide="shopping-bag" style="width:14px"></i> Keranjang</button></div>
+<button class="buy" onclick="addCart()">Beli Sekarang - Rp<span id="hargaB">18.000</span></button>
+<div style="margin-top:18px;display:flex;gap:16px;font-size:11px;color:#8C7A6B"><span style="display:flex;gap:6px"><i data-lucide="truck" style="width:14px"></i> Kirim dari Jakarta</span><span style="display:flex;gap:6px"><i data-lucide="shield-check" style="width:14px"></i> COD & QRIS</span></div>
+</div></div>
+<div id="cartModal" onclick="if(event.target==this)closeCart()"><div id="cartBox"><div style="display:flex;justify-content:space-between;align-items:center"><h3 style="font-family:'Cormorant Garamond';margin:0;font-size:26px">Keranjang</h3><button onclick="closeCart()" style="border:1px solid #EAE6E1;background:white;width:32px;height:32px"><i data-lucide="x" style="width:14px"></i></button></div><div id="list" style="flex:1;overflow:auto;margin-top:20px"></div><div style="border-top:1px solid #EAE6E1;padding-top:12px;display:flex;justify-content:space-between;font-family:'Cormorant Garamond';font-size:20px"><span>Total</span><span id="tot">Rp 0</span></div><a id="waLink" style="display:block;text-align:center;background:#2B1B12;color:white;padding:15px;margin-top:12px;text-decoration:none;font-size:11px;letter-spacing:2px">Checkout WhatsApp</a></div></div>
 <script>
-let cart=JSON.parse(localStorage.getItem('cart'))||[];
-let warna='Hitam Pekat',ukuran='STANDAR 110x110',harga=18000;
-function updateBadge(){let q=cart.reduce((a,b)=>a+b.qty,0);document.getElementById('cartBadge').innerText='🛒 '+q;localStorage.setItem('cart',JSON.stringify(cart));}
-function pilihWarna(el,hex,nama){document.querySelectorAll('.warna').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.getElementById('mainCircle').style.background=hex;document.getElementById('warnaNameBig').innerText=nama;warna=nama;}
-function pilihUkuran(el){document.querySelectorAll('.ukur button').forEach(x=>x.classList.remove('active'));el.classList.add('active');ukuran=el.innerText;harga=ukuran.includes('SYARI')?25000:18000;document.getElementById('hargaText').innerText=harga.toLocaleString('id-ID');document.getElementById('hargaBeli').innerText=harga.toLocaleString('id-ID');}
-function addCart(){let k=`${warna}-${ukuran}`;let f=cart.find(c=>c.key==k);if(f)f.qty++;else cart.push({key:k,name:`Arinda Hijab ${warna} - ${ukuran}`,price:harga,qty:1});updateBadge();openCart();}
-function openCart(){render();document.getElementById('cartModal').style.display='flex';}
-function closeCart(){document.getElementById('cartModal').style.display='none';}
-function kurang(i){if(cart[i].qty>1)cart[i].qty--;else cart.splice(i,1);updateBadge();render();}
-function tambah(i){cart[i].qty++;updateBadge();render();}
-function hapus(i){cart.splice(i,1);updateBadge();render();}
-function render(){let list=document.getElementById('cartList');list.innerHTML='';let total=0;let txt='Halo Kak Aeni, mau order:%0A';if(cart.length==0)list.innerHTML='<p style="font-size:13px;color:#999;text-align:center;padding:20px">Kosong</p>';cart.forEach((c,i)=>{let sub=c.price*c.qty;total+=sub;txt+=`${i+1}. ${c.name} x${c.qty} - Rp ${sub.toLocaleString('id-ID')}%0A`;list.innerHTML+=`<div style="display:flex;justify-content:space-between;align-items:center;margin:12px 0;padding-bottom:10px;border-bottom:1px dashed #FDE68A"><div style="flex:1"><div style="font-size:13px;font-weight:600;font-family:Poppins">${c.name}</div><div style="font-size:11px;color:#A16207">Rp${c.price.toLocaleString('id-ID')} x ${c.qty}</div></div><div style="display:flex;align-items:center;gap:6px"><button onclick="kurang(${i})" style="width:30px;height:30px;border-radius:10px;border:1.5px solid #FDE68A;background:white;font-weight:700">−</button><span style="font-size:13px;font-weight:700;min-width:18px;text-align:center;font-family:Poppins">${c.qty}</span><button onclick="tambah(${i})" style="width:30px;height:30px;border-radius:10px;border:0;background:#D97706;color:white;font-weight:700">+</button><button onclick="hapus(${i})" style="margin-left:6px;width:32px;height:32px;border-radius:10px;border:0;background:#FFF1F2;font-size:16px">🗑️</button></div></div>`});document.getElementById('cartTotal').innerText='Rp '+total.toLocaleString('id-ID');document.getElementById('waLink').href=`https://wa.me/6285178098354?text=${txt}%0ATotal: Rp ${total.toLocaleString('id-ID')}`;}
-function beli(){addCart();}
-function chatWA(){window.open(`https://wa.me/6285178098354?text=Halo Kak, mau tanya ${warna} ${ukuran}`,'_blank');}
-updateBadge();
+let cart=JSON.parse(localStorage.getItem('cart'))||[],warna='Hitam Pekat',ukuran='STANDAR 110X110',harga=18000;
+function upd(){document.getElementById('cnt').innerText=cart.reduce((a,b)=>a+b.qty,0);localStorage.setItem('cart',JSON.stringify(cart))}
+function pickW(el,hex,nama){document.querySelectorAll('.c').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.getElementById('mainCircle').style.background=hex;document.getElementById('warnaName').innerText=nama;warna=nama}
+function pickS(el){document.getElementById('b1').classList.remove('active');document.getElementById('b2').classList.remove('active');document.getElementById('b1').classList.remove('btn-dark');document.getElementById('b2').classList.remove('btn-dark');el.classList.add('active');el.classList.add('btn-dark');ukuran=el.innerText;harga=ukuran.includes('SYARI')?25000:18000;document.getElementById('harga').innerText=harga.toLocaleString('id-ID');document.getElementById('hargaB').innerText=harga.toLocaleString('id-ID')}
+function addCart(){let k=warna+'-'+ukuran;let f=cart.find(c=>c.key==k);if(f)f.qty++;else cart.push({key:k,name:`Arinda ${warna} - ${ukuran}`,price:harga,qty:1});upd();openCart()}
+function openCart(){render();document.getElementById('cartModal').style.display='flex'}
+function closeCart(){document.getElementById('cartModal').style.display='none'}
+function kurang(i){if(cart[i].qty>1)cart[i].qty--;else cart.splice(i,1);upd();render()}
+function tambah(i){cart[i].qty++;upd();render()}
+function hapus(i){cart.splice(i,1);upd();render()}
+function render(){let l=document.getElementById('list');l.innerHTML='';let total=0;let txt='Halo Kak Aeni, mau order:%0A';if(!cart.length)l.innerHTML='<p style="color:#8C7A6B;text-align:center;padding:20px;font-size:13px">Kosong</p>';cart.forEach((c,i)=>{let sub=c.price*c.qty;total+=sub;txt+=`${i+1}. ${c.name} x${c.qty} - Rp ${sub.toLocaleString('id-ID')}%0A`;l.innerHTML+=`<div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0;padding-bottom:14px;border-bottom:1px solid #EAE6E1"><div><div style="font-family:Cormorant Garamond">${c.name}</div><div style="font-size:11px;color:#8C7A6B">Rp${c.price.toLocaleString('id-ID')} x ${c.qty}</div></div><div style="display:flex;align-items:center;gap:6px"><button onclick="kurang(${i})" style="width:28px;height:28px;border:1px solid #EAE6E1;background:white">−</button><span style="min-width:16px;text-align:center;font-size:12px">${c.qty}</span><button onclick="tambah(${i})" style="width:28px;height:28px;background:#2B1B12;color:white;border:0">+</button><button onclick="hapus(${i})" style="margin-left:6px;width:32px;height:32px;border:1px solid #EAE6E1;background:white"><i data-lucide="trash-2" style="width:14px"></i></button></div></div>`});document.getElementById('tot').innerText='Rp '+total.toLocaleString('id-ID');document.getElementById('waLink').href=`https://wa.me/6285178098354?text=${txt}%0ATotal: Rp ${total.toLocaleString('id-ID')}`;lucide.createIcons()}
+function chatWA(){window.open(`https://wa.me/6285178098354?text=Halo Kak, mau tanya ${warna} ${ukuran}`,'_blank')}
+upd();lucide.createIcons();document.getElementById('b1').classList.add('btn-dark');document.getElementById('b1').classList.add('active');
 </script>
 </body>
 </html>
-<title>Produk - Arinda Hijab</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-
-</head>
-<body>
-<nav>
-  <div><a href="index.html">Beranda</a><a href="produk.html" class="active">Produk</a><a href="kontak.html">Kontak</a></div>
-  <div class="badge" id="cartBadge" onclick="openCart()">🛒 0</div>
-</nav>
-
-<div class="container">
-<div class="detail">
-  <div class="galeri">
-    <div class="circle-big" id="mainCircle" style="background:#111111"></div>
-    <div style="margin-top:14px;font-family:'Poppins';font-weight:700" id="warnaNameBig">Hitam Pekat</div>
-  </div>
-  <div class="info">
-    <div class="harga">Rp<span id="hargaText">18.000</span></div>
-    <div class="judul">Arinda Hijab Premium - Adem, Tidak Mudah Kusut, Jahit Rapi</div>
-    <div class="terjual">⭐ 4.9 • 482 Terjual • Premium Voal</div>
-
-    <div class="label">PILIH WARNA</div>
-    <div class="warna-list">
-      <div class="warna active" onclick="pilihWarna(this,'#111111','Hitam Pekat')">
-        <div class="dot" style="background:#111111"></div><span>HITAM</span>
-      </div>
-      <div class="warna" onclick="pilihWarna(this,'#E8D5B5','Krem Elegan')">
-        <div class="dot" style="background:#E8D5B5"></div><span>KREM</span>
-      </div>
-      <div class="warna" onclick="pilihWarna(this,'#7A1C1C','Maroon')">
-        <div class="dot" style="background:#7A1C1C"></div><span>MAROON</span>
-      </div>
-      <div class="warna" onclick="pilihWarna(this,'#1E2A4A','Navy')">
-        <div class="dot" style="background:#1E2A4A"></div><span>NAVY</span>
-      </div>
-    </div>
-
-    <div class="label">UKURAN</div>
-    <div class="ukur">
-      <button class="active" onclick="pilihUkuran(this)">STANDAR 110x110</button>
-      <button onclick="pilihUkuran(this)">SYARI 130x130</button>
-    </div>
-
-    <div class="btns">
-      <button class="btn btn-chat" onclick="chatWA()">💬 Chat</button>
-      <button class="btn btn-cart" onclick="addCart()">+ Keranjang</button>
-    </div>
-    <button class="btn btn-beli" onclick="beli()">Beli Sekarang - Rp<span id="hargaBeli">18.000</span></button>
-  </div>
-</div>
-</div>
-
-<div id="cartModal" onclick="if(event.target==this)closeCart()"><div id="cartBox"><h3 style="font-family:Poppins;margin:0 0 10px">Keranjang 🛒</h3><div id="cartList"></div><hr><div style="display:flex;justify-content:space-between;font-weight:800"><span>Total</span><span id="cartTotal">Rp 0</span></div><a id="waLink" class="btn btn-beli" style="display:block;text-align:center;text-decoration:none;margin-top:12px" target="_blank">Checkout WA →</a><button onclick="closeCart()" style="width:100%;margin-top:8px;padding:10px;border-radius:10px;border:0;background:#eee">Tutup</button></div></div>
-
-<script>
-let cart=JSON.parse(localStorage.getItem('cart'))||[];
-let warna='Hitam Pekat',warnaHex='#111111',ukuran='STANDAR 110x110',harga=18000;
-
-function updateBadge(){
-  let totalQty = cart.reduce((a,b)=>a+b.qty,0);
-  document.getElementById('cartBadge').innerText='🛒 '+totalQty;
-  localStorage.setItem('cart',JSON.stringify(cart));
-}
-function pilihWarna(el,hex,nama){
-  document.querySelectorAll('.warna').forEach(x=>x.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('mainCircle').style.background=hex;
-  document.getElementById('warnaNameBig').innerText=nama;
-  warna=nama;warnaHex=hex;
-}
-function pilihUkuran(el){
-  document.querySelectorAll('.ukur button').forEach(x=>x.classList.remove('active'));
-  el.classList.add('active');ukuran=el.innerText;
-  harga=ukuran.includes('SYARI')?25000:18000;
-  document.getElementById('hargaText').innerText=harga.toLocaleString('id-ID');
-  document.getElementById('hargaBeli').innerText=harga.toLocaleString('id-ID');
-}
-function addCart(){
-  let key = `${warna} - ${ukuran}`;
-  let found = cart.find(c=>c.key==key);
-  if(found){found.qty++} else {cart.push({key:key,name:`Arinda Hijab ${warna} - ${ukuran}`,price:harga,qty:1})}
-  updateBadge();openCart();
-}
-function openCart(){render();document.getElementById('cartModal').style.display='flex';}
-function closeCart(){document.getElementById('cartModal').style.display='none';}
-
-function kurang(i){
-  if(cart[i].qty>1){cart[i].qty--} else {cart.splice(i,1)}
-  updateBadge();render();
-}
-function tambah(i){cart[i].qty++;updateBadge();render();}
-function hapus(i){cart.splice(i,1);updateBadge();render();}
-
-function render(){
-  let list=document.getElementById('cartList');list.innerHTML='';let total=0;
-  let txt='Halo Kak Aeni, mau order:%0A';
-  if(cart.length==0){list.innerHTML='<p style="font-size:13px;color:#999;text-align:center;padding:20px">Keranjang kosong</p>'}
-  cart.forEach((c,i)=>{
-    let sub = c.price*c.qty; total+=sub;
-    txt+=`${i+1}. ${c.name} x${c.qty} - Rp ${sub.toLocaleString('id-ID')}%0A`;
-    list.innerHTML+=`
-    <div style="display:flex;justify-content:space-between;align-items:center;margin:12px 0;padding-bottom:8px;border-bottom:1px dashed #fde68a">
-      <div style="flex:1"><div style="font-size:13px;font-weight:600">${c.name}</div><div style="font-size:11px;color:#a16207">Rp${c.price.toLocaleString('id-ID')}</div></div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <button onclick="kurang(${i})" style="width:28px;height:28px;border-radius:8px;border:1px solid #fde68a;background:white;font-weight:700">-</button>
-        <span style="font-size:13px;font-weight:700;min-width:14px;text-align:center">${c.qty}</span>
-        <button onclick="tambah(${i})" style="width:28px;height:28px;border-radius:8px;border:0;background:#d97706;color:white;font-weight:700">+</button>
-        <button onclick="hapus(${i})" style="margin-left:4px;border:0;background:none;color:#ef4444;font-size:16px">🗑️</button>
-      </div>
-    </div>`;
-  });
-  document.getElementById('cartTotal').innerText='Rp '+total.toLocaleString('id-ID');
-  document.getElementById('waLink').href=`https://wa.me/6285178098354?text=${txt}%0ATotal: Rp ${total.toLocaleString('id-ID')}`;
-}
-function beli(){addCart();let t=cart.reduce((a,b)=>a+b.price*b.qty,0);let tx='';cart.forEach((c,i)=>tx+=`${c.name} x${c.qty}%0A`);window.open(`https://wa.me/6285178098354?text=Halo Kak mau beli:%0A${tx}Total Rp ${t.toLocaleString('id-ID')}`,'_blank');}
-function chatWA(){window.open(`https://wa.me/6285178098354?text=Halo Kak, mau tanya ${warna} ${ukuran}`,'_blank');}
-updateBadge();
-</script>
