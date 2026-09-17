@@ -36,6 +36,27 @@ nav a{font-size:10px!important;margin-left:8px!important;letter-spacing:1px!impo
 .badge{padding:6px 10px;font-size:11px}
 }
 .hero-img img{width:100%;height:auto;display:block;object-fit:cover}
+
+html{scroll-behavior:smooth}
+body{opacity:0;animation:fadeIn .45s ease forwards}
+@keyframes fadeIn{to{opacity:1}}
+body.fadeOut{opacity:0;transition:opacity .28s ease}
+nav .menu a{transition:all .2s ease}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('a[href$=".html"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const h=a.getAttribute('href');
+      if(h.startsWith('http'))return;
+      e.preventDefault();
+      document.body.classList.add('fadeOut');
+      setTimeout(()=>window.location.href=h,280);
+    });
+  });
+});
+</script>
+</head>
 </style>
 </head>
 <body>
