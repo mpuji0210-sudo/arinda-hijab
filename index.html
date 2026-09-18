@@ -1,55 +1,48 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ARINDA - Hijab Premium</title>
+<title>ARINDA - Hijab Premium Rp180.000</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--off:#FFFCF9}
 *{box-sizing:border-box}body{margin:0;background:var(--off);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
-nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.98);backdrop-filter:blur(12px);border-bottom:1px solid var(--champ)}
+nav{position:sticky;top:0;z-index:99;background:#FFFCF9;border-bottom:1px solid var(--champ)}
 .nav-in{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:4px;font-size:22px}.menu{display:flex;gap:20px}.menu a{text-decoration:none;font-size:11px;letter-spacing:2px;color:var(--taupe);border-bottom:1.5px solid transparent;padding-bottom:3px}.menu a.active{color:var(--esp);border-color:var(--esp)}
-.banner{max-width:1100px;margin:0 auto;padding:0 20px}
-.banner img{width:100%;height:520px;object-fit:cover;display:block;border:1px solid var(--champ)}
-.banner-text{background:#fff;border:1px solid var(--champ);padding:20px;margin-top:-80px;position:relative;z-index:2;max-width:340px;margin-left:30px}
-.banner-text h1{font-family:'Cormorant Garamond';font-size:38px;margin:0 0 8px;line-height:.9}
-.btn{display:inline-block;padding:13px 20px;background:var(--esp);color:#fff;font-size:11px;letter-spacing:2px;text-decoration:none;margin-top:10px}
-.wrap{max-width:1100px;margin:0 auto;padding:28px 20px}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:4px;font-size:22px}
+.menu{display:flex;gap:20px}.menu a{text-decoration:none;font-size:11px;letter-spacing:2px;color:var(--taupe);padding-bottom:3px}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
+.banner{max-width:1100px;margin:0 auto;position:relative}
+.banner img{width:100%;height:560px;object-fit:cover;display:block}
+.banner-card{position:absolute;left:30px;bottom:30px;background:#fff;border:1px solid var(--champ);padding:22px;max-width:360px}
+.banner-card h1{font-family:'Cormorant Garamond';font-size:42px;margin:0;line-height:.95}
+.btn{background:var(--esp);color:#fff;padding:14px 22px;font-size:11px;letter-spacing:2px;text-decoration:none;display:inline-block;margin-top:12px;border:0}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 20px}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .grid img{width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--champ)}
-@media(max-width:750px){
-.nav-in{flex-direction:column;align-items:flex-start;gap:8px}.menu{width:100%;justify-content:space-between;border-top:1px solid var(--champ);padding-top:10px}
-.banner{padding:0}.banner img{height:auto;aspect-ratio:4/3}
-.banner-text{margin:-30px 12px 0 12px;max-width:none;padding:16px}
-.banner-text h1{font-size:32px}
-.grid{grid-template-columns:1fr 1fr}
+/* HP FIX */
+@media(max-width:700px){
+.nav-in{padding:12px 16px}.menu{gap:12px}
+.banner img{height:auto;aspect-ratio:1/1.1}
+.banner-card{position:relative;left:auto;bottom:auto;margin:-24px 16px 0 16px;max-width:none;padding:18px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.banner-card h1{font-size:30px}
+.grid{grid-template-columns:1fr 1fr;gap:8px}
 }
-</style>
-</head><body>
+</style></head><body>
 <nav><div class="nav-in"><div class="logo">ARINDA</div><div class="menu"><a href="index.html" class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kontak.html">KONTAK</a></div></div></nav>
 <div class="banner">
-<img src="banner.jpg" onerror="this.src='https://images.unsplash.com/photo-1580331451062-99ff652288d7?w=1200'">
-<div class="banner-text">
+<img src="banner.jpg">
+<div class="banner-card">
 <div style="font-size:10px;letter-spacing:3px;color:var(--taupe)">NEW COLLECTION</div>
 <h1>Adem,<br>Tidak Menerawang</h1>
-<p style="font-size:12px;color:var(--taupe);margin:8px 0">Premium voal Rp180.000 - 4 warna bestseller</p>
+<p style="font-size:13px;color:var(--taupe);margin:10px 0">Premium voal Rp180.000 - 4 warna bestseller</p>
 <a class="btn" href="produk.html">LIHAT PRODUK →</a>
 </div>
 </div>
 <div class="wrap">
-<div style="font-size:11px;letter-spacing:3px;color:var(--taupe);margin-bottom:10px">KOLEKSI 4 WARNA BESTSELLER</div>
+<div style="font-size:11px;letter-spacing:3px;color:var(--taupe);margin-bottom:12px">KOLEKSI 4 WARNA BESTSELLER</div>
 <div class="grid">
-<div><img src="hitam.jpg"><div style="font-size:11px;margin-top:6px;text-align:center">HITAM PEKAT</div></div>
-<div><img src="krem.jpg"><div style="font-size:11px;margin-top:6px;text-align:center">KREM ELEGANT</div></div>
-<div><img src="maroon.jpg"><div style="font-size:11px;margin-top:6px;text-align:center">MAROON</div></div>
-<div><img src="navy.jpg"><div style="font-size:11px;margin-top:6px;text-align:center">NAVY</div></div>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px">
-<img src="detail.jpg" style="width:100%;border:1px solid var(--champ)">
-<div style="border:1px solid var(--champ);background:#fff;padding:20px">
-<div style="font-family:'Cormorant Garamond';font-size:28px">Detail Laser Cut Rapi</div>
-<p style="font-size:13px;color:var(--taupe);line-height:1.6">Tidak brudul, tidak menerawang, adem seharian. Cocok untuk daily & acara.</p>
-<a class="btn" href="produk.html">BELI SEKARANG Rp180.000</a>
-</div>
+<div><img src="hitam.jpg"><p style="font-size:11px;text-align:center">HITAM PEKAT</p></div>
+<div><img src="krem.jpg"><p style="font-size:11px;text-align:center">KREM ELEGANT</p></div>
+<div><img src="maroon.jpg"><p style="font-size:11px;text-align:center">MAROON</p></div>
+<div><img src="navy.jpg"><p style="font-size:11px;text-align:center">NAVY</p></div>
 </div>
 </div>
 </body></html>
