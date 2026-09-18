@@ -30,7 +30,7 @@ input,textarea,select{width:100%;padding:12px;border:1px solid var(--champ);font
 
 <div class="card">
 <div style="font-size:11px;letter-spacing:2px">FORM PESAN</div>
-<label style="font-size:11px;margin-top:12px;display:block">Nama</label><input id="nama" placeholder="Nama kamu">
+<label style="font-size:11px;margin-top:12px;display:block">Nama</label><input id="nama" placeholder="Nama kamu">required
 <label style="font-size:11px;margin-top:12px;display:block">Warna yang diminati</label>
 <select id="warna"><option>HITAM PEKAT</option><option>KREM ELEGANT</option><option>MAROON</option><option>NAVY</option><option>Semua 4 warna</option></select>
 <label style="font-size:11px;margin-top:12px;display:block">Pesan</label><textarea id="pesan" rows="4" placeholder="Mau tanya stok, ukuran, ongkir..."></textarea>
@@ -41,11 +41,12 @@ input,textarea,select{width:100%;padding:12px;border:1px solid var(--champ);font
 
 <script>
 function kirimWA(){
- let n=document.getElementById('nama').value||'Kak';
- let w=document.getElementById('warna').value;
- let p=document.getElementById('pesan').value||`Mau tanya hijab ${w} Rp180.000`;
- let msg=`Halo Arinda, saya ${n} 👋\n\nWarna: ${w}\nPesan: ${p}\n\nMohon infonya ya 🙏`;
- window.open(`https://wa.me/6285178098354?text=${encodeURIComponent(msg)}`,'_blank');
+let n=document.getElementById('nama').value.trim();
+if(!n){alert('Kak, isi nama dulu ya biar Arinda tau mau sapa siapa 🖐️');document.getElementById('nama').focus();return;}
+let w=document.getElementById('warna').value;
+let p=document.getElementById('pesan').value||'Mau tanya hijab Rp180.000';
+let msg=`Halo Arinda, saya ${n} 🖐️\n\nWarna: ${w}\nPesan: ${p}\n\nMohon infonya ya 🙏`;
+window.open('https://wa.me/6285178908354?text='+encodeURIComponent(msg),'_blank');
 }
 </script>
 </body></html>
