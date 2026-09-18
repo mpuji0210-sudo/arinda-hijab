@@ -1,30 +1,70 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Produk - ARINDA</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Plus+Jakarta+Sans:wght@500&display=swap" rel="stylesheet">
+<title>Produk Rp18.000 - ARINDA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--off:#FFFCF9}
 *{box-sizing:border-box}body{margin:0;background:var(--off);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
-nav{position:sticky;top:0;z-index:99;display:flex;justify-content:space-between;align-items:center;padding:18px 24px;background:rgba(255,252,249,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--champ)}
-.logo{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:4px;font-size:22px}.menu{display:flex;gap:22px}.menu a{text-decoration:none;font-size:11.5px;letter-spacing:2.8px;color:var(--taupe);padding-bottom:4px;border-bottom:1.5px solid transparent}.menu a.active{color:var(--esp);border-color:var(--esp)}
-.wrap{max-width:900px;margin:0 auto;padding:20px}
-.circle{width:280px;height:280px;background:#111;border-radius:50%;margin:20px auto}
-html{scroll-behavior:smooth}body{opacity:0;animation:fadeIn .45s ease forwards}@keyframes fadeIn{to{opacity:1}}body.fadeOut{opacity:0;transition:opacity .28s ease}
+nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.98);backdrop-filter:blur(12px);border-bottom:1px solid var(--champ)}
+.nav-in{max-width:1000px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:4px;font-size:20px}.menu{display:flex;gap:16px;align-items:center}.menu a{text-decoration:none;font-size:11px;letter-spacing:2px;color:var(--taupe);border-bottom:1.5px solid transparent;padding-bottom:3px;white-space:nowrap}.menu a.active{color:var(--esp);border-color:var(--esp)}
+.wrap{max-width:1000px;margin:0 auto;padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.gal{border:1px solid var(--champ);background:#fff;padding:8px}.gal img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover}
+.thumb{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.thumb img{width:100%;aspect-ratio:1/1;object-fit:cover;border:1.5px solid transparent;cursor:pointer}.thumb img.active{border-color:var(--esp)}
+.pill{padding:10px;border:1px solid var(--champ);text-align:center;cursor:pointer;background:#fff;font-size:11px}.pill.active{border-color:var(--esp);border-width:1.5px;font-weight:600}
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.btn{padding:14px;text-align:center;border:1px solid var(--esp);font-size:11px;letter-spacing:2px;cursor:pointer;background:#fff}
+.btn-primary{background:var(--esp);color:#fff}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--esp);color:#fff;padding:12px 20px;font-size:12px;display:none;z-index:999;border-radius:4px}
+@media(max-width:750px){.nav-in{flex-direction:column;align-items:flex-start}.menu{width:100%;justify-content:space-between;border-top:1px solid var(--champ);padding-top:10px}.wrap{grid-template-columns:1fr}}
 </style>
-<script>document.addEventListener('DOMContentLoaded',()=>{const s=!!document.startViewTransition;document.querySelectorAll('a[href$=".html"]').forEach(a=>{a.addEventListener('click',e=>{const h=a.getAttribute('href');if(h.startsWith('http'))return;e.preventDefault();if(s){document.startViewTransition(()=>window.location.href=h)}else{document.body.classList.add('fadeOut');setTimeout(()=>window.location.href=h,280)}})})})</script>
 </head><body>
-<nav><div class="logo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html" class="active">PRODUK</a><a href="kontak.html">KONTAK</a></div></nav>
+<nav><div class="nav-in"><div class="logo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html" class="active">PRODUK</a><a href="kontak.html">KONTAK</a><a href="#" id="cartLink">KERANJANG (<span id="cartCount">0</span>)</a></div></div></nav>
 <div class="wrap">
-<div class="circle"></div>
-<div style="text-align:center"><div style="font-weight:600">Hitam Pekat</div><div style="font-size:10px;letter-spacing:2px;color:var(--taupe)">PREMIUM VOAL • 110X110 • LASER CUT</div></div>
-<div style="margin-top:24px"><div style="font-size:10px;letter-spacing:2px;color:var(--taupe)">BESTSELLER • PREMIUM VOAL</div><div style="font-family:'Cormorant Garamond';font-size:32px">Rp18.000</div><div style="font-size:14px;margin:8px 0">Arinda Hijab Premium - Adem, Tidak Mudah Kusut, Jahit Rapi</div>
-<div style="font-size:11px;letter-spacing:2px;margin:16px 0 8px">PILIH WARNA</div>
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px"><div style="border:1.5px solid var(--esp);padding:8px;text-align:center"><div style="width:24px;height:24px;background:#111;border-radius:50%;margin:0 auto"></div><div style="font-size:9px;margin-top:4px">HITAM</div></div><div style="border:1px solid var(--champ);padding:8px;text-align:center;background:#fff"><div style="width:24px;height:24px;background:#E8DCCF;border-radius:50%;margin:0 auto"></div><div style="font-size:9px;margin-top:4px">KREM</div></div><div style="border:1px solid var(--champ);padding:8px;text-align:center;background:#fff"><div style="width:24px;height:24px;background:#7a1a1a;border-radius:50%;margin:0 auto"></div><div style="font-size:9px;margin-top:4px">MAROON</div></div><div style="border:1px solid var(--champ);padding:8px;text-align:center;background:#fff"><div style="width:24px;height:24px;background:#1a2a4a;border-radius:50%;margin:0 auto"></div><div style="font-size:9px;margin-top:4px">NAVY</div></div></div>
-<div style="font-size:11px;letter-spacing:2px;margin:16px 0 8px">UKURAN</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="border:1px solid var(--champ);padding:10px;text-align:center;background:#fff;font-size:11px">STANDAR 110X110</div><div style="border:1px solid var(--champ);padding:10px;text-align:center;background:#fff;font-size:11px">SYARI 130X130</div></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><div style="border:1px solid var(--esp);padding:12px;text-align:center;font-size:11px;letter-spacing:1px">CHAT</div><div style="border:1px solid var(--esp);padding:12px;text-align:center;font-size:11px;letter-spacing:1px">KERANJANG</div></div>
-<div style="background:var(--esp);color:#fff;padding:14px;text-align:center;font-size:11px;letter-spacing:2px;margin-top:8px">BELI SEKARANG - RP18.000</div>
-<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--taupe);margin-top:8px"><span>Kirim dari Jakarta</span><span>COD & QRIS</span></div>
+<div>
+<div class="gal"><img id="mainImg" src="krem.jpg"></div>
+<div class="thumb">
+<img src="hitam.jpg" data-warna="HITAM" class="active" onclick="pickWarna(this)">
+<img src="krem.jpg" data-warna="KREM" onclick="pickWarna(this)">
+<img src="maroon.jpg" data-warna="MAROON" onclick="pickWarna(this)">
+<img src="navy.jpg" data-warna="NAVY" onclick="pickWarna(this)">
 </div>
 </div>
+<div>
+<div style="font-size:10px;letter-spacing:3px;color:var(--taupe)">BESTSELLER</div>
+<div style="font-family:'Cormorant Garamond';font-size:40px;font-weight:600">Rp18.000</div>
+<div style="font-size:11px;letter-spacing:2px;margin:18px 0 8px">PILIH WARNA : <b id="warnaText">HITAM</b></div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px" id="warnaPills">
+<div class="pill active" data-warna="HITAM" onclick="pickWarnaByName('HITAM')">HITAM</div>
+<div class="pill" data-warna="KREM" onclick="pickWarnaByName('KREM')">KREM</div>
+<div class="pill" data-warna="MAROON" onclick="pickWarnaByName('MAROON')">MAROON</div>
+<div class="pill" data-warna="NAVY" onclick="pickWarnaByName('NAVY')">NAVY</div>
+</div>
+<div style="font-size:11px;letter-spacing:2px;margin:18px 0 8px">UKURAN : <b id="ukuranText">110x110</b></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<div class="pill active" data-uk="110x110" onclick="pickUkuran(this)">110x110</div>
+<div class="pill" data-uk="130x130" onclick="pickUkuran(this)">130x130</div>
+</div>
+<div class="btn-row">
+<div class="btn" id="btnChat">CHAT</div>
+<div class="btn" id="btnCart">+ KERANJANG</div>
+</div>
+<div class="btn btn-primary" id="btnBuy" style="margin-top:10px">BELI SEKARANG</div>
+</div>
+</div>
+<div id="toast"></div>
+<script>
+let selectedWarna='HITAM',selectedUkuran='110x110',cart=JSON.parse(localStorage.getItem('arinda_cart')||'[]');
+function updateCartCount(){document.getElementById('cartCount').innerText=cart.length;}
+function pickWarna(el){selectedWarna=el.dataset.warna;document.getElementById('mainImg').src=el.src;document.getElementById('warnaText').innerText=selectedWarna;document.querySelectorAll('.thumb img, #warnaPills .pill').forEach(p=>p.classList.remove('active'));el.classList.add('active');document.querySelector(`#warnaPills .pill[data-warna="${selectedWarna}"]`).classList.add('active');}
+function pickWarnaByName(n){const i=document.querySelector(`.thumb img[data-warna="${n}"]`);if(i)pickWarna(i);}
+function pickUkuran(el){selectedUkuran=el.dataset.uk;document.getElementById('ukuranText').innerText=selectedUkuran;document.querySelectorAll('[data-uk]').forEach(p=>p.classList.remove('active'));el.classList.add('active');}
+function showToast(m){const t=document.getElementById('toast');t.innerText=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
+function waLink(t){return `https://wa.me/6285178098354?text=${encodeURIComponent(t)}`;}
+document.getElementById('btnChat').onclick=()=>{window.open(waLink(`Halo Arinda mau tanya hijab ${selectedWarna} ${selectedUkuran} Rp18.000 ready?`),'_blank');};
+document.getElementById('btnCart').onclick=()=>{cart.push({warna:selectedWarna,ukuran:selectedUkuran});localStorage.setItem('arinda_cart',JSON.stringify(cart));updateCartCount();showToast(`${selectedWarna} masuk keranjang!`);};
+document.getElementById('btnBuy').onclick=()=>{window.open(waLink(`Halo Arinda mau ORDER Warna: ${selectedWarna} Ukuran: ${selectedUkuran} Rp18.000`), '_blank');};
+document.getElementById('cartLink').onclick=(e)=>{e.preventDefault();if(cart.length===0){showToast('Keranjang kosong');return;}let list=cart.map((c,i)=>`${i+1}. ${c.warna} ${c.ukuran}`).join('\n');window.open(waLink(`Mau checkout:\n${list}`),'_blank');};
+updateCartCount();
+</script>
 </body></html>
