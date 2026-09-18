@@ -66,7 +66,7 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9;border-bottom:1px solid 
 </div></div>
 
 <script>
-let warna='KREM', ukuran='110x110'; const HARGA=18000;
+let warna='KREM', ukuran='110x110'; const HARGA=180000;
 const IMG={HITAM:'hitam.jpg',KREM:'krem.jpg',MAROON:'maroon.jpg',NAVY:'navy.jpg'};
 // RESET keranjang lama yang corrupt
 let cart=[]; try{cart=JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){cart=[]}
@@ -105,7 +105,7 @@ let pesan='Halo Arinda, mau ORDER:%0A'; cart.forEach((it,n)=>{pesan+=`${n+1}. ${
 let total=cart.reduce((a,b)=>a+b.harga*b.qty,0); pesan+=`%0ATotal: Rp${total.toLocaleString('id-ID')} (${cart.reduce((a,b)=>a+b.qty,0)} item)%0AMohon info ongkir ya kak 🙏`;
 window.open('https://wa.me/6285178098354?text='+pesan,'_blank');
 }
-function chat(){window.open('https://wa.me/6285178098354?text='+encodeURIComponent('Halo Arinda, mau tanya hijab '+warna+' '+ukuran+' Rp18.000 ready gak?'),'_blank')}
+function chat(){window.open('https://wa.me/6285178098354?text='+encodeURIComponent('Halo Arinda, mau tanya hijab '+warna+' '+ukuran+' Rp180.000 ready gak?'),'_blank')}
 renderCount();
 pickW('KREM');
 </script></body></html>
