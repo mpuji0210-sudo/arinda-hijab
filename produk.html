@@ -3,71 +3,90 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ARINDA - Produk</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,sans-serif;background:#FFFCF8;color:#2B1B12}
-nav{display:flex;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #EAE6E1;position:sticky;top:0;background:#FFFCF8;z-index:10}
-nav a{text-decoration:none;color:#2B1B12;font-size:12px;margin-right:12px}nav a.active{border-bottom:2px solid #2B1B12;font-weight:700}
-#prod{max-width:420px;margin:0 auto;padding:10px}
-#mainImg{width:100%;aspect-ratio:1;object-fit:cover;background:#F5F0EB}
-.thumbs{display:flex;gap:8px;margin:10px 0}
-.thumbs img{width:58px;height:58px;object-fit:cover;border:1px solid #EAE6E1;cursor:pointer}
-.thumbs img.active{border:2px solid #2B1B12}
-.opt{display:inline-block;border:1px solid #2B1B12;padding:8px 12px;margin:4px;font-size:11px;cursor:pointer}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#FFFCF8;color:#2B1B12;letter-spacing:.2px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid #EAE6E1;position:sticky;top:0;background:#FFFCF8;z-index:20}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:4px}
+nav a{text-decoration:none;color:#2B1B12;font-size:11px;letter-spacing:2px;margin-left:18px}
+nav a.active{border-bottom:1.5px solid #2B1B12;padding-bottom:2px;font-weight:600}
+.wrap{max-width:480px;margin:0 auto}
+#main{width:100%;aspect-ratio:.9;object-fit:cover;background:#F5F0EB}
+.thumbs{display:flex;gap:8px;padding:12px 16px}
+.thumbs img{width:62px;height:62px;object-fit:cover;cursor:pointer;border:1.5px solid transparent;opacity:.7}
+.thumbs img.active{border-color:#2B1B12;opacity:1}
+.info{padding:0 20px 120px}
+.label{font-size:10px;letter-spacing:3px;margin-top:10px;color:#8C7A6B}
+.price{font-family:'Cormorant Garamond',serif;font-size:30px;margin:6px 0}
+.desc{font-size:12px;color:#8C7A6B;line-height:1.6}
+.sub{font-size:11px;letter-spacing:1px;font-weight:600;margin:18px 0 8px}
+.opt{display:inline-block;border:1px solid #2B1B12;padding:9px 14px;font-size:11px;letter-spacing:1px;margin:3px;cursor:pointer;min-width:58px;text-align:center}
 .opt.active{background:#2B1B12;color:#fff}
-.btn{display:block;width:100%;padding:14px;text-align:center;font-size:12px;letter-spacing:2px;cursor:pointer;margin-top:8px;border:1px solid #2B1B12}
+.spec{margin-top:16px;border:1px solid #EAE6E1}
+.spec div{display:flex;font-size:11px;border-bottom:1px solid #EAE6E1}
+.spec div:last-child{border:0}
+.spec div b{width:88px;background:#F9F6F3;padding:12px;font-weight:600}
+.spec div span{padding:12px;flex:1;color:#5A4A40;line-height:1.5}
+.btn{width:100%;padding:16px;text-align:center;font-size:12px;letter-spacing:3px;cursor:pointer;border:1px solid #2B1B12;margin-top:10px;transition:.2s}
 .btn-dark{background:#2B1B12;color:#fff}.btn-light{background:#fff;color:#2B1B12}
+.flex{display:flex;gap:10px}
+#toast{position:fixed;left:50%;bottom:85px;transform:translateX(-50%) translateY(20px);background:#2B1B12;color:#fff;padding:12px 22px;border-radius:30px;font-size:12px;opacity:0;pointer-events:none;transition:all.35s ease;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.2)}
 </style>
 </head>
 <body>
-<nav><div><b>ARINDA</b></div><div><a href="index.html">BERANDA</a><a href="produk.html" class="active">PRODUK</a><a href="#" onclick="openCart()">KERANJANG (<span id="cartCount">0</span>)</a></div></nav>
-<div id="prod">
-<img id="mainImg" src="https://images.unsplash.com/photo-1610878722345-79c5eaf6a48c?w=600">
+<nav><div class="logo">ARINDA</div><div><a href="index.html">BERANDA</a><a href="produk.html" class="active">PRODUK</a><a href="#" onclick="openCart()">KERANJANG (<span id="cartCount">0</span>)</a></div></nav>
+<div class="wrap">
+<img id="main" src="https://i.ibb.co/bMqXkJx3/hijab-krem.jpg" onerror="this.src='https://images.unsplash.com/photo-1610878722345-79c5eaf6a48c?w=600'">
 <div class="thumbs">
-<img id="b-hitam" src="https://images.unsplash.com/photo-1584915561949-9effff6342d3?w=200" onclick="pickM('HITAM')">
-<img id="b-krem" src="https://images.unsplash.com/photo-1610878722345-79c5eaf6a48c?w=200" onclick="pickM('KREM')" class="active">
-<img id="b-maroon" src="https://images.unsplash.com/photo-1617019114583-fd34d2d2a5cd?w=200" onclick="pickM('MAROON')">
-<img id="b-navy" src="https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=200" onclick="pickM('NAVY')">
+<img id="b-hitam" src="https://i.ibb.co/hJz9R5s/hitam.jpg" onerror="this.src='https://images.unsplash.com/photo-1584915561949-9effff6342d3?w=200'" onclick="pickM('HITAM')">
+<img id="b-krem" class="active" src="https://i.ibb.co/bMqXkJx3/hijab-krem.jpg" onerror="this.src='https://images.unsplash.com/photo-1610878722345-79c5eaf6a48c?w=200'" onclick="pickM('KREM')">
+<img id="b-maroon" src="https://i.ibb.co/Q3fYqYx/maroon.jpg" onerror="this.src='https://images.unsplash.com/photo-1617019114583-fd34d2d2a5cd?w=200'" onclick="pickM('MAROON')">
+<img id="b-navy" src="https://i.ibb.co/3mZk8pN/navy.jpg" onerror="this.src='https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=200'" onclick="pickM('NAVY')">
 </div>
-<p style="font-size:10px;letter-spacing:2px;margin-top:8px">BESTSELLER READY STOCK</p>
-<h1 style="font-size:26px;margin:4px 0">Rp180.000</h1>
-<p style="font-size:12px;color:#8C7A6B">Hijab premium voal, adem, laser cut rapi, tidak menerawang.</p>
-<p style="font-size:11px;margin-top:12px;font-weight:600">PILIH WARNA: <span id="wText">KREM</span></p>
+<div class="info">
+<p class="label">BESTSELLER READY STOCK</p>
+<p class="price">Rp180.000</p>
+<p class="desc">Hijab premium voal, adem, laser cut rapi, tidak menerawang.</p>
+<p class="sub">PILIH WARNA: <span id="wText">KREM</span></p>
 <div><span class="opt" id="w-hitam" onclick="pickM('HITAM')">HITAM</span><span class="opt active" id="w-krem" onclick="pickM('KREM')">KREM</span><span class="opt" id="w-maroon" onclick="pickM('MAROON')">MAROON</span><span class="opt" id="w-navy" onclick="pickM('NAVY')">NAVY</span></div>
-<p style="font-size:11px;margin-top:12px;font-weight:600">UKURAN: <span id="uText">110x110</span></p>
+<p class="sub">UKURAN: <span id="uText">110x110</span></p>
 <div><span class="opt active" id="u-110" onclick="pickU('110x110')">110x110</span><span class="opt" id="u-130" onclick="pickU('130x130')">130x130</span></div>
-<div style="margin-top:14px;border:1px solid #EAE6E1;font-size:11px">
-<div style="display:flex;border-bottom:1px solid #EAE6E1"><div style="width:90px;padding:10px;background:#F9F6F3">MATERIAL</div><div style="padding:10px">Voal Premium - Adem, Tidak Menerawang, Tegak di Dahi</div></div>
-<div style="display:flex;border-bottom:1px solid #EAE6E1"><div style="width:90px;padding:10px;background:#F9F6F3">FINISHING</div><div style="padding:10px">Laser Cut Rapi - Pinggiran Halus Tidak Mudah Sobek</div></div>
-<div style="display:flex"><div style="width:90px;padding:10px;background:#F9F6F3">UKURAN</div><div style="padding:10px">110 x 110 cm - Cocok untuk daily & formal</div></div>
+<div class="spec">
+<div><b>MATERIAL</b><span>Voal Premium - Adem, Tidak Menerawang, Tegak di Dahi</span></div>
+<div><b>FINISHING</b><span>Laser Cut Rapi - Pinggiran Halus Tidak Mudah Sobek</span></div>
+<div><b>PERAWATAN</b><span>Cuci tangan, hindari pemutih, setrika suhu sedang</span></div>
+<div><b>UKURAN</b><span>110 x 110 cm - Cocok untuk daily & formal</span></div>
 </div>
 <div class="btn btn-dark" onclick="checkout()">BELI SEKARANG →</div>
-<div style="display:flex;gap:8px"><div class="btn btn-dark" style="flex:1" onclick="addCart()">+ KERANJANG</div><div class="btn btn-light" style="flex:1" onclick="chat()">CHAT WA</div></div>
-</div>
-
-<div id="cartModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;justify-content:center;align-items:flex-end">
-<div style="background:#fff;width:100%;max-width:420px;max-height:80vh;overflow:auto;padding:16px;border-radius:16px 16px 0 0">
-<div style="display:flex;justify-content:space-between"><b>KERANJANG</b><span onclick="closeCart()" style="cursor:pointer">✕</span></div>
-<div id="cList" style="margin-top:12px"></div>
-<div style="margin-top:12px;display:flex;justify-content:space-between;font-size:12px"><span>Total Item: <span id="tItem">0</span></span><span id="tHarga">Rp0</span></div>
-<div class="btn btn-dark" onclick="checkout()">CHECKOUT WA</div>
+<div class="flex"><div class="btn btn-dark" style="flex:1" onclick="addCart()">+ KERANJANG</div><div class="btn btn-light" style="flex:1" onclick="chat()">CHAT WA</div></div>
 </div>
 </div>
 
-<div id="toast" style="position:fixed;left:50%;bottom:85px;transform:translateX(-50%) translateY(20px);background:#2B1B12;color:#fff;padding:12px 22px;border-radius:30px;font-size:12px;opacity:0;pointer-events:none;transition:all.35s ease;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.2)">✓ Masuk keranjang</div>
+<div id="cartModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;justify-content:center;align-items:flex-end"><div style="background:#fff;width:100%;max-width:480px;max-height:85vh;overflow:auto;padding:18px;border-radius:18px 18px 0 0"><div style="display:flex;justify-content:space-between;align-items:center"><b style="letter-spacing:2px;font-size:13px">KERANJANG</b><span onclick="closeCart()" style="cursor:pointer;font-size:18px">✕</span></div><div id="cList" style="margin-top:14px"></div><div style="margin-top:14px;display:flex;justify-content:space-between;font-size:12px;border-top:1px solid #EAE6E1;padding-top:12px"><span>Total Item: <span id="tItem">0</span></span><b id="tHarga">Rp0</b></div><div class="btn btn-dark" onclick="checkout()">CHECKOUT WA</div></div></div>
+<div id="toast">✓ Masuk keranjang</div>
 
 <script>
-const HARGA=180000;
-let IMG='https://images.unsplash.com/photo-1610878722345-79c5eaf6a48c?w=600';
-let warna='KREM',ukuran='110x110';
+const HARGA=180000;let warna='KREM',ukuran='110x110';
+let IMG=document.getElementById('main').src;
 let cart=JSON.parse(localStorage.getItem('cart')||'[]');
 const MAP={
-'HITAM':'https://images.unsplash.com/photo-1584915561949-9effff6342d3?w=600',
-'KREM':'https://images.unsplash.com/photo-1610878722345-79c5eaf6a48c?w=600',
-'MAROON':'https://images.unsplash.com/photo-1617019114583-fd34d2d2a5cd?w=600',
-'NAVY':'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=600'
+HITAM:document.getElementById('b-hitam').src,
+KREM:document.getElementById('b-krem').src,
+MAROON:document.getElementById('b-maroon').src,
+NAVY:document.getElementById('b-navy').src
 };
-function pickM(c){warna=c;IMG=MAP[c];document.getElementById('mainImg').src=IMG;document.getElementById('wText').innerText=c;
-['HITAM','KREM','MAROON','NAVY'].forEach(k=>{let a=document.getElementById('b-'+k.toLowerCase());let b=document.getElementById('w-'+k.toLowerCase());if(a)a.classList.toggle('active',k==c);if(b)b.classList.toggle('active',k==c);})}
+function pickM(c){
+warna=c;document.getElementById('wText').innerText=c;
+let src=MAP[c]||MAP['KREM'];IMG=src;
+document.getElementById('main').src=src;
+['HITAM','KREM','MAROON','NAVY'].forEach(k=>{
+let a=document.getElementById('b-'+k.toLowerCase());
+let b=document.getElementById('w-'+k.toLowerCase());
+if(a)a.classList.toggle('active',k==c);
+if(b)b.classList.toggle('active',k==c);
+});
+}
 function pickU(u){ukuran=u;document.getElementById('uText').innerText=u;document.getElementById('u-110').classList.toggle('active',u=='110x110');document.getElementById('u-130').classList.toggle('active',u=='130x130');}
 function addCart(){
 let i=cart.findIndex(x=>x.warna==warna&&x.ukuran==ukuran);
@@ -83,19 +102,14 @@ function openCart(){renderList();document.getElementById('cartModal').style.disp
 function closeCart(){document.getElementById('cartModal').style.display='none'}
 function renderList(){
 let list=document.getElementById('cList');
-if(cart.length==0){list.innerHTML='<p style="text-align:center;color:#8C7A6B;padding:24px">Keranjang kosong</p>'}
-else{list.innerHTML=cart.map((it,idx)=>`<div style="display:flex;gap:10px;margin-bottom:12px"><img src="${it.img}" style="width:58px;height:58px;object-fit:cover"><div style="flex:1"><div style="font-size:12px;font-weight:600">${it.warna} - ${it.ukuran}</div><div style="display:flex;align-items:center;gap:8px;margin-top:6px"><span onclick="chg(${idx},-1)" style="cursor:pointer;border:1px solid #2B1B12;padding:2px 8px">-</span><span>${it.qty}</span><span onclick="chg(${idx},1)" style="cursor:pointer;border:1px solid #2B1B12;padding:2px 8px">+</span><span onclick="del(${idx})" style="cursor:pointer;margin-left:8px">🗑️</span></div></div></div>`).join('')}
-let totItem=cart.reduce((a,b)=>a+Number(b.qty),0);let totHarga=totItem*HARGA;
-document.getElementById('tItem').innerText=totItem;document.getElementById('tHarga').innerText='Rp'+totHarga.toLocaleString('id-ID');
+if(cart.length==0){list.innerHTML='<p style="text-align:center;color:#8C7A6B;padding:24px;font-size:12px">Keranjang kosong, yuk tambah dulu</p>'}
+else{list.innerHTML=cart.map((it,idx)=>`<div style="display:flex;gap:10px;margin-bottom:12px;align-items:center"><img src="${it.img}" style="width:56px;height:56px;object-fit:cover"><div style="flex:1"><div style="font-size:12px;font-weight:600">${it.warna} - ${it.ukuran}</div><div style="display:flex;align-items:center;gap:8px;margin-top:6px"><span onclick="chg(${idx},-1)" style="cursor:pointer;border:1px solid #2B1B12;padding:2px 8px">-</span><span style="font-size:12px">${it.qty}</span><span onclick="chg(${idx},1)" style="cursor:pointer;border:1px solid #2B1B12;padding:2px 8px">+</span><span onclick="del(${idx})" style="cursor:pointer;margin-left:8px">🗑️</span></div></div><div style="font-size:11px">Rp${(it.harga*it.qty).toLocaleString('id-ID')}</div></div>`).join('')}
+let tot=cart.reduce((a,b)=>a+Number(b.qty),0);let totH=tot*HARGA;
+document.getElementById('tItem').innerText=tot;document.getElementById('tHarga').innerText='Rp'+totH.toLocaleString('id-ID');
 }
 function chg(i,d){cart[i].qty=Number(cart[i].qty)+d;if(cart[i].qty<=0)cart.splice(i,1);save();renderList();renderCount();}
 function del(i){cart.splice(i,1);save();renderList();renderCount();}
-function checkout(){
-if(cart.length==0){return alert('Keranjang kosong')}
-let pesan=`Halo Arinda, mau ORDER:\n`;cart.forEach((it,n)=>{pesan+=`${n+1}. ${it.warna} ${it.ukuran} x${it.qty} = Rp${(it.harga*it.qty).toLocaleString('id-ID')}\n`});
-let total=cart.reduce((a,b)=>a+b.harga*b.qty,0);pesan+=`\nTOTAL: Rp${total.toLocaleString('id-ID')}\n\nMohon infonya ongkir ya 🙏`;
-window.open('https://wa.me/6285178908354?text='+encodeURIComponent(pesan),'_blank');
-}
+function checkout(){if(cart.length==0){alert('Keranjang kosong');return}let pesan=`Halo Arinda, mau ORDER:%0A`;cart.forEach((it,n)=>{pesan+=`${n+1}. ${it.warna} ${it.ukuran} x${it.qty} = Rp${(it.harga*it.qty).toLocaleString('id-ID')}%0A`});let total=cart.reduce((a,b)=>a+b.harga*b.qty,0);pesan+=`%0ATOTAL: Rp${total.toLocaleString('id-ID')}%0A%0AMohon infonya ongkir ya 🙏`;window.open('https://wa.me/6285178908354?text='+pesan,'_blank');}
 function chat(){window.open('https://wa.me/6285178908354?text='+encodeURIComponent('Halo Arinda, mau tanya hijab '+warna+' '+ukuran+' Rp180.000'),'_blank')}
 function save(){localStorage.setItem('cart',JSON.stringify(cart))}
 function renderCount(){document.getElementById('cartCount').innerText=cart.reduce((a,b)=>a+Number(b.qty),0)}
