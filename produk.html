@@ -1,70 +1,121 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Produk Rp18.000 - ARINDA</title>
+<title>Produk - ARINDA</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--off:#FFFCF9}
 *{box-sizing:border-box}body{margin:0;background:var(--off);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
-nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.98);backdrop-filter:blur(12px);border-bottom:1px solid var(--champ)}
-.nav-in{max-width:1000px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
-.logo{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:4px;font-size:20px}.menu{display:flex;gap:16px;align-items:center}.menu a{text-decoration:none;font-size:11px;letter-spacing:2px;color:var(--taupe);border-bottom:1.5px solid transparent;padding-bottom:3px;white-space:nowrap}.menu a.active{color:var(--esp);border-color:var(--esp)}
-.wrap{max-width:1000px;margin:0 auto;padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.gal{border:1px solid var(--champ);background:#fff;padding:8px}.gal img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover}
-.thumb{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.thumb img{width:100%;aspect-ratio:1/1;object-fit:cover;border:1.5px solid transparent;cursor:pointer}.thumb img.active{border-color:var(--esp)}
-.pill{padding:10px;border:1px solid var(--champ);text-align:center;cursor:pointer;background:#fff;font-size:11px}.pill.active{border-color:var(--esp);border-width:1.5px;font-weight:600}
-.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
-.btn{padding:14px;text-align:center;border:1px solid var(--esp);font-size:11px;letter-spacing:2px;cursor:pointer;background:#fff}
-.btn-primary{background:var(--esp);color:#fff}
-#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--esp);color:#fff;padding:12px 20px;font-size:12px;display:none;z-index:999;border-radius:4px}
-@media(max-width:750px){.nav-in{flex-direction:column;align-items:flex-start}.menu{width:100%;justify-content:space-between;border-top:1px solid var(--champ);padding-top:10px}.wrap{grid-template-columns:1fr}}
+nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.98);border-bottom:1px solid var(--champ)}
+.nav-in{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:22px}.menu{display:flex;gap:18px}.menu a{text-decoration:none;font-size:11px;letter-spacing:2px;color:var(--taupe);cursor:pointer}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
+.wrap{max-width:1100px;margin:0 auto;padding:20px;display:grid;grid-template-columns:1.1fr.9fr;gap:20px}
+.main-img{width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--champ)}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.thumbs img{width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--champ);cursor:pointer;opacity:.7}.thumbs img.active{opacity:1;border:2px solid var(--esp)}
+.opt{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.opt button{padding:10px 14px;border:1px solid var(--champ);background:#fff;font-size:11px;letter-spacing:1px;cursor:pointer}.opt button.active{background:var(--esp);color:#fff;border-color:var(--esp)}
+.btn{padding:14px;border:1px solid var(--esp);background:#fff;font-size:11px;letter-spacing:2px;cursor:pointer;width:100%;margin-top:10px}.btn.primary{background:var(--esp);color:#fff}
+#cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;justify-content:center;align-items:flex-end}
+#cartBox{background:#fff;width:100%;max-width:500px;max-height:85vh;overflow:auto;border-radius:16px 16px 0 0;padding:20px;animation:slide.3s}
+@keyframes slide{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--champ);align-items:center}
+.cart-item img{width:60px;height:60px;object-fit:cover;border:1px solid var(--champ)}
+.qty{display:flex;gap:8px;align-items:center;border:1px solid var(--champ);padding:4px 8px}
+@media(max-width:800px){.wrap{grid-template-columns:1fr}.nav-in{flex-direction:column;align-items:flex-start}}
 </style>
 </head><body>
-<nav><div class="nav-in"><div class="logo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html" class="active">PRODUK</a><a href="kontak.html">KONTAK</a><a href="#" id="cartLink">KERANJANG (<span id="cartCount">0</span>)</a></div></div></nav>
+<nav><div class="nav-in"><div class="logo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html" class="active">PRODUK</a><a href="kontak.html">KONTAK</a><a onclick="openCart()">KERANJANG (<span id="cartCount">0</span>)</a></div></div></nav>
+
 <div class="wrap">
 <div>
-<div class="gal"><img id="mainImg" src="krem.jpg"></div>
-<div class="thumb">
-<img src="hitam.jpg" data-warna="HITAM" class="active" onclick="pickWarna(this)">
-<img src="krem.jpg" data-warna="KREM" onclick="pickWarna(this)">
-<img src="maroon.jpg" data-warna="MAROON" onclick="pickWarna(this)">
-<img src="navy.jpg" data-warna="NAVY" onclick="pickWarna(this)">
+<img id="mainImg" class="main-img" src="krem.jpg">
+<div class="thumbs">
+<img id="t-hitam" src="hitam.jpg" onclick="setWarna('HITAM')">
+<img id="t-krem" src="krem.jpg" class="active" onclick="setWarna('KREM')">
+<img id="t-maroon" src="maroon.jpg" onclick="setWarna('MAROON')">
+<img id="t-navy" src="navy.jpg" onclick="setWarna('NAVY')">
 </div>
 </div>
 <div>
-<div style="font-size:10px;letter-spacing:3px;color:var(--taupe)">BESTSELLER</div>
-<div style="font-family:'Cormorant Garamond';font-size:40px;font-weight:600">Rp18.000</div>
-<div style="font-size:11px;letter-spacing:2px;margin:18px 0 8px">PILIH WARNA : <b id="warnaText">HITAM</b></div>
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px" id="warnaPills">
-<div class="pill active" data-warna="HITAM" onclick="pickWarnaByName('HITAM')">HITAM</div>
-<div class="pill" data-warna="KREM" onclick="pickWarnaByName('KREM')">KREM</div>
-<div class="pill" data-warna="MAROON" onclick="pickWarnaByName('MAROON')">MAROON</div>
-<div class="pill" data-warna="NAVY" onclick="pickWarnaByName('NAVY')">NAVY</div>
+<div style="font-size:10px;letter-spacing:3px;color:var(--taupe)">BESTSELLER • READY STOCK</div>
+<div style="font-family:'Cormorant Garamond';font-size:42px;margin:6px 0">Rp180.000</div>
+<div style="font-size:13px;color:var(--taupe)">Hijab premium voal, adem, tidak menerawang, laser cut rapi.</div>
+
+<div style="margin-top:18px;font-size:11px;letter-spacing:2px">PILIH WARNA : <b id="labelWarna">KREM</b></div>
+<div class="opt">
+<button id="b-HITAM" onclick="setWarna('HITAM')">HITAM</button>
+<button id="b-KREM" class="active" onclick="setWarna('KREM')">KREM</button>
+<button id="b-MAROON" onclick="setWarna('MAROON')">MAROON</button>
+<button id="b-NAVY" onclick="setWarna('NAVY')">NAVY</button>
 </div>
-<div style="font-size:11px;letter-spacing:2px;margin:18px 0 8px">UKURAN : <b id="ukuranText">110x110</b></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-<div class="pill active" data-uk="110x110" onclick="pickUkuran(this)">110x110</div>
-<div class="pill" data-uk="130x130" onclick="pickUkuran(this)">130x130</div>
+
+<div style="margin-top:18px;font-size:11px;letter-spacing:2px">UKURAN : <b id="labelUkuran">110x110</b></div>
+<div class="opt">
+<button id="u-110" class="active" onclick="setUkuran('110x110')">110x110</button>
+<button id="u-130" onclick="setUkuran('130x130')">130x130</button>
 </div>
-<div class="btn-row">
-<div class="btn" id="btnChat">CHAT</div>
-<div class="btn" id="btnCart">+ KERANJANG</div>
+
+<button class="btn" onclick="chatLangsung()">CHAT</button>
+<button class="btn" onclick="addToCart()">+ KERANJANG</button>
+<button class="btn primary" onclick="openCart()">BELI SEKARANG - REVIEW KERANJANG</button>
+<div id="toast" style="margin-top:10px;font-size:12px;color:green;text-align:center;display:none"></div>
 </div>
-<div class="btn btn-primary" id="btnBuy" style="margin-top:10px">BELI SEKARANG</div>
+</div>
+
+<div id="cartModal" onclick="if(event.target==this)closeCart()">
+<div id="cartBox">
+<div style="display:flex;justify-content:space-between;align-items:center"><b style="font-family:'Cormorant Garamond';font-size:22px">Keranjang Kamu</b><span onclick="closeCart()" style="cursor:pointer;font-size:20px">✕</span></div>
+<div id="cartList" style="margin-top:12px"></div>
+<div style="border-top:2px solid var(--esp);margin-top:12px;padding-top:12px">
+<div style="display:flex;justify-content:space-between"><span>Total Item:</span><b id="totalItem">0</b></div>
+<div style="display:flex;justify-content:space-between;font-size:20px;margin-top:6px"><span>Total Belanja:</span><b id="totalHarga">Rp0</b></div>
+</div>
+<button class="btn primary" onclick="checkoutWA()">CHECKOUT VIA WHATSAPP →</button>
+<button class="btn" onclick="closeCart()">LANJUT BELANJA</button>
 </div>
 </div>
-<div id="toast"></div>
+
 <script>
-let selectedWarna='HITAM',selectedUkuran='110x110',cart=JSON.parse(localStorage.getItem('arinda_cart')||'[]');
-function updateCartCount(){document.getElementById('cartCount').innerText=cart.length;}
-function pickWarna(el){selectedWarna=el.dataset.warna;document.getElementById('mainImg').src=el.src;document.getElementById('warnaText').innerText=selectedWarna;document.querySelectorAll('.thumb img, #warnaPills .pill').forEach(p=>p.classList.remove('active'));el.classList.add('active');document.querySelector(`#warnaPills .pill[data-warna="${selectedWarna}"]`).classList.add('active');}
-function pickWarnaByName(n){const i=document.querySelector(`.thumb img[data-warna="${n}"]`);if(i)pickWarna(i);}
-function pickUkuran(el){selectedUkuran=el.dataset.uk;document.getElementById('ukuranText').innerText=selectedUkuran;document.querySelectorAll('[data-uk]').forEach(p=>p.classList.remove('active'));el.classList.add('active');}
-function showToast(m){const t=document.getElementById('toast');t.innerText=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
-function waLink(t){return `https://wa.me/6285178098354?text=${encodeURIComponent(t)}`;}
-document.getElementById('btnChat').onclick=()=>{window.open(waLink(`Halo Arinda mau tanya hijab ${selectedWarna} ${selectedUkuran} Rp18.000 ready?`),'_blank');};
-document.getElementById('btnCart').onclick=()=>{cart.push({warna:selectedWarna,ukuran:selectedUkuran});localStorage.setItem('arinda_cart',JSON.stringify(cart));updateCartCount();showToast(`${selectedWarna} masuk keranjang!`);};
-document.getElementById('btnBuy').onclick=()=>{window.open(waLink(`Halo Arinda mau ORDER Warna: ${selectedWarna} Ukuran: ${selectedUkuran} Rp18.000`), '_blank');};
-document.getElementById('cartLink').onclick=(e)=>{e.preventDefault();if(cart.length===0){showToast('Keranjang kosong');return;}let list=cart.map((c,i)=>`${i+1}. ${c.warna} ${c.ukuran}`).join('\n');window.open(waLink(`Mau checkout:\n${list}`),'_blank');};
-updateCartCount();
+let warna='KREM', ukuran='110x110', harga=18000;
+let cart=JSON.parse(localStorage.getItem('arinda_cart')||'[]');
+const mapImg={HITAM:'hitam.jpg',KREM:'krem.jpg',MAROON:'maroon.jpg',NAVY:'navy.jpg'};
+function setWarna(w){warna=w;document.getElementById('labelWarna').innerText=w;document.getElementById('mainImg').src=mapImg[w];
+document.querySelectorAll('.thumbs img').forEach(i=>i.classList.remove('active'));document.getElementById('t-'+w.toLowerCase()).classList.add('active');
+document.querySelectorAll('.opt button').forEach(b=>{if(['HITAM','KREM','MAROON','NAVY'].includes(b.innerText))b.classList.toggle('active',b.innerText==w)})}
+function setUkuran(u){ukuran=u;document.getElementById('labelUkuran').innerText=u;
+document.getElementById('u-110').classList.toggle('active',u=='110x110');document.getElementById('u-130').classList.toggle('active',u=='130x130')}
+function addToCart(){
+let idx=cart.findIndex(i=>i.warna==warna&&i.ukuran==ukuran);
+if(idx>-1)cart[idx].qty++; else cart.push({warna,ukuran,harga,qty:1,img:mapImg[warna]});
+save();showToast(`${warna} masuk keranjang!`)}
+function save(){localStorage.setItem('arinda_cart',JSON.stringify(cart));updateCount();renderCart()}
+function updateCount(){document.getElementById('cartCount').innerText=cart.reduce((a,b)=>a+b.qty,0)}
+function showToast(t){let el=document.getElementById('toast');el.innerText=t;el.style.display='block';setTimeout(()=>el.style.display='none',2000)}
+function openCart(){renderCart();document.getElementById('cartModal').style.display='flex'}
+function closeCart(){document.getElementById('cartModal').style.display='none'}
+function renderCart(){
+let list=document.getElementById('cartList');if(cart.length==0){list.innerHTML='<p style="color:var(--taupe);text-align:center;padding:20px">Keranjang kosong</p>';document.getElementById('totalItem').innerText=0;document.getElementById('totalHarga').innerText='Rp0';return}
+list.innerHTML=cart.map((it,i)=>`
+<div class="cart-item">
+<img src="${it.img}"><div style="flex:1"><div style="font-size:12px;font-weight:600">${it.warna} - ${it.ukuran}</div><div style="font-size:11px;color:var(--taupe)">Rp${it.harga.toLocaleString('id-ID')} x ${it.qty}</div></div>
+<div class="qty"><span style="cursor:pointer" onclick="chgQty(${i},-1)">-</span><b>${it.qty}</b><span style="cursor:pointer" onclick="chgQty(${i},1)">+</span></div>
+<span style="cursor:pointer;margin-left:8px" onclick="removeItem(${i})">🗑️</span>
+</div>`).join('');
+let totalItem=cart.reduce((a,b)=>a+b.qty,0);let total=cart.reduce((a,b)=>a+b.harga*b.qty,0);
+document.getElementById('totalItem').innerText=totalItem;document.getElementById('totalHarga').innerText='Rp'+total.toLocaleString('id-ID');
+}
+function chgQty(i,d){cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);save()}
+function removeItem(i){cart.splice(i,1);save()}
+function checkoutWA(){
+if(cart.length==0)return alert('Keranjang kosong');
+let pesan=`Halo Arinda, mau ORDER:%0A`;
+cart.forEach((it,n)=>{pesan+=`${n+1}. ${it.warna} ${it.ukuran} x${it.qty} = Rp${(it.harga*it.qty).toLocaleString('id-ID')}%0A`});
+let total=cart.reduce((a,b)=>a+b.harga*b.qty,0);
+pesan+=`%0ATotal: Rp${total.toLocaleString('id-ID')} (${cart.reduce((a,b)=>a+b.qty,0)} item)%0A%0AMohon total + ongkir ya kak 🙏`;
+window.open(`https://wa.me/6285178098354?text=${pesan}`,'_blank');
+}
+function chatLangsung(){
+let pesan=`Halo Arinda, mau tanya hijab ${warna} ${ukuran} Rp18.000 ready gak?`;
+window.open(`https://wa.me/6285178098354?text=${encodeURIComponent(pesan)}`,'_blank');
+}
+updateCount();
 </script>
 </body></html>
