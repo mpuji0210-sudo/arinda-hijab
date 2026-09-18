@@ -1,30 +1,132 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Produk - ARINDA</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Plus+Jakarta+Sans:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--off:#FFFCF9}
 *{box-sizing:border-box}body{margin:0;background:var(--off);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
-nav{position:sticky;top:0;z-index:99;display:flex;justify-content:space-between;align-items:center;padding:18px 24px;background:rgba(255,252,249,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--champ)}
-.logo{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:4px;font-size:22px}.menu{display:flex;gap:22px}.menu a{text-decoration:none;font-size:11.5px;letter-spacing:2.8px;color:var(--taupe);padding-bottom:4px;border-bottom:1.5px solid transparent}.menu a.active{color:var(--esp);border-color:var(--esp)}
-.wrap{max-width:900px;margin:0 auto;padding:20px}
-.circle{width:280px;height:280px;background:#111;border-radius:50%;margin:20px auto}
-html{scroll-behavior:smooth}body{opacity:0;animation:fadeIn .45s ease forwards}@keyframes fadeIn{to{opacity:1}}body.fadeOut{opacity:0;transition:opacity .28s ease}
-</style>
-<script>document.addEventListener('DOMContentLoaded',()=>{const s=!!document.startViewTransition;document.querySelectorAll('a[href$=".html"]').forEach(a=>{a.addEventListener('click',e=>{const h=a.getAttribute('href');if(h.startsWith('http'))return;e.preventDefault();if(s){document.startViewTransition(()=>window.location.href=h)}else{document.body.classList.add('fadeOut');setTimeout(()=>window.location.href=h,280)}})})})</script>
-</head><body>
-<nav><div class="logo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html" class="active">PRODUK</a><a href="kontak.html">KONTAK</a></div></nav>
+nav{position:sticky;top:0;z-index:99;background:#FFFCF9;border-bottom:1px solid var(--champ)}
+.nav-in{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:20px}
+.menu{display:flex;gap:16px}.menu a{font-size:11px;letter-spacing:2px;color:var(--taupe);text-decoration:none;cursor:pointer}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
+.wrap{max-width:1100px;margin:0 auto;padding:16px 20px;display:grid;grid-template-columns:1.1fr.9fr;gap:24px}
+.main-img{width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--champ)}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.thumbs img{width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--champ);opacity:.6}
+.thumbs img.active{opacity:1;border:2px solid var(--esp)}
+.opt{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 16px 0}
+.opt button{padding:11px 14px;border:1px solid var(--champ);background:#fff;font-size:12px;cursor:pointer;min-width:64px}
+.opt button.active{background:var(--esp);color:#fff}
+.btn{width:100%;padding:15px;border:1px solid var(--esp);background:#fff;font-size:12px;letter-spacing:2px;cursor:pointer;margin-top:10px}
+.btn.primary{background:var(--esp);color:#fff}
+#cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;align-items:flex-end;justify-content:center}
+#cartBox{background:#fff;width:100%;max-width:520px;max-height:90vh;overflow:auto;border-radius:18px 18px 0 0;padding:20px}
+.cart-row{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--champ);align-items:center}
+@media(max-width:800px){.wrap{grid-template-columns:1fr}.nav-in{flex-direction:column;align-items:flex-start;gap:6px}}
+</style></head><body>
+<nav><div class="nav-in"><div class="logo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html" class="active">PRODUK</a><a href="kontak.html">KONTAK</a><a onclick="openCart()">KERANJANG (<span id="cCount">0</span>)</a></div></div></nav>
+
 <div class="wrap">
-<div class="circle"></div>
-<div style="text-align:center"><div style="font-weight:600">Hitam Pekat</div><div style="font-size:10px;letter-spacing:2px;color:var(--taupe)">PREMIUM VOAL • 110X110 • LASER CUT</div></div>
-<div style="margin-top:24px"><div style="font-size:10px;letter-spacing:2px;color:var(--taupe)">BESTSELLER • PREMIUM VOAL</div><div style="font-family:'Cormorant Garamond';font-size:32px">Rp18.000</div><div style="font-size:14px;margin:8px 0">Arinda Hijab Premium - Adem, Tidak Mudah Kusut, Jahit Rapi</div>
-<div style="font-size:11px;letter-spacing:2px;margin:16px 0 8px">PILIH WARNA</div>
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px"><div style="border:1.5px solid var(--esp);padding:8px;text-align:center"><div style="width:24px;height:24px;background:#111;border-radius:50%;margin:0 auto"></div><div style="font-size:9px;margin-top:4px">HITAM</div></div><div style="border:1px solid var(--champ);padding:8px;text-align:center;background:#fff"><div style="width:24px;height:24px;background:#E8DCCF;border-radius:50%;margin:0 auto"></div><div style="font-size:9px;margin-top:4px">KREM</div></div><div style="border:1px solid var(--champ);padding:8px;text-align:center;background:#fff"><div style="width:24px;height:24px;background:#7a1a1a;border-radius:50%;margin:0 auto"></div><div style="font-size:9px;margin-top:4px">MAROON</div></div><div style="border:1px solid var(--champ);padding:8px;text-align:center;background:#fff"><div style="width:24px;height:24px;background:#1a2a4a;border-radius:50%;margin:0 auto"></div><div style="font-size:9px;margin-top:4px">NAVY</div></div></div>
-<div style="font-size:11px;letter-spacing:2px;margin:16px 0 8px">UKURAN</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="border:1px solid var(--champ);padding:10px;text-align:center;background:#fff;font-size:11px">STANDAR 110X110</div><div style="border:1px solid var(--champ);padding:10px;text-align:center;background:#fff;font-size:11px">SYARI 130X130</div></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><div style="border:1px solid var(--esp);padding:12px;text-align:center;font-size:11px;letter-spacing:1px">CHAT</div><div style="border:1px solid var(--esp);padding:12px;text-align:center;font-size:11px;letter-spacing:1px">KERANJANG</div></div>
-<div style="background:var(--esp);color:#fff;padding:14px;text-align:center;font-size:11px;letter-spacing:2px;margin-top:8px">BELI SEKARANG - RP18.000</div>
-<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--taupe);margin-top:8px"><span>Kirim dari Jakarta</span><span>COD & QRIS</span></div>
+<div>
+<img id="main" class="main-img" src="krem.jpg">
+<div class="thumbs">
+<img src="hitam.jpg" id="th-hitam" onclick="pickW('HITAM')">
+<img src="krem.jpg" id="th-krem" class="active" onclick="pickW('KREM')">
+<img src="maroon.jpg" id="th-maroon" onclick="pickW('MAROON')">
+<img src="navy.jpg" id="th-navy" onclick="pickW('NAVY')">
 </div>
 </div>
-</body></html>
+<div>
+<div style="font-size:10px;letter-spacing:3px;color:var(--taupe)">BESTSELLER READY STOCK</div>
+<div style="font-family:'Cormorant Garamond';font-size:44px">Rp180.000</div>
+<div style="font-size:13px;color:var(--taupe);margin-top:6px">Hijab premium voal, adem, laser cut rapi, tidak menerawang.</div>
+
+<div style="margin-top:20px;font-size:11px;letter-spacing:2px">PILIH WARNA: <b id="lW">KREM</b></div>
+<div class="opt"><button id="b-HITAM" onclick="pickW('HITAM')">HITAM</button><button id="b-KREM" class="active" onclick="pickW('KREM')">KREM</button><button id="b-MAROON" onclick="pickW('MAROON')">MAROON</button><button id="b-NAVY" onclick="pickW('NAVY')">NAVY</button></div>
+
+<div style="font-size:11px;letter-spacing:2px">UKURAN: <b id="lU">110x110</b></div>
+<div class="opt"><button id="u-110" class="active" onclick="pickU('110x110')">110x110</button><button id="u-130" onclick="pickU('130x130')">130x130</button></div>
+
+  <!-- DETAIL NILAI TAMBAH - BIKIN YAKIN BELI -->
+<div style="background:#FFFCF9;border:1px solid #EAE6E1;padding:14px 16px;margin:16px 0 6px 0;display:flex;flex-direction:column;gap:10px">
+  <div style="display:flex;gap:10px;font-size:12px">
+    <span style="min-width:90px;letter-spacing:1px;color:#8C7A6B;font-size:10px">MATERIAL</span>
+    <span style="color:#2B1B12;font-weight:500">Voal Premium - Adem, Tidak Menerawang, Tegak di Dahi</span>
+  </div>
+  <div style="display:flex;gap:10px;font-size:12px;border-top:1px dashed #EAE6E1;padding-top:10px">
+    <span style="min-width:90px;letter-spacing:1px;color:#8C7A6B;font-size:10px">FINISHING</span>
+    <span style="color:#2B1B12;font-weight:500">Laser Cut Rapi - Pinggiran Halus Tidak Mudah Sobek</span>
+  </div>
+  <div style="display:flex;gap:10px;font-size:12px;border-top:1px dashed #EAE6E1;padding-top:10px">
+    <span style="min-width:90px;letter-spacing:1px;color:#8C7A6B;font-size:10px">PERAWATAN</span>
+    <span style="color:#2B1B12;font-weight:500">Cuci tangan, hindari pemutih, setrika suhu sedang</span>
+  </div>
+  <div style="display:flex;gap:10px;font-size:12px;border-top:1px dashed #EAE6E1;padding-top:10px">
+    <span style="min-width:90px;letter-spacing:1px;color:#8C7A6B;font-size:10px">UKURAN</span>
+    <span style="color:#2B1B12;font-weight:500">110 x 110 cm - Cocok untuk daily & formal</span>
+  </div>
+</div>
+<button class="btn-primary" onclick="addCart();openCart()" style="background:#2B1B12;color:#fff;border:2px solid #2B1B12;padding:16px;width:100%;font-size:12px;letter-spacing:2px;font-weight:600;margin-top:10px">BELI SEKARANG →</button>
+<div style="display:flex;gap:10px;margin-top:10px">
+<button class="btn" onclick="addCart()" style="background:#3D2B1F;color:#fff;border:2px solid #3D2B1F;padding:14px;width:100%;font-size:11px;letter-spacing:2px">+ KERANJANG</button>
+<a href="https://wa.me/6285178098354" style="background:#fff;color:#2B1B12;border:1.5px solid #8C7A6B;padding:14px;width:100%;font-size:11px;letter-spacing:2px;text-align:center;text-decoration:none">CHAT WA</a>
+</div>
+<div id="toast" style="display:none;text-align:center;color:green;margin-top:12px;font-size:13px"></div>
+</div>
+</div>
+
+<div id="cartModal" onclick="if(event.target==this)closeCart()"><div id="cartBox">
+<div style="display:flex;justify-content:space-between"><b style="font-family:'Cormorant Garamond';font-size:24px">Keranjang Belanja</b><span onclick="closeCart()" style="font-size:24px;cursor:pointer">✕</span></div>
+<div id="cList" style="margin-top:10px"></div>
+<div style="border-top:2px solid var(--esp);padding-top:14px;margin-top:10px">
+<div style="display:flex;justify-content:space-between"><span>Total Item</span><b id="tItem">0</b></div>
+<div style="display:flex;justify-content:space-between;font-size:22px;margin-top:8px"><span>Total</span><b id="tHarga">Rp0</b></div>
+</div>
+<button class="btn primary" onclick="checkout()">CHECKOUT VIA WHATSAPP</button>
+<button class="btn" onclick="closeCart()">LANJUT BELANJA</button>
+</div></div>
+
+<script>
+let warna='KREM', ukuran='110x110'; const HARGA=180000;
+const IMG={HITAM:'hitam.jpg',KREM:'krem.jpg',MAROON:'maroon.jpg',NAVY:'navy.jpg'};
+// RESET keranjang lama yang corrupt
+let cart=[]; try{cart=JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){cart=[]}
+if(!Array.isArray(cart)) cart=[];
+function save(){localStorage.setItem('arinda_cart2',JSON.stringify(cart)); renderCount()}
+function renderCount(){let c=cart.reduce((a,b)=>a+(Number(b.qty)||0),0); document.getElementById('cCount').innerText=c}
+function pickW(w){warna=w;document.getElementById('lW').innerText=w;document.getElementById('main').src=IMG[w];
+document.querySelectorAll('.thumbs img').forEach(i=>i.classList.remove('active'));document.getElementById('th-'+w.toLowerCase()).classList.add('active');
+['HITAM','KREM','MAROON','NAVY'].forEach(k=>{let b=document.getElementById('b-'+k); if(b) b.classList.toggle('active',k==w)})}
+function pickU(u){ukuran=u;document.getElementById('lU').innerText=u;
+document.getElementById('u-110').classList.toggle('active',u=='110x110');document.getElementById('u-130').classList.toggle('active',u=='130x130')}
+function addCart(){
+let i=cart.findIndex(x=>x.warna==warna&&x.ukuran==ukuran);
+if(i>-1){cart[i].qty=Number(cart[i].qty||0)+1}else{cart.push({warna,ukuran,qty:1,harga:HARGA,img:IMG[warna]})}
+save(); let t=document.getElementById('toast'); t.innerText=warna+' '+ukuran+' masuk keranjang!'; t.style.display='block'; setTimeout(()=>t.style.display='none',2000)}
+function openCart(){renderList();document.getElementById('cartModal').style.display='flex'}
+function closeCart(){document.getElementById('cartModal').style.display='none'}
+function renderList(){
+let list=document.getElementById('cList');
+if(cart.length==0){list.innerHTML='<p style="text-align:center;color:#8C7A6B;padding:24px">Keranjang kosong, yuk tambah dulu</p>'; document.getElementById('tItem').innerText='0'; document.getElementById('tHarga').innerText='Rp0'; return}
+list.innerHTML=cart.map((it,idx)=>`
+<div class="cart-row">
+<img src="${it.img}" style="width:58px;height:58px;object-fit:cover;border:1px solid #EAE6E1">
+<div style="flex:1"><div style="font-size:13px;font-weight:600">${it.warna} - ${it.ukuran}</div><div style="font-size:12px;color:#8C7A6B">Rp${HARGA.toLocaleString('id-ID')} x ${it.qty} = Rp${(HARGA*it.qty).toLocaleString('id-ID')}</div></div>
+<div style="display:flex;align-items:center;gap:8px;border:1px solid #EAE6E1;padding:4px 8px"><span onclick="chg(${idx},-1)" style="cursor:pointer">−</span><b>${it.qty}</b><span onclick="chg(${idx},1)" style="cursor:pointer">+</span></div>
+<span onclick="del(${idx})" style="cursor:pointer">🗑️</span>
+</div>`).join('');
+let totItem=cart.reduce((a,b)=>a+Number(b.qty),0); let totHarga=totItem*HARGA;
+document.getElementById('tItem').innerText=totItem; document.getElementById('tHarga').innerText='Rp'+totHarga.toLocaleString('id-ID');
+}
+function chg(i,d){cart[i].qty=Number(cart[i].qty)+d; if(cart[i].qty<=0) cart.splice(i,1); save(); renderList()}
+function del(i){cart.splice(i,1); save(); renderList()}
+function checkout(){
+if(cart.length==0) return alert('Keranjang kosong');
+let pesan='Halo Arinda, mau ORDER:%0A'; cart.forEach((it,n)=>{pesan+=`${n+1}. ${it.warna} ${it.ukuran} x${it.qty} = Rp${(it.harga*it.qty).toLocaleString('id-ID')}%0A`});
+let total=cart.reduce((a,b)=>a+b.harga*b.qty,0); pesan+=`%0ATotal: Rp${total.toLocaleString('id-ID')} (${cart.reduce((a,b)=>a+b.qty,0)} item)%0AMohon info ongkir ya kak 🙏`;
+window.open('https://wa.me/6285178098354?text='+pesan,'_blank');
+}
+function chat(){window.open('https://wa.me/6285178098354?text='+encodeURIComponent('Halo Arinda, mau tanya hijab '+warna+' '+ukuran+' Rp180.000 ready gak?'),'_blank')}
+renderCount();
+pickW('KREM');
+</script></body></html>
