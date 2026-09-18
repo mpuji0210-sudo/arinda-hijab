@@ -97,7 +97,7 @@ list.innerHTML=cart.map((it,i)=>`
 <div class="cart-item">
 <img src="${it.img}"><div style="flex:1"><div style="font-size:12px;font-weight:600">${it.warna} - ${it.ukuran}</div><div style="font-size:11px;color:var(--taupe)">Rp${it.harga.toLocaleString('id-ID')} x ${it.qty}</div></div>
 <div class="qty"><span style="cursor:pointer" onclick="chgQty(${i},-1)">-</span><b>${it.qty}</b><span style="cursor:pointer" onclick="chgQty(${i},1)">+</span></div>
-<span style="cursor:pointer;margin-left:8px" onclick="removeItem(${i})">🗑️</span>
+<span style="cursor:pointer;margin-left:8px" onclick="removeItem(${i})">keranjang</span>
 </div>`).join('');
 let totalItem=cart.reduce((a,b)=>a+b.qty,0);let total=cart.reduce((a,b)=>a+b.harga*b.qty,0);
 document.getElementById('totalItem').innerText=totalItem;document.getElementById('totalHarga').innerText='Rp'+total.toLocaleString('id-ID');
