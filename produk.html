@@ -102,7 +102,7 @@ document.getElementById('u-110').classList.toggle('active',u=='110x110');documen
 function addCart(){
 let i=cart.findIndex(x=>x.warna==warna&&x.ukuran==ukuran);
 if(i>-1){cart[i].qty=Number(cart[i].qty)+1}else{cart.push({warna,ukuran,qty:1,harga:HARGA,img:IMG})}
-save(); renderCount(); let t=document.getElementById('toast'); t.innerText='✓ '+warna+' '+ukuran+' masuk keranjang'; t.style.opacity='1'; t.style.transform='translateX(-50%) translateY(0)'; clearTimeout(window._toastTimer); window._toastTimer=setTimeout(()=>{t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(20px)';},2200);
+save(); renderCount(); renderList(); let t=document.getElementById('toast'); t.innerText='✓ '+warna+' '+ukuran+' masuk keranjang'; t.style.opacity='1'; t.style.transform='translateX(-50%) translateY(0)'; clearTimeout(window._toastTimer); window._toastTimer=setTimeout(()=>{t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(20px)';},2200);
 function openCart(){renderList();document.getElementById('cartModal').style.display='flex'}
 function closeCart(){document.getElementById('cartModal').style.display='none'}
 function renderList(){
