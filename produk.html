@@ -22,7 +22,7 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9;border-bottom:1px solid 
 #cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;align-items:flex-end;justify-content:center}
 #cartBox{background:#fff;width:100%;max-width:520px;max-height:90vh;overflow:auto;border-radius:18px 18px 0 0;padding:20px}
 .cart-row{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--champ);align-items:center}
-/* UNDERTONE GUIDE - ALA ELZATTA */
+/* UNDERTONE GUIDE - */
 .undertone{max-width:1100px;margin:0 auto;padding:32px 20px 40px;background:var(--beige);margin-top:20px;border-radius:24px}
 .u-head{font-family:'Cormorant Garamond';font-size:36px;line-height:1.1;margin-bottom:8px}
 .u-sub{font-size:13px;color:var(--taupe);margin-bottom:20px;line-height:1.5}
@@ -68,11 +68,22 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9;border-bottom:1px solid 
 <button class="btn primary" onclick="addCart();openCart()">BELI SEKARANG →</button>
 <div style="display:flex;gap:10px;margin-top:10px">
 <button class="btn" onclick="addCart()">+ KERANJANG</button>
-<a href="https://wa.me/6285178098354" style="background:#fff;color:#2B1B12;border:1.5px solid #8C7A6B;padding:14px;width:100%;font-size:11px;letter-spacing:2px;text-align:center;text-decoration:none">CHAT WA</a>
+<a href="https://wa.me/6285178098354?text=Hi%20ARINDA%20%F0%9F%91%8B%0A%0AAku%20bingung%20pilih%20warna%20hijab%20yang%20cocok.%0ABoleh%20bantu%20cek%20undertone%20aku%20%3F%0A%0AUrat%20nadi%20aku%20kayaknya%20%3A%20%5B%20Tulis%20Biru%2FHijau%2FCampur%20%5D%0A%0AMau%20order%20ARINDA%20Premium%20Voal%20Rp180.000%20ya" target="_blank">CHAT WA</a>
 </div>
 <div id="toast" style="display:none;text-align:center;color:green;margin-top:12px;font-size:13px"></div>
 </div>
 </div>
+
+<script>
+function chatWaUndertone(){
+  let warna = document.querySelector('.opt button.active, .color-opt.active')?.innerText || 'KREM ELEGANT';
+  let ukuran = document.getElementById('u-110')?.classList.contains('active') ? '110x110' : '130x130';
+  let text = `Hi ARINDA 👋%0A%0AAku bingung pilih warna hijab yang cocok.%0A%0APilihan aku:%0A- Warna: ${warna}%0A- Ukuran: ${ukuran}%0A- Harga: Rp180.000%0A%0ABoleh bantu cek undertone aku? Urat nadi aku warna [Biru/Hijau/Campur]%0A%0AMakasih!`;
+  window.open('https://wa.me/6285178098354?text='+text,'_blank');
+}
+</script>
+
+<!-- SECTION BARU: UNDER TONE GUIDE -->
 
 <!-- SECTION BARU: UNDER TONE GUIDE -->
 <div class="undertone">
