@@ -1,45 +1,94 @@
-
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ARINDA - Hijab Premium Rp180.000</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
+<title>ARINDA Hijab Premium - Pilih Warna Sesuai Undertone</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--off:#FFFCF9}
-*{box-sizing:border-box}body{margin:0;background:var(--off);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
-nav{position:sticky;top:0;z-index:99;background:#FFFCF9;border-bottom:1px solid var(--champ)}
-.nav-in{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:22px}
-.menu{display:flex;gap:18px}.menu a{text-decoration:none;font-size:11px;letter-spacing:2px;color:var(--taupe)}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
-.banner{max-width:1100px;margin:0 auto;position:relative;overflow:hidden;background:#EAE6E1}
-.banner img{width:100%;height:540px;object-fit:cover;display:block}
-.banner-card{position:absolute;left:24px;bottom:24px;background:#fff;border:1px solid var(--champ);padding:20px;max-width:360px;z-index:2;box-shadow:0 12px 30px rgba(43,27,18,.08)}
-.banner-card h1{font-family:'Cormorant Garamond';font-size:38px;margin:0;line-height:.95}
-.btn{background:var(--esp);color:#fff;padding:14px 22px;font-size:11px;letter-spacing:2px;text-decoration:none;display:inline-block;margin-top:12px}
-.wrap{max-width:1100px;margin:0 auto;padding:22px 20px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.grid img{width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--champ)}
-@media(max-width:700px){
-.nav-in{padding:12px 16px}
-.banner img{height:auto;aspect-ratio:4/3}
-.banner-card{position:relative;left:auto;bottom:auto;margin:-24px 16px 0 16px;max-width:none;padding:18px}
-.banner-card h1{font-size:30px}
-.grid{grid-template-columns:1fr 1fr}
+:root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--bg:#FFFCF9}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
+nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(8px);border-bottom:1px solid var(--champ)}
+.nav-in{max-width:1120px;margin:0 auto;padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:18px}
+.menu{display:flex;gap:12px}.menu a{font-size:11px;letter-spacing:1.5px;color:var(--taupe);text-decoration:none}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
+.hero{position:relative;width:100%;background:#F6EEE3;overflow:hidden}
+.hero img{width:100%;display:block}
+.desktop-only{display:block}.mobile-only{display:none}
+.hero-text{position:absolute;left:5%;top:20%;max-width:420px;background:#fff;padding:20px;border:1px solid var(--champ);box-shadow:0 8px 30px rgba(0,0,0,.06)}
+.kicker{font-size:10px;letter-spacing:3px;color:var(--taupe)}.hero-text h1{font-family:'Cormorant Garamond';font-size:36px;line-height:.95;margin:6px 0 8px}
+.hero-text p{font-size:12px;color:var(--taupe);line-height:1.5;margin:0 0 14px}
+.btn{display:inline-block;background:var(--esp);color:#fff;padding:11px 20px;font-size:11px;letter-spacing:2px;text-decoration:none;text-align:center}
+.section{max-width:1120px;margin:0 auto;padding:16px 14px}
+.h2{font-family:'Cormorant Garamond';font-size:22px;margin:0}.sub{font-size:10px;letter-spacing:2.5px;color:var(--taupe);margin:4px 0 12px}
+/* 4 warna */
+.colors{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.colors img{width:100%;aspect-ratio:3/4;object-fit:contain;object-position:top center;background:#fff;border:1px solid var(--champ)}
+/* Undertone 3 */
+.undertone{margin-top:18px;background:#fff;border:1px solid var(--champ);padding:14px}
+.undertone-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.card{border:1px solid var(--champ);padding:8px;text-align:center;background:#fff}
+.card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.card h4{font-size:12px;margin:8px 0 4px}.card p{font-size:10px;color:var(--taupe);line-height:1.4;margin:0}
+.badge{display:inline-block;font-size:9px;letter-spacing:1px;padding:4px 8px;background:var(--esp);color:#fff;margin-top:6px;border-radius:12px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle;border:1px solid #ddd}
+@media(max-width:800px){
+.desktop-only{display:none !important}.mobile-only{display:block !important}
+.colors{grid-template-columns:repeat(2,1fr)}
+.hero-text{position:relative;left:auto;top:auto;max-width:100%;margin:-36px 14px 0;padding:16px}
+.undertone-grid{grid-template-columns:1fr}
 }
 </style></head><body>
-<nav><div class="nav-in"><div class="logo">ARINDA</div><div class="menu"><a href="index.html" class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kontak.html">KONTAK</a></div></div></nav>
-<div class="banner">
-<img src="banner.jpg">
-<div class="banner-card">
-<div style="font-size:10px;letter-spacing:3px;color:var(--taupe)">NEW COLLECTION - READY STOCK</div>
+<nav><div class="nav-in"><div class="logo">ARINDA</div><div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kontak.html">KONTAK</a></div></div></nav>
+
+<div class="hero">
+<img class="desktop-only" src="banner-desktop.jpg" style="aspect-ratio:16/9;object-fit:contain;background:#F6EEE3" alt="Banner">
+<img class="mobile-only" src="banner-hp.jpg" style="aspect-ratio:9/16;object-fit:contain;object-position:top;background:#F6EEE3" alt="Banner HP">
+<div class="hero-text">
+<div class="kicker">NEW COLLECTION - READY STOCK</div>
 <h1>Adem,<br>Tidak Menerawang</h1>
-<p style="font-size:13px;color:var(--taupe);margin:10px 0">Premium voal <b style="color:var(--esp)">Rp180.000</b> - 4 warna bestseller, laser cut rapi</p>
-<a class="btn" href="produk.html">LIHAT PRODUK →</a>
+<p>Premium voal Rp180.000 - 115x115cm, laser cut rapi, 4 warna bestseller</p>
+<a class="btn" href="#undertone">CEK UNDERTONE SAYA →</a>
 </div>
 </div>
-<div class="wrap">
-<div style="font-size:11px;letter-spacing:3px;color:var(--taupe);margin-bottom:12px">KOLEKSI 4 WARNA BESTSELLER</div>
-<div class="grid">
-<div><img src="katalog-4warna.jpg"><p style="font-size:11px;text-align:center;margin:6px 0">4 WARNA BEST SELLER</p></div>
+
+<div class="section">
+<div class="sub">KOLEKSI 4 WARNA BESTSELLER</div>
+<div class="colors">
+<img src="navy.jpg" alt="Navy"><img src="hitam.jpg" alt="Hitam"><img src="krem.jpg" alt="Krem"><img src="maroon.jpg" alt="Maroon">
+</div>
+
+<!-- 3 UNDERTONE DENGAN FOTO PERGELANGAN DI ATAS -->
+<div class="undertone" id="undertone">
+<div class="h2">Kenali Undertone Kamu</div>
+<div class="sub">Lihat warna urat nadi di pergelangan tangan</div>
+
+<div class="undertone-grid">
+<div class="card">
+<img src="undertone-cool-biru.jpg" alt="Cool Blue">
+<h4><span class="dot" style="background:#8FA8D3"></span> COOL - Urat Biru/Ungu</h4>
+<p>Kulit cerah, pinkish. Pembuluh darah kebiruan</p>
+<div class="badge">COCOK: Navy & Hitam</div>
+</div>
+<div class="card">
+<img src="undertone-warm-hijau.jpg" alt="Warm Green">
+<h4><span class="dot" style="background:#9CAF8A"></span> WARM - Urat Hijau</h4>
+<p>Kulit kuning langsat, sawo matang</p>
+<div class="badge">COCOK: Krem & Maroon</div>
+</div>
+<div class="card">
+<img src="undertone-neutral-campur.jpg" alt="Neutral Mix">
+<h4><span class="dot" style="background:linear-gradient(90deg,#8FA8D3,#9CAF8A)"></span> NEUTRAL - Campur</h4>
+<p>Urat hijau + biru, semua warna masuk</p>
+<div class="badge">BEST: Krem Elegant (Universal)</div>
+</div>
+</div>
+
+<div style="margin-top:14px;padding:12px;background:#F6EEE3;border:1px solid var(--champ);font-size:11px;line-height:1.6">
+<b>Informasi Produk ARINDA:</b><br>
+• Bahan: Premium Voal, adem, tidak menerawang, mudah dibentuk<br>
+• Ukuran: 115 x 115 cm (lebih luas dari standar 110)<br>
+• Finishing: Laser cut rapi, tidak mudah berbulu<br>
+• Berat: ~120gr, ringan dipakai seharian
+</div>
+<a href="produk.html" class="btn" style="width:100%;margin-top:12px">LIHAT PRODUK SESUAI UNDERTONE →</a>
 </div>
 </div>
 </body></html>
