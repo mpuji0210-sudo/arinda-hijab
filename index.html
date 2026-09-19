@@ -1,50 +1,52 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ARINDA Hijab Premium</title>
+<title>ARINDA - Hijab Premium</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
 <style>
-:root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--off:#FFFCF9;--beige:#9A8474}
-*{box-sizing:border-box}body{margin:0;background:var(--off);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
-.hero-wrap{position:relative;width:100%;min-height:100vh;overflow:hidden;background:#F7EEE2}
-.hero-wrap img.bg{width:100%;height:100vh;object-fit:cover;display:block}
-.topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:26px 48px;max-width:1400px;margin:0 auto}
-.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:36px;line-height:.9;color:#4A3728}
-.logo span{display:block;font-size:11px;letter-spacing:4px;color:#6B5A4C;font-family:'Plus Jakarta Sans';margin-top:4px;font-weight:500}
-.menu{display:flex;gap:36px}.menu a{font-size:14px;text-decoration:none;color:#6B5A4C;letter-spacing:.2px}.menu a.active{color:#2B1B12;font-weight:600}
-.left-content{position:absolute;left:4%;top:32%;max-width:420px}
-.kicker{font-size:12px;letter-spacing:3px;color:#6B5A4C;margin-bottom:18px}
-h1{font-family:'Cormorant Garamond';font-size:52px;line-height:1.1;color:#4A3728;font-weight:600}
-.desc{font-size:14px;color:#5A4A40;margin:18px 0 26px;line-height:1.6}
-.btn-shop{background:var(--beige);color:#fff;padding:14px 28px;font-size:13px;letter-spacing:2px;display:inline-flex;gap:12px;align-items:center;text-decoration:none;border-radius:8px;box-shadow:0 8px 20px rgba(0,0,0,.15)}
-.right-benefits{position:absolute;right:5%;top:30%;display:flex;flex-direction:column;gap:28px}
-.b-item{display:flex;gap:12px;align-items:flex-start;font-size:13px;color:#2B1B12;line-height:1.3}
-.b-item svg{width:26px;height:26px;stroke:#9A8474;fill:none}
-.script{position:absolute;right:5%;bottom:6%;font-family:'Dancing Script';font-size:38px;color:#B89A5A}
-.vases{position:absolute;left:3%;bottom:2%;width:220px}
-@media(max-width:900px){.topbar{padding:16px}.menu{display:none}.left-content{top:12%;left:5%;right:5%}.right-benefits{position:relative;right:auto;top:auto;padding:20px 24px;flex-direction:row;flex-wrap:wrap}.hero-wrap img.bg{height:auto;min-height:100vh}.script{position:relative;right:auto;bottom:auto;text-align:right;padding:20px}}
+:root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--off:#FFFCF9;--beige:#7A6455;--bg:#F6EEE3}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
+nav{max-width:1280px;margin:0 auto;padding:22px 32px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:6px;font-size:28px;line-height:.9}.logo span{display:block;font-family:'Plus Jakarta Sans';font-size:10px;letter-spacing:4px;color:var(--taupe);font-weight:500;margin-top:4px}
+.menu{display:flex;gap:32px}.menu a{font-size:13px;text-decoration:none;color:var(--taupe)}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp);padding-bottom:4px}
+.hero{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:420px 1fr 200px;align-items:center;min-height:86vh;padding:10px 32px;gap:24px;position:relative}
+.kicker{font-size:11px;letter-spacing:4px;color:var(--taupe);margin-bottom:14px}
+h1{font-family:'Cormorant Garamond';font-size:64px;line-height:.92;color:var(--beige);font-weight:600}
+.desc{font-size:13.5px;color:var(--taupe);margin:18px 0 24px;line-height:1.6;max-width:340px}
+.btn{display:inline-flex;align-items:center;gap:14px;background:var(--beige);color:#fff;padding:12px 24px;font-size:11px;letter-spacing:2px;text-decoration:none}
+.hero-img{width:100%;height:84vh;object-fit:cover;object-position:top;border-radius:120px 0 0 0;border:1px solid var(--champ);background:#E9DDD0}
+.benefits{display:flex;flex-direction:column;gap:26px}
+.b{display:flex;gap:12px;align-items:center;font-size:11px;line-height:1.3;color:var(--taupe)}.b b{color:var(--esp);font-weight:600}
+.ico{width:38px;height:38px;border:1px solid var(--beige);border-radius:50%;display:grid;place-items:center;flex-shrink:0}
+.script{font-family:'Dancing Script';font-size:20px;color:var(--taupe);margin-top:30px;text-align:right;line-height:1.2}
+.arch{position:absolute;inset:0;pointer-events:none;opacity:.35;background:radial-gradient(ellipse at 70% 10%, #D8CFC3 0%, transparent 55%), radial-gradient(ellipse at 10% 80%, #E9DDD0 0%, transparent 50%)}
+@media(max-width:900px){.hero{grid-template-columns:1fr;padding:16px}.hero-img{height:62vh;order:-1;border-radius:80px 80px 0 0}.benefits{flex-direction:row;flex-wrap:wrap}.menu{display:none}}
 </style></head><body>
-<div class="hero-wrap">
-<img class="bg" src="hero-final.jpg" alt="Arinda Hijab Premium">
-
-<div class="topbar">
+<div class="arch"></div>
+<nav>
 <div class="logo">ARINDA<span>HIJAB PREMIUM</span></div>
-<div class="menu">
-<a class="active" href="index.html">Home</a>
-<a href="produk.html">Shop</a>
-<a href="produk.html">Collections</a>
-<a href="kontak.html">About Us</a>
-<a href="kontak.html">Journal</a>
-</div>
-</div>
+<div class="menu"><a class="active" href="index.html">Home</a><a href="produk.html">Shop</a><a href="produk.html">Collections</a><a href="kontak.html">About Us</a><a href="kontak.html">Journal</a></div>
+<div style="display:flex;gap:18px">⌕ ◯ 👜</div>
+</nav>
 
-<div class="left-content">
+<div class="hero">
+<div>
 <div class="kicker">ELEGANCE IN EVERY LAYER</div>
-<h1>Arinda Hijab Premium</h1>
+<h1>Arinda Hijab<br>Premium</h1>
 <div class="desc">Hijab berkualitas untuk setiap langkah perempuan berkelas.</div>
-<a class="btn-shop" href="produk.html">SHOP NOW <span>→</span></a>
+<a class="btn" href="produk.html">SHOP NOW →</a>
 </div>
 
-<!-- Klik area tetap jalan walau pakai gambar -->
-<a href="produk.html" style="position:absolute;left:4%;top:62%;width:160px;height:44px;display:block;text-indent:-9999px">SHOP</a>
+<!-- PAKAI FOTO KREM YANG UDAH ADA & UDAH JALAN - JADI GAK PERLU UPLOAD BARU -->
+<img class="hero-img" src="krem.jpg" alt="Arinda Hijab Premium - Beige Silk Hijab">
+
+<div>
+<div class="benefits">
+<div class="b"><div class="ico">🍃</div><div><b>Premium<br>Voal Fabric</b></div></div>
+<div class="b"><div class="ico">✦</div><div><b>Elegant<br>& Timeless</b></div></div>
+<div class="b"><div class="ico">🛡️</div><div><b>Nyaman<br>Sepanjang Hari</b></div></div>
+<div class="b"><div class="ico">♡</div><div><b>Untuk Versi<br>Terbaik Dirimu</b></div></div>
+</div>
+<div class="script">More Than<br>Just a Hijab</div>
+</div>
 </div>
 </body></html>
