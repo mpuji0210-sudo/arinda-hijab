@@ -42,7 +42,6 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9;border-bottom:1px solid 
 </style></head><body>
 <nav><div class="nav-in"><div class="logo" id="storeLogo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html" class="active">PRODUK</a><a href="kontak.html">KONTAK</a><a onclick="openCart()" style="cursor:pointer">KERANJANG (<span id="cCount">0</span>)</a></div></div></nav>
 
-<!-- PRODUK DINAMIS DARI ADMIN -->
 <div style="max-width:1100px;margin:0 auto;padding:20px">
 <h2 style="font-family:'Cormorant Garamond';margin:0">Produk Baru dari Admin</h2>
 <div style="font-size:11px;letter-spacing:2px;color:#8C7A6B;margin:4px 0 12px">Otomatis muncul setelah upload di admin.html</div>
@@ -105,14 +104,21 @@ const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 let STORE_WA='6285178098354';
 let STORE_NAME='ARINDA';
 
-// LOAD SETTINGS + PRODUK DINAMIS
 async function loadDynamic(){
- const {data:set}=await supabaseClient.from('settings').select('*').eq('id',1).single();
- if(set){ STORE_WA=set.wa_number; STORE_NAME=set.store_name; document.getElementById('storeLogo').innerText=set.store_name; }
- const {data}=await supabaseClient.from('products').select('*').order('created_at',{ascending:false});
- const el=document.getElementById('dynamicList');
- if(!data||data.length==0){ el.innerHTML='<p style="color:#8C7A6B">Belum ada produk baru. Upload di admin.html ya Puji!</p>'; return; }
- el.innerHTML=data.map(p=>`<div class="prod" onclick="selectDynamic('${p.image_url}','${p.name}',${p.price})"><img src="${p.image_url}"><div class="prod-info"><b>${p.name}</b><div style="font-size:11px;color:#8C7A6B">${p.description||''}</div><div style="font-weight:700;margin-top:4px">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`).join('');
+ try{
+  const {data:set}=await supabaseClient.from('settings').select('*').eq('id',1).single();
+  if(set){
+   STORE_NAME=set.store_name||set.storeName||'ARINDA';
+   STORE_WA=set.whatsapp||set.wa_number||set.wa||'6285178098354';
+   document.getElementById('storeLogo').innerText=STORE_NAME;
+  }
+ }catch(e){}
+ try{
+  const {data}=await supabaseClient.from('products').select('*').order('created_at',{ascending:false});
+  const el=document.getElementById('dynamicList');
+  if(!data||data.length==0){ el.innerHTML='<p style="color:#8C7A6B">Belum ada produk baru. Upload di admin.html ya Puji!</p>'; return; }
+  el.innerHTML=data.map(p=>`<div class="prod" onclick="selectDynamic('${p.image_url}','${p.name}',${p.price})"><img src="${p.image_url}"><div class="prod-info"><b>${p.name}</b><div style="font-size:11px;color:#8C7A6B">${p.description||''}</div><div style="font-weight:700;margin-top:4px">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`).join('');
+ }catch(e){ document.getElementById('dynamicList').innerHTML='Error load produk'; }
 }
 function selectDynamic(img,name,price){
  document.getElementById('main').src=img;
