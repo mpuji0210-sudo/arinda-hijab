@@ -1,119 +1,106 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Arinda Hijab</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin ARINDA Hijab</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{font-family:sans-serif;box-sizing:border-box} body{padding:20px;background:#f9f5f0;max-width:800px;margin:auto}
-.card{background:white;padding:20px;border-radius:12px;margin-bottom:15px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
-input,textarea{width:100%;padding:10px;margin:5px 0 10px;border:1px solid #ddd;border-radius:8px}
-button{padding:10px 15px;border:none;border-radius:8px;cursor:pointer;background:#8B5E3C;color:white;font-weight:bold}
-button.del{background:#c0392b}.flex{display:flex;gap:10px;align-items:center}
-img{width:80px;height:80px;object-fit:cover;border-radius:8px}
-#login{max-width:350px;margin:100px auto;text-align:center}
-#previewImg{width:120px;height:120px;display:none;margin-top:10px;border:2px dashed #8B5E3C}
+body{font-family:Arial,sans-serif;background:#FFFCF9;padding:20px;max-width:600px;margin:auto}
+.box{background:#fff;border:1px solid #EAE6E1;padding:16px;border-radius:12px;margin-bottom:16px}
+h1{font-size:20px;text-align:center} label{font-size:12px;display:block;margin-top:10px}
+input{width:100%;padding:10px;margin-top:4px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
+button{background:#2B1B12;color:#fff;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;margin-top:10px;width:100%}
+#preview{width:100%;max-height:200px;object-fit:cover;margin-top:10px;border-radius:8px;display:none}
+.item{border:1px solid #eee;padding:8px;border-radius:8px;margin-top:8px;display:flex;gap:10px;align-items:center}
+.item img{width:60px;height:60px;object-fit:cover;border-radius:6px}
 </style>
 </head>
 <body>
-<div id="login" class="card">
-<h2>Login Admin Arinda</h2>
-<input type="password" id="pass" placeholder="Password">
-<button onclick="cekLogin()">Masuk</button>
-<p style="font-size:12px;color:#888">Default: arinda123</p>
-</div>
-<div id="panel" style="display:none">
 <h1>ARINDA - Admin Panel</h1>
-<div class="card">
+
+<div class="box">
 <h3>Setting Toko</h3>
+<label>Nama Toko (misal: ARINDA HIJAB)</label>
+<input id="storeName" placeholder="ARINDA">
 <label>Nomor WA (contoh: 628123456789)</label>
-<input type="text" id="waNumber" placeholder="628xxx">
-<button onclick="saveWA()">Simpan Nomor WA</button>
+<input id="waNumber" placeholder="628xxxx">
+<button onclick="saveSettings()">Simpan Setting Toko</button>
+<div id="msgSet" style="font-size:12px;margin-top:6px"></div>
 </div>
-<div class="card">
+
+<div class="box">
 <h3>Tambah Produk Baru</h3>
-<input type="text" id="pNama" placeholder="Nama Produk (ex: Paris Premium)">
-<input type="number" id="pHarga" placeholder="Harga (ex: 35000)">
-<label style="font-weight:bold;margin-top:10px;display:block">📸 Foto Produk (Pilih dari Galeri HP)</label>
-<input type="file" id="pFile" accept="image/*" onchange="uploadImage()">
-<p id="uploadStatus" style="font-size:12px;color:#8B5E3C"></p>
-<img id="previewImg" src="">
-<input type="hidden" id="pGambar">
-<textarea id="pDeskripsi" placeholder="Deskripsi"></textarea>
-<button onclick="tambahProduk()" id="btnTambah">Tambah Produk</button>
+<label>Nama Produk</label>
+<input id="pName" placeholder="Paris Premium">
+<label>Harga</label>
+<input id="pPrice" type="number" placeholder="35000">
+<label>📷 Foto Produk (Pilih dari Galeri HP)</label>
+<input type="file" id="pFile" accept="image/*" onchange="uploadFoto()">
+<img id="preview">
+<div id="msgFoto" style="font-size:12px;margin-top:6px"></div>
+<label>Deskripsi</label>
+<input id="pDesc" placeholder="Bahan voal premium...">
+<button onclick="addProduct()">Tambah Produk</button>
 </div>
-<div id="listProduk"></div>
-<a href="/" style="color:#8B5E3C">← Lihat Toko</a>
+
+<div class="box">
+<h3>Daftar Produk</h3>
+<div id="list">Loading...</div>
 </div>
+
 <script>
-const SUPABASE_URL = 'https://qjgevvizqeebtdqcbqmt.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-function cekLogin(){
- if(document.getElementById('pass').value === 'arinda123'){
-   document.getElementById('login').style.display='none';
-   document.getElementById('panel').style.display='block';
-   loadProduk(); loadWA();
- } else alert('Password salah!');
+const SUPABASE_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
+const SUPABASE_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
+const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let uploadedImageUrl='';
+
+async function loadSettings(){
+ const {data}=await supabaseClient.from('settings').select('*').eq('id',1).single();
+ if(data){ document.getElementById('storeName').value=data.store_name; document.getElementById('waNumber').value=data.wa_number; }
 }
-async function uploadImage(){
- const file = document.getElementById('pFile').files[0];
+async function saveSettings(){
+ const name=document.getElementById('storeName').value;
+ const wa=document.getElementById('waNumber').value;
+ const {error}=await supabaseClient.from('settings').upsert({id:1,store_name:name,wa_number:wa});
+ document.getElementById('msgSet').innerText=error?'Gagal: '+error.message:'✅ Nama toko & WA berhasil disimpan!';
+}
+
+async function uploadFoto(){
+ const file=document.getElementById('pFile').files[0];
  if(!file) return;
- document.getElementById('uploadStatus').innerText = '⏳ Mengupload...';
- document.getElementById('btnTambah').disabled = true;
- const fileName = Date.now() + '-' + file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
- const { data, error } = await supabaseClient.storage.from('product-images').upload(fileName, file);
- if(error){
-   alert('Gagal upload: ' + error.message);
-   document.getElementById('uploadStatus').innerText = '❌ Gagal: ' + error.message;
-   document.getElementById('btnTambah').disabled = false;
-   return;
- }
- const { data: { publicUrl } } = supabaseClient.storage.from('product-images').getPublicUrl(fileName);
- document.getElementById('pGambar').value = publicUrl;
- document.getElementById('previewImg').src = publicUrl;
- document.getElementById('previewImg').style.display = 'block';
- document.getElementById('uploadStatus').innerText = '✅ Foto berhasil diupload!';
- document.getElementById('btnTambah').disabled = false;
+ document.getElementById('msgFoto').innerText='⏳ Uploading...';
+ const fileName=Date.now()+'-'+file.name;
+ const {error}=await supabaseClient.storage.from('product-images').upload(fileName,file);
+ if(error){ document.getElementById('msgFoto').innerText='❌ Gagal: '+error.message; return; }
+ const {data}=supabaseClient.storage.from('product-images').getPublicUrl(fileName);
+ uploadedImageUrl=data.publicUrl;
+ document.getElementById('preview').src=uploadedImageUrl;
+ document.getElementById('preview').style.display='block';
+ document.getElementById('msgFoto').innerText='✅ Foto berhasil diupload!';
 }
-async function loadProduk(){
- const {data} = await supabaseClient.from('products').select('*').order('created_at',{ascending:false});
+
+async function addProduct(){
+ if(!uploadedImageUrl){ alert('Upload foto dulu!'); return; }
+ const name=document.getElementById('pName').value;
+ const price=document.getElementById('pPrice').value;
+ const desc=document.getElementById('pDesc').value;
+ if(!name||!price){ alert('Isi nama & harga!'); return; }
+ const {error}=await supabaseClient.from('products').insert({name,price,description:desc,image_url:uploadedImageUrl});
+ if(error){ alert('Gagal: '+error.message); return; }
+ alert('✅ Produk berhasil ditambah!');
+ uploadedImageUrl=''; document.getElementById('pName').value=''; document.getElementById('pPrice').value=''; document.getElementById('pDesc').value=''; document.getElementById('pFile').value=''; document.getElementById('preview').style.display='none'; document.getElementById('msgFoto').innerText='';
+ loadProducts();
+}
+
+async function loadProducts(){
+ const {data}=await supabaseClient.from('products').select('*').order('created_at',{ascending:false});
  let html='';
- if(!data) return;
- data.forEach(p=>{
-   html+=`<div class="card flex"><img src="${p.image_url}"><div style="flex:1"><b>${p.name}</b><br>Rp ${p.price}<br><small>${p.description||''}</small></div><button class="del" onclick="hapusProduk('${p.id}')">Hapus</button></div>`;
- });
- document.getElementById('listProduk').innerHTML=html;
+ if(!data||data.length==0) html='Belum ada produk';
+ else data.forEach(p=>{ html+=`<div class="item"><img src="${p.image_url}"><div style="flex:1"><b>${p.name}</b><br>Rp${p.price}<br><button style="width:auto;padding:4px 8px;font-size:11px;margin-top:4px" onclick="del('${p.id}')">Hapus</button></div></div>`; });
+ document.getElementById('list').innerHTML=html;
 }
-async function tambahProduk(){
- const nama = document.getElementById('pNama').value;
- const harga = document.getElementById('pHarga').value;
- const gambar = document.getElementById('pGambar').value;
- if(!nama ||!harga ||!gambar) return alert('Lengkapi Nama, Harga, dan Foto dulu!');
- const {error} = await supabaseClient.from('products').insert([{
-   name: nama, price: parseInt(harga), image_url: gambar, description: document.getElementById('pDeskripsi').value
- }]);
- if(error) alert(error.message); else {
-   alert('Berhasil!');
-   document.getElementById('pNama').value=''; document.getElementById('pHarga').value=''; document.getElementById('pGambar').value=''; document.getElementById('pDeskripsi').value=''; document.getElementById('previewImg').style.display='none'; document.getElementById('uploadStatus').innerText='';
-   loadProduk();
- }
-}
-async function hapusProduk(id){
- if(!confirm('Hapus produk ini?')) return;
- await supabaseClient.from('products').delete().eq('id',id);
- loadProduk();
-}
-async function loadWA(){
- const {data} = await supabaseClient.from('settings').select('*').eq('key','wa_number').single();
- if(data) document.getElementById('waNumber').value = data.value;
-}
-async function saveWA(){
- const wa = document.getElementById('waNumber').value;
- await supabaseClient.from('settings').upsert({key:'wa_number', value: wa});
- alert('Nomor WA tersimpan!');
-}
+async function del(id){ if(!confirm('Hapus?')) return; await supabaseClient.from('products').delete().eq('id',id); loadProducts(); }
+loadSettings(); loadProducts();
 </script>
 </body>
 </html>
