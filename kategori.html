@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="id"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kategori - ARINDA</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--bg:#FFFCF9}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
+nav{position:sticky;top:0;z-index:99;background:#FFFCF9;border-bottom:1px solid var(--champ)}
+.nav-in{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:20px}
+.menu{display:flex;gap:16px}.menu a{font-size:11px;letter-spacing:2px;color:var(--taupe);text-decoration:none}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
+.wrap{max-width:1100px;margin:0 auto;padding:20px}
+.h1{font-family:'Cormorant Garamond';font-size:36px;margin:0}.sub{font-size:11px;letter-spacing:2px;color:var(--taupe);margin-top:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-top:18px}
+.cat{border:1px solid var(--champ);background:#fff;border-radius:14px;overflow:hidden;cursor:pointer;transition:.2s}
+.cat:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.cat img{width:100%;height:180px;object-fit:cover;display:block}
+.cat-info{padding:12px}
+.cat-info b{font-size:14px;display:block}
+.cat-info span{font-size:11px;color:var(--taupe)}
+.admin-note{background:#fff;border:1px dashed var(--champ);padding:12px;border-radius:12px;margin-top:14px;font-size:12px;color:var(--taupe)}
+</style></head><body>
+<nav><div class="nav-in"><div class="logo" id="storeLogo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html" class="active">KATEGORI</a><a href="kontak.html">KONTAK</a></div></div></nav>
+
+<div class="wrap">
+<div class="h1">Kategori Koleksi</div>
+<div class="sub">Klien bisa tambah / edit / hapus langsung dari admin.html</div>
+<div id="list" class="grid">Loading kategori...</div>
+<div class="admin-note">💡 Cara custom: Buka <b>admin.html → Tab Kategori</b> untuk tambah kategori baru (nama, foto, deskripsi)</div>
+</div>
+
+<script>
+const SUPABASE_URL="https://qjgevvizqeebtdqcbqmt.supabase.co";
+const SUPABASE_KEY="sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19";
+const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+async function load(){
+ try{
+  const {data:setting}=await supabaseClient.from('settings').select('*').eq('id',1).single();
+  if(setting?.store_name) document.getElementById('storeLogo').innerText=setting.store_name;
+ }catch(e){}
+ const {data,error}=await supabaseClient.from('categories').select('*').order('created_at',{ascending:false});
+ const el=document.getElementById('list');
+ if(error){ el.innerHTML='Belum ada tabel categories. Jalankan SQL di Supabase dulu ya! Error: '+error.message; return;}
+ if(!data||data.length==0){ el.innerHTML='<p>Belum ada kategori. Tambah di admin.html → Tab Kategori</p>'; return;}
+ el.innerHTML=data.map(c=>`
+  <div class="cat" onclick="location.href='produk.html?cat=${encodeURIComponent(c.slug||c.name)}'">
+   <img src="${c.image_url||'https://via.placeholder.com/300'}" onerror="this.src='https://via.placeholder.com/300'">
+   <div class="cat-info"><b>${c.name}</b><span>${c.description||'Koleksi '+c.name}</span></div>
+  </div>
+ `).join('');
+}
+load();
+</script>
+</body></html>
