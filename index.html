@@ -37,7 +37,7 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(8
 .prod-info{padding:8px}.prod-info b{font-size:13px;display:block}.price{font-weight:700;color:var(--taupe);margin-top:4px;font-size:12px}
 @media(max-width:800px){.desktop-only{display:none!important}.mobile-only{display:block!important}.colors{grid-template-columns:repeat(2,1fr)}.hero-text{position:relative;left:auto;top:auto;max-width:100%;margin:-36px 14px 0;padding:16px}.undertone-grid{grid-template-columns:1fr}}
 </style></head><body>
-<nav><div class="nav-in"><div class="logo">ARINDA</div><div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kontak.html">KONTAK</a></div></div></nav>
+<nav><div class="nav-in"><div class="logo" id="storeLogo">ARINDA</div><div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kontak.html">KONTAK</a></div></div></nav>
 
 <div class="hero">
 <img class="desktop-only" src="banner.jpg" style="aspect-ratio:16/9;object-fit:contain;background:#F6EEE3" alt="Banner">
@@ -74,20 +74,32 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(8
 </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
-const SUPABASE_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
+const SUPABASE_URL="https://qjgevvizqeebtdqcbqmt.supabase.co";
+const SUPABASE_KEY="sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19";
 const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
 async function load(){
- const {data,error}=await supabaseClient.from('products').select('*').order('created_at',{ascending:false});
- if(error){document.getElementById('list').innerHTML='Error: '+error.message; return;}
- if(!data||data.length==0){document.getElementById('list').innerHTML='Belum ada produk di admin'; return;}
- let html='';
- data.forEach(p=>{
-   html+=`<div class="prod"><img src="${p.image_url}" onerror="this.src='https://via.placeholder.com/300'"><div class="prod-info"><b>${p.name}</b><div class="price">Rp${Number(p.price).toLocaleString('id-ID')}</div><a href="produk.html?id=${p.id}" class="btn" style="width:100%;margin-top:6px;display:block">Detail</a></div></div>`;
- });
- document.getElementById('list').innerHTML=html;
+  // 1. Load nama toko buat logo Beranda
+  try {
+    const {data:setting}=await supabaseClient.from('settings').select('*').eq('id',1).single();
+    if(setting?.store_name){
+      document.getElementById('storeLogo').innerText=setting.store_name;
+    }
+  } catch(e){}
+
+  // 2. Load produk
+  const {data,error}=await supabaseClient.from('products').select('*').order('created_at',{ascending:false});
+  if(error){document.getElementById('list').innerHTML='Error: '+error.message; return;}
+  if(!data||data.length==0){document.getElementById('list').innerHTML='Belum ada produk di admin'; return;}
+  let html="";
+  data.forEach(p=>{
+    html+=`<div class="prod"><img src="${p.image_url}" onerror="this.src='https://via.placeholder.com/300'"><div class="prod-info"><b>${p.name}</b><div>Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
+  });
+  document.getElementById('list').innerHTML=html;
 }
 load();
 </script>
-</body></html>
+</body>
+</html>
