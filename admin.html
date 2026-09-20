@@ -10,48 +10,46 @@
 .card{background:white;padding:20px;border-radius:12px;margin-bottom:15px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
 input,textarea{width:100%;padding:10px;margin:5px 0 10px;border:1px solid #ddd;border-radius:8px}
 button{padding:10px 15px;border:none;border-radius:8px;cursor:pointer;background:#8B5E3C;color:white;font-weight:bold}
-button.del{background:#c0392b} .flex{display:flex;gap:10px;align-items:center}
+button.del{background:#c0392b}.flex{display:flex;gap:10px;align-items:center}
 img{width:80px;height:80px;object-fit:cover;border-radius:8px}
 #login{max-width:350px;margin:100px auto;text-align:center}
+#previewImg{width:120px;height:120px;display:none;margin-top:10px;border:2px dashed #8B5E3C}
 </style>
 </head>
 <body>
-
 <div id="login" class="card">
 <h2>Login Admin Arinda</h2>
 <input type="password" id="pass" placeholder="Password">
 <button onclick="cekLogin()">Masuk</button>
 <p style="font-size:12px;color:#888">Default: arinda123</p>
 </div>
-
 <div id="panel" style="display:none">
 <h1>ARINDA - Admin Panel</h1>
-
 <div class="card">
 <h3>Setting Toko</h3>
 <label>Nomor WA (contoh: 628123456789)</label>
 <input type="text" id="waNumber" placeholder="628xxx">
 <button onclick="saveWA()">Simpan Nomor WA</button>
 </div>
-
 <div class="card">
 <h3>Tambah Produk Baru</h3>
 <input type="text" id="pNama" placeholder="Nama Produk (ex: Paris Premium)">
 <input type="number" id="pHarga" placeholder="Harga (ex: 35000)">
-<input type="text" id="pGambar" placeholder="Link Gambar https://...">
+<label style="font-weight:bold;margin-top:10px;display:block">📸 Foto Produk (Pilih dari Galeri HP)</label>
+<input type="file" id="pFile" accept="image/*" onchange="uploadImage()">
+<p id="uploadStatus" style="font-size:12px;color:#8B5E3C"></p>
+<img id="previewImg" src="">
+<input type="hidden" id="pGambar">
 <textarea id="pDeskripsi" placeholder="Deskripsi"></textarea>
-<button onclick="tambahProduk()">Tambah Produk</button>
+<button onclick="tambahProduk()" id="btnTambah">Tambah Produk</button>
 </div>
-
 <div id="listProduk"></div>
 <a href="/" style="color:#8B5E3C">← Lihat Toko</a>
 </div>
-
 <script>
 const SUPABASE_URL = 'https://qjgevvizqeebtdqcbqmt.supabase.co';
-const SUPABASE_KEY = 'ISI_DENGAN_ANON_KEY_KAMU'; // <-- GANTI INI!
+const SUPABASE_KEY = 'sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
 function cekLogin(){
  if(document.getElementById('pass').value === 'arinda123'){
    document.getElementById('login').style.display='none';
@@ -59,32 +57,54 @@ function cekLogin(){
    loadProduk(); loadWA();
  } else alert('Password salah!');
 }
-
+async function uploadImage(){
+ const file = document.getElementById('pFile').files[0];
+ if(!file) return;
+ document.getElementById('uploadStatus').innerText = '⏳ Mengupload...';
+ document.getElementById('btnTambah').disabled = true;
+ const fileName = Date.now() + '-' + file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+ const { data, error } = await supabaseClient.storage.from('product-images').upload(fileName, file);
+ if(error){
+   alert('Gagal upload: ' + error.message);
+   document.getElementById('uploadStatus').innerText = '❌ Gagal: ' + error.message;
+   document.getElementById('btnTambah').disabled = false;
+   return;
+ }
+ const { data: { publicUrl } } = supabaseClient.storage.from('product-images').getPublicUrl(fileName);
+ document.getElementById('pGambar').value = publicUrl;
+ document.getElementById('previewImg').src = publicUrl;
+ document.getElementById('previewImg').style.display = 'block';
+ document.getElementById('uploadStatus').innerText = '✅ Foto berhasil diupload!';
+ document.getElementById('btnTambah').disabled = false;
+}
 async function loadProduk(){
  const {data} = await supabaseClient.from('products').select('*').order('created_at',{ascending:false});
  let html='';
+ if(!data) return;
  data.forEach(p=>{
    html+=`<div class="card flex"><img src="${p.image_url}"><div style="flex:1"><b>${p.name}</b><br>Rp ${p.price}<br><small>${p.description||''}</small></div><button class="del" onclick="hapusProduk('${p.id}')">Hapus</button></div>`;
  });
  document.getElementById('listProduk').innerHTML=html;
 }
-
 async function tambahProduk(){
+ const nama = document.getElementById('pNama').value;
+ const harga = document.getElementById('pHarga').value;
+ const gambar = document.getElementById('pGambar').value;
+ if(!nama ||!harga ||!gambar) return alert('Lengkapi Nama, Harga, dan Foto dulu!');
  const {error} = await supabaseClient.from('products').insert([{
-   name: document.getElementById('pNama').value,
-   price: parseInt(document.getElementById('pHarga').value),
-   image_url: document.getElementById('pGambar').value,
-   description: document.getElementById('pDeskripsi').value
+   name: nama, price: parseInt(harga), image_url: gambar, description: document.getElementById('pDeskripsi').value
  }]);
- if(error) alert(error.message); else { alert('Berhasil!'); loadProduk(); }
+ if(error) alert(error.message); else {
+   alert('Berhasil!');
+   document.getElementById('pNama').value=''; document.getElementById('pHarga').value=''; document.getElementById('pGambar').value=''; document.getElementById('pDeskripsi').value=''; document.getElementById('previewImg').style.display='none'; document.getElementById('uploadStatus').innerText='';
+   loadProduk();
+ }
 }
-
 async function hapusProduk(id){
  if(!confirm('Hapus produk ini?')) return;
  await supabaseClient.from('products').delete().eq('id',id);
  loadProduk();
 }
-
 async function loadWA(){
  const {data} = await supabaseClient.from('settings').select('*').eq('key','wa_number').single();
  if(data) document.getElementById('waNumber').value = data.value;
