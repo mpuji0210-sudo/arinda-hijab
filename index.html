@@ -4,7 +4,6 @@
 <meta property="og:title" content="ARINDA - Hijab Premium Elegan & Modern" />
 <meta property="og:image" content="https://arinda-hijab.vercel.app/banner-hp.jpg" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--bg:#FFFCF9}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
@@ -30,7 +29,6 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(8
 .card h4{font-size:12px;margin:8px 0 4px}.card p{font-size:10px;color:var(--taupe);line-height:1.4;margin:0}
 .badge{display:inline-block;font-size:9px;letter-spacing:1px;padding:4px 8px;background:var(--esp);color:#fff;margin-top:6px;border-radius:12px}
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle;border:1px solid #ddd}
-/* GRID PRODUK SUPABASE */
 .prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
 .prod{border:1px solid var(--champ);background:#fff;border-radius:10px;overflow:hidden}
 .prod img{width:100%;height:190px;object-fit:cover;display:block}
@@ -41,7 +39,7 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(8
 
 <div class="hero">
 <img class="desktop-only" src="banner.jpg" style="aspect-ratio:16/9;object-fit:contain;background:#F6EEE3" alt="Banner">
-<img class="mobile-only" src="banner hp.jpg" style="aspect-ratio:9/16;object-fit:contain;object-position:top;background:#F6EEE3" alt="Banner HP">
+<img class="mobile-only" src="banner-hp.jpg" style="aspect-ratio:9/16;object-fit:contain;object-position:top;background:#F6EEE3" alt="Banner HP">
 <div class="hero-text">
 <div class="kicker">NEW COLLECTION - READY STOCK</div>
 <h1>Adem,<br>Tidak Menerawang</h1>
@@ -56,7 +54,6 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(8
 <img src="navy.jpg" alt="Navy"><img src="hitam.jpg" alt="Hitam"><img src="krem.jpg" alt="Krem"><img src="maroon.jpg" alt="Maroon">
 </div>
 
-<!-- PRODUK DARI SUPABASE - DINAMIS -->
 <div id="produk-dinamis" style="margin-top:22px">
 <div class="h2">Produk Ready Stock (Otomatis dari Admin)</div>
 <div class="sub">Yang kamu tambah di admin.html akan muncul di sini</div>
@@ -68,7 +65,7 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(8
 <div class="sub">Lihat warna urat nadi di pergelangan tangan</div>
 <div class="undertone-grid">
 <div class="card"><img src="undertone-cool-biru.jpg"><h4><span class="dot" style="background:#8FA8D3"></span> COOL - Urat Biru/Ungu</h4><p>Kulit cerah, pinkish</p><div class="badge">COCOK: Navy & Hitam</div></div>
-<div class="card"><img src="udertone-.jpg"><h4><span class="dot" style="background:#9CAF8A"></span> WARM - Urat Hijau</h4><p>Kulit kuning langsat</p><div class="badge">COCOK: Krem & Maroon</div></div>
+<div class="card"><img src="undertone.jpg"><h4><span class="dot" style="background:#9CAF8A"></span> WARM - Urat Hijau</h4><p>Kulit kuning langsat</p><div class="badge">COCOK: Krem & Maroon</div></div>
 <div class="card"><img src="undertone-neutral-campur.jpg"><h4><span class="dot" style="background:linear-gradient(90deg,#8FA8D3,#9CAF8A)"></span> NEUTRAL - Campur</h4><p>Semua warna masuk</p><div class="badge">BEST: Krem Elegant</div></div>
 </div>
 </div>
@@ -81,15 +78,12 @@ const SUPABASE_KEY="sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19";
 const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 async function load(){
-  // 1. Load nama toko buat logo Beranda
   try {
     const {data:setting}=await supabaseClient.from('settings').select('*').eq('id',1).single();
     if(setting?.store_name){
       document.getElementById('storeLogo').innerText=setting.store_name;
     }
   } catch(e){}
-
-  // 2. Load produk
   const {data,error}=await supabaseClient.from('products').select('*').order('created_at',{ascending:false});
   if(error){document.getElementById('list').innerHTML='Error: '+error.message; return;}
   if(!data||data.length==0){document.getElementById('list').innerHTML='Belum ada produk di admin'; return;}
