@@ -1,14 +1,14 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ARINDA Hijab Premium - Lihat Produk</title>
-<meta property="og:title" content="ARINDA - Hijab Premium Elegan & Modern" />
+<title>Aeni HIJAB - Adem Tidak Menerawang</title>
+<meta property="og:title" content="Aeni HIJAB - Hijab Premium Elegan & Modern" />
 <meta property="og:description" content="Koleksi hijab premium bahan terbaik, nyaman, elegan. Gratis ongkir & bisa COD!" />
 <meta property="og:image" content="https://arinda-hijab.vercel.app/banner-hp.jpg" />
 <meta property="og:url" content="https://arinda-hijab.vercel.app" />
 <meta property="og:type" content="website" />
-<meta name="description" content="ARINDA Hijab Premium - Adem, Tidak Menerawang, Elegan & Modern. Koleksi 4 warna bestseller." />
+<meta name="description" content="Aeni HIJAB - Adem, Tidak Menerawang, Elegan & Modern. Koleksi 4 warna bestseller." />
 <meta name="twitter:card" content="summary_large_image" />
-<meta property="og:site_name" content="ARINDA Hijab" />
+<meta property="og:site_name" content="Aeni HIJAB" />
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -37,13 +37,21 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(8
 .badge{display:inline-block;font-size:9px;letter-spacing:1px;padding:4px 8px;background:var(--esp);color:#fff;margin-top:6px;border-radius:12px}
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle;border:1px solid #ddd}
 @media(max-width:800px){
-.desktop-only{display:none !important}.mobile-only{display:block !important}
+.desktop-only{display:none!important}.mobile-only{display:block!important}
 .colors{grid-template-columns:repeat(2,1fr)}
 .hero-text{position:relative;left:auto;top:auto;max-width:100%;margin:-36px 14px 0;padding:16px}
 .undertone-grid{grid-template-columns:1fr}
 }
 </style></head><body>
-<nav><div class="nav-in"><div class="logo" id="storeLogo">ARINDA</div><div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a href="kontak.html">KONTAK</a></div></div></nav>
+<nav><div class="nav-in"><div class="logo" id="storeLogo">Aeni HIJAB</div><div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a href="kontak.html">KONTAK</a><a href="produk.html">KERANJANG (<span id="cCount">0</span>)</a></div></div></nav>
+
+<script>
+// FIX ANTI KEDIP - Ambil nama toko dari cache HP dulu
+try{
+  const cachedName = localStorage.getItem('arinda_store_name');
+  if(cachedName){ document.getElementById('storeLogo').innerText = cachedName; }
+}catch(e){}
+</script>
 
 <div class="hero">
 <img class="desktop-only" src="banner.jpg" style="aspect-ratio:16/9;object-fit:contain;background:#F6EEE3" alt="Banner">
@@ -62,14 +70,12 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(8
 <img src="navy.jpg" alt="Navy"><img src="hitam.jpg" alt="Hitam"><img src="krem.jpg" alt="Krem"><img src="maroon.jpg" alt="Maroon">
 </div>
 
-<!-- ===== BAGIAN CUSTOM DARI ADMIN - OTOMATIS MUNCUL JIKA ADA PRODUK BARU ===== -->
 <div id="customSection" style="display:none;margin-top:24px;border-top:1px solid var(--champ);padding-top:16px">
-<div class="sub">PRODUK READY STOCK </div>
-<div style="font-size:10px;color:#8C7A6B;margin-bottom:12px">New Colection</div>
+<div class="sub">PRODUK READY STOCK</div>
+<div style="font-size:10px;color:#8C7A6B;margin-bottom:12px">New Collection - Klik + untuk tambah keranjang</div>
 <div id="dynamicList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div>
 </div>
 
-<!-- 3 UNDERTONE DENGAN FOTO PERGELANGAN DI ATAS -->
 <div class="undertone" id="undertone">
 <div class="h2">Kenali Undertone Kamu</div>
 <div class="sub">Lihat warna urat nadi di pergelangan tangan</div>
@@ -94,40 +100,35 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(8
 </div>
 </div>
 
-<!-- FAQ ACCORDION -->
 <div style="margin-top:18px">
 <div style="font-family:'Cormorant Garamond',serif;font-size:20px;margin-bottom:4px;font-weight:600">FAQ - Pertanyaan Umum</div>
-<div style="font-size:10px;letter-spacing:2px;color:#8C7A6B;margin-bottom:10px">Jawaban cepat seputar ARINDA Hijab Premium</div>
+<div style="font-size:10px;letter-spacing:2px;color:#8C7A6B;margin-bottom:10px">Jawaban cepat seputar Aeni HIJAB Premium</div>
 <style>
 .faq{border:1px solid #EAE6E1;background:#fff;margin-top:10px}
 .faq-item{border-bottom:1px solid #EAE6E1}.faq-item:last-child{border-bottom:none}
 .faq-q{width:100%;text-align:left;background:#fff;border:none;padding:14px;font-size:13px;font-weight:500;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}
 .faq-q span{color:#8C7A6B;font-size:18px;transition:.2s}
-.faq-item.active .faq-q span{transform:rotate(45deg)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;padding:0 14px;background:#FFFCF9}
-.faq-item.active .faq-a{max-height:250px;padding:0 14px 14px}
+.faq-item.active.faq-q span{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height.3s ease;padding:0 14px;background:#FFFCF9}
+.faq-item.active.faq-a{max-height:250px;padding:0 14px 14px}
 .faq-a p{font-size:11px;line-height:1.6;color:#8C7A6B;margin:8px 0 0}
 </style>
 <div class="faq" id="faq">
 <div class="faq-item active">
-<button class="faq-q" onclick="this.parentElement.classList.toggle('active')">Apa bahan ARINDA? Adem & menerawang tidak? <span>+</span></button>
-<div class="faq-a"><p>ARINDA pakai <b>Premium Voal</b> grade A, serat rapat, adem, tidak menerawang meski warna terang Krem. Mudah dibentuk dan tidak licin.</p></div>
+<button class="faq-q" onclick="this.parentElement.classList.toggle('active')">Apa bahan Aeni? Adem & menerawang tidak? <span>+</span></button>
+<div class="faq-a"><p>Aeni pakai <b>Premium Voal</b> grade A, serat rapat, adem, tidak menerawang meski warna terang Krem.</p></div>
 </div>
 <div class="faq-item">
 <button class="faq-q" onclick="this.parentElement.classList.toggle('active')">Apa perbedaan tampilan oval dan square? <span>+</span></button>
-<div class="faq-a"><p>ARINDA bisa ditata <b>2 tampilan</b>: oval (lebih soft feminin di dahi) atau square (lebih tegas rapi). Tinggal lipat ujung sesuai selera.</p></div>
+<div class="faq-a"><p>Bisa ditata <b>2 tampilan</b>: oval (lebih soft) atau square (lebih tegas rapi).</p></div>
 </div>
 <div class="faq-item">
 <button class="faq-q" onclick="this.parentElement.classList.toggle('active')">Ukuran & finishing gimana? <span>+</span></button>
-<div class="faq-a"><p>Ukuran <b>115 x 115 cm</b> (lebih luas dari standar 110), finishing <b>laser cut</b> rapi, tidak berbulu.</p></div>
+<div class="faq-a"><p>Ukuran <b>115 x 115 cm</b>, finishing <b>laser cut</b> rapi.</p></div>
 </div>
 <div class="faq-item">
 <button class="faq-q" onclick="this.parentElement.classList.toggle('active')">Cocok untuk undertone apa? <span>+</span></button>
-<div class="faq-a"><p><b>Cool (urat biru)</b> → Navy & Hitam, <b>Warm (urat hijau)</b> → Krem & Maroon, <b>Neutral (campur)</b> → semua masuk.</p></div>
-</div>
-<div class="faq-item">
-<button class="faq-q" onclick="this.parentElement.classList.toggle('active')">Cara perawatan biar awet? <span>+</span></button>
-<div class="faq-a"><p>Cuci tangan, jangan sikat, setrika suhu rendah, simpan digantung.</p></div>
+<div class="faq-a"><p><b>Cool</b> → Navy & Hitam, <b>Warm</b> → Krem & Maroon, <b>Neutral</b> → semua masuk.</p></div>
 </div>
 </div>
 </div>
@@ -139,21 +140,50 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(8
 const SUPABASE_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPABASE_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+function getCart(){ try{ return JSON.parse(localStorage.getItem('arinda_cart2')||'[]'); }catch(e){ return []; } }
+function updateCount(){ const el=document.getElementById('cCount'); if(el) el.innerText=getCart().reduce((a,b)=>a+Number(b.qty||0),0); }
+
 async function load(){
  try{
   const {data}=await supabaseClient.from('settings').select('*').eq('id',1).single();
-  if(data && data.store_name) document.getElementById('storeLogo').innerText=data.store_name;
+  if(data && data.store_name){
+   document.getElementById('storeLogo').innerText=data.store_name;
+   localStorage.setItem('arinda_store_name', data.store_name); // SIMPAN BIAR GAK KEDIP LAGI
+  }
  }catch(e){}
  try{
-  // pakai id biar tidak error created_at does not exist
   const {data,error}=await supabaseClient.from('products').select('*').order('id',{ascending:false});
-  if(error) return;
+  if(error) throw error;
   if(!data || data.length==0) return;
   const sec=document.getElementById('customSection');
   const el=document.getElementById('dynamicList');
   sec.style.display='block';
-  el.innerHTML=data.map(p=>`<div style="border:1px solid #EAE6E1;background:#fff;border-radius:10px;overflow:hidden;cursor:pointer" onclick="location.href='produk.html'"><img src="${p.image_url}" style="width:100%;height:160px;object-fit:cover" loading="lazy"><div style="padding:8px"><div style="font-size:12px;font-weight:600">${p.name}</div><div style="font-size:11px;color:#8C7A6B">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`).join('');
- }catch(e){ console.log(e); }
+  // VERSI SIMPLE: cuma tombol + bulat
+  el.innerHTML=data.map(p=>{
+    const safeName = p.name.replace(/'/g,"\\'");
+    return `<div style="border:1px solid #EAE6E1;background:#fff;border-radius:10px;overflow:hidden">
+      <img src="${p.image_url}" style="width:100%;height:160px;object-fit:cover" loading="lazy" onclick="location.href='produk.html'">
+      <div style="padding:8px">
+        <div style="font-size:12px;font-weight:600">${p.name}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+          <div style="font-size:11px;color:#8C7A6B">Rp${Number(p.price).toLocaleString('id-ID')}</div>
+          <button onclick="addSimple('${safeName}',${p.price},'${p.image_url}')" style="width:30px;height:30px;border-radius:50%;background:#2B1B12;color:#fff;border:none;font-size:16px;cursor:pointer;line-height:1">+</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+ }catch(e){ console.log('load error',e); }
+ updateCount();
+}
+
+function addSimple(name,price,img){
+ let cart=getCart();
+ let i=cart.findIndex(x=>x.warna==name);
+ if(i>-1) cart[i].qty++; else cart.push({warna:name,ukuran:'All Size',qty:1,harga:Number(price),img});
+ localStorage.setItem('arinda_cart2', JSON.stringify(cart));
+ updateCount();
+ alert(name+' masuk keranjang ✓');
 }
 load();
 </script>
