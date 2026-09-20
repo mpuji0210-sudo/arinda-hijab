@@ -1,8 +1,15 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ARINDA Hijab Premium</title>
+<title>ARINDA Hijab Premium - Lihat Produk</title>
 <meta property="og:title" content="ARINDA - Hijab Premium Elegan & Modern" />
+<meta property="og:description" content="Koleksi hijab premium bahan terbaik, nyaman, elegan. Gratis ongkir & bisa COD!" />
 <meta property="og:image" content="https://arinda-hijab.vercel.app/banner-hp.jpg" />
+<meta property="og:url" content="https://arinda-hijab.vercel.app" />
+<meta property="og:type" content="website" />
+<meta name="description" content="ARINDA Hijab Premium - Adem, Tidak Menerawang, Elegan & Modern. Koleksi 4 warna bestseller." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="og:site_name" content="ARINDA Hijab" />
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--bg:#FFFCF9}
@@ -21,7 +28,7 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(8
 .section{max-width:1120px;margin:0 auto;padding:16px 14px}
 .h2{font-family:'Cormorant Garamond';font-size:22px;margin:0}.sub{font-size:10px;letter-spacing:2.5px;color:var(--taupe);margin:4px 0 12px}
 .colors{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.colors img{width:100%;aspect-ratio:3/4;object-fit:contain;background:#fff;border:1px solid var(--champ)}
+.colors img{width:100%;aspect-ratio:3/4;object-fit:contain;object-position:top center;background:#fff;border:1px solid var(--champ)}
 .undertone{margin-top:18px;background:#fff;border:1px solid var(--champ);padding:14px}
 .undertone-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
 .card{border:1px solid var(--champ);padding:8px;text-align:center;background:#fff}
@@ -29,71 +36,125 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(8
 .card h4{font-size:12px;margin:8px 0 4px}.card p{font-size:10px;color:var(--taupe);line-height:1.4;margin:0}
 .badge{display:inline-block;font-size:9px;letter-spacing:1px;padding:4px 8px;background:var(--esp);color:#fff;margin-top:6px;border-radius:12px}
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle;border:1px solid #ddd}
-.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
-.prod{border:1px solid var(--champ);background:#fff;border-radius:10px;overflow:hidden}
-.prod img{width:100%;height:190px;object-fit:cover;display:block}
-.prod-info{padding:8px}.prod-info b{font-size:13px;display:block}.price{font-weight:700;color:var(--taupe);margin-top:4px;font-size:12px}
-@media(max-width:800px){.desktop-only{display:none!important}.mobile-only{display:block!important}.colors{grid-template-columns:repeat(2,1fr)}.hero-text{position:relative;left:auto;top:auto;max-width:100%;margin:-36px 14px 0;padding:16px}.undertone-grid{grid-template-columns:1fr}}
+@media(max-width:800px){
+.desktop-only{display:none !important}.mobile-only{display:block !important}
+.colors{grid-template-columns:repeat(2,1fr)}
+.hero-text{position:relative;left:auto;top:auto;max-width:100%;margin:-36px 14px 0;padding:16px}
+.undertone-grid{grid-template-columns:1fr}
+}
 </style></head><body>
-<nav><div class="nav-in"><div class="logo" id="storeLogo">ARINDA</div><div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kontak.html">KONTAK</a></div></div></nav>
+<nav><div class="nav-in"><div class="logo" id="storeLogo">ARINDA</div><div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a href="kontak.html">KONTAK</a></div></div></nav>
 
 <div class="hero">
 <img class="desktop-only" src="banner.jpg" style="aspect-ratio:16/9;object-fit:contain;background:#F6EEE3" alt="Banner">
-<img class="mobile-only" src="banner-hp.jpg" style="aspect-ratio:9/16;object-fit:contain;object-position:top;background:#F6EEE3" alt="Banner HP">
+<img class="mobile-only" src="banner hp.jpg" style="aspect-ratio:9/16;object-fit:contain;object-position:top;background:#F6EEE3" alt="Banner HP">
 <div class="hero-text">
 <div class="kicker">NEW COLLECTION - READY STOCK</div>
 <h1>Adem,<br>Tidak Menerawang</h1>
 <p>Premium voal Rp80.000 - 115x115cm, laser cut rapi, 4 warna bestseller</p>
-<a href="#produk-dinamis" class="btn">Lihat Produk →</a>
+<a href="produk.html" class="btn">Lihat Produk →</a>
 </div>
 </div>
 
-<div class="section">
+<div class="section" id="produk">
 <div class="sub">KOLEKSI 4 WARNA BESTSELLER</div>
 <div class="colors">
 <img src="navy.jpg" alt="Navy"><img src="hitam.jpg" alt="Hitam"><img src="krem.jpg" alt="Krem"><img src="maroon.jpg" alt="Maroon">
 </div>
 
-<div id="produk-dinamis" style="margin-top:22px">
-<div class="h2">Produk Ready Stock (Otomatis dari Admin)</div>
-<div class="sub">Yang kamu tambah di admin.html akan muncul di sini</div>
-<div id="list" class="prod-grid">Loading produk...</div>
+<!-- ===== BAGIAN CUSTOM DARI ADMIN - OTOMATIS MUNCUL JIKA ADA PRODUK BARU ===== -->
+<div id="customSection" style="display:none;margin-top:24px;border-top:1px solid var(--champ);padding-top:16px">
+<div class="sub">PRODUK READY STOCK (OTOMATIS DARI ADMIN)</div>
+<div style="font-size:10px;color:#8C7A6B;margin-bottom:12px">Yang kamu tambah di admin.html akan muncul di sini otomatis</div>
+<div id="dynamicList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div>
 </div>
 
-<div class="undertone" id="undertone" style="margin-top:22px">
+<!-- 3 UNDERTONE DENGAN FOTO PERGELANGAN DI ATAS -->
+<div class="undertone" id="undertone">
 <div class="h2">Kenali Undertone Kamu</div>
 <div class="sub">Lihat warna urat nadi di pergelangan tangan</div>
 <div class="undertone-grid">
-<div class="card"><img src="undertone-cool-biru.jpg"><h4><span class="dot" style="background:#8FA8D3"></span> COOL - Urat Biru/Ungu</h4><p>Kulit cerah, pinkish</p><div class="badge">COCOK: Navy & Hitam</div></div>
-<div class="card"><img src="undertone.jpg"><h4><span class="dot" style="background:#9CAF8A"></span> WARM - Urat Hijau</h4><p>Kulit kuning langsat</p><div class="badge">COCOK: Krem & Maroon</div></div>
-<div class="card"><img src="undertone-neutral-campur.jpg"><h4><span class="dot" style="background:linear-gradient(90deg,#8FA8D3,#9CAF8A)"></span> NEUTRAL - Campur</h4><p>Semua warna masuk</p><div class="badge">BEST: Krem Elegant</div></div>
+<div class="card">
+<img src="undertone-cool-biru.jpg" alt="Cool Blue">
+<h4><span class="dot" style="background:#8FA8D3"></span> COOL - Urat Biru/Ungu</h4>
+<p>Kulit cerah, pinkish. Pembuluh darah kebiruan</p>
+<div class="badge">COCOK: Navy & Hitam</div>
 </div>
+<div class="card">
+<img src="udertone-.jpg" alt="Warm Green">
+<h4><span class="dot" style="background:#9CAF8A"></span> WARM - Urat Hijau</h4>
+<p>Kulit kuning langsat, sawo matang</p>
+<div class="badge">COCOK: Krem & Maroon</div>
+</div>
+<div class="card">
+<img src="undertone-neutral-campur.jpg" alt="Neutral Mix">
+<h4><span class="dot" style="background:linear-gradient(90deg,#8FA8D3,#9CAF8A)"></span> NEUTRAL - Campur</h4>
+<p>Urat hijau + biru, semua warna masuk</p>
+<div class="badge">BEST: Krem Elegant (Universal)</div>
 </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- FAQ ACCORDION -->
+<div style="margin-top:18px">
+<div style="font-family:'Cormorant Garamond',serif;font-size:20px;margin-bottom:4px;font-weight:600">FAQ - Pertanyaan Umum</div>
+<div style="font-size:10px;letter-spacing:2px;color:#8C7A6B;margin-bottom:10px">Jawaban cepat seputar ARINDA Hijab Premium</div>
+<style>
+.faq{border:1px solid #EAE6E1;background:#fff;margin-top:10px}
+.faq-item{border-bottom:1px solid #EAE6E1}.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;text-align:left;background:#fff;border:none;padding:14px;font-size:13px;font-weight:500;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif}
+.faq-q span{color:#8C7A6B;font-size:18px;transition:.2s}
+.faq-item.active .faq-q span{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;padding:0 14px;background:#FFFCF9}
+.faq-item.active .faq-a{max-height:250px;padding:0 14px 14px}
+.faq-a p{font-size:11px;line-height:1.6;color:#8C7A6B;margin:8px 0 0}
+</style>
+<div class="faq" id="faq">
+<div class="faq-item active">
+<button class="faq-q" onclick="this.parentElement.classList.toggle('active')">Apa bahan ARINDA? Adem & menerawang tidak? <span>+</span></button>
+<div class="faq-a"><p>ARINDA pakai <b>Premium Voal</b> grade A, serat rapat, adem, tidak menerawang meski warna terang Krem. Mudah dibentuk dan tidak licin.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="this.parentElement.classList.toggle('active')">Apa perbedaan tampilan oval dan square? <span>+</span></button>
+<div class="faq-a"><p>ARINDA bisa ditata <b>2 tampilan</b>: oval (lebih soft feminin di dahi) atau square (lebih tegas rapi). Tinggal lipat ujung sesuai selera.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="this.parentElement.classList.toggle('active')">Ukuran & finishing gimana? <span>+</span></button>
+<div class="faq-a"><p>Ukuran <b>115 x 115 cm</b> (lebih luas dari standar 110), finishing <b>laser cut</b> rapi, tidak berbulu.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="this.parentElement.classList.toggle('active')">Cocok untuk undertone apa? <span>+</span></button>
+<div class="faq-a"><p><b>Cool (urat biru)</b> → Navy & Hitam, <b>Warm (urat hijau)</b> → Krem & Maroon, <b>Neutral (campur)</b> → semua masuk.</p></div>
+</div>
+<div class="faq-item">
+<button class="faq-q" onclick="this.parentElement.classList.toggle('active')">Cara perawatan biar awet? <span>+</span></button>
+<div class="faq-a"><p>Cuci tangan, jangan sikat, setrika suhu rendah, simpan digantung.</p></div>
+</div>
+</div>
+</div>
+</div>
+<a href="produk.html" class="btn" style="width:100%;margin-top:12px">LIHAT PRODUK SESUAI UNDERTONE →</a>
+</div>
+
 <script>
-const SUPABASE_URL="https://qjgevvizqeebtdqcbqmt.supabase.co";
-const SUPABASE_KEY="sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19";
+const SUPABASE_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
+const SUPABASE_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-
 async function load(){
-  try {
-    const {data:setting}=await supabaseClient.from('settings').select('*').eq('id',1).single();
-    if(setting?.store_name){
-      document.getElementById('storeLogo').innerText=setting.store_name;
-    }
-  } catch(e){}
-  const {data,error}=await supabaseClient.from('products').select('*').order('created_at',{ascending:false});
-  if(error){document.getElementById('list').innerHTML='Error: '+error.message; return;}
-  if(!data||data.length==0){document.getElementById('list').innerHTML='Belum ada produk di admin'; return;}
-  let html="";
-  data.forEach(p=>{
-    html+=`<div class="prod"><img src="${p.image_url}" onerror="this.src='https://via.placeholder.com/300'"><div class="prod-info"><b>${p.name}</b><div>Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
-  });
-  document.getElementById('list').innerHTML=html;
+ try{
+  const {data}=await supabaseClient.from('settings').select('*').eq('id',1).single();
+  if(data && data.store_name) document.getElementById('storeLogo').innerText=data.store_name;
+ }catch(e){}
+ try{
+  // pakai id biar tidak error created_at does not exist
+  const {data,error}=await supabaseClient.from('products').select('*').order('id',{ascending:false});
+  if(error) return;
+  if(!data || data.length==0) return;
+  const sec=document.getElementById('customSection');
+  const el=document.getElementById('dynamicList');
+  sec.style.display='block';
+  el.innerHTML=data.map(p=>`<div style="border:1px solid #EAE6E1;background:#fff;border-radius:10px;overflow:hidden;cursor:pointer" onclick="location.href='produk.html'"><img src="${p.image_url}" style="width:100%;height:160px;object-fit:cover" loading="lazy"><div style="padding:8px"><div style="font-size:12px;font-weight:600">${p.name}</div><div style="font-size:11px;color:#8C7A6B">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`).join('');
+ }catch(e){ console.log(e); }
 }
 load();
 </script>
-</body>
-</html>
+</body></html>
