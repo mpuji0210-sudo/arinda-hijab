@@ -10,7 +10,7 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9;border-bottom:1px solid 
 .nav-in{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:20px}
 .menu{display:flex;gap:16px}.menu a{font-size:11px;letter-spacing:2px;color:var(--taupe);text-decoration:none}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
-.wrap{max-width:1100px;margin:0 auto;padding:16px 20px;display:grid;grid-template-columns:1.1fr .9fr;gap:24px}
+.wrap{max-width:1100px;margin:0 auto;padding:16px 20px;display:grid;grid-template-columns:1.1fr.9fr;gap:24px}
 .main-img{width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--champ)}
 .thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
 .thumbs img{width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--champ);opacity:.6;cursor:pointer}
@@ -35,16 +35,17 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9;border-bottom:1px solid 
 .u-result{margin-top:20px;background:#fff;border:1px dashed var(--champ);border-radius:16px;padding:16px;display:none}
 .u-result.show{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
 .prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
-.prod{border:1px solid var(--champ);background:#fff;border-radius:12px;overflow:hidden;cursor:pointer}
-.prod img{width:100%;height:200px;object-fit:cover}
-.prod-info{padding:10px}
+.prod{border:1px solid var(--champ);background:#fff;border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.prod img{width:100%;height:200px;object-fit:cover;cursor:pointer}
+.prod-info{padding:10px;flex:1;display:flex;flex-direction:column}
+.prod-info.btns{display:flex;flex-direction:column;gap:6px;margin-top:8px}
 @media(max-width:800px){.wrap{grid-template-columns:1fr}.nav-in{flex-direction:column;align-items:flex-start;gap:6px}.u-cards{grid-template-columns:1fr}.u-head{font-size:28px}}
 </style></head><body>
 <nav><div class="nav-in"><div class="logo" id="storeLogo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html" class="active">PRODUK</a><a href="kontak.html">KONTAK</a><a onclick="openCart()" style="cursor:pointer">KERANJANG (<span id="cCount">0</span>)</a></div></div></nav>
 
 <div style="max-width:1100px;margin:0 auto;padding:20px">
 <h2 style="font-family:'Cormorant Garamond';margin:0">Produk Baru dari Admin</h2>
-<div style="font-size:11px;letter-spacing:2px;color:#8C7A6B;margin:4px 0 12px">Otomatis muncul setelah upload di admin.html</div>
+<div style="font-size:11px;letter-spacing:2px;color:#8C7A6B;margin:4px 0 12px">Otomatis muncul setelah upload di admin.html - sudah ada tombol beli & chat</div>
 <div id="dynamicList" class="prod-grid">Loading produk...</div>
 </div>
 
@@ -108,17 +109,35 @@ async function loadDynamic(){
  try{
   const {data:set}=await supabaseClient.from('settings').select('*').eq('id',1).single();
   if(set){
-   STORE_NAME=set.store_name||set.storeName||'ARINDA';
-   STORE_WA=set.whatsapp||set.wa_number||set.wa||'6285178098354';
+   STORE_NAME=set.store_name||'ARINDA';
+   STORE_WA=set.wa_number||set.whatsapp||'6285178098354';
    document.getElementById('storeLogo').innerText=STORE_NAME;
   }
  }catch(e){}
  try{
-  const {data}=await supabaseClient.from('products').select('*').order('created_at',{ascending:false});
+  // FIX: pakai id, bukan created_at biar tidak error
+  const {data,error}=await supabaseClient.from('products').select('*').order('id',{ascending:false});
   const el=document.getElementById('dynamicList');
-  if(!data||data.length==0){ el.innerHTML='<p style="color:#8C7A6B">Belum ada produk baru. Upload di admin.html ya Puji!</p>'; return; }
-  el.innerHTML=data.map(p=>`<div class="prod" onclick="selectDynamic('${p.image_url}','${p.name}',${p.price})"><img src="${p.image_url}"><div class="prod-info"><b>${p.name}</b><div style="font-size:11px;color:#8C7A6B">${p.description||''}</div><div style="font-weight:700;margin-top:4px">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`).join('');
- }catch(e){ document.getElementById('dynamicList').innerHTML='Error load produk'; }
+  if(error) throw error;
+  if(!data||data.length==0){ el.innerHTML='<p style="color:#8C7A6B">PRODUK BARU</p>'; return; }
+  el.innerHTML=data.map(p=>{
+   const safeName = p.name.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+   return `<div class="prod">
+     <img src="${p.image_url}" onclick="selectDynamic('${p.image_url}','${safeName}',${p.price})">
+     <div class="prod-info">
+       <b>${p.name}</b>
+       <div style="font-size:11px;color:#8C7A6B">${p.description||'Premium Voal'}</div>
+       <div style="font-weight:700;margin-top:4px">Rp${Number(p.price).toLocaleString('id-ID')}</div>
+       <div class="btns">
+         <button class="btn primary" style="padding:10px;margin:0" onclick="buyDynamic('${safeName}',${p.price},'${p.image_url}')">BELI SEKARANG →</button>
+         <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+           <button class="btn" style="padding:8px;margin:0;font-size:10px" onclick="addCartDynamic('${safeName}',${p.price},'${p.image_url}')">+ KERANJANG</button>
+           <button class="btn" style="padding:8px;margin:0;font-size:10px;background:#25D366;color:#fff;border-color:#25D366" onclick="chatDynamic('${safeName}')">CHAT WA</button>
+         </div>
+       </div>
+     </div>
+   </div>`}).join('');
+ }catch(e){ document.getElementById('dynamicList').innerHTML='Error: '+e.message; }
 }
 function selectDynamic(img,name,price){
  document.getElementById('main').src=img;
@@ -143,13 +162,27 @@ function addCart(){
 let i=cart.findIndex(x=>x.warna==warna&&x.ukuran==ukuran);
 if(i>-1){cart[i].qty=Number(cart[i].qty||0)+1}else{cart.push({warna,ukuran,qty:1,harga:HARGA,img:IMG[warna]})}
 save(); let t=document.getElementById('toast'); t.innerText=warna+' '+ukuran+' masuk keranjang!'; t.style.display='block'; setTimeout(()=>t.style.display='none',2000)}
+// FUNGSI UNTUK PRODUK DYNAMIC
+function addCartDynamic(name,price,img){
+ let i=cart.findIndex(x=>x.warna==name);
+ if(i>-1){cart[i].qty++}else{cart.push({warna:name,ukuran:'All Size',qty:1,harga:Number(price),img})}
+ save(); alert(name+' masuk keranjang!');
+}
+function buyDynamic(name,price,img){
+ let pesan=`Halo ${STORE_NAME} 👋%0A%0AMau ORDER: ${name} - Rp${Number(price).toLocaleString('id-ID')}%0A${img}`;
+ window.open('https://wa.me/'+STORE_WA+'?text='+pesan,'_blank');
+}
+function chatDynamic(name){
+ let text=`Hi ${STORE_NAME} 👋%0A%0AAku mau tanya stok ${name} ready?`;
+ window.open('https://wa.me/'+STORE_WA+'?text='+text,'_blank');
+}
 function openCart(){renderList();document.getElementById('cartModal').style.display='flex'}
 function closeCart(){document.getElementById('cartModal').style.display='none'}
 function renderList(){
 let list=document.getElementById('cList');
 if(cart.length==0){list.innerHTML='<p style="text-align:center;color:#8C7A6B;padding:24px">Keranjang kosong, yuk tambah dulu</p>'; document.getElementById('tItem').innerText='0'; document.getElementById('tHarga').innerText='Rp0'; return}
-list.innerHTML=cart.map((it,idx)=>`<div class="cart-row"><img src="${it.img}" style="width:58px;height:58px;object-fit:cover;border:1px solid #EAE6E1"><div style="flex:1"><div style="font-size:13px;font-weight:600">${it.warna} - ${it.ukuran}</div><div style="font-size:12px;color:#8C7A6B">Rp${HARGA.toLocaleString('id-ID')} x ${it.qty} = Rp${(HARGA*it.qty).toLocaleString('id-ID')}</div></div><div style="display:flex;align-items:center;gap:8px;border:1px solid #EAE6E1;padding:4px 8px"><span onclick="chg(${idx},-1)" style="cursor:pointer">−</span><b>${it.qty}</b><span onclick="chg(${idx},1)" style="cursor:pointer">+</span></div><span onclick="del(${idx})" style="cursor:pointer">🗑️</span></div>`).join('');
-let totItem=cart.reduce((a,b)=>a+Number(b.qty),0); let totHarga=totItem*HARGA;
+list.innerHTML=cart.map((it,idx)=>`<div class="cart-row"><img src="${it.img}" style="width:58px;height:58px;object-fit:cover;border:1px solid #EAE6E1"><div style="flex:1"><div style="font-size:13px;font-weight:600">${it.warna} - ${it.ukuran}</div><div style="font-size:12px;color:#8C7A6B">Rp${Number(it.harga).toLocaleString('id-ID')} x ${it.qty} = Rp${(Number(it.harga)*it.qty).toLocaleString('id-ID')}</div></div><div style="display:flex;align-items:center;gap:8px;border:1px solid #EAE6E1;padding:4px 8px"><span onclick="chg(${idx},-1)" style="cursor:pointer">−</span><b>${it.qty}</b><span onclick="chg(${idx},1)" style="cursor:pointer">+</span></div><span onclick="del(${idx})" style="cursor:pointer">🗑️</span></div>`).join('');
+let totItem=cart.reduce((a,b)=>a+Number(b.qty),0); let totHarga=cart.reduce((a,b)=>a+Number(b.harga)*Number(b.qty),0);
 document.getElementById('tItem').innerText=totItem; document.getElementById('tHarga').innerText='Rp'+totHarga.toLocaleString('id-ID');
 }
 function chg(i,d){cart[i].qty=Number(cart[i].qty)+d; if(cart[i].qty<=0) cart.splice(i,1); save(); renderList()}
@@ -158,7 +191,7 @@ function chatWa(){let text=`Hi ${STORE_NAME} 👋%0A%0AAku mau tanya warna ${war
 function checkout(){
 if(cart.length==0) return alert('Keranjang kosong');
 let pesan='Halo '+STORE_NAME+', mau ORDER:%0A'; cart.forEach((it,n)=>{pesan+=`${n+1}. ${it.warna} ${it.ukuran} x${it.qty} = Rp${(it.harga*it.qty).toLocaleString('id-ID')}%0A`});
-let total=cart.reduce((a,b)=>a+b.harga*b.qty,0); pesan+=`%0ATotal: Rp${total.toLocaleString('id-ID')} (${cart.reduce((a,b)=>a+b.qty,0)} item)%0AMohon info ongkir ya kak 🙏`;
+let total=cart.reduce((a,b)=>a+Number(b.harga)*Number(b.qty),0); pesan+=`%0ATotal: Rp${total.toLocaleString('id-ID')} (${cart.reduce((a,b)=>a+b.qty,0)} item)%0AMohon info ongkir ya kak 🙏`;
 window.open('https://wa.me/'+STORE_WA+'?text='+pesan,'_blank');
 }
 function checkUndertone(type, el){
