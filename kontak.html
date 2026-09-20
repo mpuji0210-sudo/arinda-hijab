@@ -15,7 +15,7 @@ input,textarea,select{width:100%;padding:12px;border:1px solid var(--champ);font
 @media(max-width:750px){.nav-in{flex-direction:column;align-items:flex-start}.menu{width:100%;justify-content:space-between;border-top:1px solid var(--champ);padding-top:10px}.wrap{grid-template-columns:1fr}}
 </style>
 </head><body>
-<nav><div class="nav-in"><div class="logo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kontak.html" class="active">KONTAK</a></div></div></nav>
+<nav><div class="nav-in"><div class="logo" id="storeLogo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kontak.html" class="active">KONTAK</a></div></div></nav>
 
 <div class="wrap">
 <div>
@@ -23,7 +23,7 @@ input,textarea,select{width:100%;padding:12px;border:1px solid var(--champ);font
 <p style="color:var(--taupe);font-size:13px;margin-top:12px">Konsultasi warna, ukuran, dan pre-order koleksi terbaru. </p>
 <div style="display:grid;gap:12px;margin-top:20px">
 <div class="card">📍 Jakarta - Kirim seluruh Indonesia<br><span style="font-size:11px;color:var(--taupe)">COD & QRIS Ready</span></div>
-<div class="card">💬 WhatsApp: 6285178098354<br><span style="font-size:11px;color:var(--taupe)">Jam 08.00 - 21.00 WIB</span></div>
+<div class="card">💬 WhatsApp: <span id="waText">6285178098354</span><br><span style="font-size:11px;color:var(--taupe)">Jam 08.00 - 21.00 WIB</span></div>
 <div class="card">⭐ Rating 4.9/5 dari 1.200+ pembeli</div>
 </div>
 </div>
@@ -35,18 +35,43 @@ input,textarea,select{width:100%;padding:12px;border:1px solid var(--champ);font
 <select id="warna"><option>HITAM </option><option>KREM </option><option>MAROON</option><option>NAVY</option></select>
 <label style="font-size:11px;margin-top:12px;display:block">Pesan</label><textarea id="pesan" rows="4" placeholder="Mau tanya stok, ukuran, ongkir..."></textarea>
 <button class="btn" onclick="kirimWA()">KIRIM KE WHATSAPP</button>
-<div style="font-size:10px;color:var(--taupe);text-align:center;margin-top:8px">Langsung terhubung ke admin ARINDA</div>
+<div style="font-size:10px;color:var(--taupe);text-align:center;margin-top:8px">Langsung terhubung ke admin <span id="storeName2">ARINDA</span></div>
 </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const SUPABASE_URL="https://qjgevvizqeebtdqcbqmt.supabase.co";
+const SUPABASE_KEY="sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19";
+const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let WA_NUMBER="6285178098354";
+let STORE_NAME="ARINDA";
+
+async function loadSetting(){
+  try{
+    const {data}=await supabaseClient.from('settings').select('*').eq('id',1).single();
+    if(data){
+      if(data.store_name){
+        STORE_NAME=data.store_name;
+        document.getElementById('storeLogo').innerText=data.store_name;
+        document.getElementById('storeName2').innerText=data.store_name;
+      }
+      if(data.whatsapp){
+        WA_NUMBER=data.whatsapp;
+        document.getElementById('waText').innerText=data.whatsapp;
+      }
+    }
+  }catch(e){}
+}
+loadSetting();
+
 function kirimWA(){
 let n=document.getElementById('nama').value.trim();
-if(!n){alert('Kak, isi nama dulu ya biar Arinda tau mau sapa siapa 🖐️');document.getElementById('nama').focus();return;}
+if(!n){alert('Kak, isi nama dulu ya biar '+STORE_NAME+' tau mau sapa siapa 🖐️');document.getElementById('nama').focus();return;}
 let w=document.getElementById('warna').value;
 let p=document.getElementById('pesan').value||'Mau tanya hijab Rp180.000';
-let msg=`Halo Arinda, saya ${n} \n\nWarna: ${w}\nPesan: ${p}\n\nMohon infonya ya 🙏`;
-window.open('https://wa.me/6285178098354?text='+encodeURIComponent(msg),'_blank');
+let msg=`Halo ${STORE_NAME}, saya ${n} \n\nWarna: ${w}\nPesan: ${p}\n\nMohon infonya ya 🙏`;
+window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(msg),'_blank');
 }
 </script>
 </body></html>
