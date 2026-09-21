@@ -74,7 +74,7 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 </div>
 
 <script>
-const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co/rest/v1/','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
+const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
 function toggleSearch(){const b=document.getElementById('searchBox');b.style.display=b.style.display=='block'?'none':'block';if(b.style.display=='block')document.getElementById('q').focus();}
 function goSearch(e){e.preventDefault();const v=document.getElementById('q').value.trim();if(!v)return;location.href='produk.html?q='+encodeURIComponent(v);}
 function toggleFaq(el){const item=el.closest('.faq-item');const active=item.classList.contains('active');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('active'));if(!active)item.classList.add('active');}
