@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Aeni HIJAB - Adem Tidak Menerawang</title>
+<title>Aeni HIJAB</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -11,137 +11,96 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 .nav-top{display:flex;justify-content:space-between;align-items:center}
 .logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:18px}
 .menu{display:flex;gap:14px;margin-top:8px;padding-top:8px;border-top:1px solid var(--champ)}
-.menu a{font-size:11px;letter-spacing:1.5px;color:var(--taupe);text-decoration:none;white-space:nowrap}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
+.menu a{font-size:11px;letter-spacing:1.5px;color:var(--taupe);text-decoration:none}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
 .icons{display:flex;gap:10px;align-items:center}
 .icon-btn{background:none;border:none;cursor:pointer;padding:4px;position:relative}
 .icon-btn svg{width:21px;height:21px;stroke:var(--esp);fill:none;stroke-width:1.6}
 .badge{position:absolute;top:-3px;right:-4px;background:var(--esp);color:#fff;font-size:9px;min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 #searchBox{display:none;padding:8px 0 0}
-#searchBox input{width:100%;padding:12px 16px;border:1px solid var(--champ);border-radius:24px;font-size:13px;outline:none;background:#fff;-webkit-appearance:none}
+#searchBox input{width:100%;padding:12px 16px;border:1px solid var(--champ);border-radius:24px;font-size:13px;outline:none;background:#fff}
 .hero{position:relative;width:100%;background:#F6EEE3;overflow:hidden}
 .hero img{width:100%;display:block}
 .desktop-only{display:block}.mobile-only{display:none}
 .hero-text{position:absolute;left:5%;top:22%;max-width:400px;background:#fff;padding:18px;border:1px solid var(--champ)}
 .kicker{font-size:10px;letter-spacing:3px;color:var(--taupe)}.hero-text h1{font-family:'Cormorant Garamond';font-size:36px;line-height:.95;margin:6px 0 8px}
-.hero-text p{font-size:12px;color:var(--taupe);line-height:1.5;margin:0 0 14px}
-.btn{display:inline-block;background:var(--esp);color:#fff;padding:11px 20px;font-size:11px;letter-spacing:2px;text-decoration:none;text-align:center}
+.btn{display:inline-block;background:var(--esp);color:#fff;padding:11px 20px;font-size:11px;letter-spacing:2px;text-decoration:none}
 .section{max-width:1120px;margin:0 auto;padding:16px 14px}
 .sub{font-size:10px;letter-spacing:2.5px;color:var(--taupe);margin:4px 0 12px}
 .colors{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .colors img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#fff;border:1px solid var(--champ)}
 .prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}
 .prod-card{border:1px solid #EAE6E1;background:#fff;border-radius:10px;overflow:hidden}
-.prod-card img{width:100%;height:180px;object-fit:cover;display:block}
-.plus-btn{width:32px;height:32px;border-radius:50%;background:#2B1B12;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;padding:0}
-/* FAQ FIX - INI YANG BENER */
+.prod-card img{width:100%;height:180px;object-fit:cover}
+.plus-btn{width:32px;height:32px;border-radius:50%;background:#2B1B12;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px}
+/* FAQ FIX 100% - ADA SPASI */
 .faq{border:1px solid #EAE6E1;background:#fff;margin-top:10px;border-radius:8px;overflow:hidden}
 .faq-item{border-bottom:1px solid #EAE6E1}.faq-item:last-child{border-bottom:none}
 .faq-q{width:100%;text-align:left;background:#fff;border:none;padding:14px 12px;font-size:13px;font-weight:500;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
-.arrow{width:18px;height:18px;transition:transform.25s;flex-shrink:0}
-.faq-a{display:none;background:#FFFCF9}
+.arrow{width:18px;height:18px;transition:transform.25s;stroke:#8C7A6B;fill:none;stroke-width:1.8}
+.faq-a{max-height:0;overflow:hidden;transition:max-height.3s ease;background:#FFFCF9}
 .faq-a p{font-size:11.5px;line-height:1.6;color:#8C7A6B;margin:0;padding:0 12px 14px}
-.faq-item.active.faq-a{display:block}
+.faq-item.active.faq-a{max-height:300px;padding-top:8px}
 .faq-item.active.arrow{transform:rotate(180deg)}
-@media(max-width:800px){
-.desktop-only{display:none!important}.mobile-only{display:block!important}
-.hero-text{position:relative;left:auto;top:auto;max-width:100%;margin:-24px 14px 0;padding:14px}
-.hero-text h1{font-size:28px}
-.colors{grid-template-columns:repeat(2,1fr)}
-.prod-grid{grid-template-columns:repeat(2,1fr)}
-}
+@media(max-width:800px){.desktop-only{display:none!important}.mobile-only{display:block!important}.hero-text{position:relative;left:auto;top:auto;max-width:100%;margin:-24px 14px 0;padding:14px}.colors{grid-template-columns:repeat(2,1fr)}.prod-grid{grid-template-columns:repeat(2,1fr)}}
 </style></head><body>
 <nav><div class="nav-in">
 <div class="nav-top">
 <div class="logo" id="storeLogo">Aeni HIJAB</div>
 <div class="icons">
-<button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l20 20" stroke-linecap="round"/></svg></button>
+<button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16L20 20" stroke-linecap="round"/></svg></button>
 <a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></a>
 <a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 10H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cCount">0</span></a>
 </div>
 </div>
 <div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div>
-<div id="searchBox"><form onsubmit="return false;"><input id="q" type="search" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="search" placeholder="Cari hijab... krem, navy, hitam, maroon" oninput="doSearch(this.value)"></form></div>
+<div id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" autocomplete="off" placeholder="Cari hijab... krem, navy, hitam, maroon" enterkeyhint="search"></form></div>
 </div></nav>
 
 <div class="hero">
 <img class="desktop-only" src="banner.jpg" style="aspect-ratio:16/9;object-fit:cover;background:#F6EEE3">
 <img class="mobile-only" src="banner hp.jpg" style="height:62vh;object-fit:cover;object-position:top">
-<div class="hero-text">
-<div class="kicker">NEW COLLECTION - READY STOCK</div>
-<h1>Adem,<br>Tidak Menerawang</h1>
-<p>Premium voal Rp80.000 - 115x115cm, laser cut rapi, 4 warna bestseller</p>
-<a href="produk.html" class="btn">Lihat Produk →</a>
-</div>
+<div class="hero-text"><div class="kicker">NEW COLLECTION - READY STOCK</div><h1>Adem,<br>Tidak Menerawang</h1><p>Premium voal Rp80.000 - 115x115cm, laser cut rapi, 4 warna bestseller</p><a href="produk.html" class="btn">Lihat Produk →</a></div>
 </div>
 
 <div class="section">
 <div class="sub">KOLEKSI 4 WARNA BESTSELLER</div>
 <div class="colors"><img src="navy.jpg"><img src="hitam.jpg"><img src="krem.jpg"><img src="maroon.jpg"></div>
 
-<div id="customSection" style="display:block;margin-top:24px;border-top:1px solid var(--champ);padding-top:16px">
-<div class="sub" id="resultLabel">PRODUK READY STOCK - Klik + untuk keranjang</div>
-<div id="dynamicList" class="prod-grid"></div>
+<div id="customSection" style="margin-top:24px;border-top:1px solid var(--champ);padding-top:16px">
+<div class="sub">PRODUK READY STOCK - Klik + untuk keranjang</div>
+<div id="dynamicList" class="prod-grid">Loading...</div>
 </div>
 
 <div style="margin-top:28px;background:#fff;border:1px solid var(--champ);padding:14px;border-radius:10px">
+<div style="font-family:'Cormorant Garamond';font-size:22px;font-weight:600">Kenali Undertone Kamu</div>
+<div class="sub">Lihat warna urat nadi di pergelangan tangan</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px">
+<div style="border:1px solid var(--champ);padding:8px;text-align:center;border-radius:8px"><img src="undertone-cool-biru.jpg" style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:6px"><div style="font-size:11px;margin-top:6px"><b>COOL - Urat Biru/Ungu</b><br><span style="color:var(--taupe)">COCOK: Navy & Hitam</span></div></div>
+<div style="border:1px solid var(--champ);padding:8px;text-align:center;border-radius:8px"><img src="udertone-.jpg" style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:6px"><div style="font-size:11px;margin-top:6px"><b>WARM - Urat Hijau</b><br><span style="color:var(--taupe)">COCOK: Krem & Maroon</span></div></div>
+<div style="border:1px solid var(--champ);padding:8px;text-align:center;border-radius:8px"><img src="undertone-neutral-campur.jpg" style="width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:6px"><div style="font-size:11px;margin-top:6px"><b>NEUTRAL - Campur</b><br><span style="color:var(--taupe)">BEST: Krem Elegant</span></div></div>
+</div>
+
+<div style="margin-top:18px">
 <div style="font-family:'Cormorant Garamond';font-size:20px;font-weight:600">FAQ - Pertanyaan Umum</div>
 <div class="faq">
-<div class="faq-item active">
-<button class="faq-q" onclick="toggleFaq(this)">Apa bahan Aeni? Adem & menerawang tidak? <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="#8C7A6B" stroke-width="1.8"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-<div class="faq-a"><p>Aeni pakai <b>Premium Voal</b> grade A, serat rapat, adem, tidak menerawang meski warna terang Krem.</p></div>
-</div>
-<div class="faq-item">
-<button class="faq-q" onclick="toggleFaq(this)">Apa perbedaan tampilan oval dan square? <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="#8C7A6B" stroke-width="1.8"><path d="M6 9l6 6 6-6" stroke-linecap="round"/></svg></button>
-<div class="faq-a"><p>Bisa ditata 2 tampilan: oval lebih soft, square lebih tegas rapi.</p></div>
-</div>
-<div class="faq-item">
-<button class="faq-q" onclick="toggleFaq(this)">Ukuran & finishing gimana? <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="#8C7A6B" stroke-width="1.8"><path d="M6 9l6 6 6-6" stroke-linecap="round"/></svg></button>
-<div class="faq-a"><p>Ukuran 115 x 115 cm, finishing laser cut rapi, tidak berbulu.</p></div>
-</div>
-<div class="faq-item">
-<button class="faq-q" onclick="toggleFaq(this)">Cocok untuk undertone apa? <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="#8C7A6B" stroke-width="1.8"><path d="M6 9l6 6 6-6" stroke-linecap="round"/></svg></button>
-<div class="faq-a"><p>Cool → Navy & Hitam, Warm → Krem & Maroon, Neutral → semua masuk.</p></div>
+<div class="faq-item active"><button class="faq-q" onclick="toggleFaq(this)">Apa bahan Aeni? Adem & menerawang tidak? <svg class="arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-a"><p>Aeni pakai <b>Premium Voal</b> grade A, serat rapat, adem, tidak menerawang meski warna terang Krem.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Apa perbedaan tampilan oval dan square? <svg class="arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-a"><p>Bisa 2 tampilan: oval lebih soft, square lebih tegas rapi.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Ukuran & finishing gimana? <svg class="arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-a"><p>Ukuran 115 x 115 cm, finishing laser cut rapi.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Cocok untuk undertone apa? <svg class="arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="faq-a"><p>Cool → Navy & Hitam, Warm → Krem & Maroon, Neutral → semua masuk.</p></div></div>
 </div>
 </div>
 </div>
 </div>
 
 <script>
-const SUPABASE_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
-const SUPABASE_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
-const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let allProducts=[];
-
-function toggleSearch(){const b=document.getElementById('searchBox'); b.style.display=b.style.display=='block'?'none':'block'; if(b.style.display=='block') setTimeout(()=>document.getElementById('q').focus(),100);}
+const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
+function toggleSearch(){const b=document.getElementById('searchBox'); b.style.display=b.style.display=='block'?'none':'block'; if(b.style.display=='block') document.getElementById('q').focus();}
+function goSearch(e){e.preventDefault(); const v=document.getElementById('q').value.trim(); if(!v) return; location.href='produk.html?q='+encodeURIComponent(v);}
 function toggleFaq(btn){const item=btn.closest('.faq-item'); const was=item.classList.contains('active'); document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('active')); if(!was) item.classList.add('active');}
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return []}}
 function updateCount(){document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+Number(b.qty||0),0);}
-
-function doSearch(v){
-  const q=v.toLowerCase().trim();
-  const label=document.getElementById('resultLabel');
-  if(!q){ label.innerText='PRODUK READY STOCK - Klik + untuk keranjang'; render(allProducts); return; }
-  const filtered=allProducts.filter(p=> (p.name+' '+(p.category||'')+' '+(p.description||'')).toLowerCase().includes(q));
-  label.innerText=`Hasil cari "${v}" (${filtered.length})`;
-  render(filtered);
-  if(filtered.length>0) document.getElementById('customSection').scrollIntoView({behavior:'smooth'});
-}
-function render(list){
-  const el=document.getElementById('dynamicList');
-  if(!list || list.length==0){ el.innerHTML='<p style="font-size:12px;color:#8C7A6B;padding:10px">Produk tidak ditemukan, coba kata lain: krem, navy, hitam, maroon</p>'; return;}
-  el.innerHTML=list.map(p=>{
-   const safe=p.name.replace(/'/g,"\\'");
-   return `<div class="prod-card"><img src="${p.image_url}" onclick="location.href='produk.html'"><div style="padding:8px"><div style="font-size:12px;font-weight:600">${p.name}</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><div style="font-size:11px;color:#8C7A6B">Rp${Number(p.price).toLocaleString('id-ID')}</div><button class="plus-btn" onclick="addSimple('${safe}',${p.price},'${p.image_url}')">+</button></div></div></div>`;
-  }).join('');
-}
-async function load(){
-  try{
-    const {data,error}=await supabaseClient.from('products').select('*').order('id',{ascending:false});
-    if(!error && data){ allProducts=data; render(allProducts); }
-  }catch(e){ console.log(e); }
-  updateCount();
-}
-function addSimple(name,price,img){let cart=getCart();let i=cart.findIndex(x=>x.warna==name); if(i>-1) cart[i].qty++; else cart.push({warna:name,ukuran:'All Size',qty:1,harga:Number(price),img}); localStorage.setItem('arinda_cart2', JSON.stringify(cart)); updateCount(); let t=document.createElement('div'); t.innerText=name+' ✓'; t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#2B1B12;color:#fff;padding:10px 16px;border-radius:20px;font-size:12px;z-index:9999'; document.body.appendChild(t); setTimeout(()=>t.remove(),1500);}
+async function load(){try{const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false}); document.getElementById('dynamicList').innerHTML=data.map(p=>{const s=p.name.replace(/'/g,"\\'"); return `<div class="prod-card"><img src="${p.image_url}"><div style="padding:8px"><div style="font-size:12px;font-weight:600">${p.name}</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><div style="font-size:11px;color:#8C7A6B">Rp${Number(p.price).toLocaleString('id-ID')}</div><button class="plus-btn" onclick="addSimple('${s}',${p.price},'${p.image_url}')">+</button></div></div></div>`}).join('');}catch(e){} updateCount();}
+function addSimple(n,p,i){let c=getCart();let x=c.findIndex(a=>a.warna==n); if(x>-1) c[x].qty++; else c.push({warna:n,ukuran:'All Size',qty:1,harga:Number(p),img:i}); localStorage.setItem('arinda_cart2',JSON.stringify(c)); updateCount();}
 load();
 </script>
 </body></html>
