@@ -4,18 +4,18 @@ export default async function handler(req, res) {
   try{
     const { origin, destination, weight, courier } = req.body;
     const w = String(weight || 1000);
+    const c = String(courier||'jne').toLowerCase().split(':')[0].split(',')[0];
 
-    // Coba 3 endpoint, yang mana yang ada isinya
-    const couriersToTry = ['pos','jne','jnt'];
-    // kalau user pilih 1 kurir, utamakan itu dulu
-    const first = String(courier||'pos').toLowerCase().split(':')[0].split(',')[0];
-    couriersToTry.unshift(first);
-    const uniqCouriers = [...new Set(couriersToTry)];
+    const endpoints = [
+      'https://rajaongkir.komerce.id/api/v1/calculate/subdistrict/domestic-cost',
+      'https://rajaongkir.komerce.id/api/v1/calculate/district/domestic-cost',
+      'https://rajaongkir.komerce.id/api/v1/calculate/domestic-cost'
+    ];
 
     let allData = [];
     let lastRaw = null;
 
-    for (let c of uniqCouriers) {
+    for (let url of endpoints) {
       const params = new URLSearchParams();
       params.append('origin', origin);
       params.append('destination', destination);
@@ -23,23 +23,27 @@ export default async function handler(req, res) {
       params.append('courier', c);
       params.append('price', 'lowest');
 
-      const r = await fetch('https://rajaongkir.komerce.id/api/v1/calculate/district/domestic-cost', {
-        method: 'POST',
-        headers: { 'key': key, 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params
-      });
-      const j = await r.json();
-      lastRaw = j;
-      if (j.data && Array.isArray(j.data) && j.data.length > 0) {
-        allData = allData.concat(j.data);
-      }
+      try{
+        const r = await fetch(url, {
+          method: 'POST',
+          headers: { 'key': key, 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: params
+        });
+        const j = await r.json();
+        lastRaw = { url, response: j };
+        if (j.data && Array.isArray(j.data) && j.data.length > 0) {
+          allData = j.data;
+          break; // udah ketemu yang ada isinya, stop
+        }
+      }catch(e){}
     }
 
     if (allData.length > 0) {
       return res.status(200).json({ data: allData });
     }
-    // kalau tetap kosong, balikin raw biar frontend bisa lihat pesan error Komerce
-    return res.status(200).json(lastRaw || { data: [], message: 'Tidak ada layanan untuk rute ini' });
+    // biar kamu lihat di Vercel log kalau masih kosong
+    console.log('KOSONG:', lastRaw);
+    return res.status(200).json({ data: [], debug: lastRaw, message: 'Tidak ada layanan - coba ganti kurir POS' });
 
   }catch(e){
     return res.status(500).json({error: e.message, data: []});
