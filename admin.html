@@ -1,29 +1,20 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARINDA ADMIN - FIX KONEK SETTINGS</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><style>body{margin:0;background:#FFFCF9;font-family:sans-serif;padding:12px}.card{background:#fff;border:1px solid #EAE6E1;border-radius:12px;padding:12px;margin-bottom:10px}.input{width:100%;padding:9px;border:1px solid #ddd;border-radius:8px;margin:4px 0}.btn{background:#2B1B12;color:#fff;border:none;padding:9px;border-radius:8px;width:100%;cursor:pointer;font-weight:bold}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cat{display:inline-block;background:#f3ece6;padding:4px 8px;border-radius:20px;margin:2px;font-size:12px}</style></head><body>
-
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
 <h2 style="margin:0">ARINDA ADMIN - SUDAH FIX</h2>
 <button onclick="logout()" style="background:red;color:white;padding:8px 15px;border-radius:8px;border:none;font-weight:bold;cursor:pointer">LOGOUT</button>
 </div>
-
 <div class="card"><h3>1. CUSTOM NAMA TOKO</h3><input id="storeName" class="input" placeholder="ARINDA HIJAB PREMIUM"><button class="btn" onclick="saveStoreName()">SIMPAN NAMA TOKO</button><small id="storeStatus"></small></div>
 <div class="card"><h3>2. GANTI WA</h3><input id="waNumber" class="input" placeholder="628xxxxxxxxxx"><button class="btn" onclick="saveWA()">SIMPAN NO WA</button><small id="waStatus"></small></div>
-<div class="card"><h3>3. ASAL PENGIRIMAN (ONGKIR)</h3><p style="font-size:12px;">Saat ini: <b id="curOrigin">CENGKARENG BARAT - 17523</b></p><input id="originSearch" placeholder="Ketik kecamatan baru, cth: Bekasi Timur" style="width:65%;padding:8px;"><button onclick="searchOrigin()" style="padding:8px;background:#0ea5e9;color:white;border:none;border-radius:4px;">Cari</button><div id="originList" style="margin-top:8px;max-height:150px;overflow-y:auto;"></div></div>
+<div class="card"><h3>3. ASAL PENGIRIMAN (ONGKIR)</h3><p style="font-size:12px;">Saat ini: <b id="curOrigin">CENGKARENG BARAT - 17523</b></p><div style="display:flex;gap:6px;"><input id="originSearch" class="input" placeholder="Ketik kecamatan baru, cth: Bekasi Timur" style="flex:1;"><button onclick="searchOrigin()" class="btn" style="width:auto;padding:9px 16px;">Cari</button></div><div id="originList" style="margin-top:8px;max-height:150px;overflow-y:auto;"></div></div>
 <div class="card"><h3>4. KATEGORI</h3><input id="catName" class="input" placeholder="Nama Kategori - Paris, Bella, dll"><button class="btn" onclick="addCat()">TAMBAH KATEGORI</button><div id="catList" style="margin-top:8px"></div></div>
 <div class="card"><h3>5. CUSTOM PRODUK - Tambah / Edit</h3><input type="hidden" id="editId"><input id="pName" class="input" placeholder="Nama Produk"><input id="pPrice" class="input" type="number" placeholder="Harga"><select id="pCat" class="input"><option value="">Pilih Kategori</option></select><input id="pImage" class="input" placeholder="Link foto"><input id="pFile" type="file" class="input"><button class="btn" onclick="saveProduct()">SIMPAN PRODUK</button></div>
 <div class="card"><h3>6. DAFTAR PRODUK - Edit & Hapus</h3><div id="list" class="grid">Loading...</div></div>
-
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supabaseClient = window.supabase.createClient(SUPA_URL, SUPA_KEY);
-  if(localStorage.getItem('arinda_admin')!=='login'){ alert('Harus login dulu!'); location.href='login.html'; }
-
-function logout(){
-  if(confirm('Yakin mau logout?')){
-    localStorage.clear();
-    location.href='login.html';
-  }
-}
+if(localStorage.getItem('arinda_admin')!=='login'){ alert('Harus login dulu!'); location.href='login.html'; }
+function logout(){ if(confirm('Yakin mau logout?')){ localStorage.clear(); location.href='login.html'; } }
 
 async function init(){
  try{
@@ -35,95 +26,62 @@ async function init(){
     if(sWa) document.getElementById('waNumber').value = sWa;
   }
  }catch(e){ console.log(e) }
- loadCats(); loadProducts();
+ loadCats(); loadProducts(); loadOrigin();
 }
-
+function loadOrigin(){
+  const DEFAULT_ID="17523"; const DEFAULT_LABEL="CENGKARENG BARAT, CENGKARENG, KOTA JAKARTA BARAT";
+  let sid=localStorage.getItem('toko_origin_id'); let slab=localStorage.getItem('toko_origin_label');
+  if(!sid){ sid=DEFAULT_ID; slab=DEFAULT_LABEL; localStorage.setItem('toko_origin_id',sid); localStorage.setItem('toko_origin_label',slab); }
+  document.getElementById('curOrigin').innerText=slab+' - '+sid;
+}
 async function saveStoreName(){
-  const val = document.getElementById('storeName').value.trim();
-  if(!val) return alert('Isi dulu nama toko');
-  const {error} = await supabaseClient.from('settings').upsert({key:'store_name', value:val}, {onConflict:'key'});
-  if(error) alert('Gagal: '+error.message);
-  else { document.getElementById('storeStatus').innerText='✅ Berhasil! Toko depan akan jadi '+val; alert('Nama toko berhasil disimpan ke Supabase!'); }
+  const val=document.getElementById('storeName').value.trim(); if(!val) return alert('Isi dulu nama toko');
+  const {error}=await supabaseClient.from('settings').upsert({key:'store_name',value:val},{onConflict:'key'});
+  if(error) alert('Gagal: '+error.message); else { document.getElementById('storeStatus').innerText='✅ Berhasil!'; alert('Nama toko disimpan!'); }
 }
-
 async function saveWA(){
-  const val = document.getElementById('waNumber').value.trim();
-  if(!val) return alert('Isi dulu WA');
-  const {error} = await supabaseClient.from('settings').upsert({key:'wa_number', value:val}, {onConflict:'key'});
-  if(error) alert('Gagal: '+error.message);
-  else { document.getElementById('waStatus').innerText='✅ WA berhasil: '+val; alert('WA disimpan!'); }
+  const val=document.getElementById('waNumber').value.trim(); if(!val) return alert('Isi dulu WA');
+  const {error}=await supabaseClient.from('settings').upsert({key:'wa_number',value:val},{onConflict:'key'});
+  if(error) alert('Gagal: '+error.message); else { document.getElementById('waStatus').innerText='✅ WA: '+val; alert('WA disimpan!'); }
 }
-
 async function loadCats(){
  try{
-  const {data,error} = await supabaseClient.from('categories').select('*');
-  if(error) throw error;
+  const {data,error}=await supabaseClient.from('categories').select('*'); if(error) throw error;
   window._cats=data||[];
   catList.innerHTML=window._cats.map(c=>`<span class="cat">${c.name} <b onclick="delCat('${c.id}')" style="cursor:pointer">x</b></span>`).join('');
   pCat.innerHTML='<option value="">Pilih Kategori</option>'+window._cats.map(c=>`<option value="${c.name}">${c.name}</option>`).join('');
- }catch(e){
-  catList.innerHTML='<small style="color:#999">Tabel categories belum ada</small>';
- }
+ }catch(e){ catList.innerHTML='<small style="color:#999">Tabel categories belum ada</small>'; }
 }
-
-async function addCat(){
- if(!catName.value) return;
- const {error}=await supabaseClient.from('categories').insert({name:catName.value});
- if(error) alert(error.message); else {catName.value=''; loadCats();}
-}
+async function addCat(){ if(!catName.value) return; const {error}=await supabaseClient.from('categories').insert({name:catName.value}); if(error) alert(error.message); else {catName.value=''; loadCats();} }
 async function delCat(id){if(!confirm('Hapus kategori?'))return;await supabaseClient.from('categories').delete().eq('id',id);loadCats();}
-
 async function loadProducts(){
  const {data,error}=await supabaseClient.from('products').select('*').order('id',{ascending:false});
  if(error){list.innerText='Error: '+error.message; return;}
- window._p=data||[];
- if(window._p.length==0){list.innerText='Kosong - Tambah produk baru di atas'; return;}
+ window._p=data||[]; if(window._p.length==0){list.innerText='Kosong'; return;}
  list.innerHTML=window._p.map(p=>`<div style="border:1px solid #eee;border-radius:8px;overflow:hidden"><img src="${p.image_url}" style="width:100%;height:110px;object-fit:cover"><div style="padding:6px"><b>${p.name}</b><br><small>${p.category||''}</small><br>Rp${Number(p.price).toLocaleString('id-ID')}<br><button class="btn" style="padding:4px;margin-top:3px" onclick="editP('${p.id}')">EDIT</button><button class="btn" style="padding:4px;background:#b42318;margin-top:2px" onclick="delP('${p.id}')">HAPUS</button></div></div>`).join('');
 }
 function editP(id){const p=window._p.find(x=>String(x.id)===String(id));editId.value=p.id;pName.value=p.name;pPrice.value=p.price;pImage.value=p.image_url;pCat.value=p.category||'';window.scrollTo({top:0,behavior:'smooth'});}
 async function delP(id){if(!confirm('Hapus?'))return;const {error}=await supabaseClient.from('products').delete().eq('id',id);if(error)alert(error.message);else loadProducts();}
 async function saveProduct(){
- let img=pImage.value;
- const f=pFile.files[0];
- if(f){
-  const fn=Date.now()+'_'+f.name.replace(/\s+/g,'_');
-  const {error}=await supabaseClient.storage.from('products').upload(fn,f);
-  if(error){alert('Upload gagal: '+error.message); return;}
-  const {data}=supabaseClient.storage.from('products').getPublicUrl(fn);
-  img=data.publicUrl;
- }
+ let img=pImage.value; const f=pFile.files[0];
+ if(f){ const fn=Date.now()+'_'+f.name.replace(/\s+/g,'_'); const {error}=await supabaseClient.storage.from('products').upload(fn,f); if(error){alert('Upload gagal: '+error.message); return;} const {data}=supabaseClient.storage.from('products').getPublicUrl(fn); img=data.publicUrl; }
  const payload={name:pName.value,price:Number(pPrice.value),image_url:img,category:pCat.value};
  if(!payload.name ||!payload.price ||!payload.image_url) return alert('Lengkapi nama, harga, dan foto');
- let err;
- if(editId.value){const r=await supabaseClient.from('products').update(payload).eq('id',editId.value); err=r.error;}
- else {const r=await supabaseClient.from('products').insert(payload); err=r.error;}
+ let err; if(editId.value){const r=await supabaseClient.from('products').update(payload).eq('id',editId.value); err=r.error;} else {const r=await supabaseClient.from('products').insert(payload); err=r.error;}
  if(err) alert(err.message); else {editId.value='';pName.value='';pPrice.value='';pImage.value='';pFile.value=''; loadProducts();}
 }
-   if(err) alert(err.message); else {editId.value='';pName.value='';pPrice.value='';pImage.value='';...
-  }
-}// === SETTING ASAL TOKO - BISA DIUBAH DI ADMIN ===
-const TOKO_ORIGIN_ID = "17523";
-localStorage.setItem('toko_origin_id', TOKO_ORIGIN_ID);
-localStorage.setItem('toko_origin_label', 'CENGKARENG BARAT, CENGKARENG, KOTA JAKARTA BARAT');
-
 async function searchOrigin(){
-  const q=document.getElementById('originSearch').value;
-  if(!q) return alert('Ketik kecamatan dulu');
-  const r=await fetch('/api/search?q='+encodeURIComponent(q));
-  const j=await r.json();
-  document.getElementById('originList').innerHTML=j.data.map(d=>`<div style="padding:8px;border-bottom:1px solid #eee;cursor:pointer;" onclick="pilihOrigin('${d.id}','${d.label}')">${d.label} (ID:${d.id}) - KLIK PILIH</div>`).join('');
+  const q=document.getElementById('originSearch').value; if(!q) return alert('Ketik kecamatan dulu');
+  document.getElementById('originList').innerHTML='⏳ Mencari...';
+  try{
+    const r=await fetch('/api/search?q='+encodeURIComponent(q)); const j=await r.json();
+    if(!j.data || j.data.length==0){ document.getElementById('originList').innerHTML='Tidak ketemu'; return; }
+    document.getElementById('originList').innerHTML=j.data.map(d=>`<div style="padding:8px;border-bottom:1px solid #eee;cursor:pointer;" onclick="pilihOrigin('${d.id}','${d.label}')">${d.label} (ID:${d.id}) - KLIK PILIH</div>`).join('');
+  }catch(e){ document.getElementById('originList').innerHTML='Error: '+e.message; }
 }
 function pilihOrigin(id,label){
-  localStorage.setItem('toko_origin_id',id);
-  localStorage.setItem('toko_origin_label',label);
-  const el=document.getElementById('curOrigin');
-  if(el) el.innerText=label+' - '+id;
-  document.getElementById('originList').innerHTML='';
-  alert('Berhasil! Asal toko jadi: '+label);
-}
-const savedId=localStorage.getItem('toko_origin_id');
-const savedLabel=localStorage.getItem('toko_origin_label');
-if(savedId && document.getElementById('curOrigin')){
-  document.getElementById('curOrigin').innerText=savedLabel+' - '+savedId;
+  localStorage.setItem('toko_origin_id',id); localStorage.setItem('toko_origin_label',label);
+  document.getElementById('curOrigin').innerText=label+' - '+id; document.getElementById('originList').innerHTML=''; alert('Berhasil! Asal toko jadi: '+label);
 }
 init();
+</script></body></html>
