@@ -1,119 +1,54 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ARINDA HIJAB PREMIUM</title>
-<meta property="og:title" content="ARINDA - Hijab Premium Elegan & Modern" />
-<meta property="og:description" content="Koleksi hijab premium bahan terbaik, nyaman, elegan. Gratis ongkir & bisa COD!" />
-<meta property="og:image" content="https://arinda-hijab.vercel.app/banner-hp.jpg" />
-<meta property="og:url" content="https://arinda-hijab.vercel.app" />
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--bg:#FFFCF9}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
 nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(10px);border-bottom:1px solid var(--champ)}
-.nav-in{max-width:1120px;margin:0 auto;padding:10px 14px}
-.nav-top{display:flex;justify-content:space-between;align-items:center}
+.nav-in{max-width:1120px;margin:0 auto;padding:10px 14px}.nav-top{display:flex;justify-content:space-between;align-items:center}
 .logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:18px}
-.menu{display:flex;gap:14px;margin-top:8px;padding-top:8px;border-top:1px solid var(--champ)}
-.menu a{font-size:11px;letter-spacing:1.5px;color:var(--taupe);text-decoration:none}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
-.icons{display:flex;gap:10px}.icon-btn{background:none;border:none;cursor:pointer;padding:4px;position:relative}
-.icon-btn svg{width:21px;height:21px;stroke:var(--esp);fill:none;stroke-width:1.6}
+.menu{display:flex;gap:14px;margin-top:8px;padding-top:8px;border-top:1px solid var(--champ)}.menu a{font-size:11px;letter-spacing:1.5px;color:var(--taupe);text-decoration:none}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
+.icons{display:flex;gap:10px}.icon-btn{background:none;border:none;cursor:pointer;padding:4px;position:relative}.icon-btn svg{width:21px;height:21px;stroke:var(--esp);fill:none;stroke-width:1.6}
 .badge{position:absolute;top:-3px;right:-4px;background:var(--esp);color:#fff;font-size:9px;min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 #searchBox{display:none;padding:8px 0 0}#searchBox input{width:100%;padding:12px 16px;border:1px solid var(--champ);border-radius:24px;font-size:13px;outline:none}
-.hero{position:relative;width:100%;background:#F6EEE3;overflow:hidden}.hero img{width:100%;display:block}
+.hero{position:relative;width:100%;height:70vh;min-height:420px;background:#F6EEE3;overflow:hidden}
+.hero img{width:100%;height:100%;object-fit:cover;display:block}
 .desktop-only{display:block}.mobile-only{display:none}
-.hero-text{position:absolute;left:5%;top:20%;max-width:420px;background:#fff;padding:20px;border:1px solid var(--champ);box-shadow:0 8px 30px rgba(0,0,0,.06)}
-.kicker{font-size:10px;letter-spacing:3px;color:var(--taupe)}.hero-text h1{font-family:'Cormorant Garamond';font-size:36px;line-height:.95;margin:6px 0 8px}
-.hero-text p{font-size:12px;color:var(--taupe);line-height:1.5;margin:0 0 14px}
-.btn{display:inline-block;background:var(--esp);color:#fff;padding:11px 20px;font-size:11px;letter-spacing:2px;text-decoration:none;text-align:center}
-.section{max-width:1120px;margin:0 auto;padding:16px 14px}
-.sub{font-size:10px;letter-spacing:2.5px;color:var(--taupe);margin:4px 0 12px}
+.hero-text{position:absolute;left:5%;top:50%;transform:translateY(-50%);max-width:420px;background:#fff;padding:20px;border:1px solid var(--champ)}
+.btn{display:inline-block;background:var(--esp);color:#fff;padding:11px 20px;font-size:11px;letter-spacing:2px;text-decoration:none}
+.section{max-width:1120px;margin:0 auto;padding:16px 14px}.sub{font-size:10px;letter-spacing:2.5px;color:var(--taupe);margin:4px 0 12px}
 .colors{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.colors img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#fff;border:1px solid var(--champ)}
-.undertone{margin-top:18px;background:#fff;border:1px solid var(--champ);padding:14px}
-.undertone-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-.card{border:1px solid var(--champ);padding:8px;text-align:center;background:#fff}
-.card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.undertone{margin-top:18px;background:#fff;border:1px solid var(--champ);padding:14px}.undertone-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.card{border:1px solid var(--champ);padding:8px;text-align:center;background:#fff}.card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
 .badge2{display:inline-block;font-size:9px;padding:4px 8px;background:var(--esp);color:#fff;margin-top:6px;border-radius:12px}
-.faq{border:1px solid #EAE6E1;background:#fff;margin-top:10px;border-radius:8px;overflow:hidden}
-.faq-item{border-bottom:1px solid #EAE6E1}.faq-item:last-child{border-bottom:none}
-.faq-q{width:100%;text-align:left;background:#fff;border:none;padding:14px;font-size:13px;font-weight:500;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:inherit}
-.arrow{width:18px;height:18px;stroke:#8C7A6B;stroke-width:1.8;fill:none;transition:transform .3s ease}
-.faq-item.active .arrow{transform:rotate(180deg)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;background:#FFFCF9}
-.faq-item.active .faq-a{max-height:400px}
-.faq-a p{font-size:11px;line-height:1.6;color:#5a4a40;margin:0;padding:10px 14px 14px}
-@media(max-width:800px){.desktop-only{display:none!important}.mobile-only{display:block!important}.colors{grid-template-columns:repeat(2,1fr)}.hero-text{position:relative;left:auto;top:auto;max-width:100%;margin:-36px 14px 0;padding:16px}.undertone-grid{grid-template-columns:1fr}}
+.faq{border:1px solid #EAE6E1;background:#fff;margin-top:10px;border-radius:8px;overflow:hidden}.faq-item{border-bottom:1px solid #EAE6E1}.faq-q{width:100%;text-align:left;background:#fff;border:none;padding:14px;font-size:13px;font-weight:500;display:flex;justify-content:space-between;align-items:center;cursor:pointer}.arrow{width:18px;height:18px;stroke:#8C7A6B;stroke-width:1.8;fill:none;transition:transform.3s}.faq-item.active.arrow{transform:rotate(180deg)}.faq-a{max-height:0;overflow:hidden;transition:max-height.3s;background:#FFFCF9}.faq-item.active.faq-a{max-height:400px}.faq-a p{font-size:11px;line-height:1.6;color:#5a4a40;margin:0;padding:10px 14px 14px}
+@media(max-width:800px){.desktop-only{display:none!important}.mobile-only{display:block!important}.colors{grid-template-columns:repeat(2,1fr)}.hero{height:75vh}.hero-text{left:14px;right:14px;top:auto;bottom:14px;transform:none;max-width:100%}.undertone-grid{grid-template-columns:1fr}}
 </style></head><body>
-<nav><div class="nav-in">
-<div class="nav-top"><div class="logo" id="storeLogo">ARINDA</div><div class="icons">
+<nav><div class="nav-in"><div class="nav-top"><div class="logo" id="storeLogo">ARINDA HIJAB PREMIUM</div><div class="icons">
 <button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16L20 20" stroke-linecap="round"/></svg></button>
 <a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></a>
 <a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 10H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cCount">0</span></a>
-</div></div>
-<div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div>
-<div id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" placeholder="Cari hijab... maroon, navy, hitam, krem"></form></div>
-</div></nav>
-
+</div></div><div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div><div id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" placeholder="Cari hijab..."></form></div></div></nav>
 <div class="hero">
-<img class="desktop-only" src="banner.jpg" style="aspect-ratio:16/9;object-fit:contain;background:#F6EEE3" alt="Banner" onerror="this.style.display='none'">
-<img class="mobile-only" src="banner-hp.jpg" style="aspect-ratio:9/16;object-fit:contain;background:#F6EEE3" alt="Banner HP" onerror="this.src='banner hp.jpg'">
-<div class="hero-text">
-<div class="kicker">NEW COLLECTION - READY STOCK</div>
-<h1>Adem,<br>Tidak Menerawang</h1>
-<p>Premium voal Rp80.000 - 115x115cm, laser cut rapi, 4 warna bestseller</p>
-<a href="produk.html" class="btn">LIHAT PRODUK →</a>
+<img class="desktop-only" src="banner.jpg" alt="Banner Desktop">
+<img class="mobile-only" src="banner-hp.jpg" alt="Banner HP" onerror="this.src='banner.jpg'">
+<div class="hero-text"><div style="font-size:10px;letter-spacing:3px;color:#8C7A6B">NEW COLLECTION - READY STOCK</div><h1 style="font-family:'Cormorant Garamond';font-size:36px;line-height:.95;margin:6px 0 8px">Adem,<br>Tidak Menerawang</h1><p style="font-size:12px;color:#8C7A6B;line-height:1.5;margin:0 0 14px">Premium voal Rp80.000 - 115x115cm, laser cut rapi</p><a href="produk.html" class="btn">LIHAT PRODUK →</a></div>
 </div>
-</div>
-
 <div class="section">
-<div class="sub">KOLEKSI 4 WARNA BESTSELLER</div><div class="colors"><img src="navy.jpg" onerror="this.src='https://via.placeholder.com/300'"><img src="hitam.jpg"><img src="krem.jpg"><img src="maroon.jpg"></div>
-<div id="customSection" style="display:none;margin-top:24px;border-top:1px solid var(--champ);padding-top:16px"><div class="sub">PRODUK READY STOCK OTOMATIS DARI ADMIN</div><div id="dynamicList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div></div>
-
+<div class="sub">KOLEKSI 4 WARNA BESTSELLER</div><div class="colors"><img src="navy.jpg"><img src="hitam.jpg"><img src="krem.jpg"><img src="maroon.jpg"></div>
+<div id="customSection" style="display:none;margin-top:24px;border-top:1px solid var(--champ);padding-top:16px"><div class="sub">PRODUK READY STOCK DARI ADMIN</div><div id="dynamicList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div></div>
 <div class="undertone" style="margin-top:24px"><div style="font-family:'Cormorant Garamond';font-size:22px">Kenali Undertone Kamu</div><div class="sub">Lihat warna urat nadi</div>
-<div class="undertone-grid">
-<div class="card"><img src="undertone-cool-biru.jpg"><div style="font-size:11px;margin-top:6px"><b>COOL - Urat Biru</b><br><span class="badge2">COCOK: Navy & Hitam</span></div></div>
-<div class="card"><img src="udertone-.jpg"><div style="font-size:11px;margin-top:6px"><b>WARM - Urat Hijau</b><br><span class="badge2">COCOK: Krem & Maroon</span></div></div>
-<div class="card"><img src="undertone-neutral-campur.jpg"><div style="font-size:11px;margin-top:6px"><b>NEUTRAL - Campur</b><br><span class="badge2">BEST: Krem Elegant</span></div></div>
+<div class="undertone-grid"><div class="card"><img src="undertone-cool-biru.jpg"><div style="font-size:11px;margin-top:6px"><b>COOL</b><br><span class="badge2">Navy & Hitam</span></div></div><div class="card"><img src="udertone-.jpg"><div style="font-size:11px;margin-top:6px"><b>WARM</b><br><span class="badge2">Krem & Maroon</span></div></div><div class="card"><img src="undertone-neutral-campur.jpg"><div style="font-size:11px;margin-top:6px"><b>NEUTRAL</b><br><span class="badge2">Krem Elegant</span></div></div></div></div>
 </div>
-
-<div style="margin-top:18px"><div style="font-family:'Cormorant Garamond';font-size:20px;font-weight:600">FAQ - Pertanyaan Umum</div>
-<div class="faq">
-<div class="faq-item active"><button class="faq-q" onclick="toggleFaq(this)">Apa bahan ARINDA? Adem & menerawang tidak? <svg class="arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>ARINDA pakai <b>Premium Voal</b> grade A, serat rapat, adem, tidak menerawang meski warna terang Krem.</p></div></div>
-<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Apa perbedaan tampilan oval dan square? <svg class="arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Bisa ditata <b>2 tampilan</b>: oval lebih soft, square lebih tegas rapi.</p></div></div>
-<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Ukuran & finishing gimana? <svg class="arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Ukuran <b>115 x 115 cm</b>, finishing <b>laser cut</b> rapi.</p></div></div>
-<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Cocok untuk undertone apa? <svg class="arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p><b>Cool</b> → Navy & Hitam, <b>Warm</b> → Krem & Maroon, <b>Neutral</b> → semua masuk.</p></div></div>
-<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Cara perawatan biar awet? <svg class="arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Cuci tangan, jangan sikat, setrika suhu rendah.</p></div></div>
-</div></div>
-<a href="produk.html" class="btn" style="width:100%;margin-top:14px">LIHAT PRODUK SESUAI UNDERTONE →</a>
-</div>
-</div>
-
 <script>
 const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
 function toggleSearch(){const b=document.getElementById('searchBox');b.style.display=b.style.display=='block'?'none':'block';if(b.style.display=='block')document.getElementById('q').focus();}
 function goSearch(e){e.preventDefault();const v=document.getElementById('q').value.trim();if(!v)return;location.href='produk.html?q='+encodeURIComponent(v);}
-function toggleFaq(el){const item=el.closest('.faq-item');const active=item.classList.contains('active');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('active'));if(!active)item.classList.add('active');}
+function toggleFaq(el){const item=el.closest('.faq-item');const a=item.classList.contains('active');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('active'));if(!a)item.classList.add('active');}
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return []}}
 function updateCount(){document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+Number(b.qty||0),0);}
-
-async function load(){
- try{
-  // FIX UTAMA: baca dari tabel settings yang baru kamu bikin (key/value)
-  const {data:settings} = await supabaseClient.from('settings').select('*');
-  if(settings){
-    const sName = settings.find(s=>s.key==='store_name')?.value;
-    if(sName) document.getElementById('storeLogo').innerText = sName;
-  }
- }catch(e){console.log('settings',e)}
- try{
-  const {data} = await supabaseClient.from('products').select('*').order('id',{ascending:false});
-  if(data && data.length>0){
-    document.getElementById('customSection').style.display='block';
-    document.getElementById('dynamicList').innerHTML=data.map(p=>`<div style="border:1px solid #EAE6E1;background:#fff;border-radius:10px;overflow:hidden;cursor:pointer" onclick="location.href='produk.html'"><img src="${p.image_url}" style="width:100%;height:160px;object-fit:cover" loading="lazy"><div style="padding:8px"><div style="font-size:12px;font-weight:600">${p.name}</div><div style="font-size:11px;color:#8C7A6B">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`).join('');
-  }
- }catch(e){}
- updateCount();
-}
+async function load(){try{const {data}=await supabaseClient.from('settings').select('*');if(data){const n=data.find(s=>s.key==='store_name')?.value;if(n)document.getElementById('storeLogo').innerText=n;}}catch(e){}try{const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false});if(data&&data.length>0){document.getElementById('customSection').style.display='block';document.getElementById('dynamicList').innerHTML=data.map(p=>`<div style="border:1px solid #EAE6E1;background:#fff;border-radius:10px;overflow:hidden" onclick="location.href='produk.html'"><img src="${p.image_url}" style="width:100%;height:160px;object-fit:cover"><div style="padding:8px"><div style="font-size:12px;font-weight:600">${p.name}</div><div style="font-size:11px;color:#8C7A6B">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`).join('');}}catch(e){}updateCount();}
 load();
-</script>
-</body></html>
+</script></body></html>
