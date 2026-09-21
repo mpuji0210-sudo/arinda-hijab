@@ -43,7 +43,7 @@ button.del{background:#e11d48}
 
 <script>
 const OWNER_PASS = "aeni123"; // GANTI PASSWORD DISINI Puji, kasih ke client aja
-const supabaseClient = supabase.createClient('https://qjgevvizqeebtdcqbgmt.supabase.co','sb_publishable_stWC1QunQfFyT1t2p1u6x2w_X-5v1a2b3');
+const supabaseClient = supabase.createClient('https://qjgevvizqeebtdcqbgmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
 
 function doLogin(){ if(pass.value===OWNER_PASS){ localStorage.setItem('aeni_owner','1'); showAdmin(); } else { loginMsg.innerText='Password salah'; } }
 function showAdmin(){ loginPage.style.display='none'; adminPage.style.display='block'; loadAll(); }
