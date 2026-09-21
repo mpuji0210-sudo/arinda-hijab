@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Produk - Aeni HIJAB</title>
+<title>Produk - ARINDA</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Plus+Jakarta+Sans:wght@400&display=swap" rel="stylesheet">
 <style>
@@ -12,12 +12,10 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 .logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:18px}
 .menu{display:flex;gap:14px;margin-top:8px;padding-top:8px;border-top:1px solid var(--champ)}
 .menu a{font-size:11px;letter-spacing:1.5px;color:var(--taupe);text-decoration:none}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
-.icons{display:flex;gap:10px}
-.icon-btn{background:none;border:none;cursor:pointer;padding:4px;position:relative}
+.icons{display:flex;gap:10px}.icon-btn{background:none;border:none;cursor:pointer;padding:4px;position:relative}
 .icon-btn svg{width:21px;height:21px;stroke:var(--esp);fill:none;stroke-width:1.6}
 .badge{position:absolute;top:-3px;right:-4px;background:var(--esp);color:#fff;font-size:9px;min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.search-wrap{padding:10px 0 0}
-.search-wrap input{width:100%;padding:12px 16px;border:1px solid var(--champ);border-radius:24px;font-size:13px;outline:none}
+.search-wrap{padding:10px 0 0}.search-wrap input{width:100%;padding:12px 16px;border:1px solid var(--champ);border-radius:24px;font-size:13px;outline:none}
 .section{max-width:1120px;margin:0 auto;padding:14px}
 .filter{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
 .filter button{padding:8px 14px;border:1px solid var(--champ);background:#fff;border-radius:20px;font-size:11px;cursor:pointer;letter-spacing:1px}
@@ -28,21 +26,19 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 .plus-btn{width:32px;height:32px;border-radius:50%;background:#2B1B12;color:#fff;border:none;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer}
 </style></head><body>
 <nav><div class="nav-in">
-<div class="nav-top">
-<div class="logo">Aeni HIJAB</div>
+<div class="nav-top"><div class="logo" id="storeLogo">ARINDA</div>
 <div class="icons">
-<a href="index.html" class="icon-btn" onclick="localStorage.setItem('focusSearch','1')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16L20 20" stroke-linecap="round"/></svg></a>
+<a href="index.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16L20 20" stroke-linecap="round"/></svg></a>
 <a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></a>
 <a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 10H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cCount">0</span></a>
-</div>
-</div>
+</div></div>
 <div class="menu"><a href="index.html">BERANDA</a><a class="active">PRODUK</a><a href="kategori.html">KATEGORI</a></div>
-<div class="search-wrap"><form onsubmit="doSearch(event)"><input id="q" type="search" autocomplete="off" placeholder="Cari hijab... krem, navy, hitam, maroon"></form></div>
+<div class="search-wrap"><form onsubmit="doSearch(event)"><input id="q" type="search" placeholder="Cari hijab..."></form></div>
 </div></nav>
 
 <div class="section">
 <div style="display:flex;justify-content:space-between;align-items:center">
-<div><div style="font-family:'Cormorant Garamond';font-size:22px">Produk Ready Stock</div><div id="resultInfo" style="font-size:10px;letter-spacing:2px;color:#8C7A6B">Filter kategori - tampilan simple cuma tombol +</div></div>
+<div><div style="font-family:'Cormorant Garamond';font-size:22px">Produk Ready Stock</div><div id="resultInfo" style="font-size:10px;letter-spacing:2px;color:#8C7A6B">Otomatis dari Supabase - Admin</div></div>
 </div>
 <div class="filter" id="filterBtns">
 <button class="active" onclick="filterColor('ALL',this)">ALL</button>
@@ -50,7 +46,6 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 <button onclick="filterColor('HITAM',this)">HITAM</button>
 <button onclick="filterColor('KREM',this)">KREM</button>
 <button onclick="filterColor('MAROON',this)">MAROON</button>
-<button onclick="filterColor('PARIS PREMIUM',this)">PARIS PREMIUM</button>
 </div>
 <div id="list" class="prod-grid">Loading produk...</div>
 </div>
@@ -58,80 +53,50 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 <script>
 const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
 let allProducts=[];
-let currentQ='';
-function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return []}}
+function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return[]}}
 function updateCount(){document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+(b.qty||0),0);}
-function doSearch(e){e.preventDefault(); const v=document.getElementById('q').value.trim(); location.href='produk.html?q='+encodeURIComponent(v);}
+function doSearch(e){e.preventDefault();const v=document.getElementById('q').value.trim();location.href='produk.html?q='+encodeURIComponent(v);}
 
 function filterColor(color,btn){
   document.querySelectorAll('.filter button').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
-  if(color==='ALL'){ render(allProducts); document.getElementById('resultInfo').innerText='Semua produk'; return; }
-  const filtered=allProducts.filter(p=> (p.name+' '+(p.category||'')+' '+(p.description||'')+' '+p.image_url).toLowerCase().includes(color.toLowerCase()));
-  // fallback: kalau di supabase cuma ada paris premium, mapping warna dari gambar statis
-  let list=filtered;
-  if(list.length===0){
-    // buat dummy produk warna dari file statis biar Maroon tetap muncul
-    const staticColors=[
-      {name:'Aeni Hijab Navy', price:80000, image_url:'navy.jpg', category:'NAVY'},
-      {name:'Aeni Hijab Hitam', price:80000, image_url:'hitam.jpg', category:'HITAM'},
-      {name:'Aeni Hijab Krem', price:80000, image_url:'krem.jpg', category:'KREM'},
-      {name:'Aeni Hijab Maroon', price:80000, image_url:'maroon.jpg', category:'MAROON'},
-    ];
-    list=staticColors.filter(p=>p.category.includes(color));
-    if(list.length===0 && color.toLowerCase()!=='paris premium') list=staticColors; // kalau gak ketemu
-  }
-  document.getElementById('resultInfo').innerText=`Hasil filter: ${color} (${list.length})`;
-  render(list);
+  if(color==='ALL'){render(allProducts); document.getElementById('resultInfo').innerText=`Semua produk (${allProducts.length})`; return;}
+  const filtered=allProducts.filter(p=> (p.name+' '+(p.category||'') ).toLowerCase().includes(color.toLowerCase()));
+  document.getElementById('resultInfo').innerText=`Filter: ${color} (${filtered.length})`;
+  render(filtered);
 }
-
 function render(list){
   const el=document.getElementById('list');
-  if(!list || list.length===0){ el.innerHTML='<p style="font-size:12px;color:#8C7A6B">Produk tidak ditemukan</p>'; return; }
+  if(!list||list.length===0){el.innerHTML='<p style="font-size:12px;color:#8C7A6B">Belum ada produk. Tambah di admin.html</p>'; return;}
   el.innerHTML=list.map(p=>{
     const safe=p.name.replace(/'/g,"\\'");
-    return `<div class="prod-card"><img src="${p.image_url}" onerror="this.src='banner hp.jpg'"><div style="padding:8px"><div style="font-size:12px;font-weight:600">${p.name}</div><div style="font-size:10px;color:#8C7A6B;margin:2px 0">${p.category||'BESTSELLER'}</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><div style="font-size:12px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div><button class="plus-btn" onclick="addCart('${safe}',${p.price},'${p.image_url}')">+</button></div></div></div>`;
+    const img=(p.image_url||'').replace(/'/g,'');
+    return `<div class="prod-card"><img src="${img}" onerror="this.src='https://via.placeholder.com/400?text=No+Image'"><div style="padding:8px"><div style="font-size:12px;font-weight:600">${p.name}</div><div style="font-size:10px;color:#8C7A6B;margin:2px 0">${p.category||'BESTSELLER'}</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><div style="font-size:12px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div><button class="plus-btn" onclick="addCart('${safe}',${p.price},'${img}')">+</button></div></div></div>`;
   }).join('');
 }
-
 async function load(){
-  const params=new URLSearchParams(location.search);
-  const q=params.get('q')||'';
-  currentQ=q;
-  document.getElementById('q').value=q;
-  if(q) document.getElementById('resultInfo').innerText=`Hasil cari "${q}"`;
-
   try{
-    const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false});
+    const {data:settings}=await supabaseClient.from('settings').select('*');
+    if(settings){const n=settings.find(s=>s.key==='store_name')?.value; if(n){document.getElementById('storeLogo').innerText=n; document.title="Produk - "+n;}}
+  }catch(e){}
+  const params=new URLSearchParams(location.search);
+  const q=(params.get('q')||'').toLowerCase();
+  document.getElementById('q').value=params.get('q')||'';
+  try{
+    const {data,error}=await supabaseClient.from('products').select('*').order('id',{ascending:false});
+    if(error) throw error;
     allProducts=data||[];
-    // tambahkan 4 warna statis ke list biar bisa dicari Maroon/Navy
-    const extras=[
-      {id:1001, name:'Aeni Hijab Navy', price:80000, image_url:'navy.jpg', category:'NAVY', description:'navy'},
-      {id:1002, name:'Aeni Hijab Hitam', price:80000, image_url:'hitam.jpg', category:'HITAM', description:'hitam'},
-      {id:1003, name:'Aeni Hijab Krem', price:80000, image_url:'krem.jpg', category:'KREM', description:'krem'},
-      {id:1004, name:'Aeni Hijab Maroon', price:80000, image_url:'maroon.jpg', category:'MAROON', description:'maroon'},
-    ];
-    allProducts=[...extras,...allProducts];
-
     if(q){
-      // auto klik filter
-      const up=q.toUpperCase();
-      const btnMap={NAVY:1,HITAM:2,KREM:3,MAROON:4};
-      if(btnMap[up]!==undefined){
-        const btns=document.querySelectorAll('.filter button');
-        filterColor(up, btns[btnMap[up]]);
-      }else{
-        const filtered=allProducts.filter(p=> (p.name+' '+p.category+' '+p.description).toLowerCase().includes(q.toLowerCase()));
-        document.getElementById('resultInfo').innerText=`Hasil cari "${q}" (${filtered.length})`;
-        render(filtered);
-      }
+      const filtered=allProducts.filter(p=> (p.name+' '+(p.category||'')).toLowerCase().includes(q));
+      document.getElementById('resultInfo').innerText=`Hasil cari "${params.get('q')}" (${filtered.length})`;
+      render(filtered);
     }else{
       render(allProducts);
     }
-  }catch(e){ document.getElementById('list').innerHTML='Error load'; }
+  }catch(e){document.getElementById('list').innerText='Error: '+e.message}
   updateCount();
 }
 function addCart(n,p,i){let c=getCart();let x=c.findIndex(a=>a.warna==n); if(x>-1) c[x].qty++; else c.push({warna:n,ukuran:'All Size',qty:1,harga:Number(p),img:i}); localStorage.setItem('arinda_cart2',JSON.stringify(c)); updateCount(); let t=document.createElement('div'); t.innerText=n+' ✓ masuk keranjang'; t.style.cssText='position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#2B1B12;color:#fff;padding:10px 16px;border-radius:20px;font-size:12px;z-index:9999'; document.body.appendChild(t); setTimeout(()=>t.remove(),1500);}
 load();
 </script>
-</body></html>
+</body></html>vv
