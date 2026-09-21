@@ -1,36 +1,107 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ADMIN Aeni - Owner Only</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>body{font-family:sans-serif;background:#FFFCF9;padding:0;margin:0;color:#2B1B12}.login{height:100vh;display:flex;align-items:center;justify-content:center;background:#2B1B12}.login-box{background:#fff;padding:28px;border-radius:16px;width:90%;max-width:320px;text-align:center}.wrap{max-width:900px;margin:auto;padding:18px;display:none}.card{background:#fff;border:1px solid #EAE6E1;border-radius:16px;padding:16px;margin-bottom:16px}.input{width:100%;padding:12px;border:1px solid #EAE6E1;border-radius:10px;margin-bottom:10px}.btn{background:#2B1B12;color:#fff;border:none;padding:10px 16px;border-radius:10px;cursor:pointer}.btn-red{background:#b42318}.btn-gray{background:#eee;color:#333}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}.prod{border:1px solid #EAE6E1;border-radius:12px;overflow:hidden}.prod img{width:100%;height:200px;object-fit:cover;object-position:top}.cat-item{display:flex;justify-content:space-between;align-items:center;border:1px solid #EAE6E1;padding:8px 12px;border-radius:8px;margin-bottom:6px}</style></head><body>
-<div id="loginPage" class="login"><div class="login-box"><h3>AENI HIJAB - OWNER LOGIN</h3><p style="font-size:11px;color:#888">Hanya pemilik web bisa buka</p><input id="pass" type="password" class="input" placeholder="Password Owner"><button class="btn" style="width:100%" onclick="doLogin()">MASUK</button><div id="loginMsg" style="font-size:11px;color:red;margin-top:8px"></div></div></div>
-<div id="adminPage" class="wrap">
-<h2>Aeni HIJAB - ADMIN FULL CUSTOM</h2><button class="btn-gray" style="font-size:10px;padding:6px" onclick="logout()">Logout</button>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aeni Hijab - Admin</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{font-family:sans-serif;max-width:800px;margin:auto;padding:20px;background:#fff0f5}
+.card{background:white;padding:15px;border-radius:12px;margin-bottom:15px;box-shadow:0 2px 8px #0001}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+input,button{padding:10px;border-radius:8px;border:1px solid #ccc;width:100%;margin-top:5px}
+button{background:#111;color:white;cursor:pointer;font-weight:bold}
+button.del{background:#e11d48}
+</style>
+</head>
+<body>
 
-<div class="card"><h4>1. TOKO & KONTAK (Sync ke semua halaman)</h4><input id="storeName" class="input" placeholder="Nama Toko"><input id="waNumber" class="input" placeholder="No WA contoh 6281234567890"><input id="igLink" class="input" placeholder="Link Instagram"><button class="btn" onclick="saveSettings()">Simpan Toko & WA & IG</button></div>
+<div id="loginPage" class="card">
+<h2>Aeni HIJAB - Owner Login</h2>
+<input id="pass" type="password" placeholder="Password aeni123">
+<button onclick="doLogin()">MASUK</button>
+<p id="loginMsg"></p>
+</div>
 
-<div class="card"><h4>2. KATEGORI - Edit / Hapus / Tambah</h4><div style="display:flex;gap:8px"><input id="catName" class="input" placeholder="Nama Kategori Baru"><button class="btn" onclick="addCat()">Tambah</button></div><div id="catList"></div></div>
+<div id="adminPage" style="display:none">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<h2>ADMIN FULL CUSTOM</h2><button onclick="logout()" style="width:auto">Logout</button>
+</div>
 
-<div class="card"><h4>3. PRODUK - Edit & Hapus (Fixed)</h4><input type="hidden" id="editId"><input id="pName" class="input" placeholder="Nama Produk"><input id="pPrice" class="input" type="number" placeholder="Harga"><select id="pCat" class="input"></select><input id="pImage" class="input" placeholder="Link foto atau nama file"><input id="pFile" type="file" accept="image/*" class="input"><div style="display:flex;gap:8px"><button class="btn" onclick="saveProduct()">SIMPAN PRODUK</button><button class="btn btn-gray" onclick="resetForm()">BATAL</button></div><div id="status" style="font-size:11px;margin-top:8px"></div></div>
+<div class="card"><h4>3. PRODUK - Edit & Hapus (Fixed)</h4>
+<input type="hidden" id="editId">
+<input id="pName" placeholder="Nama Produk">
+<input id="pPrice" type="number" placeholder="Harga">
+<input id="pImage" placeholder="URL Gambar (atau pakai file dibawah)">
+<input id="pFile" type="file" accept="image/*">
+<button onclick="saveProduct()">SIMPAN PRODUK</button>
+<p id="status"></p>
+</div>
 
 <div class="card"><h4>4. DAFTAR PRODUK</h4><div id="list" class="grid"></div></div>
 </div>
 
 <script>
 const OWNER_PASS = "aeni123"; // GANTI PASSWORD DISINI Puji, kasih ke client aja
-const supabaseClient = supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
-function doLogin(){ if(pass.value===OWNER_PASS){ localStorage.setItem('aeni_owner','1'); showAdmin(); } else loginMsg.innerText='Password salah!'; }
+const supabaseClient = supabase.createClient('https://qjgevvizqeebtdcqbgmt.supabase.co','sb_publishable_stWC1QunQfFyT1t2p1u6x2w_X-5v1a2b3');
+
+function doLogin(){ if(pass.value===OWNER_PASS){ localStorage.setItem('aeni_owner','1'); showAdmin(); } else { loginMsg.innerText='Password salah'; } }
 function showAdmin(){ loginPage.style.display='none'; adminPage.style.display='block'; loadAll(); }
 function logout(){ localStorage.removeItem('aeni_owner'); location.reload(); }
 if(localStorage.getItem('aeni_owner')==='1') showAdmin();
 
-async function loadAll(){ loadSettings(); loadCats(); loadProducts(); }
-async function loadSettings(){ const {data}=await supabaseClient.from('settings').select('*').eq('id',1).single(); if(data){ storeName.value=data.store_name||''; waNumber.value=data.whatsapp||''; igLink.value=data.instagram||''; } }
-async function saveSettings(){ const {error}=await supabaseClient.from('settings').upsert({id:1,store_name:storeName.value,whatsapp:waNumber.value,instagram:igLink.value}); if(error) alert(error.message); else alert('Toko, WA, IG tersinkronisasi ke web!'); }
-
-async function loadCats(){ const {data}=await supabaseClient.from('categories').select('*').order('id'); catList.innerHTML=data.map(c=>`<div class=cat-item><span>${c.name}</span><button class=btn-red style="border:none;color:#fff;padding:4px 8px;border-radius:6px;font-size:10px" onclick="delCat(${c.id})">HAPUS</button></div>`).join(''); pCat.innerHTML=data.map(c=>`<option value="${c.name}">${c.name}</option>`).join(''); }
-async function addCat(){ if(!catName.value) return; await supabaseClient.from('categories').insert({name:catName.value}); catName.value=''; loadCats(); }
-async function delCat(id){ if(!confirm('Hapus kategori?'))return; await supabaseClient.from('categories').delete().eq('id',id); loadCats(); }
-
-async function loadProducts(){ const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false}); list.innerHTML=data.map(p=>`<div class=prod><img src="${p.image_url}"><div style="padding:8px"><b style="font-size:12px">${p.name}</b><br><small>${p.category||''} - Rp${p.price}</small><div style="display:flex;gap:6px;margin-top:6px"><button class=btn style="flex:1;font-size:10px" onclick="editProd(${p.id})">EDIT</button><button class=btn btn-red style="flex:1;font-size:10px;background:#b42318" onclick="delProd(${p.id})">HAPUS</button></div></div></div>`).join(''); window._products=data; }
-function editProd(id){ const p=window._products.find(x=>x.id===id); editId.value=p.id; pName.value=p.name; pPrice.value=p.price; pCat.value=p.category||''; pImage.value=p.image_url; status.innerText='Mode EDIT ID '+id; window.scrollTo(0,300); }
-async function delProd(id){ if(!confirm('Yakin HAPUS?'))return; const {error}=await supabaseClient.from('products').delete().eq('id',id); if(error) alert(error.message); else loadProducts(); }
+async function loadAll(){ loadProducts(); }
+async function loadSettings(){} // dummy biar ga error
+async function loadCats(){}
+async function loadProducts(){
+  const {data, error} = await supabaseClient.from('products').select('*').order('id',{ascending:false});
+  if(error){ list.innerHTML='Error: '+error.message; return; }
+  window._products = data || [];
+  list.innerHTML = window._products.map(x=>`
+    <div class="card">
+      <img src="${x.image_url||''}" style="width:100%;height:120px;object-fit:cover;border-radius:8px">
+      <p><b>${x.name}</b><br>Rp${x.price}</p>
+      <button onclick="editProd('${x.id}')">EDIT</button>
+      <button class="del" onclick="delProd('${x.id}')">HAPUS</button>
+    </div>`).join('') || 'Belum ada produk';
+}
+function editProd(id){
+  const p=window._products.find(x=>String(x.id)===String(id));
+  if(!p) return alert('Produk tidak ketemu');
+  editId.value=p.id; pName.value=p.name; pPrice.value=p.price; pImage.value=p.image_url||'';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+async function delProd(id){
+  if(!confirm('Yakin HAPUS produk ini?')) return;
+  const {error}=await supabaseClient.from('products').delete().eq('id',id);
+  if(error) return alert('Gagal hapus: '+error.message);
+  alert('Berhasil dihapus');
+  loadProducts();
+}
 function resetForm(){ editId.value=''; pName.value=''; pPrice.value=''; pImage.value=''; pFile.value=''; status.innerText=''; }
-async function saveProduct(){ let image_url=pImage.value.trim(); const file=pFile.files[0]; if(file){ const fn=Date.now()+'_'+file.name; const {error:upErr}=await supabaseClient.storage.from('products').upload(fn,file); if(upErr){ alert(upErr.message); return; } const {data}=supabaseClient.storage.from('products').getPublicUrl(fn); image_url=data.publicUrl; } if(!pName.value||!pPrice.value) return alert('Nama & Harga wajib isi'); if(!image_url) return alert('Foto wajib isi'); const payload={name:pName.value,price:Number(pPrice.value),image_url,category:pCat.value}; let err; if(editId.value){ const r=await supabaseClient.from('products').update(payload).eq('id',editId.value); err=r.error; } else { const r=await supabaseClient.from('products').insert(payload); err=r.error; } if(err) alert(err.message); else { resetForm(); status.innerText='Berhasil disimpan & tersinkronisasi!'; loadProducts(); } }
+async function saveProduct(){
+  let image_url=pImage.value.trim();
+  const file=pFile.files[0];
+  if(file){
+    status.innerText='Uploading...';
+    const fn=Date.now()+'_'+file.name;
+    const {error:upErr}=await supabaseClient.storage.from('product-images').upload(fn,file);
+    if(upErr) return alert('Upload gagal: '+upErr.message);
+    const {data}=supabaseClient.storage.from('product-images').getPublicUrl(fn);
+    image_url=data.publicUrl;
+  }
+  if(!pName.value ||!pPrice.value) return alert('Nama & Harga wajib isi');
+  const payload={name:pName.value, price:parseInt(pPrice.value), image_url:image_url};
+  let error;
+  if(editId.value){
+    const res=await supabaseClient.from('products').update(payload).eq('id',editId.value);
+    error=res.error;
+  }else{
+    const res=await supabaseClient.from('products').insert(payload);
+    error=res.error;
+  }
+  if(error) return alert('Gagal simpan: '+error.message);
+  status.innerText='Berhasil disimpan!';
+  resetForm(); loadProducts();
+}
 </script></body></html>
