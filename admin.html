@@ -6,7 +6,7 @@
 <div class="card"><h3>4. CUSTOM PRODUK - Tambah / Edit</h3><input type="hidden" id="editId"><input id="pName" class="input" placeholder="Nama Produk"><input id="pPrice" class="input" type="number" placeholder="Harga"><select id="pCat" class="input"><option value="">Pilih Kategori</option></select><input id="pImage" class="input" placeholder="Link foto"><input id="pFile" type="file" class="input"><button class="btn" onclick="saveProduct()">SIMPAN PRODUK</button></div>
 <div class="card"><h3>5. DAFTAR PRODUK - Edit & Hapus</h3><div id="list" class="grid">Loading...</div></div>
 <script>
-const SUPA_URL='https://qjgevvizqeebtdcqbgmt.supabase.co';
+const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supabaseClient = window.supabase.createClient(SUPA_URL, SUPA_KEY);
 async function init(){
