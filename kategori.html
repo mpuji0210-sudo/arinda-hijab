@@ -1,6 +1,16 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kategori - ARINDA HIJAB</title>
+<title>Kategori - ARINDA HIJAB PREMIUM | Pilih Warna Otomatis</title>
+<meta name="description" content="Pilih kategori hijab ARINDA - Navy, Hitam, Krem, Maroon. Otomatis dari admin, konek Supabase. Tips undertone cool warm neutral.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arinda-hijab.vercel.app/kategori.html">
+<meta property="og:title" content="Kategori - ARINDA HIJAB PREMIUM">
+<meta property="og:description" content="Pilih warna hijab sesuai undertone kamu - Navy, Hitam, Krem, Maroon. Otomatis dari admin!">
+<meta property="og:image" content="https://arinda-hijab.vercel.app/banner.jpg">
+<meta property="og:site_name" content="ARINDA HIJAB PREMIUM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://arinda-hijab.vercel.app/banner.jpg">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -16,6 +26,7 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 .icon-btn svg{width:21px;height:21px;stroke:var(--esp);fill:none;stroke-width:1.6}
 .badge{position:absolute;top:-3px;right:-4px;background:var(--esp);color:#fff;font-size:9px;min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 .search-wrap{padding:10px 0 0;display:none}.search-wrap input{width:100%;padding:12px 16px;border:1px solid var(--champ);border-radius:24px;font-size:13px;outline:none}
+.btn{background:var(--esp);color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:bold;cursor:pointer}
 .section{max-width:1120px;margin:0 auto;padding:14px}
 .cat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
 .cat-card{position:relative;border:1px solid var(--champ);border-radius:12px;overflow:hidden;background:#fff;cursor:pointer}
@@ -32,12 +43,12 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 <a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 10H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cCount">0</span></a>
 </div></div>
 <div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a class="active">KATEGORI</a></div>
-<div class="search-wrap" id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" placeholder="Cari hijab..."></form></div>
+<div class="search-wrap" id="searchBox"><form onsubmit="goSearch(event)"><div style="display:flex;gap:6px;"><input id="q" type="search" placeholder="Cari hijab..." style="flex:1;"><button type="submit" class="btn">Cari</button></div></form></div>
 </div></nav>
 
 <div class="section">
 <div style="font-family:'Cormorant Garamond';font-size:24px">Kategori Warna</div>
-<div style="font-size:10px;letter-spacing:2px;color:#8C7A6B;margin:4px 0 12px">PILIH WARNA - OTOMATIS DARI ADMIN</div>
+<div style="font-size:10px;letter-spacing:2px;color:#8C7A6B;margin:4px 0 12px">PILIH WARNA - OTOMATIS DARI ADMIN - KONEK SUPABASE</div>
 <div class="cat-grid" id="catGrid">
 <div class="cat-card" onclick="location.href='produk.html?q=Navy'"><img src="navy.jpg"><div class="cat-info"><b>NAVY</b><br><span>COOL UNDERTONE</span></div></div>
 <div class="cat-card" onclick="location.href='produk.html?q=Hitam'"><img src="hitam.jpg"><div class="cat-info"><b>HITAM</b><br><span>BEST SELLER</span></div></div>
@@ -56,7 +67,6 @@ function toggleSearch(){const b=document.getElementById('searchBox');b.style.dis
 function goSearch(e){e.preventDefault();const v=document.getElementById('q').value.trim();if(!v)return;location.href='produk.html?q='+encodeURIComponent(v);}
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return[]}}
 document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+(b.qty||0),0);
-
 async function load(){
  try{
   const {data} = await supa.from('settings').select('*');
