@@ -1,4 +1,15 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Produk - ARINDA</title>
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Produk - ARINDA HIJAB PREMIUM | Cek Ongkir Otomatis</title>
+<meta name="description" content="Produk hijab voal premium ARINDA - Ready stock, adem tidak menerawang. Cek ongkir otomatis JNE J&T SiCepat.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arinda-hijab.vercel.app/produk.html">
+<meta property="og:title" content="Produk ARINDA HIJAB PREMIUM - Ready Stock">
+<meta property="og:description" content="Koleksi hijab voal premium Rp80.000 - Cek ongkir otomatis!">
+<meta property="og:image" content="https://arinda-hijab.vercel.app/banner.jpg">
+<meta property="og:site_name" content="ARINDA HIJAB PREMIUM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://arinda-hijab.vercel.app/banner.jpg">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Plus+Jakarta+Sans:wght@400&display=swap" rel="stylesheet">
 <style>
@@ -19,24 +30,45 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 .btn-mini{padding:8px 10px;border-radius:20px;font-size:10px;letter-spacing:1px;border:1px solid var(--esp);cursor:pointer}.btn-black{background:var(--esp);color:#fff}.btn-white{background:#fff;color:var(--esp)}
 #cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:flex-end}
 #cartBox{background:#fff;width:100%;max-width:480px;margin:0 auto;max-height:85vh;overflow:auto;border-radius:16px 16px 0 0;padding:16px}
+.btn{width:100%;padding:12px;background:var(--esp);color:#fff;border:none;border-radius:10px;letter-spacing:2px;font-size:11px;font-weight:bold;cursor:pointer}
 </style></head><body>
 <nav><div class="nav-in"><div class="nav-top"><div class="logo" id="storeLogo">ARINDA</div><div class="icons">
 <a href="index.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16L20 20" stroke-linecap="round"/></svg></a>
 <button class="icon-btn" onclick="openCart()"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 10H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cCount">0</span></button>
 </div></div><div class="menu"><a href="index.html">BERANDA</a><a class="active">PRODUK</a><a href="kategori.html">KATEGORI</a></div><div class="search-wrap"><form onsubmit="doSearch(event)"><input id="q" type="search" placeholder="Cari hijab..."></form></div></div></nav>
-<div class="section"><div style="font-family:'Cormorant Garamond';font-size:22px">Produk Ready Stock</div><div id="resultInfo" style="font-size:10px;letter-spacing:2px;color:#8C7A6B;margin-bottom:8px">Otomatis dari admin</div><div class="filter"><button class="active" onclick="filterColor('ALL',this)">ALL</button><button onclick="filterColor('NAVY',this)">NAVY</button><button onclick="filterColor('HITAM',this)">HITAM</button><button onclick="filterColor('KREM',this)">KREM</button><button onclick="filterColor('MAROON',this)">MAROON</button></div><div id="list" class="prod-grid">Loading...</div></div>
+<div class="section"><div style="font-family:'Cormorant Garamond';font-size:22px">Produk Ready Stock</div><div id="resultInfo" style="font-size:10px;letter-spacing:2px;color:#8C7A6B;margin-bottom:8px">Otomatis dari admin - Sudah konek Supabase</div><div class="filter"><button class="active" onclick="filterColor('ALL',this)">ALL</button><button onclick="filterColor('NAVY',this)">NAVY</button><button onclick="filterColor('HITAM',this)">HITAM</button><button onclick="filterColor('KREM',this)">KREM</button><button onclick="filterColor('MAROON',this)">MAROON</button></div><div id="list" class="prod-grid">Loading...</div></div>
 
 <div id="cartModal" onclick="if(event.target==this)closeCart()"><div id="cartBox">
 <div style="display:flex;justify-content:space-between;align-items:center"><b>Keranjang (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:20px">×</button></div>
 <div id="cartList" style="margin-top:12px"></div>
-<div style="border-top:1px solid #EAE6E1;margin-top:12px;padding-top:12px"><div style="display:flex;justify-content:space-between;font-weight:700"><span>Total</span><span id="cartTotalPrice">Rp0</span></div>
-<button onclick="checkoutWA()" style="width:100%;margin-top:12px;padding:14px;background:#2B1B12;color:#fff;border:none;border-radius:10px;letter-spacing:2px;font-size:11px">CHAT WA & PESAN SEKARANG →</button>
+
+<!-- CEK ONGKIR DI KERANJANG - KONEK SUPA -->
+<div style="margin-top:14px;padding:12px;background:#FFFCF9;border:1px solid var(--champ);border-radius:10px;">
+<div style="font-size:12px;font-weight:700">🚚 Cek Ongkir - Asal: <span id="originInfo">Loading...</span></div>
+<div style="display:flex;gap:6px;margin-top:8px;">
+<input id="destSearch" placeholder="Ketik kecamatan pembeli" style="flex:1;padding:10px;border:1px solid var(--champ);border-radius:8px;font-size:12px;">
+<button onclick="searchDest()" class="btn" style="width:auto;padding:10px 14px;">Cari</button>
+</div>
+<div id="destList" style="margin:6px 0;max-height:120px;overflow-y:auto;border:1px solid #f0e9e3;border-radius:8px;display:none;"></div>
+<div style="display:flex;gap:6px;margin-top:8px;">
+<select id="courierSelect" style="padding:10px;border:1px solid var(--champ);border-radius:8px;flex:1;font-size:12px;"><option value="jne">JNE</option><option value="jnt">J&T</option><option value="sicepat">SiCepat</option><option value="anteraja">AnterAja</option><option value="pos">POS</option></select>
+<button onclick="cekOngkir()" class="btn" style="flex:1;">CEK</button>
+</div>
+<div id="ongkirResult" style="margin-top:8px;font-size:11px;"></div>
+</div>
+
+<div style="border-top:1px solid #EAE6E1;margin-top:12px;padding-top:12px">
+<div style="display:flex;justify-content:space-between;font-size:12px"><span>Subtotal Produk</span><span id="cartSubtotal">Rp0</span></div>
+<div style="display:flex;justify-content:space-between;font-size:12px;margin-top:4px"><span>Ongkir (<span id="ongkirLabel">belum cek</span>)</span><span id="ongkirPrice">Rp0</span></div>
+<div style="display:flex;justify-content:space-between;font-weight:700;margin-top:8px;font-size:14px"><span>Total</span><span id="cartTotalPrice">Rp0</span></div>
+<button onclick="checkoutWA()" class="btn" style="margin-top:12px;padding:14px;">CHAT WA & PESAN SEKARANG →</button>
 <button onclick="clearCart()" style="width:100%;margin-top:8px;padding:10px;background:#fff;border:1px solid #EAE6E1;border-radius:10px;font-size:11px">Kosongkan Keranjang</button></div>
 </div></div>
 
 <script>
 const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
-let allProducts=[], WA_NUMBER="6285178098354", STORE_NAME="ARINDA";
+let allProducts=[], WA_NUMBER="6285178098354", STORE_NAME="ARINDA", tokoOriginId="17523", tokoOriginLabel="CENGKARENG BARAT";
+let selectedDestId=null, selectedDestLabel='', selectedOngkirCost=0, selectedService='';
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return[]}}
 function saveCart(c){localStorage.setItem('arinda_cart2',JSON.stringify(c)); updateCount(); renderCart();}
 function updateCount(){document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+(b.qty||0),0);}
@@ -44,13 +76,57 @@ function doSearch(e){e.preventDefault();const v=document.getElementById('q').val
 function filterColor(color,btn){document.querySelectorAll('.filter button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');if(color==='ALL'){render(allProducts);return;}const f=allProducts.filter(p=>(p.name+' '+(p.category||'')).toLowerCase().includes(color.toLowerCase()));render(f);}
 function render(list){const el=document.getElementById('list');if(!list||list.length==0){el.innerHTML='<p style="font-size:12px;color:#8C7A6B">Belum ada produk di kategori ini</p>';return;}el.innerHTML=list.map(p=>{const safe=p.name.replace(/'/g,"\\'");const img=p.image_url;return `<div class="prod-card"><img src="${img}" onerror="this.src='https://via.placeholder.com/400'"><div style="padding:10px;flex:1;display:flex;flex-direction:column"><div style="font-size:12px;font-weight:600">${p.name}</div><div style="font-size:10px;color:#8C7A6B">${p.category||''}</div><div style="font-size:12px;font-weight:700;margin-top:6px">Rp${Number(p.price).toLocaleString('id-ID')}</div><div style="display:flex;gap:6px;margin-top:8px"><button class="btn-mini btn-white" onclick="addCart('${safe}',${p.price},'${img}')">+ Keranjang</button><button class="btn-mini btn-black" onclick="buyNow('${safe}',${p.price},'${img}')">Beli</button></div></div></div>`}).join('');}
 function addCart(n,p,i){let c=getCart();let idx=c.findIndex(a=>a.warna==n);if(idx>-1)c[idx].qty++;else c.push({warna:n,qty:1,harga:Number(p),img:i});saveCart(c);openCart();}
-function buyNow(n,p,i){let c=getCart();c=[{warna:n,qty:1,harga:Number(p),img:i}];saveCart(c);checkoutWA();}
+function buyNow(n,p,i){let c=getCart();c=[{warna:n,qty:1,harga:Number(p),img:i}];saveCart(c);openCart();}
 function openCart(){renderCart();document.getElementById('cartModal').style.display='flex';}
 function closeCart(){document.getElementById('cartModal').style.display='none';}
-function renderCart(){const c=getCart();const list=document.getElementById('cartList');document.getElementById('cartTotalQty').innerText=c.reduce((a,b)=>a+b.qty,0);document.getElementById('cartTotalPrice').innerText='Rp'+c.reduce((a,b)=>a+b.harga*b.qty,0).toLocaleString('id-ID');if(c.length==0){list.innerHTML='<p style="font-size:12px;color:#8C7A6B">Keranjang kosong</p>';return;}list.innerHTML=c.map((it,i)=>`<div style="display:flex;gap:10px;align-items:center;border-bottom:1px solid #eee;padding:8px 0"><img src="${it.img}" style="width:50px;height:50px;object-fit:cover;border-radius:8px"><div style="flex:1"><div style="font-size:12px;font-weight:600">${it.warna}</div><div style="font-size:11px">Rp${it.harga.toLocaleString('id-ID')} x ${it.qty}</div></div><button onclick="changeQty(${i},-1)" style="width:26px;height:26px;border-radius:50%;border:1px solid #ddd">-</button><span style="margin:0 6px;font-size:12px">${it.qty}</span><button onclick="changeQty(${i},1)" style="width:26px;height:26px;border-radius:50%;border:1px solid #ddd">+</button></div>`).join('');}
+function renderCart(){const c=getCart();const list=document.getElementById('cartList');const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);document.getElementById('cartTotalQty').innerText=c.reduce((a,b)=>a+b.qty,0);document.getElementById('cartSubtotal').innerText='Rp'+sub.toLocaleString('id-ID');document.getElementById('ongkirPrice').innerText='Rp'+selectedOngkirCost.toLocaleString('id-ID');document.getElementById('cartTotalPrice').innerText='Rp'+(sub+selectedOngkirCost).toLocaleString('id-ID');if(c.length==0){list.innerHTML='<p style="font-size:12px;color:#8C7A6B">Keranjang kosong</p>';return;}list.innerHTML=c.map((it,i)=>`<div style="display:flex;gap:10px;align-items:center;border-bottom:1px solid #eee;padding:8px 0"><img src="${it.img}" style="width:50px;height:50px;object-fit:cover;border-radius:8px"><div style="flex:1"><div style="font-size:12px;font-weight:600">${it.warna}</div><div style="font-size:11px">Rp${it.harga.toLocaleString('id-ID')} x ${it.qty}</div></div><button onclick="changeQty(${i},-1)" style="width:26px;height:26px;border-radius:50%;border:1px solid #ddd">-</button><span style="margin:0 6px;font-size:12px">${it.qty}</span><button onclick="changeQty(${i},1)" style="width:26px;height:26px;border-radius:50%;border:1px solid #ddd">+</button></div>`).join('');}
 function changeQty(i,d){let c=getCart();c[i].qty+=d;if(c[i].qty<=0)c.splice(i,1);saveCart(c);}
-function clearCart(){if(!confirm('Kosongkan keranjang?'))return;saveCart([]);}
-function checkoutWA(){const c=getCart();if(c.length==0)return alert('Keranjang kosong');let msg=`Halo ${STORE_NAME} 👋%0A%0ASaya mau pesan:%0A`;c.forEach(it=>{msg+=`- ${it.warna} x${it.qty} = Rp${(it.harga*it.qty).toLocaleString('id-ID')}%0A`});const total=c.reduce((a,b)=>a+b.harga*b.qty,0);msg+=`%0ATotal: Rp${total.toLocaleString('id-ID')}%0A%0AMohon info ongkir & stok ya 🙏`;window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');}
-async function load(){try{const {data}=await supabaseClient.from('settings').select('*');if(data){const n=data.find(s=>s.key==='store_name')?.value;const wa=data.find(s=>s.key==='wa_number')?.value;if(n)STORE_NAME=n,document.getElementById('storeLogo').innerText=n;if(wa)WA_NUMBER=wa;}}catch(e){}const q=new URLSearchParams(location.search).get('q')||'';document.getElementById('q').value=q;try{const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false});allProducts=data||[];if(q){const f=allProducts.filter(p=>(p.name+' '+(p.category||'')).toLowerCase().includes(q.toLowerCase()));render(f);}else render(allProducts);}catch(e){document.getElementById('list').innerText=e.message}updateCount();}
+function clearCart(){if(!confirm('Kosongkan keranjang?'))return;saveCart([]);selectedOngkirCost=0;selectedService='';renderCart();}
+async function searchDest(){const q=document.getElementById('destSearch').value.trim();if(!q)return alert('Ketik kecamatan dulu');const list=document.getElementById('destList');list.style.display='block';list.innerHTML='⏳ Mencari...';try{const r=await fetch('/api/search?q='+encodeURIComponent(q));const j=await r.json();if(!j.data||j.data.length==0){list.innerHTML='<div style="padding:10px">Tidak ketemu</div>';return;}list.innerHTML=j.data.map(d=>`<div style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;" onclick="pilihDest('${d.id}','${d.label.replace(/'/g,"")}')">${d.label} - <b style="color:#2B1B12">KLIK PILIH</b></div>`).join('');}catch(e){list.innerHTML='Error: '+e.message;}}
+function pilihDest(id,label){selectedDestId=id;selectedDestLabel=label;document.getElementById('destSearch').value=label;document.getElementById('destList').innerHTML='<div style="padding:10px;background:#dcfce7;border-radius:8px;">✅ Tujuan: <b>'+label+'</b></div>';}
+async function cekOngkir(){
+ if(!selectedDestId) return alert('Pilih kecamatan pembeli dulu!');
+ const courier=document.getElementById('courierSelect').value; const result=document.getElementById('ongkirResult');
+ result.innerHTML='⏳ Mengecek...';
+ try{
+  const res=await fetch('/api/cost',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({origin:tokoOriginId,destination:selectedDestId,weight:1000,courier})});
+  const data=await res.json(); if(data.error){result.innerHTML='❌ '+data.error;return;}
+  const arr = data.data||data.costs||data; const list = Array.isArray(arr)?arr:(arr.costs||[]);
+  if(list.length==0){result.innerHTML='Tidak ada layanan';return;}
+  let html='<div style="font-size:11px;margin-bottom:4px;">Pilih layanan:</div>';
+  list.forEach(c=>{
+    const cost=c.cost||0; const etd=c.etd||'-'; const service=c.service||'REG';
+    html+=`<div onclick="setOngkir(${cost},'${service}','${etd}')" style="padding:8px;border:1px solid #EAE6E1;margin:4px 0;border-radius:8px;display:flex;justify-content:space-between;cursor:pointer;background:#fff;"><div><b>${service}</b><br><small>${etd} hari</small></div><b>Rp${Number(cost).toLocaleString('id-ID')}</b></div>`;
+  });
+  result.innerHTML=html;
+ }catch(e){result.innerHTML='❌ '+e.message;}
+}
+function setOngkir(cost,service,etd){selectedOngkirCost=Number(cost);selectedService=service+' ('+etd+' hari)';document.getElementById('ongkirLabel').innerText=selectedService;document.getElementById('ongkirResult').innerHTML='<div style="padding:8px;background:#dcfce7;border-radius:8px;">✅ Dipilih: <b>'+service+'</b> - Rp'+selectedOngkirCost.toLocaleString('id-ID')+' ('+etd+' hari)</div>';renderCart();}
+function checkoutWA(){
+ const c=getCart(); if(c.length==0)return alert('Keranjang kosong');
+ let msg=`Halo ${STORE_NAME} 👋%0A%0ASaya mau pesan:%0A`;
+ c.forEach(it=>{msg+=`- ${it.warna} x${it.qty} = Rp${(it.harga*it.qty).toLocaleString('id-ID')}%0A`});
+ const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);
+ msg+=`%0ASubtotal: Rp${sub.toLocaleString('id-ID')}%0A`;
+ if(selectedOngkirCost>0){msg+=`Ongkir (${selectedService} ke ${selectedDestLabel}): Rp${selectedOngkirCost.toLocaleString('id-ID')}%0A`;}
+ msg+=`Total: Rp${(sub+selectedOngkirCost).toLocaleString('id-ID')}%0A`;
+ if(selectedDestLabel) msg+=`Tujuan: ${selectedDestLabel}%0A`;
+ msg+=`%0AMohon info stok ya 🙏`;
+ window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');
+}
+async function load(){
+ try{
+  const {data}=await supabaseClient.from('settings').select('*');
+  if(data){
+    const n=data.find(s=>s.key==='store_name')?.value; const wa=data.find(s=>s.key==='wa_number')?.value;
+    const oid=data.find(s=>s.key==='toko_origin_id')?.value; const olabel=data.find(s=>s.key==='toko_origin_label')?.value;
+    if(n)STORE_NAME=n,document.getElementById('storeLogo').innerText=n; if(wa)WA_NUMBER=wa;
+    if(oid){tokoOriginId=oid; tokoOriginLabel=olabel||oid; document.getElementById('originInfo').innerText=tokoOriginLabel+' ('+oid+')';}
+  }
+ }catch(e){}
+ const q=new URLSearchParams(location.search).get('q')||'';document.getElementById('q').value=q;
+ try{const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false});allProducts=data||[];if(q){const f=allProducts.filter(p=>(p.name+' '+(p.category||'')).toLowerCase().includes(q.toLowerCase()));render(f);}else render(allProducts);}catch(e){document.getElementById('list').innerText=e.message}
+ updateCount();
+}
 load();
 </script></body></html>
