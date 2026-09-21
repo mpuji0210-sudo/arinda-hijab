@@ -1,171 +1,86 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
+<!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Admin ARINDA Hijab</title>
+<title>ARINDA Hijab Premium</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
-body{font-family:Arial,sans-serif;background:#FFFCF9;padding:20px;max-width:600px;margin:auto}
-.box{background:#fff;border:1px solid #EAE6E1;padding:16px;border-radius:12px;margin-bottom:16px}
-h1{font-size:20px;text-align:center} label{font-size:12px;display:block;margin-top:10px}
-input{width:100%;padding:10px;margin-top:4px;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
-button{background:#2B1B12;color:#fff;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;margin-top:10px;width:100%}
-button.small{width:auto;padding:6px 10px;font-size:11px}
-#preview,#catPreview{width:100%;max-height:200px;object-fit:cover;margin-top:10px;border-radius:8px;display:none}
-.item{border:1px solid #eee;padding:8px;border-radius:8px;margin-top:8px;display:flex;gap:10px;align-items:center}
-.item img{width:60px;height:60px;object-fit:cover;border-radius:6px}
-.tabs{display:flex;gap:8px;margin-bottom:12px}
-.tabs button{width:50%;background:#EAE6E1;color:#2B1B12}
-.tabs button.active{background:#2B1B12;color:#fff}
-</style>
-</head>
-<body>
-<h1>ARINDA - Admin Panel</h1>
+:root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--bg:#FFFCF9}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
+nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(10px);border-bottom:1px solid var(--champ)}
+.nav-in{max-width:1120px;margin:0 auto;padding:10px 14px}
+.nav-top{display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:18px}
+.menu{display:flex;gap:14px;margin-top:8px;padding-top:8px;border-top:1px solid var(--champ)}
+.menu a{font-size:11px;letter-spacing:1.5px;color:var(--taupe);text-decoration:none}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
+.icons{display:flex;gap:10px}.icon-btn{background:none;border:none;cursor:pointer;padding:4px;position:relative}
+.icon-btn svg{width:21px;height:21px;stroke:var(--esp);fill:none;stroke-width:1.6}
+.badge{position:absolute;top:-3px;right:-4px;background:var(--esp);color:#fff;font-size:9px;min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+#searchBox{display:none;padding:8px 0 0}#searchBox input{width:100%;padding:12px 16px;border:1px solid var(--champ);border-radius:24px;font-size:13px;outline:none}
+.hero{position:relative;width:100%;background:#F6EEE3;overflow:hidden}.hero img{width:100%;display:block}
+.desktop-only{display:block}.mobile-only{display:none}
+.hero-text{position:absolute;left:5%;top:20%;max-width:420px;background:#fff;padding:20px;border:1px solid var(--champ)}
+.btn{display:inline-block;background:var(--esp);color:#fff;padding:11px 20px;font-size:11px;letter-spacing:2px;text-decoration:none}
+.section{max-width:1120px;margin:0 auto;padding:16px 14px}
+.sub{font-size:10px;letter-spacing:2.5px;color:var(--taupe);margin:4px 0 12px}
+.colors{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.colors img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#fff;border:1px solid var(--champ)}
+.undertone{margin-top:18px;background:#fff;border:1px solid var(--champ);padding:14px}
+.undertone-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.card{border:1px solid var(--champ);padding:8px;text-align:center;background:#fff}
+.card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.badge2{display:inline-block;font-size:9px;padding:4px 8px;background:var(--esp);color:#fff;margin-top:6px;border-radius:12px}
+/* FAQ PANAH BAWAH - UDAH JALAN DI VIDEO KAMU */
+.faq{border:1px solid #EAE6E1;background:#fff;margin-top:10px;border-radius:8px;overflow:hidden}
+.faq-item{border-bottom:1px solid #EAE6E1}.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;text-align:left;background:#fff;border:none;padding:14px;font-size:13px;font-weight:500;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-family:inherit}
+.arrow{width:18px;height:18px;stroke:#8C7A6B;stroke-width:1.8;fill:none;transition:transform .3s ease}
+.faq-item.active .arrow{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;background:#FFFCF9}
+.faq-item.active .faq-a{max-height:400px}
+.faq-a p{font-size:11px;line-height:1.6;color:#5a4a40;margin:0;padding:10px 14px 14px}
+@media(max-width:800px){.desktop-only{display:none!important}.mobile-only{display:block!important}.colors{grid-template-columns:repeat(2,1fr)}.hero-text{position:relative;left:auto;top:auto;max-width:100%;margin:-36px 14px 0;padding:16px}.undertone-grid{grid-template-columns:1fr}}
+</style></head><body>
+<nav><div class="nav-in">
+<div class="nav-top"><div class="logo" id="storeLogo">Aeni HIJAB</div><div class="icons">
+<button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16L20 20" stroke-linecap="round"/></svg></button>
+<a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></a>
+<a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 10H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cCount">0</span></a>
+</div></div>
+<div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div>
+<div id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" placeholder="Cari hijab... maroon, navy, hitam, krem"></form></div>
+</div></nav>
 
-<div class="box">
-<h3>Setting Toko</h3>
-<label>Nama Toko (misal: ARINDA HIJAB)</label>
-<input id="storeName" placeholder="ARINDA">
-<label>Nomor WA (contoh: 628123456789)</label>
-<input id="waNumber" placeholder="628xxxx">
-<button onclick="saveSettings()">Simpan Setting Toko</button>
-<div id="msgSet" style="font-size:12px;margin-top:6px"></div>
+<div class="hero"><img class="desktop-only" src="banner.jpg" style="aspect-ratio:16/9;object-fit:cover"><img class="mobile-only" src="banner hp.jpg" style="height:62vh;object-fit:cover"><div class="hero-text"><div style="font-size:10px;letter-spacing:3px;color:#8C7A6B">NEW COLLECTION</div><h1 style="font-family:'Cormorant Garamond';font-size:36px;line-height:.95;margin:6px 0 8px">Adem,<br>Tidak Menerawang</h1><p style="font-size:12px;color:#8C7A6B">Premium voal Rp80.000 - 115x115cm, laser cut rapi</p><a href="produk.html" class="btn">Lihat Produk →</a></div></div>
+
+<div class="section">
+<div class="sub">KOLEKSI 4 WARNA BESTSELLER</div><div class="colors"><img src="navy.jpg"><img src="hitam.jpg"><img src="krem.jpg"><img src="maroon.jpg"></div>
+<div id="customSection" style="display:none;margin-top:24px;border-top:1px solid var(--champ);padding-top:16px"><div class="sub">PRODUK READY STOCK OTOMATIS</div><div id="dynamicList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div></div>
+
+<div class="undertone"><div style="font-family:'Cormorant Garamond';font-size:22px">Kenali Undertone Kamu</div><div class="sub">Lihat warna urat nadi</div>
+<div class="undertone-grid">
+<div class="card"><img src="undertone-cool-biru.jpg"><div style="font-size:11px;margin-top:6px"><b>COOL - Urat Biru</b><br><span class="badge2">COCOK: Navy & Hitam</span></div></div>
+<div class="card"><img src="udertone-.jpg"><div style="font-size:11px;margin-top:6px"><b>WARM - Urat Hijau</b><br><span class="badge2">COCOK: Krem & Maroon</span></div></div>
+<div class="card"><img src="undertone-neutral-campur.jpg"><div style="font-size:11px;margin-top:6px"><b>NEUTRAL - Campur</b><br><span class="badge2">BEST: Krem Elegant</span></div></div>
 </div>
 
-<div class="box">
-<h3>Tambah Produk Baru</h3>
-<label>Nama Produk</label>
-<input id="pName" placeholder="Paris Premium">
-<label>Harga</label>
-<input id="pPrice" type="number" placeholder="35000">
-<label>📷 Foto Produk (Pilih dari Galeri HP)</label>
-<input type="file" id="pFile" accept="image/*" onchange="uploadFoto()">
-<img id="preview">
-<div id="msgFoto" style="font-size:12px;margin-top:6px"></div>
-<label>Deskripsi</label>
-<input id="pDesc" placeholder="Bahan voal premium...">
-<button onclick="addProduct()">Tambah Produk</button>
+<div style="margin-top:18px"><div style="font-family:'Cormorant Garamond';font-size:20px;font-weight:600">FAQ - Pertanyaan Umum</div>
+<div class="faq">
+<div class="faq-item active"><button class="faq-q" onclick="toggleFaq(this)">Apa bahan ARINDA? Adem & menerawang tidak? <svg class="arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>ARINDA pakai <b>Premium Voal</b> grade A, serat rapat, adem, tidak menerawang meski warna terang Krem.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Apa perbedaan tampilan oval dan square? <svg class="arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Bisa ditata <b>2 tampilan</b>: oval lebih soft, square lebih tegas rapi.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Ukuran & finishing gimana? <svg class="arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Ukuran <b>115 x 115 cm</b>, finishing <b>laser cut</b> rapi.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Cocok untuk undertone apa? <svg class="arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p><b>Cool</b> → Navy & Hitam, <b>Warm</b> → Krem & Maroon, <b>Neutral</b> → semua masuk.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Cara perawatan biar awet? <svg class="arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="faq-a"><p>Cuci tangan, jangan sikat, setrika suhu rendah.</p></div></div>
+</div></div>
 </div>
-
-<div class="box">
-<h3>Daftar Produk</h3>
-<div id="list">Loading...</div>
-</div>
-
-<!-- KATEGORI FULL CUSTOM - BARU -->
-<div class="box">
-<h3>📂 Kategori (Full Custom Klien)</h3>
-<p style="font-size:11px;color:#8C7A6B">Klien bisa tambah kategori sendiri. Akan muncul di halaman kategori.html</p>
-<label>Nama Kategori (contoh: Pashmina, Segiempat Voal, Daily)</label>
-<input id="cat_name" placeholder="Nama Kategori">
-<label>Deskripsi Kategori</label>
-<input id="cat_desc" placeholder="Adem & tidak menerawang">
-<label>📷 Foto Kategori</label>
-<input type="file" id="catFile" accept="image/*" onchange="uploadCatFoto()">
-<img id="catPreview">
-<div id="msgCatFoto" style="font-size:12px;margin-top:6px"></div>
-<label>Atau Link Gambar (opsional jika tidak upload)</label>
-<input id="cat_image" placeholder="https://...">
-<button onclick="addCategory()">+ Tambah Kategori</button>
-<div style="margin-top:16px"><b>Daftar Kategori:</b><div id="catList">Loading...</div></div>
 </div>
 
 <script>
-const SUPABASE_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
-const SUPABASE_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
-const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let uploadedImageUrl='';
-let uploadedCatUrl='';
-
-async function loadSettings(){
- const {data}=await supabaseClient.from('settings').select('*').eq('id',1).single();
- if(data){
-  document.getElementById('storeName').value=data.store_name||'';
-  document.getElementById('waNumber').value=data.wa_number||data.whatsapp||'';
- }
-}
-async function saveSettings(){
- const name=document.getElementById('storeName').value;
- const wa=document.getElementById('waNumber').value;
- if(!name||!wa) return alert('Isi nama toko & WA!');
- // simpan 2 kolom biar kompatibel dengan file lama & baru
- const {error}=await supabaseClient.from('settings').upsert({id:1,store_name:name,wa_number:wa,whatsapp:wa});
- document.getElementById('msgSet').innerText=error?'Gagal: '+error.message:'✅ Nama toko & WA berhasil disimpan!';
-}
-
-async function uploadFoto(){
- const file=document.getElementById('pFile').files[0];
- if(!file) return;
- document.getElementById('msgFoto').innerText='⏳ Uploading...';
- const fileName='prod-'+Date.now()+'-'+file.name;
- const {error}=await supabaseClient.storage.from('product-images').upload(fileName,file);
- if(error){ document.getElementById('msgFoto').innerText='❌ Gagal: '+error.message; return; }
- const {data}=supabaseClient.storage.from('product-images').getPublicUrl(fileName);
- uploadedImageUrl=data.publicUrl;
- document.getElementById('preview').src=uploadedImageUrl;
- document.getElementById('preview').style.display='block';
- document.getElementById('msgFoto').innerText='✅ Foto berhasil diupload!';
-}
-
-async function addProduct(){
- if(!uploadedImageUrl){ alert('Upload foto dulu!'); return; }
- const name=document.getElementById('pName').value;
- const price=document.getElementById('pPrice').value;
- const desc=document.getElementById('pDesc').value;
- if(!name||!price){ alert('Isi nama & harga!'); return; }
- const {error}=await supabaseClient.from('products').insert({name,price,description:desc,image_url:uploadedImageUrl});
- if(error){ alert('Gagal: '+error.message); return; }
- alert('✅ Produk berhasil ditambah!');
- uploadedImageUrl=''; document.getElementById('pName').value=''; document.getElementById('pPrice').value=''; document.getElementById('pDesc').value=''; document.getElementById('pFile').value=''; document.getElementById('preview').style.display='none'; document.getElementById('msgFoto').innerText='';
- loadProducts();
-}
-
-async function loadProducts(){
- const {data}=await supabaseClient.from('products').select('*').order('created_at',{ascending:false});
- let html='';
- if(!data||data.length==0) html='Belum ada produk';
- else data.forEach(p=>{ html+=`<div class="item"><img src="${p.image_url}"><div style="flex:1"><b>${p.name}</b><br>Rp${Number(p.price).toLocaleString('id-ID')}<br><button class="small" onclick="del('${p.id}')">Hapus</button></div></div>`; });
- document.getElementById('list').innerHTML=html;
-}
-async function del(id){ if(!confirm('Hapus produk?')) return; await supabaseClient.from('products').delete().eq('id',id); loadProducts(); }
-
-// === KATEGORI LOGIC ===
-async function uploadCatFoto(){
- const file=document.getElementById('catFile').files[0];
- if(!file) return;
- document.getElementById('msgCatFoto').innerText='⏳ Uploading...';
- const fileName='cat-'+Date.now()+'-'+file.name;
- const {error}=await supabaseClient.storage.from('product-images').upload(fileName,file);
- if(error){ document.getElementById('msgCatFoto').innerText='❌ Gagal: '+error.message; return; }
- const {data}=supabaseClient.storage.from('product-images').getPublicUrl(fileName);
- uploadedCatUrl=data.publicUrl;
- document.getElementById('catPreview').src=uploadedCatUrl;
- document.getElementById('catPreview').style.display='block';
- document.getElementById('cat_image').value=uploadedCatUrl;
- document.getElementById('msgCatFoto').innerText='✅ Foto kategori berhasil!';
-}
-async function addCategory(){
- const name=document.getElementById('cat_name').value.trim();
- const desc=document.getElementById('cat_desc').value.trim();
- const img=document.getElementById('cat_image').value.trim()||uploadedCatUrl;
- if(!name) return alert('Nama kategori wajib!');
- if(!img) return alert('Upload foto kategori dulu!');
- const slug=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
- const {error}=await supabaseClient.from('categories').insert({name,description:desc,image_url:img,slug});
- if(error){ alert('Gagal: '+error.message+'\nPastikan sudah bikin tabel categories di Supabase SQL!'); return; }
- alert('✅ Kategori ditambahkan!');
- document.getElementById('cat_name').value=''; document.getElementById('cat_desc').value=''; document.getElementById('cat_image').value=''; document.getElementById('catFile').value=''; document.getElementById('catPreview').style.display='none'; uploadedCatUrl=''; document.getElementById('msgCatFoto').innerText='';
- loadCats();
-}
-async function loadCats(){
- const {data,error}=await supabaseClient.from('categories').select('*').order('created_at',{ascending:false});
- if(error){ document.getElementById('catList').innerHTML='<span style="font-size:11px;color:red">Tabel categories belum ada. Jalankan SQL di Supabase dulu!</span>'; return; }
- if(!data||data.length==0){ document.getElementById('catList').innerHTML='Belum ada kategori'; return; }
- document.getElementById('catList').innerHTML=data.map(c=>`<div class="item"><img src="${c.image_url}"><div style="flex:1"><b>${c.name}</b><br><span style="font-size:11px;color:#8C7A6B">${c.description||''}</span></div><button class="small" onclick="delCat(${c.id})">Hapus</button></div>`).join('');
-}
-async function delCat(id){ if(!confirm('Hapus kategori ini?')) return; await supabaseClient.from('categories').delete().eq('id',id); loadCats(); }
-
-loadSettings(); loadProducts(); loadCats();
+const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
+function toggleSearch(){const b=document.getElementById('searchBox');b.style.display=b.style.display=='block'?'none':'block';if(b.style.display=='block')document.getElementById('q').focus();}
+function goSearch(e){e.preventDefault();const v=document.getElementById('q').value.trim();if(!v)return;location.href='produk.html?q='+encodeURIComponent(v);}
+function toggleFaq(el){const item=el.closest('.faq-item');const active=item.classList.contains('active');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('active'));if(!active)item.classList.add('active');}
+function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return []}}
+function updateCount(){document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+Number(b.qty||0),0);}
+async function load(){try{const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false});if(data&&data.length>0){document.getElementById('customSection').style.display='block';document.getElementById('dynamicList').innerHTML=data.map(p=>`<div style="border:1px solid #EAE6E1;background:#fff;border-radius:10px;overflow:hidden" onclick="location.href='produk.html'"><img src="${p.image_url}" style="width:100%;height:160px;object-fit:cover"><div style="padding:8px"><div style="font-size:12px;font-weight:600">${p.name}</div><div style="font-size:11px;color:#8C7A6B">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`).join('');}}catch(e){}updateCount();}
+load();
 </script>
-</body>
-</html>
+</body></html>
