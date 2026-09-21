@@ -1,26 +1,27 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kontak - ARINDA</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--off:#FFFCF9}
 *{box-sizing:border-box}body{margin:0;background:var(--off);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
 nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.98);backdrop-filter:blur(12px);border-bottom:1px solid var(--champ)}
 .nav-in{max-width:1000px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
-.logo{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:4px;font-size:20px}.menu{display:flex;gap:18px}.menu a{text-decoration:none;font-size:11px;letter-spacing:2px;color:var(--taupe);border-bottom:1.5px solid transparent;padding-bottom:3px;white-space:nowrap}.menu a.active{color:var(--esp);border-color:var(--esp)}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:4px;font-size:20px}.menu{display:flex;gap:18px}.menu a{text-decoration:none;font-size:11px;letter-spacing:2px;color:var(--taupe);border-bottom:1.5px solid transparent;padding-bottom:3px}.menu a.active{color:var(--esp);border-color:var(--esp)}
 .wrap{max-width:1000px;margin:0 auto;padding:32px 20px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .card{border:1px solid var(--champ);background:#fff;padding:20px}
 input,textarea,select{width:100%;padding:12px;border:1px solid var(--champ);font-family:inherit;font-size:13px;margin-top:6px}
 .btn{padding:14px;background:var(--esp);color:#fff;text-align:center;font-size:11px;letter-spacing:2px;cursor:pointer;border:none;width:100%;margin-top:12px}
-@media(max-width:750px){.nav-in{flex-direction:column;align-items:flex-start}.menu{width:100%;justify-content:space-between;border-top:1px solid var(--champ);padding-top:10px}.wrap{grid-template-columns:1fr}}
+@media(max-width:750px){.wrap{grid-template-columns:1fr}}
 </style>
 </head><body>
-<nav><div class="nav-in"><div class="logo" id="storeLogo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kontak.html" class="active">KONTAK</a></div></div></nav>
+<nav><div class="nav-in"><div class="logo" id="storeLogo">ARINDA</div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a href="kontak.html" class="active">KONTAK</a></div></div></nav>
 
 <div class="wrap">
 <div>
 <h1 style="font-family:'Cormorant Garamond';font-size:42px;line-height:.9;margin:0">Hubungi<br><i style="font-weight:400">Kami</i></h1>
-<p style="color:var(--taupe);font-size:13px;margin-top:12px">Konsultasi warna, ukuran, dan pre-order koleksi terbaru. </p>
+<p style="color:var(--taupe);font-size:13px;margin-top:12px">Konsultasi warna, ukuran, dan pre-order koleksi terbaru.</p>
 <div style="display:grid;gap:12px;margin-top:20px">
 <div class="card">📍 Jakarta - Kirim seluruh Indonesia<br><span style="font-size:11px;color:var(--taupe)">COD & QRIS Ready</span></div>
 <div class="card">💬 WhatsApp: <span id="waText">6285178098354</span><br><span style="font-size:11px;color:var(--taupe)">Jam 08.00 - 21.00 WIB</span></div>
@@ -30,48 +31,48 @@ input,textarea,select{width:100%;padding:12px;border:1px solid var(--champ);font
 
 <div class="card">
 <div style="font-size:11px;letter-spacing:2px">FORM PESAN</div>
-<label style="font-size:11px;margin-top:12px;display:block">Nama</label><input id="nama" placeholder="Nama kamu" required style="width:100%;padding:10px;margin-top:6px;border:1px solid var(--taupe);border-radius:8px">
+<label style="font-size:11px;margin-top:12px;display:block">Nama</label><input id="nama" placeholder="Nama kamu">
 <label style="font-size:11px;margin-top:12px;display:block">Warna yang diminati</label>
-<select id="warna"><option>HITAM </option><option>KREM </option><option>MAROON</option><option>NAVY</option></select>
+<select id="warna"><option>HITAM</option><option>KREM</option><option>MAROON</option><option>NAVY</option></select>
 <label style="font-size:11px;margin-top:12px;display:block">Pesan</label><textarea id="pesan" rows="4" placeholder="Mau tanya stok, ukuran, ongkir..."></textarea>
 <button class="btn" onclick="kirimWA()">KIRIM KE WHATSAPP</button>
 <div style="font-size:10px;color:var(--taupe);text-align:center;margin-top:8px">Langsung terhubung ke admin <span id="storeName2">ARINDA</span></div>
 </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL="https://qjgevvizqeebtdqcbqmt.supabase.co";
-const SUPABASE_KEY="sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19";
-const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const supabaseClient=supabase.createClient("https://qjgevvizqeebtdqcbqmt.supabase.co","sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19");
 let WA_NUMBER="6285178098354";
 let STORE_NAME="ARINDA";
 
 async function loadSetting(){
   try{
-    const {data}=await supabaseClient.from('settings').select('*').eq('id',1).single();
+    const {data} = await supabaseClient.from('settings').select('*');
     if(data){
-      if(data.store_name){
-        STORE_NAME=data.store_name;
-        document.getElementById('storeLogo').innerText=data.store_name;
-        document.getElementById('storeName2').innerText=data.store_name;
+      const sName = data.find(s=>s.key==='store_name')?.value;
+      const sWa = data.find(s=>s.key==='wa_number')?.value;
+      if(sName){
+        STORE_NAME=sName;
+        document.getElementById('storeLogo').innerText=sName;
+        document.getElementById('storeName2').innerText=sName;
+        document.title = "Kontak - "+sName;
       }
-      if(data.whatsapp){
-        WA_NUMBER=data.whatsapp;
-        document.getElementById('waText').innerText=data.whatsapp;
+      if(sWa){
+        WA_NUMBER=sWa;
+        document.getElementById('waText').innerText=sWa;
       }
     }
-  }catch(e){}
+  }catch(e){console.log(e)}
 }
 loadSetting();
 
 function kirimWA(){
-let n=document.getElementById('nama').value.trim();
-if(!n){alert('Kak, isi nama dulu ya biar '+STORE_NAME+' tau mau sapa siapa 🖐️');document.getElementById('nama').focus();return;}
-let w=document.getElementById('warna').value;
-let p=document.getElementById('pesan').value||'Mau tanya hijab Rp180.000';
-let msg=`Halo ${STORE_NAME}, saya ${n} \n\nWarna: ${w}\nPesan: ${p}\n\nMohon infonya ya 🙏`;
-window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(msg),'_blank');
+ let n=document.getElementById('nama').value.trim();
+ if(!n){alert('Kak, isi nama dulu ya biar '+STORE_NAME+' tau mau sapa siapa 🖐️'); return;}
+ let w=document.getElementById('warna').value;
+ let p=document.getElementById('pesan').value||'Mau tanya hijab';
+ let msg=`Halo ${STORE_NAME}, saya ${n} \n\nWarna: ${w}\nPesan: ${p}\n\nMohon infonya ya 🙏`;
+ window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(msg),'_blank');
 }
 </script>
 </body></html>
