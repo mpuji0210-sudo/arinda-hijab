@@ -1,18 +1,30 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARINDA ADMIN - FIX KONEK SETTINGS</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><style>body{margin:0;background:#FFFCF9;font-family:sans-serif;padding:12px}.card{background:#fff;border:1px solid #EAE6E1;border-radius:12px;padding:12px;margin-bottom:10px}.input{width:100%;padding:9px;border:1px solid #ddd;border-radius:8px;margin:4px 0}.btn{background:#2B1B12;color:#fff;border:none;padding:9px;border-radius:8px;width:100%;cursor:pointer;font-weight:bold}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cat{display:inline-block;background:#f3ece6;padding:4px 8px;border-radius:20px;margin:2px;font-size:12px}</style></head><body>
-<h2>ARINDA ADMIN - SUDAH FIX</h2>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<h2 style="margin:0">ARINDA ADMIN - SUDAH FIX</h2>
+<button onclick="logout()" style="background:red;color:white;padding:8px 15px;border-radius:8px;border:none;font-weight:bold;cursor:pointer">LOGOUT</button>
+</div>
+
 <div class="card"><h3>1. CUSTOM NAMA TOKO</h3><input id="storeName" class="input" placeholder="ARINDA HIJAB PREMIUM"><button class="btn" onclick="saveStoreName()">SIMPAN NAMA TOKO</button><small id="storeStatus"></small></div>
 <div class="card"><h3>2. GANTI WA</h3><input id="waNumber" class="input" placeholder="628xxxxxxxxxx"><button class="btn" onclick="saveWA()">SIMPAN NO WA</button><small id="waStatus"></small></div>
 <div class="card"><h3>3. KATEGORI</h3><input id="catName" class="input" placeholder="Nama Kategori - Paris, Bella, dll"><button class="btn" onclick="addCat()">TAMBAH KATEGORI</button><div id="catList" style="margin-top:8px"></div></div>
 <div class="card"><h3>4. CUSTOM PRODUK - Tambah / Edit</h3><input type="hidden" id="editId"><input id="pName" class="input" placeholder="Nama Produk"><input id="pPrice" class="input" type="number" placeholder="Harga"><select id="pCat" class="input"><option value="">Pilih Kategori</option></select><input id="pImage" class="input" placeholder="Link foto"><input id="pFile" type="file" class="input"><button class="btn" onclick="saveProduct()">SIMPAN PRODUK</button></div>
 <div class="card"><h3>5. DAFTAR PRODUK - Edit & Hapus</h3><div id="list" class="grid">Loading...</div></div>
+
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supabaseClient = window.supabase.createClient(SUPA_URL, SUPA_KEY);
 
+function logout(){
+  if(confirm('Yakin mau logout?')){
+    localStorage.clear();
+    location.href='index.html';
+  }
+}
+
 async function init(){
  try{
-  // FIX: baca settings model key/value
   const {data,error} = await supabaseClient.from('settings').select('*');
   if(!error && data){
     const sName = data.find(s=>s.key==='store_name')?.value;
@@ -48,7 +60,7 @@ async function loadCats(){
   catList.innerHTML=window._cats.map(c=>`<span class="cat">${c.name} <b onclick="delCat('${c.id}')" style="cursor:pointer">x</b></span>`).join('');
   pCat.innerHTML='<option value="">Pilih Kategori</option>'+window._cats.map(c=>`<option value="${c.name}">${c.name}</option>`).join('');
  }catch(e){
-  catList.innerHTML='<small style="color:#999">Tabel categories belum ada, bikin dulu di SQL: create table categories (id uuid default gen_random_uuid() primary key, name text); + RLS Allow all</small>';
+  catList.innerHTML='<small style="color:#999">Tabel categories belum ada</small>';
  }
 }
 
