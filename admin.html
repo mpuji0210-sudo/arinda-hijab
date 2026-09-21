@@ -1,7 +1,7 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aeni HIJAB - ADMIN SUPER LENGKAP</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><style>body{margin:0;background:#FFFCF9;font-family:sans-serif;padding:12px}.card{background:#fff;border:1px solid #EAE6E1;border-radius:12px;padding:12px;margin-bottom:10px}.input{width:100%;padding:9px;border:1px solid #ddd;border-radius:8px;margin:4px 0}.btn{background:#2B1B12;color:#fff;border:none;padding:9px;border-radius:8px;width:100%;cursor:pointer;font-weight:bold}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cat{display:inline-block;background:#f3ece6;padding:4px 8px;border-radius:20px;margin:2px;font-size:12px}</style></head><body>
-<h2>Aeni HIJAB - ADMIN FULL CUSTOM</h2>
-<div class="card"><h3>1. CUSTOM NAMA TOKO</h3><input id="storeName" class="input" placeholder="Aeni HIJAB"><button class="btn" onclick="saveStoreName()">SIMPAN NAMA TOKO</button></div>
-<div class="card"><h3>2. GANTI WA</h3><input id="waNumber" class="input" placeholder="628xxxxxxxxxx"><button class="btn" onclick="saveWA()">SIMPAN NO WA</button></div>
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARINDA ADMIN - FIX KONEK SETTINGS</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><style>body{margin:0;background:#FFFCF9;font-family:sans-serif;padding:12px}.card{background:#fff;border:1px solid #EAE6E1;border-radius:12px;padding:12px;margin-bottom:10px}.input{width:100%;padding:9px;border:1px solid #ddd;border-radius:8px;margin:4px 0}.btn{background:#2B1B12;color:#fff;border:none;padding:9px;border-radius:8px;width:100%;cursor:pointer;font-weight:bold}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cat{display:inline-block;background:#f3ece6;padding:4px 8px;border-radius:20px;margin:2px;font-size:12px}</style></head><body>
+<h2>ARINDA ADMIN - SUDAH FIX</h2>
+<div class="card"><h3>1. CUSTOM NAMA TOKO</h3><input id="storeName" class="input" placeholder="ARINDA HIJAB PREMIUM"><button class="btn" onclick="saveStoreName()">SIMPAN NAMA TOKO</button><small id="storeStatus"></small></div>
+<div class="card"><h3>2. GANTI WA</h3><input id="waNumber" class="input" placeholder="628xxxxxxxxxx"><button class="btn" onclick="saveWA()">SIMPAN NO WA</button><small id="waStatus"></small></div>
 <div class="card"><h3>3. KATEGORI</h3><input id="catName" class="input" placeholder="Nama Kategori - Paris, Bella, dll"><button class="btn" onclick="addCat()">TAMBAH KATEGORI</button><div id="catList" style="margin-top:8px"></div></div>
 <div class="card"><h3>4. CUSTOM PRODUK - Tambah / Edit</h3><input type="hidden" id="editId"><input id="pName" class="input" placeholder="Nama Produk"><input id="pPrice" class="input" type="number" placeholder="Harga"><select id="pCat" class="input"><option value="">Pilih Kategori</option></select><input id="pImage" class="input" placeholder="Link foto"><input id="pFile" type="file" class="input"><button class="btn" onclick="saveProduct()">SIMPAN PRODUK</button></div>
 <div class="card"><h3>5. DAFTAR PRODUK - Edit & Hapus</h3><div id="list" class="grid">Loading...</div></div>
@@ -9,18 +9,81 @@
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supabaseClient = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+
 async function init(){
- try{const {data}=await supabaseClient.from('settings').select('*').eq('id',1).single();if(data){storeName.value=data.store_name||'';waNumber.value=data.wa_number||'';}}catch(e){}
+ try{
+  // FIX: baca settings model key/value
+  const {data,error} = await supabaseClient.from('settings').select('*');
+  if(!error && data){
+    const sName = data.find(s=>s.key==='store_name')?.value;
+    const sWa = data.find(s=>s.key==='wa_number')?.value;
+    if(sName) document.getElementById('storeName').value = sName;
+    if(sWa) document.getElementById('waNumber').value = sWa;
+  }
+ }catch(e){ console.log(e) }
  loadCats(); loadProducts();
 }
-async function saveStoreName(){await supabaseClient.from('settings').upsert({id:1,store_name:storeName.value});alert('Nama toko disimpan!');}
-async function saveWA(){await supabaseClient.from('settings').upsert({id:1,wa_number:waNumber.value});alert('WA disimpan!');}
-async function loadCats(){const {data}=await supabaseClient.from('categories').select('*');window._cats=data||[];catList.innerHTML=window._cats.map(c=>`<span class="cat">${c.name} <b onclick="delCat('${c.id}')" style="cursor:pointer">x</b></span>`).join('');pCat.innerHTML='<option value="">Pilih Kategori</option>'+window._cats.map(c=>`<option value="${c.name}">${c.name}</option>`).join('');}
-async function addCat(){if(!catName.value)return;const {error}=await supabaseClient.from('categories').insert({name:catName.value});if(error)alert(error.message);else{catName.value='';loadCats();}}
+
+async function saveStoreName(){
+  const val = document.getElementById('storeName').value.trim();
+  if(!val) return alert('Isi dulu nama toko');
+  const {error} = await supabaseClient.from('settings').upsert({key:'store_name', value:val}, {onConflict:'key'});
+  if(error) alert('Gagal: '+error.message);
+  else { document.getElementById('storeStatus').innerText='✅ Berhasil! Toko depan akan jadi '+val; alert('Nama toko berhasil disimpan ke Supabase!'); }
+}
+
+async function saveWA(){
+  const val = document.getElementById('waNumber').value.trim();
+  if(!val) return alert('Isi dulu WA');
+  const {error} = await supabaseClient.from('settings').upsert({key:'wa_number', value:val}, {onConflict:'key'});
+  if(error) alert('Gagal: '+error.message);
+  else { document.getElementById('waStatus').innerText='✅ WA berhasil: '+val; alert('WA disimpan!'); }
+}
+
+async function loadCats(){
+ try{
+  const {data,error} = await supabaseClient.from('categories').select('*');
+  if(error) throw error;
+  window._cats=data||[];
+  catList.innerHTML=window._cats.map(c=>`<span class="cat">${c.name} <b onclick="delCat('${c.id}')" style="cursor:pointer">x</b></span>`).join('');
+  pCat.innerHTML='<option value="">Pilih Kategori</option>'+window._cats.map(c=>`<option value="${c.name}">${c.name}</option>`).join('');
+ }catch(e){
+  catList.innerHTML='<small style="color:#999">Tabel categories belum ada, bikin dulu di SQL: create table categories (id uuid default gen_random_uuid() primary key, name text); + RLS Allow all</small>';
+ }
+}
+
+async function addCat(){
+ if(!catName.value) return;
+ const {error}=await supabaseClient.from('categories').insert({name:catName.value});
+ if(error) alert(error.message); else {catName.value=''; loadCats();}
+}
 async function delCat(id){if(!confirm('Hapus kategori?'))return;await supabaseClient.from('categories').delete().eq('id',id);loadCats();}
-async function loadProducts(){const {data,error}=await supabaseClient.from('products').select('*').order('id',{ascending:false});if(error){list.innerText='Error: '+error.message;return;}window._p=data||[];if(window._p.length==0){list.innerText='Kosong';return;}list.innerHTML=window._p.map(p=>`<div style="border:1px solid #eee;border-radius:8px;overflow:hidden"><img src="${p.image_url}" style="width:100%;height:110px;object-fit:cover"><div style="padding:6px"><b>${p.name}</b><br><small>${p.category||''}</small><br>Rp${p.price}<br><button class="btn" style="padding:4px;margin-top:3px" onclick="editP('${p.id}')">EDIT</button><button class="btn" style="padding:4px;background:#b42318;margin-top:2px" onclick="delP('${p.id}')">HAPUS</button></div></div>`).join('');}
-function editP(id){const p=window._p.find(x=>String(x.id)===String(id));editId.value=p.id;pName.value=p.name;pPrice.value=p.price;pImage.value=p.image_url;pCat.value=p.category||'';scrollTo({top:0,behavior:'smooth'});}
+
+async function loadProducts(){
+ const {data,error}=await supabaseClient.from('products').select('*').order('id',{ascending:false});
+ if(error){list.innerText='Error: '+error.message; return;}
+ window._p=data||[];
+ if(window._p.length==0){list.innerText='Kosong - Tambah produk baru di atas'; return;}
+ list.innerHTML=window._p.map(p=>`<div style="border:1px solid #eee;border-radius:8px;overflow:hidden"><img src="${p.image_url}" style="width:100%;height:110px;object-fit:cover"><div style="padding:6px"><b>${p.name}</b><br><small>${p.category||''}</small><br>Rp${Number(p.price).toLocaleString('id-ID')}<br><button class="btn" style="padding:4px;margin-top:3px" onclick="editP('${p.id}')">EDIT</button><button class="btn" style="padding:4px;background:#b42318;margin-top:2px" onclick="delP('${p.id}')">HAPUS</button></div></div>`).join('');
+}
+function editP(id){const p=window._p.find(x=>String(x.id)===String(id));editId.value=p.id;pName.value=p.name;pPrice.value=p.price;pImage.value=p.image_url;pCat.value=p.category||'';window.scrollTo({top:0,behavior:'smooth'});}
 async function delP(id){if(!confirm('Hapus?'))return;const {error}=await supabaseClient.from('products').delete().eq('id',id);if(error)alert(error.message);else loadProducts();}
-async function saveProduct(){let img=pImage.value;const f=pFile.files[0];if(f){const fn=Date.now()+'_'+f.name;const {error}=await supabaseClient.storage.from('products').upload(fn,f);if(error){alert(error.message);return;}const {data}=supabaseClient.storage.from('products').getPublicUrl(fn);img=data.publicUrl;}const payload={name:pName.value,price:Number(pPrice.value),image_url:img,category:pCat.value};let err;if(editId.value){const r=await supabaseClient.from('products').update(payload).eq('id',editId.value);err=r.error;}else{const r=await supabaseClient.from('products').insert(payload);err=r.error;}if(err)alert(err.message);else{editId.value='';pName.value='';pPrice.value='';pImage.value='';loadProducts();}}
+async function saveProduct(){
+ let img=pImage.value;
+ const f=pFile.files[0];
+ if(f){
+  const fn=Date.now()+'_'+f.name.replace(/\s+/g,'_');
+  const {error}=await supabaseClient.storage.from('products').upload(fn,f);
+  if(error){alert('Upload gagal: '+error.message); return;}
+  const {data}=supabaseClient.storage.from('products').getPublicUrl(fn);
+  img=data.publicUrl;
+ }
+ const payload={name:pName.value,price:Number(pPrice.value),image_url:img,category:pCat.value};
+ if(!payload.name ||!payload.price ||!payload.image_url) return alert('Lengkapi nama, harga, dan foto');
+ let err;
+ if(editId.value){const r=await supabaseClient.from('products').update(payload).eq('id',editId.value); err=r.error;}
+ else {const r=await supabaseClient.from('products').insert(payload); err=r.error;}
+ if(err) alert(err.message); else {editId.value='';pName.value='';pPrice.value='';pImage.value='';pFile.value=''; loadProducts();}
+}
 init();
 </script></body></html>
