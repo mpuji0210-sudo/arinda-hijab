@@ -98,5 +98,11 @@ async function saveProduct(){
  else {const r=await supabaseClient.from('products').insert(payload); err=r.error;}
  if(err) alert(err.message); else {editId.value='';pName.value='';pPrice.value='';pImage.value='';pFile.value=''; loadProducts();}
 }
+   if(err) alert(err.message); else {editId.value='';pName.value='';pPrice.value='';pImage.value='';...
+  }
+}
+// === SETTING ASAL TOKO - BISA DIUBAH DI ADMIN ===
+const TOKO_ORIGIN_ID = "17523";
+localStorage.setItem('toko_origin_id', TOKO_ORIGIN_ID);
 init();
 </script></body></html>
