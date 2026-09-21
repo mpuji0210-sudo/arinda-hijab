@@ -15,11 +15,12 @@
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supabaseClient = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+  if(localStorage.getItem('arinda_admin')!=='login'){ alert('Harus login dulu!'); location.href='login.html'; }
 
 function logout(){
   if(confirm('Yakin mau logout?')){
     localStorage.clear();
-    location.href='index.html';
+    location.href='login.html';
   }
 }
 
