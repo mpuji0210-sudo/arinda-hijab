@@ -15,22 +15,30 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-
 .nav-menu{border-top:1px solid #F6F1EB;background:#fff;overflow-x:auto;scrollbar-width:none}.nav-menu::-webkit-scrollbar{display:none}
 .menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:40px}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:14px 0;opacity:.4;white-space:nowrap;border-bottom:1px solid transparent}.menu a.active{opacity:1;border-bottom-color:#111}
 #searchBox{display:none;max-width:1240px;margin:0 auto;padding:12px 20px}#searchBox input{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;background:transparent;font-size:13px;outline:none}
-.hero{position:relative;width:100%;height:80vh;min-height:520px;background:#F6EEE3;overflow:hidden}.hero img{width:100%;height:100%;object-fit:cover;display:block}
+/* FIX ANTI KEPOTONG - FOTO KANAN */
+.hero{position:relative;width:100%;height:88vh;min-height:640px;background:#E8DDD0;overflow:hidden}
+.hero img{width:100%;height:100%;object-fit:cover;object-position:78% center;display:block}
 .desktop-only{display:block}.mobile-only{display:none}
 .btn{display:inline-block;background:#111;color:#fff;padding:17px 36px;font-size:9px;letter-spacing:4px;text-decoration:none;border:none;cursor:pointer}
 .section{max-width:1240px;margin:0 auto;padding:28px 16px 40px}.sub{font-size:9px;letter-spacing:5px;color:#111;margin:0}
 .colors{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#E9E6E1;border:1px solid #E9E6E1;margin-top:18px}.k-card{background:#fff;cursor:pointer}.k-card img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
-.hero-text{position:absolute;left:24px;bottom:32px;background:transparent!important;border:none;padding:0;max-width:440px}
+.hero-text{position:absolute;left:24px;bottom:32px;background:transparent!important;border:none;padding:0;max-width:440px;z-index:2}
 @media(min-width:700px){.colors{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:800px){.nav-top{padding:15px 16px}.logo{font-size:18px;letter-spacing:6px}.menu{padding:0 16px;gap:28px}.desktop-only{display:none!important}.mobile-only{display:block!important}.hero{height:78vh;min-height:500px}.hero-text{left:16px;right:16px;bottom:22px;max-width:none}}
+@media(max-width:800px){
+.nav-top{padding:15px 16px}.logo{font-size:18px;letter-spacing:6px}.menu{padding:0 16px;gap:28px}
+.desktop-only{display:none!important}.mobile-only{display:block!important}
+.hero{height:86vh;min-height:580px}
+.hero img{object-position:72% 12%!important}
+.hero-text{left:16px;right:16px;bottom:24px;max-width:none}
+}
 </style></head><body>
 <nav><div class="nav-top"><div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons"><button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button><a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><path d="M5 19c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></a><a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a></div></div><div class="nav-menu"><div class="menu"><a class="active" href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div></div><div id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" placeholder="Search"></form></div></nav>
 
 <div class="hero" id="heroBanner">
-<img class="desktop-only" id="bannerPC" src="https://via.placeholder.com/1400x900/F6EEE3/8C7A6B?text=ARINDA"><img class="mobile-only" id="bannerHP" src="https://via.placeholder.com/800x1200/F6EEE3/8C7A6B?text=ARINDA">
+<img class="desktop-only" id="bannerPC" src="https://via.placeholder.com/1400x900/E8DDD0/8C7A6B?text=ARINDA"><img class="mobile-only" id="bannerHP" src="https://via.placeholder.com/800x1200/E8DDD0/8C7A6B?text=ARINDA">
 <div class="hero-text">
-<div style="font-size:9px;letter-spacing:6px;color:#111;opacity:.6" id="bannerTitle">JUST FOR YOU</div>
-<h1 style="font-family:'Cormorant Garamond';font-size:52px;line-height:.9;margin:14px 0 16px;font-weight:300;letter-spacing:-1.5px">Bahan Adem,<br>Dan Tidak<br>Nerawang</h1>
+<div style="font-size:9px;letter-spacing:6px;color:#111;opacity:.6" id="bannerTitle">Promo</div>
+<h1 style="font-family:'Cormorant Garamond';font-size:52px;line-height:.9;margin:14px 0 16px;font-weight:300;letter-spacing:-1.5px;color:#111">Bahan Adem,<br>Dan Tidak<br>Nerawang</h1>
 <p style="font-size:11px;color:#111;opacity:.55;line-height:1.8;margin:0 0 30px;letter-spacing:2.5px">MENUTUP AURAT DENGAN BAHAN PREMIUM</p>
 <a id="bannerLink" href="produk.html" class="btn">LIHAT KOLEKSI</a>
 </div>
@@ -41,47 +49,47 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-
 <div class="colors" id="koleksi4Grid">Loading...</div>
 </div>
 
+<footer style="margin-top:60px;border-top:1px solid #E9E6E1;background:#fff;padding:36px 16px;text-align:center">
+<div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div>
+<div style="font-size:7px;letter-spacing:5px;color:#8C7A6B;margin-top:6px">HIJAB PREMIUM</div>
+<div style="margin-top:18px;font-size:8px;letter-spacing:3px;color:#111;opacity:.4">© 2026 ARINDA HIJAB PREMIUM — ALL RIGHTS RESERVED</div>
+<div style="margin-top:6px;font-size:7px;letter-spacing:2px;color:#8C7A6B;opacity:.5">Bahan Adem, Tidak Nerawang | Made in Indonesia</div>
+</footer>
+
 <script>
 const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
 function toggleSearch(){const b=document.getElementById('searchBox');b.style.display=b.style.display=='block'?'none':'block';if(b.style.display=='block')document.getElementById('q').focus();}
 function goSearch(e){e.preventDefault();const v=document.getElementById('q').value.trim();if(v)location.href='produk.html?q='+encodeURIComponent(v);}
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return []}}
 function updateCount(){document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+Number(b.qty||0),0);}
-
 async function load(){
   try{
-    // FIX BANNER: order by created_at biar banner terbaru kepasang
-    const {data:banners, error} = await supabaseClient.from('banners').select('*').eq('is_active',true).order('created_at',{ascending:false}).limit(1);
-    if(error) console.error('BANNER ERR:', error);
+    const {data:banners}=await supabaseClient.from('banners').select('*').eq('is_active',true).order('created_at',{ascending:false}).limit(1);
     if(banners && banners[0]){
       const bust='?t='+Date.now();
-      document.getElementById('bannerPC').src = banners[0].image_url + bust;
-      document.getElementById('bannerHP').src = (banners[0].image_mobile_url||banners[0].image_url) + bust;
+      document.getElementById('bannerPC').src=banners[0].image_url+bust;
+      document.getElementById('bannerHP').src=(banners[0].image_mobile_url||banners[0].image_url)+bust;
       if(banners[0].title) document.getElementById('bannerTitle').innerText=banners[0].title;
       if(banners[0].link_url) document.getElementById('bannerLink').href=banners[0].link_url;
     }
-
     const {data:settings}=await supabaseClient.from('settings').select('*');
     let html='';
     if(settings){
       const get=k=>settings.find(s=>s.key===k)?.value;
-      let raw=[]; try{ const v=get('home_koleksi_terlaris'); if(v) raw=JSON.parse(v); }catch(e){}
-      // ADMIN V32 simpan object {url,title,desc} -> index harus baca url
+      let raw=[]; try{const v=get('home_koleksi_terlaris'); if(v) raw=JSON.parse(v);}catch(e){}
       if(raw.length && typeof raw[0]==='object'){
-        html = raw.slice(0,4).map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.url}"><div style="padding:10px"><div style="font-size:10px;letter-spacing:1px;font-family:'Cormorant Garamond'">${v.title||''}</div></div></div>`).join('');
+        html=raw.slice(0,4).map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.url}"><div style="padding:10px"><div style="font-size:10px;letter-spacing:1px;font-family:'Cormorant Garamond'">${v.title||''}</div></div></div>`).join('');
       } else if(raw.length){
-        const ids=raw.slice(0,4);
-        const {data:vars}=await supabaseClient.from('product_variants').select('*').in('id',ids);
-        if(vars){ const ordered=ids.map(id=>vars.find(x=>String(x.id)===String(id))).filter(Boolean); html=ordered.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"></div>`).join(''); }
+        const ids=raw.slice(0,4); const {data:vars}=await supabaseClient.from('product_variants').select('*').in('id',ids);
+        if(vars){const ordered=ids.map(id=>vars.find(x=>String(x.id)===String(id))).filter(Boolean); html=ordered.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"></div>`).join('');}
       }
     }
-    // fallback kalau admin belum set koleksi
     if(!html){
       const {data:fallback}=await supabaseClient.from('product_variants').select('*').order('id',{ascending:false}).limit(4);
       if(fallback) html=fallback.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"></div>`).join('');
     }
     if(html) document.getElementById('koleksi4Grid').innerHTML=html;
-  }catch(e){ console.error(e); }
+  }catch(e){console.error(e);}
   updateCount();
 }
 load();
