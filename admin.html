@@ -1,29 +1,26 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARINDA ADMIN - BANNER + SETTINGS</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><style>body{margin:0;background:#FFFCF9;font-family:sans-serif;padding:12px}.card{background:#fff;border:1px solid #EAE6E1;border-radius:12px;padding:12px;margin-bottom:10px}.input{width:100%;padding:9px;border:1px solid #ddd;border-radius:8px;margin:4px 0}.btn{background:#2B1B12;color:#fff;border:none;padding:9px;border-radius:8px;width:100%;cursor:pointer;font-weight:bold}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cat{display:inline-block;background:#f3ece6;padding:4px 8px;border-radius:20px;margin:2px;font-size:12px}img.prev{width:100%;border:1px solid #ddd;border-radius:8px;margin:6px 0}.small{font-size:11px;color:#8C7A6B}.preview-wrap{display:grid;grid-template-columns:1fr 1fr;gap:10px}</style></head><body>
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARINDA ADMIN - FINAL</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><style>body{margin:0;background:#FFFCF9;font-family:sans-serif;padding:12px}.card{background:#fff;border:1px solid #EAE6E1;border-radius:12px;padding:12px;margin-bottom:10px}.input{width:100%;padding:9px;border:1px solid #ddd;border-radius:8px;margin:4px 0}.btn{background:#2B1B12;color:#fff;border:none;padding:9px;border-radius:8px;width:100%;cursor:pointer;font-weight:bold}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cat{display:inline-block;background:#f3ece6;padding:4px 8px;border-radius:20px;margin:2px;font-size:12px}img.prev{width:100%;border:1px solid #ddd;border-radius:8px;margin:6px 0}.small{font-size:11px;color:#8C7A6B}.preview-wrap{display:grid;grid-template-columns:1fr 1fr;gap:10px}</style></head><body>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-<h2 style="margin:0">ARINDA ADMIN - BANNER READY</h2>
+<h2 style="margin:0">ARINDA ADMIN - FINAL FIX</h2>
 <button onclick="logout()" style="background:red;color:white;padding:8px 15px;border-radius:8px;border:none;font-weight:bold;cursor:pointer">LOGOUT</button>
 </div>
 
-<div class="card"><h3>1. CUSTOM NAMA TOKO</h3><input id="storeName" class="input" placeholder="ARINDA HIJAB PREMIUM"><button class="btn" onclick="saveStoreName()">SIMPAN NAMA TOKO</button><small id="storeStatus"></small></div>
+<div class="card"><h3>1. NAMA TOKO</h3><input id="storeName" class="input" placeholder="ARINDA HIJAB PREMIUM"><button class="btn" onclick="saveStoreName()">SIMPAN</button><small id="storeStatus"></small></div>
 <div class="card"><h3>2. GANTI WA</h3><input id="waNumber" class="input" placeholder="628xxxxxxxxxx"><button class="btn" onclick="saveWA()">SIMPAN NO WA</button><small id="waStatus"></small></div>
-<div class="card"><h3>3. ASAL PENGIRIMAN (ONGKIR) - KONEK SUPA</h3><p style="font-size:12px;">Saat ini: <b id="curOrigin">Loading...</b></p><div style="display:flex;gap:6px;"><input id="originSearch" class="input" placeholder="Ketik kecamatan baru, cth: Bekasi Timur" style="flex:1;"><button onclick="searchOrigin()" class="btn" style="width:auto;padding:9px 16px;">Cari</button></div><div id="originList" style="margin-top:8px;max-height:150px;overflow-y:auto;"></div></div>
-<div class="card"><h3>4. KATEGORI</h3><input id="catName" class="input" placeholder="Nama Kategori - Paris, Bella, dll"><button class="btn" onclick="addCat()">TAMBAH KATEGORI</button><div id="catList" style="margin-top:8px"></div></div>
-<div class="card"><h3>5. CUSTOM PRODUK - Tambah / Edit</h3><input type="hidden" id="editId"><input id="pName" class="input" placeholder="Nama Produk"><input id="pPrice" class="input" type="number" placeholder="Harga"><select id="pCat" class="input"><option value="">Pilih Kategori</option></select><input id="pImage" class="input" placeholder="Link foto"><input id="pFile" type="file" class="input"><button class="btn" onclick="saveProduct()">SIMPAN PRODUK</button></div>
-<div class="card"><h3>6. DAFTAR PRODUK - Edit & Hapus</h3><div id="list" class="grid">Loading...</div></div>
+<div class="card"><h3>3. ASAL PENGIRIMAN</h3><p style="font-size:12px;">Saat ini: <b id="curOrigin">Loading...</b></p><div style="display:flex;gap:6px;"><input id="originSearch" class="input" placeholder="Ketik kecamatan" style="flex:1;"><button onclick="searchOrigin()" class="btn" style="width:auto;padding:9px 16px;">Cari</button></div><div id="originList" style="margin-top:8px;max-height:150px;overflow-y:auto;"></div></div>
+<div class="card"><h3>4. KATEGORI</h3><input id="catName" class="input" placeholder="Nama Kategori"><button class="btn" onclick="addCat()">TAMBAH KATEGORI</button><div id="catList" style="margin-top:8px"></div></div>
+<div class="card"><h3>5. TAMBAH / EDIT PRODUK UTAMA</h3><input type="hidden" id="editId"><input id="pName" class="input" placeholder="Nama Produk cth: Paris Premium"><input id="pPrice" class="input" type="number" placeholder="Harga 80000"><select id="pCat" class="input"><option value="">Pilih Kategori</option></select><input id="pImage" class="input" placeholder="Link foto (kosongkan jika upload)"><input id="pFile" type="file" class="input"><button class="btn" onclick="saveProduct()">SIMPAN PRODUK</button></div>
+<div class="card"><h3>6. DAFTAR PRODUK</h3><div id="list" class="grid">Loading...</div></div>
+<div class="card"><h3>7. BANNER HOMEPAGE</h3><p class="small">PC 1920x700, HP 1080x1350, max 1.5MB</p><input type="file" id="filePC" accept="image/*" class="input"><img id="prevPC" class="prev" style="display:none"><input type="file" id="fileHP" accept="image/*" class="input"><img id="prevHP" class="prev" style="display:none"><input id="bTitle" class="input" placeholder="Teks banner"><input id="bLink" class="input" value="produk.html"><button class="btn" onclick="uploadBanner()">SIMPAN BANNER</button><div id="bStatus" style="font-size:12px;margin-top:6px"></div><div id="bannerList" style="margin-top:10px"></div></div>
 
-<!-- 7. BANNER BARU -->
-<div class="card"><h3>7. BANNER HOMEPAGE - Edit/Hapus + Preview PC & HP</h3>
-<p class="small">Wajib: PC = 1920x700 px, HP = 1080x1350 px. JPG < 1.5MB. Kalau HP kosong, pakai PC.</p>
-<input type="file" id="filePC" accept="image/*" class="input"><label class="small">Banner PC (Desktop)</label>
-<img id="prevPC" class="prev" style="display:none">
-<input type="file" id="fileHP" accept="image/*" class="input"><label class="small">Banner HP (Mobile)</label>
-<img id="prevHP" class="prev" style="display:none">
-<input id="bTitle" class="input" placeholder="Teks kecil banner, cth: PROMO 9.9 - DISKON 20%">
-<input id="bLink" class="input" placeholder="Link tujuan" value="produk.html">
-<button class="btn" onclick="uploadBanner()">SIMPAN & AKTIFKAN BANNER</button>
-<div id="bStatus" style="margin-top:8px;font-size:12px"></div>
-<div style="margin-top:10px"><b>Preview Live:</b><div class="preview-wrap"><div><div class="small">PC</div><img id="livePC" class="prev" src="banner.jpg"></div><div><div class="small">HP</div><img id="liveHP" class="prev" src="banner-hp.jpg"></div></div></div>
-<div id="bannerList" style="margin-top:12px"></div>
+<!-- 8. FITUR BARU: VARIAN WARNA 4 FOTO KANAN -->
+<div class="card"><h3>8. VARIAN WARNA - 4 FOTO KECIL DI KANAN</h3>
+<p class="small">Ini buat bikin kayak screenshot Elzatta kamu. 1 produk bisa punya 4 warna. Foto model KREM, HITAM, MAROON, NAVY akan muncul di kanan foto besar.</p>
+<select id="varProduct" class="input"></select>
+<input id="varColor" class="input" placeholder="Nama warna: KREM / HITAM / MAROON / NAVY" style="text-transform:uppercase">
+<input id="varFile" type="file" accept="image/*" class="input">
+<img id="varPrev" style="width:120px;display:none;border-radius:8px;margin:6px 0">
+<button class="btn" onclick="addVariant()">SIMPAN WARNA INI</button>
+<div id="varList" style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:6px"></div>
 </div>
 
 <script>
@@ -31,70 +28,62 @@ const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supabaseClient = window.supabase.createClient(SUPA_URL, SUPA_KEY);
 if(localStorage.getItem('arinda_admin')!=='login'){ alert('Harus login dulu!'); location.href='login.html'; }
-function logout(){ if(confirm('Yakin mau logout?')){ localStorage.clear(); location.href='login.html'; } }
+function logout(){ if(confirm('Yakin logout?')){ localStorage.clear(); location.href='login.html'; } }
 
 async function init(){
  try{
-  const {data,error} = await supabaseClient.from('settings').select('*');
-  if(!error && data){
-    const get = k => data.find(s=>s.key===k)?.value;
-    if(get('store_name')) document.getElementById('storeName').value = get('store_name');
-    if(get('wa_number')) document.getElementById('waNumber').value = get('wa_number');
-    let sid = get('toko_origin_id') || localStorage.getItem('toko_origin_id') || "17523";
-    let slab = get('toko_origin_label') || localStorage.getItem('toko_origin_label') || "CENGKARENG BARAT, CENGKARENG, KOTA JAKARTA BARAT";
+  const {data}=await supabaseClient.from('settings').select('*');
+  if(data){
+    const get=k=>data.find(s=>s.key===k)?.value;
+    if(get('store_name')) storeName.value=get('store_name');
+    if(get('wa_number')) waNumber.value=get('wa_number');
+    let sid=get('toko_origin_id')||localStorage.getItem('toko_origin_id')||"17523";
+    let slab=get('toko_origin_label')||localStorage.getItem('toko_origin_label')||"CENGKARENG BARAT";
     localStorage.setItem('toko_origin_id',sid); localStorage.setItem('toko_origin_label',slab);
-    document.getElementById('curOrigin').innerText = slab+' - '+sid;
+    curOrigin.innerText=slab+' - '+sid;
   }
- }catch(e){ const sid=localStorage.getItem('toko_origin_id')||"17523"; const slab=localStorage.getItem('toko_origin_label')||"CENGKARENG BARAT"; document.getElementById('curOrigin').innerText=slab+' - '+sid; }
- loadCats(); loadProducts(); loadBanners();
+ }catch(e){}
+ loadCats(); loadProducts(); loadBanners(); loadVarProducts();
 }
-async function saveStoreName(){ const val=document.getElementById('storeName').value.trim(); if(!val) return alert('Isi dulu'); const {error}=await supabaseClient.from('settings').upsert({key:'store_name',value:val},{onConflict:'key'}); if(error) alert(error.message); else { document.getElementById('storeStatus').innerText='✅ Berhasil'; alert('Nama toko disimpan!'); } }
-async function saveWA(){ const val=document.getElementById('waNumber').value.trim(); if(!val) return alert('Isi dulu'); const {error}=await supabaseClient.from('settings').upsert({key:'wa_number',value:val},{onConflict:'key'}); if(error) alert(error.message); else { document.getElementById('waStatus').innerText='✅ WA: '+val; alert('WA disimpan!'); } }
-async function loadCats(){ try{ const {data,error}=await supabaseClient.from('categories').select('*'); if(error) throw error; window._cats=data||[]; catList.innerHTML=window._cats.map(c=>`<span class="cat">${c.name} <b onclick="delCat('${c.id}')" style="cursor:pointer">x</b></span>`).join(''); pCat.innerHTML='<option value="">Pilih Kategori</option>'+window._cats.map(c=>`<option value="${c.name}">${c.name}</option>`).join(''); }catch(e){ catList.innerHTML='<small style="color:#999">Tabel categories belum ada</small>'; } }
+async function saveStoreName(){ const v=storeName.value.trim(); if(!v) return alert('Isi dulu'); const {error}=await supabaseClient.from('settings').upsert({key:'store_name',value:v},{onConflict:'key'}); if(error) alert(error.message); else alert('Tersimpan'); }
+async function saveWA(){ const v=waNumber.value.trim(); if(!v) return alert('Isi dulu'); const {error}=await supabaseClient.from('settings').upsert({key:'wa_number',value:v},{onConflict:'key'}); if(error) alert(error.message); else alert('WA tersimpan'); }
+async function loadCats(){ try{ const {data}=await supabaseClient.from('categories').select('*'); window._cats=data||[]; catList.innerHTML=window._cats.map(c=>`<span class="cat">${c.name} <b onclick="delCat('${c.id}')" style="cursor:pointer">x</b></span>`).join(''); pCat.innerHTML='<option value="">Pilih Kategori</option>'+window._cats.map(c=>`<option value="${c.name}">${c.name}</option>`).join(''); }catch(e){ catList.innerText='Error kategori'; } }
 async function addCat(){ if(!catName.value) return; const {error}=await supabaseClient.from('categories').insert({name:catName.value}); if(error) alert(error.message); else {catName.value=''; loadCats();} }
-async function delCat(id){if(!confirm('Hapus kategori?'))return;await supabaseClient.from('categories').delete().eq('id',id);loadCats();}
-async function loadProducts(){ const {data,error}=await supabaseClient.from('products').select('*').order('id',{ascending:false}); if(error){list.innerText='Error: '+error.message; return;} window._p=data||[]; if(window._p.length==0){list.innerText='Kosong'; return;} list.innerHTML=window._p.map(p=>`<div style="border:1px solid #eee;border-radius:8px;overflow:hidden"><img src="${p.image_url}" style="width:100%;height:110px;object-fit:cover"><div style="padding:6px"><b>${p.name}</b><br><small>${p.category||''}</small><br>Rp${Number(p.price).toLocaleString('id-ID')}<br><button class="btn" style="padding:4px;margin-top:3px" onclick="editP('${p.id}')">EDIT</button><button class="btn" style="padding:4px;background:#b42318;margin-top:2px" onclick="delP('${p.id}')">HAPUS</button></div></div>`).join(''); }
+async function delCat(id){if(!confirm('Hapus?'))return;await supabaseClient.from('categories').delete().eq('id',id);loadCats();}
+async function loadProducts(){ const {data,error}=await supabaseClient.from('products').select('*').order('id',{ascending:false}); if(error){list.innerText=error.message; return;} window._p=data||[]; list.innerHTML=window._p.map(p=>`<div style="border:1px solid #eee;border-radius:8px;overflow:hidden"><img src="${p.image_url}" style="width:100%;height:110px;object-fit:cover"><div style="padding:6px"><b>${p.name}</b><br><small>${p.category||''}</small><br>Rp${Number(p.price).toLocaleString('id-ID')}<br><button class="btn" style="padding:4px;margin-top:3px" onclick="editP('${p.id}')">EDIT</button><button class="btn" style="padding:4px;background:#b42318;margin-top:2px" onclick="delP('${p.id}')">HAPUS</button></div></div>`).join(''); }
 function editP(id){const p=window._p.find(x=>String(x.id)===String(id));editId.value=p.id;pName.value=p.name;pPrice.value=p.price;pImage.value=p.image_url;pCat.value=p.category||'';window.scrollTo({top:0,behavior:'smooth'});}
-async function delP(id){if(!confirm('Hapus?'))return;const {error}=await supabaseClient.from('products').delete().eq('id',id);if(error)alert(error.message);else loadProducts();}
-async function saveProduct(){ let img=pImage.value; const f=pFile.files[0]; if(f){ const fn=Date.now()+'_'+f.name.replace(/\s+/g,'_'); const {error}=await supabaseClient.storage.from('products').upload(fn,f); if(error){alert('Upload gagal: '+error.message); return;} const {data}=supabaseClient.storage.from('products').getPublicUrl(fn); img=data.publicUrl; } const payload={name:pName.value,price:Number(pPrice.value),image_url:img,category:pCat.value}; if(!payload.name ||!payload.price ||!payload.image_url) return alert('Lengkapi nama, harga, dan foto'); let err; if(editId.value){const r=await supabaseClient.from('products').update(payload).eq('id',editId.value); err=r.error;} else {const r=await supabaseClient.from('products').insert(payload); err=r.error;} if(err) alert(err.message); else {editId.value='';pName.value='';pPrice.value='';pImage.value='';pFile.value=''; loadProducts();} }
-async function searchOrigin(){ const q=document.getElementById('originSearch').value; if(!q) return alert('Ketik kecamatan dulu'); document.getElementById('originList').innerHTML='⏳ Mencari...'; try{ const r=await fetch('/api/search?q='+encodeURIComponent(q)); const j=await r.json(); if(!j.data || j.data.length==0){ document.getElementById('originList').innerHTML='Tidak ketemu'; return; } document.getElementById('originList').innerHTML=j.data.map(d=>`<div style="padding:8px;border-bottom:1px solid #eee;cursor:pointer;" onclick="pilihOrigin('${d.id}','${d.label}')">${d.label} (ID:${d.id}) - KLIK PILIH</div>`).join(''); }catch(e){ document.getElementById('originList').innerHTML='Error: '+e.message; } }
-async function pilihOrigin(id,label){ localStorage.setItem('toko_origin_id',id); localStorage.setItem('toko_origin_label',label); document.getElementById('curOrigin').innerText=label+' - '+id; document.getElementById('originList').innerHTML=''; const {error} = await supabaseClient.from('settings').upsert([{key:'toko_origin_id', value:id},{key:'toko_origin_label', value:label}],{onConflict:'key'}); if(error) alert('Tersimpan di HP tapi gagal ke Supa: '+error.message); else alert('✅ Asal toko jadi '+label); }
+async function delP(id){if(!confirm('Hapus produk & semua varian warnanya?'))return;await supabaseClient.from('products').delete().eq('id',id);loadProducts();loadVarProducts();}
+async function saveProduct(){ let img=pImage.value; const f=pFile.files[0]; if(f){ const fn=Date.now()+'_'+f.name.replace(/\s+/g,'_'); const {error}=await supabaseClient.storage.from('products').upload(fn,f); if(error){alert(error.message); return;} const {data}=supabaseClient.storage.from('products').getPublicUrl(fn); img=data.publicUrl; } const payload={name:pName.value,price:Number(pPrice.value),image_url:img,category:pCat.value}; if(!payload.name||!payload.price||!payload.image_url) return alert('Lengkapi!'); let err; if(editId.value){const r=await supabaseClient.from('products').update(payload).eq('id',editId.value); err=r.error;} else {const r=await supabaseClient.from('products').insert(payload); err=r.error;} if(err) alert(err.message); else {editId.value='';pName.value='';pPrice.value='';pImage.value='';pFile.value=''; loadProducts();loadVarProducts();} }
+async function searchOrigin(){ const q=originSearch.value; if(!q) return alert('Ketik dulu'); originList.innerHTML='⏳ Mencari...'; try{ const r=await fetch('/api/search?q='+encodeURIComponent(q)); const j=await r.json(); originList.innerHTML=j.data.map(d=>`<div style="padding:8px;border-bottom:1px solid #eee;cursor:pointer;" onclick="pilihOrigin('${d.id}','${d.label}')">${d.label} (ID:${d.id})</div>`).join(''); }catch(e){ originList.innerText='Error'; } }
+async function pilihOrigin(id,label){ localStorage.setItem('toko_origin_id',id); localStorage.setItem('toko_origin_label',label); curOrigin.innerText=label+' - '+id; originList.innerHTML=''; await supabaseClient.from('settings').upsert([{key:'toko_origin_id',value:id},{key:'toko_origin_label',value:label}],{onConflict:'key'}); alert('Asal toko jadi '+label); }
+let pcBase='',hpBase='';
+filePC.addEventListener('change',e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{pcBase=ev.target.result; prevPC.src=pcBase; prevPC.style.display='block';}; r.readAsDataURL(f); });
+fileHP.addEventListener('change',e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{hpBase=ev.target.result; prevHP.src=hpBase; prevHP.style.display='block';}; r.readAsDataURL(f); });
+async function uploadBanner(){ if(!pcBase) return alert('Pilih banner PC dulu'); bStatus.innerText='Uploading...'; try{ const pcName='pc_'+Date.now()+'.jpg'; const pcBlob=await (await fetch(pcBase)).blob(); await supabaseClient.storage.from('banners').upload(pcName,pcBlob); const pcUrl=supabaseClient.storage.from('banners').getPublicUrl(pcName).data.publicUrl; let hpUrl=pcUrl; if(hpBase){ const hpName='hp_'+Date.now()+'.jpg'; const hpBlob=await (await fetch(hpBase)).blob(); await supabaseClient.storage.from('banners').upload(hpName,hpBlob); hpUrl=supabaseClient.storage.from('banners').getPublicUrl(hpName).data.publicUrl; } await supabaseClient.from('banners').update({is_active:false}).eq('is_active',true); await supabaseClient.from('banners').insert({title:bTitle.value, image_url:pcUrl, image_mobile_url:hpUrl, link_url:bLink.value||'produk.html', is_active:true}); bStatus.innerText='✅ Berhasil!'; loadBanners(); }catch(e){ bStatus.innerText='❌ '+e.message; } }
+async function loadBanners(){ const {data}=await supabaseClient.from('banners').select('*').order('id',{ascending:false}); bannerList.innerHTML=(data||[]).map(b=>`<div style="border:1px solid #eee;border-radius:8px;display:flex;gap:8px;padding:6px"><img src="${b.image_url}" style="width:70px;height:40px;object-fit:cover"><div style="flex:1;font-size:11px"><b>${b.title||''}</b><br>${b.is_active?'✅ AKTIF':'Nonaktif'}</div><button class="btn" style="width:auto;padding:5px 8px;font-size:10px" onclick="aktifkanBanner('${b.id}')">Aktifkan</button><button class="btn" style="width:auto;padding:5px 8px;font-size:10px;background:#b42318" onclick="hapusBanner('${b.id}')">Hapus</button></div>`).join(''); }
+async function aktifkanBanner(id){ await supabaseClient.from('banners').update({is_active:false}).eq('is_active',true); await supabaseClient.from('banners').update({is_active:true}).eq('id',id); loadBanners(); }
+async function hapusBanner(id){ if(!confirm('Hapus?')) return; await supabaseClient.from('banners').delete().eq('id',id); loadBanners(); }
 
-// BANNER LOGIC
-let pcBase='', hpBase='';
-document.getElementById('filePC').addEventListener('change',e=>{
-  const f=e.target.files[0]; if(!f) return; if(f.size>1500000) return alert('File PC kebesaran! Max 1.5MB, kompres dulu di tinypng.com');
-  const r=new FileReader(); r.onload=ev=>{pcBase=ev.target.result; document.getElementById('prevPC').src=pcBase; document.getElementById('prevPC').style.display='block'; document.getElementById('livePC').src=pcBase;}; r.readAsDataURL(f);
-});
-document.getElementById('fileHP').addEventListener('change',e=>{
-  const f=e.target.files[0]; if(!f) return; if(f.size>1500000) return alert('File HP kebesaran! Max 1.5MB');
-  const r=new FileReader(); r.onload=ev=>{hpBase=ev.target.result; document.getElementById('prevHP').src=hpBase; document.getElementById('prevHP').style.display='block'; document.getElementById('liveHP').src=hpBase;}; r.readAsDataURL(f);
-});
-async function uploadBanner(){
-  const t=document.getElementById('bTitle').value; const l=document.getElementById('bLink').value||'produk.html';
-  if(!pcBase) return alert('Pilih banner PC dulu (1920x700)');
-  document.getElementById('bStatus').innerText='⏳ Uploading...';
-  try{
-    const pcName='pc_'+Date.now()+'.jpg'; const hpName='hp_'+Date.now()+'.jpg';
-    const pcBlob=await (await fetch(pcBase)).blob();
-    const up1=await supabaseClient.storage.from('banners').upload(pcName, pcBlob); if(up1.error) throw up1.error;
-    const pcUrl=supabaseClient.storage.from('banners').getPublicUrl(pcName).data.publicUrl;
-    let hpUrl=pcUrl;
-    if(hpBase){ const hpBlob=await (await fetch(hpBase)).blob(); const up2=await supabaseClient.storage.from('banners').upload(hpName, hpBlob); if(!up2.error){ hpUrl=supabaseClient.storage.from('banners').getPublicUrl(hpName).data.publicUrl; } }
-    await supabaseClient.from('banners').update({is_active:false}).eq('is_active',true);
-    const {error}=await supabaseClient.from('banners').insert({title:t, image_url:pcUrl, image_mobile_url:hpUrl, link_url:l, is_active:true});
-    if(error) throw error;
-    document.getElementById('bStatus').innerText='✅ Berhasil! Banner aktif di homepage';
-    pcBase=''; hpBase=''; document.getElementById('prevPC').style.display='none'; document.getElementById('prevHP').style.display='none';
-    loadBanners();
-  }catch(e){ document.getElementById('bStatus').innerText='❌ Error: '+e.message; }
+// VARIAN WARNA - FIX UUID
+async function loadVarProducts(){ const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false}); varProduct.innerHTML='<option value="">Pilih Produk untuk tambah warna</option>'+(data||[]).map(p=>`<option value="${p.id}">${p.name}</option>`).join(''); varProduct.onchange=loadVariants; }
+varFile.addEventListener('change',e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{varPrev.src=ev.target.result; varPrev.style.display='block';}; r.readAsDataURL(f); });
+async function addVariant(){
+ const pid=varProduct.value; const color=varColor.value.trim().toUpperCase(); const file=varFile.files[0];
+ if(!pid||!color||!file) return alert('Pilih produk, isi warna, upload foto!');
+ const fn='var_'+Date.now()+'_'+file.name.replace(/\s+/g,'_');
+ const {error}=await supabaseClient.storage.from('products').upload(fn,file);
+ if(error) return alert('Upload gagal: '+error.message);
+ const url=supabaseClient.storage.from('products').getPublicUrl(fn).data.publicUrl;
+ const {error:err2}=await supabaseClient.from('product_variants').insert({product_id:pid,color_name:color,image_url:url});
+ if(err2) alert('Gagal save varian: '+err2.message); else {varColor.value=''; varFile.value=''; varPrev.style.display='none'; loadVariants(); alert('Warna '+color+' berhasil ditambah!');}
 }
-async function loadBanners(){
-  const {data}=await supabaseClient.from('banners').select('*').order('id',{ascending:false});
-  document.getElementById('bannerList').innerHTML=(data||[]).map(b=>`<div style="border:1px solid #eee;border-radius:8px;overflow:hidden;display:flex;gap:8px;padding:6px;align-items:center"><img src="${b.image_url}" style="width:80px;height:50px;object-fit:cover;border-radius:6px"><div style="flex:1"><div style="font-size:12px;font-weight:bold">${b.title||'Tanpa Judul'}</div><div class="small">${b.is_active?'✅ AKTIF':'Nonaktif'} - ${new Date(b.created_at).toLocaleDateString()}</div></div><div style="display:flex;flex-direction:column;gap:4px"><button class="btn" style="padding:5px 8px;font-size:11px" onclick="aktifkanBanner(${b.id})">Aktifkan</button><button class="btn" style="padding:5px 8px;font-size:11px;background:#b42318" onclick="hapusBanner(${b.id})">Hapus</button></div></div>`).join('')||'<div class="small">Belum ada banner</div>';
+async function loadVariants(){
+ const pid=varProduct.value; if(!pid) {varList.innerHTML=''; return;}
+ const {data,error}=await supabaseClient.from('product_variants').select('*').eq('product_id',pid).order('id');
+ if(error){ varList.innerHTML=error.message; return; }
+ varList.innerHTML=(data||[]).map(v=>`<div style="border:1px solid #eee;border-radius:8px;padding:4px;text-align:center"><img src="${v.image_url}" style="width:100%;height:80px;object-fit:cover;border-radius:6px"><div style="font-size:11px;font-weight:bold;margin-top:2px">${v.color_name}</div><button onclick="delVariant('${v.id}')" style="background:#b42318;color:#fff;border:none;padding:3px 6px;border-radius:4px;font-size:10px;margin-top:3px">Hapus</button></div>`).join('')||'<div class="small">Belum ada varian. Upload foto KREM, HITAM, dll.</div>';
 }
-async function aktifkanBanner(id){ await supabaseClient.from('banners').update({is_active:false}).eq('is_active',true); await supabaseClient.from('banners').update({is_active:true}).eq('id',id); loadBanners(); alert('Banner diaktifkan!'); }
-async function hapusBanner(id){ if(!confirm('Hapus banner ini?')) return; await supabaseClient.from('banners').delete().eq('id',id); loadBanners(); }
+async function delVariant(id){ if(!confirm('Hapus warna ini?')) return; await supabaseClient.from('product_variants').delete().eq('id',id); loadVariants(); }
 
 init();
 </script></body></html>
