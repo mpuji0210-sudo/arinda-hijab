@@ -1,88 +1,82 @@
-<!DOCTYPE html><html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ARINDA HIJAB PREMIUM</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-<style>
-:root{--esp:#111;--taupe:#8C7A6B;--line:#E9E6E1;--bg:#FFFCF9}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden}
-nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.nav-top{max-width:1240px;margin:0 auto;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Cormorant Garamond';font-weight:400;letter-spacing:8px;font-size:21px}
-.logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;color:var(--taupe);margin-top:5px}
-.icons{display:flex;gap:22px;align-items:center}.icon-btn{background:none;border:none;cursor:pointer;position:relative;padding:0}.icon-btn svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.1}
-.badge{position:absolute;top:-7px;right:-9px;background:#111;color:#fff;font-size:7px;min-width:13px;height:13px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.nav-menu{border-top:1px solid #F6F1EB;background:#fff;overflow-x:auto;scrollbar-width:none}.nav-menu::-webkit-scrollbar{display:none}
-.menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:40px}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:14px 0;opacity:.4;white-space:nowrap;border-bottom:1px solid transparent}.menu a.active{opacity:1;border-bottom-color:#111}
-#searchBox{display:none;max-width:1240px;margin:0 auto;padding:12px 20px}#searchBox input{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;background:transparent;font-size:13px;outline:none}
-.hero{position:relative;width:100%;height:80vh;min-height:520px;background:#F6EEE3;overflow:hidden}.hero img{width:100%;height:100%;object-fit:cover;display:block}
-.desktop-only{display:block}.mobile-only{display:none}
-.btn{display:inline-block;background:#111;color:#fff;padding:17px 36px;font-size:9px;letter-spacing:4px;text-decoration:none;border:none;cursor:pointer}
-.section{max-width:1240px;margin:0 auto;padding:28px 16px 40px}.sub{font-size:9px;letter-spacing:5px;color:#111;margin:0}
-.colors{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#E9E6E1;border:1px solid #E9E6E1;margin-top:18px}.k-card{background:#fff;cursor:pointer}.k-card img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
-.hero-text{position:absolute;left:24px;bottom:32px;background:transparent!important;border:none;padding:0;max-width:440px}
-@media(min-width:700px){.colors{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:800px){.nav-top{padding:15px 16px}.logo{font-size:18px;letter-spacing:6px}.menu{padding:0 16px;gap:28px}.desktop-only{display:none!important}.mobile-only{display:block!important}.hero{height:78vh;min-height:500px}.hero-text{left:16px;right:16px;bottom:22px;max-width:none}}
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARINDA ADMIN V33</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet"><style>
+*{box-sizing:border-box}body{margin:0;background:#F9F3EE;font-family:'Plus Jakarta Sans',sans-serif}
+.header{background:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.05);position:sticky;top:0;z-index:100}
+.tabs{background:#fff;display:flex;gap:6px;padding:10px 12px;overflow-x:auto;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.04);position:sticky;top:56px;z-index:99}
+.tab{padding:10px 16px;border-radius:20px;border:1px solid #EEE6DF;background:#FFFCF9;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0}
+.tab.active{background:#2B1B12;color:#fff}
+.content{padding:12px;max-width:600px;margin:0 auto}
+.card{background:#fff;border:1px solid #EEE6DF;border-radius:20px;padding:16px;margin-bottom:14px}
+.card h3{font-family:'Cormorant Garamond';font-size:18px;margin:0 0 12px}
+.input{width:100%;padding:12px;border:1px solid #E7DDD5;border-radius:12px;margin:6px 0;background:#FFFCF9;font-size:13px}
+.btn{background:#2B1B12;color:#fff;border:none;padding:12px;border-radius:12px;width:100%;font-weight:700;cursor:pointer;margin-top:8px}
+.btn-green{background:#16A34A}.btn-brown{background:#8C5A2B}
+.file-btn{display:block;width:100%;padding:11px;background:#fff;border:1.5px dashed #2B1B12;border-radius:10px;text-align:center;font-size:12px;font-weight:700;cursor:pointer;margin-top:6px}
+.hidden{display:none}.small{font-size:11px;color:#8C7A6B}
+.slot{background:#FFFCF9;border:1px solid #EEE6DF;border-radius:16px;padding:12px;margin-top:10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 </style></head><body>
-<nav><div class="nav-top"><div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons"><button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button><a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><path d="M5 19c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></a><a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a></div></div><div class="nav-menu"><div class="menu"><a class="active" href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div></div><div id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" placeholder="Search"></form></div></nav>
-
-<div class="hero" id="heroBanner">
-<img class="desktop-only" id="bannerPC" src="https://via.placeholder.com/1400x900/F6EEE3/8C7A6B?text=ARINDA"><img class="mobile-only" id="bannerHP" src="https://via.placeholder.com/800x1200/F6EEE3/8C7A6B?text=ARINDA">
-<div class="hero-text">
-<div style="font-size:9px;letter-spacing:6px;color:#111;opacity:.6" id="bannerTitle">JUST FOR YOU</div>
-<h1 style="font-family:'Cormorant Garamond';font-size:52px;line-height:.9;margin:14px 0 16px;font-weight:300;letter-spacing:-1.5px">Bahan Adem,<br>Dan Tidak<br>Nerawang</h1>
-<p style="font-size:11px;color:#111;opacity:.55;line-height:1.8;margin:0 0 30px;letter-spacing:2.5px">MENUTUP AURAT DENGAN BAHAN PREMIUM</p>
-<a id="bannerLink" href="produk.html" class="btn">LIHAT KOLEKSI</a>
+<div class="header"><div><b style="font-family:'Cormorant Garamond';font-size:20px">ARINDA ADMIN V33</b><div style="font-size:9px;letter-spacing:2px;color:#16A34A">✅ BANNER FIX - CONNECT 100%</div></div><button onclick="localStorage.clear();location.href='login.html'" style="background:#B42318;color:#fff;padding:8px 12px;border-radius:10px;border:none;font-weight:700">LOGOUT</button></div>
+<div class="tabs">
+<button class="tab active" onclick="openTab('toko')">1. Toko + Banner</button>
+<button class="tab" onclick="openTab('koleksi')">2. Koleksi</button>
+<button class="tab" onclick="openTab('produk')">3. Produk</button>
 </div>
-</div>
+<div class="content">
+<div id="tab-toko" class="tab-content"><div class="card"><h3>🏪 Banner Toko</h3><input id="storeName" class="input" placeholder="Nama Toko"><input id="bTitle" class="input" placeholder="Judul Banner: JUST FOR YOU"><input id="bLink" class="input" value="produk.html" placeholder="Link banner"><hr><input type="file" id="filePC" accept="image/*" style="display:none"><label for="filePC" class="file-btn">📸 Pilih Banner PC (1920x900)</label><img id="prevPC" style="width:100%;border-radius:12px;display:none;margin-top:6px"><input type="file" id="fileHP" accept="image/*" style="display:none"><label for="fileHP" class="file-btn">📸 Pilih Banner HP (800x1200)</label><img id="prevHP" style="width:100%;border-radius:12px;display:none;margin-top:6px"><div id="bannerList"></div><button id="btnSaveToko" class="btn">💾 SIMPAN TOKO + BANNER</button><div id="setStatus" class="small"></div></div></div>
 
-<div class="section">
-<div style="display:flex;justify-content:space-between;align-items:center"><div class="sub">BEST SELLER COLLECTION</div><a href="produk.html" style="font-size:9px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;padding-bottom:4px">VIEW ALL</a></div>
-<div class="colors" id="koleksi4Grid">Loading...</div>
+<div id="tab-koleksi" class="tab-content hidden"><div class="card"><h3>💖 Best Seller (4 Foto)</h3><div class="small">Upload 4 foto best seller dari galeri HP</div><input type="file" id="koleksiGaleri" accept="image/*" multiple style="display:none"><label for="koleksiGaleri" class="file-btn" style="background:#8C5A2B;color:#fff;border:none">+ Tambah dari Galeri</label><div id="koleksi4Wrap"></div><button id="btnSaveKoleksi" class="btn btn-brown">SIMPAN KOLEKSI</button><div id="koleksiStatus" class="small"></div></div></div>
+
+<div id="tab-produk" class="tab-content hidden"><div id="list">Loading...</div></div>
 </div>
 
 <script>
-const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
-function toggleSearch(){const b=document.getElementById('searchBox');b.style.display=b.style.display=='block'?'none':'block';if(b.style.display=='block')document.getElementById('q').focus();}
-function goSearch(e){e.preventDefault();const v=document.getElementById('q').value.trim();if(v)location.href='produk.html?q='+encodeURIComponent(v);}
-function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return []}}
-function updateCount(){document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+Number(b.qty||0),0);}
+const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
+const supabaseClient=window.supabase.createClient(SUPA_URL,SUPA_KEY);
+if(localStorage.getItem('arinda_admin')!=='login'){location.href='login.html';}
+let pcBase='',hpBase=''; let koleksiSlots=[]; const $=id=>document.getElementById(id);
+function openTab(n){document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hidden'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));$("tab-"+n).classList.remove('hidden');event.target.classList.add('active'); if(n==='produk') loadProducts();}
+function toBase64(f){return new Promise(r=>{const rd=new FileReader();rd.onload=e=>r(e.target.result);rd.readAsDataURL(f);});}
 
-async function load(){
-  try{
-    // FIX BANNER: order by created_at biar banner terbaru kepasang
-    const {data:banners, error} = await supabaseClient.from('banners').select('*').eq('is_active',true).order('created_at',{ascending:false}).limit(1);
-    if(error) console.error('BANNER ERR:', error);
-    if(banners && banners[0]){
-      const bust='?t='+Date.now();
-      document.getElementById('bannerPC').src = banners[0].image_url + bust;
-      document.getElementById('bannerHP').src = (banners[0].image_mobile_url||banners[0].image_url) + bust;
-      if(banners[0].title) document.getElementById('bannerTitle').innerText=banners[0].title;
-      if(banners[0].link_url) document.getElementById('bannerLink').href=banners[0].link_url;
-    }
-
-    const {data:settings}=await supabaseClient.from('settings').select('*');
-    let html='';
-    if(settings){
-      const get=k=>settings.find(s=>s.key===k)?.value;
-      let raw=[]; try{ const v=get('home_koleksi_terlaris'); if(v) raw=JSON.parse(v); }catch(e){}
-      // ADMIN V32 simpan object {url,title,desc} -> index harus baca url
-      if(raw.length && typeof raw[0]==='object'){
-        html = raw.slice(0,4).map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.url}"><div style="padding:10px"><div style="font-size:10px;letter-spacing:1px;font-family:'Cormorant Garamond'">${v.title||''}</div></div></div>`).join('');
-      } else if(raw.length){
-        const ids=raw.slice(0,4);
-        const {data:vars}=await supabaseClient.from('product_variants').select('*').in('id',ids);
-        if(vars){ const ordered=ids.map(id=>vars.find(x=>String(x.id)===String(id))).filter(Boolean); html=ordered.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"></div>`).join(''); }
-      }
-    }
-    // fallback kalau admin belum set koleksi
-    if(!html){
-      const {data:fallback}=await supabaseClient.from('product_variants').select('*').order('id',{ascending:false}).limit(4);
-      if(fallback) html=fallback.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"></div>`).join('');
-    }
-    if(html) document.getElementById('koleksi4Grid').innerHTML=html;
-  }catch(e){ console.error(e); }
-  updateCount();
+async function init(){
+  const {data}=await supabaseClient.from('settings').select('*');
+  if(data){ const get=k=>data.find(s=>s.key===k)?.value; if(get('store_name')) $("storeName").value=get('store_name'); if(get('home_koleksi_terlaris')){try{koleksiSlots=JSON.parse(get('home_koleksi_terlaris'))}catch(e){}} }
+  renderKoleksi(); loadBanners();
 }
-load();
+$("filePC").addEventListener('change',async e=>{pcBase=await toBase64(e.target.files[0]);$("prevPC").src=pcBase;$("prevPC").style.display='block';});
+$("fileHP").addEventListener('change',async e=>{hpBase=await toBase64(e.target.files[0]);$("prevHP").src=hpBase;$("prevHP").style.display='block';});
+$("koleksiGaleri").addEventListener('change',async e=>{for(let f of e.target.files){koleksiSlots.push({url:await toBase64(f),title:f.name.split('.')[0]});}renderKoleksi();});
+
+function renderKoleksi(){ $("koleksi4Wrap").innerHTML=koleksiSlots.map((x,i)=>`<div class="slot"><img src="${x.url}" style="width:100%;height:180px;object-fit:cover;border-radius:12px"><div style="display:flex;justify-content:space-between;margin-top:6px"><span class="small">${x.title||''}</span><button onclick="koleksiSlots.splice(${i},1);renderKoleksi()" style="color:#B42318;background:none;border:none;font-weight:700">HAPUS</button></div></div>`).join(''); }
+
+$("btnSaveToko").onclick=async()=>{
+  $("setStatus").innerText='⏳ Menyimpan...';
+  if($("storeName").value) await supabaseClient.from('settings').upsert([{key:'store_name',value:$("storeName").value}],{onConflict:'key'});
+  if(pcBase){
+    const pcBlob=await (await fetch(pcBase)).blob(); const fn='pc_'+Date.now()+'.jpg';
+    const {error:upErr}=await supabaseClient.storage.from('banners').upload(fn,pcBlob,{upsert:true});
+    if(upErr){$("setStatus").innerText='❌ Upload gagal: '+upErr.message; return;}
+    const pcUrl=supabaseClient.storage.from('banners').getPublicUrl(fn).data.publicUrl;
+    let hpUrl=pcUrl;
+    if(hpBase){ const hpBlob=await (await fetch(hpBase)).blob(); const hfn='hp_'+Date.now()+'.jpg'; await supabaseClient.storage.from('banners').upload(hfn,hpBlob,{upsert:true}); hpUrl=supabaseClient.storage.from('banners').getPublicUrl(hfn).data.publicUrl; }
+    // matikan semua, aktifkan baru
+    await supabaseClient.from('banners').update({is_active:false}).eq('is_active',true);
+    const {error:insErr}=await supabaseClient.from('banners').insert({title:$("bTitle").value||'Promo',image_url:pcUrl,image_mobile_url:hpUrl,link_url:$("bLink").value||'produk.html',is_active:true});
+    if(insErr){$("setStatus").innerText='❌ Insert banner gagal: '+insErr.message; return;}
+    $("setStatus").innerText='✅ Banner terpasang!'; pcBase=''; hpBase=''; $("prevPC").style.display='none'; $("prevHP").style.display='none';
+    loadBanners();
+  } else {
+    $("setStatus").innerText='✅ Nama toko tersimpan (banner tidak diganti)';
+  }
+};
+
+$("btnSaveKoleksi").onclick=async()=>{
+  let final=[]; for(let v of koleksiSlots){ let url=v.url; if(url.startsWith('data:')){ const blob=await (await fetch(url)).blob(); const fn='koleksi_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg'; await supabaseClient.storage.from('banners').upload(fn,blob); url=supabaseClient.storage.from('banners').getPublicUrl(fn).data.publicUrl; } final.push({url,title:v.title||''}); }
+  await supabaseClient.from('settings').upsert([{key:'home_koleksi_terlaris',value:JSON.stringify(final.slice(0,4))}],{onConflict:'key'});
+  $("koleksiStatus").innerText='✅ Koleksi tersimpan '+final.length;
+};
+
+async function loadBanners(){ const {data}=await supabaseClient.from('banners').select('*').order('created_at',{ascending:false}); $("bannerList").innerHTML=(data||[]).map(b=>`<div style="border:1px solid #EEE6DF;border-radius:12px;display:flex;gap:6px;padding:8px;margin-top:6px"><img src="${b.image_url}" style="width:56px;height:36px;object-fit:cover;border-radius:8px"><div style="flex:1;font-size:11px"><b>${b.title}</b><br><span style="color:${b.is_active?'#16A34A':'#999'}">${b.is_active?'✅ AKTIF':'Nonaktif'}</span></div><button class="btn" style="width:auto;padding:6px 10px;font-size:10px" onclick="aktifkanBanner('${b.id}')">Aktifkan</button></div>`).join(''); }
+window.aktifkanBanner=async(id)=>{await supabaseClient.from('banners').update({is_active:false}).eq('is_active',true);await supabaseClient.from('banners').update({is_active:true}).eq('id',id);loadBanners();};
+async function loadProducts(){ const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false}); $("list").innerHTML=(data||[]).map(p=>`<div>${p.name} - Rp${p.price}</div>`).join(''); }
+init();
 </script></body></html>
