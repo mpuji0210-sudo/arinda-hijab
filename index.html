@@ -9,7 +9,7 @@
 nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .nav-top{max-width:1240px;margin:0 auto;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-family:'Cormorant Garamond';font-weight:400;letter-spacing:8px;font-size:21px;line-height:1}
-.logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;color:var(--taupe);margin-top:5px;font-weight:300}
+.logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;color:var(--taupe);margin-top:5px}
 .icons{display:flex;gap:22px;align-items:center}
 .icon-btn{background:none;border:none;cursor:pointer;position:relative;padding:0}
 .icon-btn svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.1}
@@ -17,42 +17,21 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-
 .nav-menu{border-top:1px solid #F6F1EB;background:#fff;overflow-x:auto;scrollbar-width:none}
 .nav-menu::-webkit-scrollbar{display:none}
 .menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:40px}
-.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:14px 0;opacity:.4;white-space:nowrap;border-bottom:1px solid transparent;transition:.3s}
+.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:14px 0;opacity:.4;white-space:nowrap;border-bottom:1px solid transparent}
 .menu a.active,.menu a:hover{opacity:1;border-bottom-color:#111}
 #searchBox{display:none;max-width:1240px;margin:0 auto;padding:12px 20px}
 #searchBox input{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;background:transparent;font-size:13px;outline:none}
-.hero{position:relative;width:100%;height:84vh;min-height:560px;background:#F6EEE3;overflow:hidden}.hero img{width:100%;height:100%;object-fit:cover;display:block}
+.hero{position:relative;width:100%;height:80vh;min-height:520px;background:#F6EEE3;overflow:hidden}.hero img{width:100%;height:100%;object-fit:cover;display:block;transition:.3s}
 .desktop-only{display:block}.mobile-only{display:none}
-.btn{display:inline-block;background:#111;color:#fff;padding:17px 36px;font-size:9px;letter-spacing:4px;text-decoration:none;border:none;cursor:pointer;font-weight:300}
-.section{max-width:1240px;margin:0 auto;padding:40px 16px}
-.sub{font-size:9px;letter-spacing:5px;color:#111;margin:0}
-.colors{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#E9E6E1;border:1px solid #E9E6E1;margin-top:20px}
-.k-card{background:#fff;cursor:pointer}.k-card img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
-/* FULL TRANSPARAN - CUMA TULISAN + FOTO - LV STYLE */
-.hero-text{
-position:absolute;left:24px;bottom:32px;
-background:transparent;
-border:none;
-backdrop-filter:none;
--webkit-backdrop-filter:none;
-padding:0;
-max-width:440px;
-}
+.btn{display:inline-block;background:#111;color:#fff;padding:17px 36px;font-size:9px;letter-spacing:4px;text-decoration:none;border:none;cursor:pointer}
+.section{max-width:1240px;margin:0 auto;padding:28px 16px 40px}.sub{font-size:9px;letter-spacing:5px;color:#111;margin:0}
+.colors{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#E9E6E1;border:1px solid #E9E6E1;margin-top:18px}.k-card{background:#fff;cursor:pointer}.k-card img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.hero-text{position:absolute;left:24px;bottom:32px;background:transparent!important;border:none;padding:0;max-width:440px}
 @media(min-width:700px){.colors{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:800px){
-.nav-top{padding:15px 16px}.logo{font-size:18px;letter-spacing:6px}.menu{padding:0 16px;gap:28px}.desktop-only{display:none!important}.mobile-only{display:block!important}.hero{height:86vh}
-.hero-text{left:16px;right:16px;bottom:24px;max-width:none}
-}
+@media(max-width:800px){.nav-top{padding:15px 16px}.logo{font-size:18px;letter-spacing:6px}.menu{padding:0 16px;gap:28px}.desktop-only{display:none!important}.mobile-only{display:block!important}.hero{height:78vh;min-height:500px}.hero-text{left:16px;right:16px;bottom:22px;max-width:none}}
 </style></head><body>
 <nav>
-<div class="nav-top">
-<div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div>
-<div class="icons">
-<button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button>
-<a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><path d="M5 19c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></a>
-<a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a>
-</div>
-</div>
+<div class="nav-top"><div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons"><button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button><a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><path d="M5 19c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></a><a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a></div></div>
 <div class="nav-menu"><div class="menu"><a class="active" href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div></div>
 <div id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" placeholder="Search"></form></div>
 </nav>
@@ -60,22 +39,17 @@ max-width:440px;
 <div class="hero" id="heroBanner">
 <img class="desktop-only" id="bannerPC" src="https://via.placeholder.com/1400x900/F6EEE3/8C7A6B?text=ARINDA"><img class="mobile-only" id="bannerHP" src="https://via.placeholder.com/800x1200/F6EEE3/8C7A6B?text=ARINDA">
 <div class="hero-text">
-<div style="font-size:9px;letter-spacing:6px;color:#111;opacity:.6;font-family:'Inter';font-weight:300" id="bannerTitle">JUST FOR YOU</div>
-<h1 style="font-family:'Cormorant Garamond';font-size:52px;line-height:.9;margin:14px 0 16px;font-weight:300;letter-spacing:-1.5px;color:#111">Bahan Adem,<br>Dan Tidak<br>Nerawang</h1>
-<p style="font-size:11px;color:#111;opacity:.55;line-height:1.8;margin:0 0 30px;letter-spacing:2.5px;font-family:'Inter'">MENUTUP AURAT DENGAN BAHAN PREMIUM</p>
+<div style="font-size:9px;letter-spacing:6px;color:#111;opacity:.6" id="bannerTitle">JUST FOR YOU</div>
+<h1 style="font-family:'Cormorant Garamond';font-size:52px;line-height:.9;margin:14px 0 16px;font-weight:300;letter-spacing:-1.5px">Bahan Adem,<br>Dan Tidak<br>Nerawang</h1>
+<p style="font-size:11px;color:#111;opacity:.55;line-height:1.8;margin:0 0 30px;letter-spacing:2.5px">MENUTUP AURAT DENGAN BAHAN PREMIUM</p>
 <a id="bannerLink" href="produk.html" class="btn">LIHAT KOLEKSI</a>
 </div>
 </div>
 
 <div class="section">
-<div style="display:flex;justify-content:space-between;align-items:center">
-<div class="sub">BEST SELLER COLLECTION</div>
-<a href="produk.html" style="font-size:9px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;padding-bottom:4px">VIEW ALL</a>
+<div style="display:flex;justify-content:space-between;align-items:center"><div class="sub">BEST SELLER COLLECTION</div><a href="produk.html" style="font-size:9px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;padding-bottom:4px">VIEW ALL</a></div>
+<div class="colors" id="koleksi4Grid"><div style="grid-column:1/-1;padding:30px;text-align:center;font-size:10px;letter-spacing:2px;opacity:.5">Loading...</div></div>
 </div>
-<div class="colors" id="koleksi4Grid">Loading...</div>
-</div>
-
-<footer style="margin-top:80px;border-top:1px solid #E9E6E1;padding:32px 16px;text-align:center"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:13px;font-weight:400">ARINDA</div><div style="font-size:7px;letter-spacing:5px;color:#8C7A6B;margin-top:6px">HIJAB PREMIUM — © 2026</div></footer>
 
 <script>
 const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
@@ -83,28 +57,50 @@ function toggleSearch(){const b=document.getElementById('searchBox');b.style.dis
 function goSearch(e){e.preventDefault();const v=document.getElementById('q').value.trim();if(v)location.href='produk.html?q='+encodeURIComponent(v);}
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return []}}
 function updateCount(){document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+Number(b.qty||0),0);}
+
 async function load(){
-  const {data:banners}=await supabaseClient.from('banners').select('*').eq('is_active',true).order('id',{ascending:false}).limit(1);
-  if(banners && banners[0]){
-    document.getElementById('bannerPC').src=banners[0].image_url;
-    document.getElementById('bannerHP').src=banners[0].image_mobile_url||banners[0].image_url;
-    if(banners[0].title) document.getElementById('bannerTitle').innerText=banners[0].title;
-    if(banners[0].link_url) document.getElementById('bannerLink').href=banners[0].link_url;
-  }
-  const {data:settings}=await supabaseClient.from('settings').select('*');
-  if(settings){
-    const get=k=>settings.find(s=>s.key===k)?.value;
-    if(get('store_name')){
-      const parts=get('store_name').split(' ');
-      document.getElementById('storeLogo').innerHTML=parts[0]+'<span>'+parts.slice(1).join(' ')+'</span>';
+  try{
+    console.log('=== LOAD ARINDA ===');
+    // FIX BANNER: pakai created_at bukan id, + anti cache
+    const {data:banners, error:bannerErr} = await supabaseClient.from('banners').select('*').eq('is_active',true).order('created_at',{ascending:false}).limit(1);
+    console.log('BANNERS:', banners, 'ERR:', bannerErr);
+    if(bannerErr) console.error('BANNER RLS ERROR - cek Policy SELECT anon', bannerErr);
+    if(banners && banners[0]){
+      const cacheBuster = '?v=' + Date.now();
+      const pcUrl = banners[0].image_url + cacheBuster;
+      const hpUrl = (banners[0].image_mobile_url || banners[0].image_url) + cacheBuster;
+      document.getElementById('bannerPC').src = pcUrl;
+      document.getElementById('bannerHP').src = hpUrl;
+      console.log('Banner dipasang:', pcUrl);
+      if(banners[0].title) document.getElementById('bannerTitle').innerText=banners[0].title;
+      if(banners[0].link_url) document.getElementById('bannerLink').href=banners[0].link_url;
+    } else {
+      console.warn('TIDAK ADA BANNER AKTIF! Cek is_active=true di Supabase');
     }
-    let raw=[]; try{if(get('home_koleksi_terlaris')) raw=JSON.parse(get('home_koleksi_terlaris'));}catch(e){}
-    if(raw.length){
-      let html=''; const ids=raw.filter(v=>!String(v).startsWith('http'));
-      if(ids.length){ const {data:vars}=await supabaseClient.from('product_variants').select('*').in('id',ids); if(vars){ const ordered=ids.map(id=>vars.find(x=>String(x.id)===String(id))).filter(Boolean); html+=ordered.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"></div>`).join(''); }}
-      if(html) document.getElementById('koleksi4Grid').innerHTML=html;
+
+    let html='';
+    const {data:settings}=await supabaseClient.from('settings').select('*');
+    if(settings){
+      const get=k=>settings.find(s=>s.key===k)?.value;
+      if(get('store_name')){
+        const parts=get('store_name').split(' ');
+        document.getElementById('storeLogo').innerHTML=parts[0]+'<span>'+parts.slice(1).join(' ')+'</span>';
+      }
+      let raw=[]; try{if(get('home_koleksi_terlaris')) raw=JSON.parse(get('home_koleksi_terlaris'));}catch(e){}
+      if(raw.length){
+        const ids=raw.filter(v=>!String(v).startsWith('http')).slice(0,4);
+        if(ids.length){
+          const {data:vars}=await supabaseClient.from('product_variants').select('*').in('id',ids);
+          if(vars){ const ordered=ids.map(id=>vars.find(x=>String(x.id)===String(id))).filter(Boolean); html=ordered.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"></div>`).join(''); }
+        }
+      }
     }
-  }
+    if(!html){
+      const {data:fallback}=await supabaseClient.from('product_variants').select('*').order('id',{ascending:false}).limit(4);
+      if(fallback) html=fallback.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"></div>`).join('');
+    }
+    if(html) document.getElementById('koleksi4Grid').innerHTML=html;
+  }catch(e){ console.error('LOAD ERROR:', e); }
   updateCount();
 }
 load();
