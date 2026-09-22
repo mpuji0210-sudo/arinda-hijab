@@ -2,16 +2,18 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kategori - ARINDA HIJAB PREMIUM</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--bg:#FFFCF9}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
-nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(10px);border-bottom:1px solid var(--champ)}
-.nav-in{max-width:1120px;margin:0 auto;padding:10px 14px}
-.nav-top{display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:18px}
-.menu{display:flex;gap:14px;margin-top:8px;padding-top:8px;border-top:1px solid var(--champ)}
-.menu a{font-size:11px;letter-spacing:1.5px;color:var(--taupe);text-decoration:none}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden}
+nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.98);backdrop-filter:blur(12px);border-bottom:1px solid var(--champ)}
+.nav-in{max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:3px;font-size:18px;line-height:1}
+.logo span{display:block;font-family:'Plus Jakarta Sans';font-size:9px;letter-spacing:4px;color:var(--taupe);margin-top:3px;font-weight:500}
+.menu{display:flex;gap:20px}
+.menu a{font-size:11px;letter-spacing:2px;color:var(--taupe);text-decoration:none;padding-bottom:3px;border-bottom:1.5px solid transparent;white-space:nowrap}
+.menu a.active{color:var(--esp);border-color:var(--esp)}
+
 .cat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
 .cat-card{position:relative;border:1px solid var(--champ);border-radius:16px;overflow:hidden;background:#fff;cursor:pointer;transition:.2s}
 .cat-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
@@ -19,18 +21,32 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 .cat-info{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top, rgba(0,0,0,.75), transparent);padding:14px;color:#fff}
 .cat-info b{font-family:'Cormorant Garamond';font-size:18px;letter-spacing:1px}
 .cat-info span{font-size:10px;letter-spacing:1.5px;opacity:.9}
-.badge-count{background:#fff;color:#2B1B12;border-radius:10px;padding:2px 6px;font-size:10px;margin-left:6px;font-family:'Plus Jakarta Sans';font-weight:700}
+.badge-count{background:#fff;color:#2B1B12;border-radius:10px;padding:2px 6px;font-size:10px;margin-left:6px;font-weight:700}
+
+/* HP - HEADER 2 LANTAI ELEGAN - SAMA KAYA KONTAK */
+@media(max-width:750px){
+.nav-in{flex-direction:column;align-items:center;padding:0;gap:0}
+.logo{width:100%;text-align:center;padding:16px 0 12px;background:#FFFCF9;border-bottom:1px solid #F6EEE6;font-size:20px;letter-spacing:4px}
+.logo span{letter-spacing:5px;font-size:10px}
+.menu{width:100%;justify-content:center;gap:0;padding:10px 6px;background:#fff;border-bottom:1px solid #EEE6DF;overflow-x:auto}
+.menu a{padding:8px 14px;margin:0 4px;border-radius:20px;border:1px solid #EEE6DF;background:#FFFCF9;font-size:9.5px;letter-spacing:1.2px;flex-shrink:0}
+.menu a.active{background:#2B1B12;color:#fff;border-color:#2B1B12}
+.cat-grid{grid-template-columns:1fr 1fr;gap:10px}
+.cat-card img{height:200px}
+}
 </style></head><body>
-<nav><div class="nav-in"><div class="nav-top"><div class="logo">ARINDA PREMIUM</div></div>
-<div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a class="active">KATEGORI</a></div></div></nav>
-<div style="max-width:1120px;margin:0 auto;padding:14px">
+<nav><div class="nav-in">
+<div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div>
+<div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a class="active" href="kategori.html">KATEGORI</a><a href="kontak.html">KONTAK</a></div>
+</div></nav>
+
+<div style="max-width:1120px;margin:0 auto;padding:18px 14px">
 <div style="font-family:'Cormorant Garamond';font-size:26px;font-weight:700">Kategori</div>
 <div style="font-size:10px;letter-spacing:2px;color:#8C7A6B;margin:4px 0 12px" id="catSub">READY STOCK </div>
 <div class="cat-grid" id="catGrid"><div style="grid-column:span 2;text-align:center;padding:40px;color:#8C7A6B">Memuat kategori...</div></div>
 </div>
 <script>
 const supa = supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
-
 async function load(){
   try{
     const {data: cats} = await supa.from('categories').select('*').order('name');
@@ -39,29 +55,28 @@ async function load(){
     let koleksiCover = null;
     try{ if(settings?.value){ const k=JSON.parse(settings.value); if(k[0]?.url) koleksiCover=k[0].url; else if(typeof k[0]==='string' && k[0].startsWith('http')) koleksiCover=k[0]; } }catch(e){}
 
+    // update logo dari settings
+    try{
+      const {data: allSettings} = await supa.from('settings').select('*');
+      const get = k => allSettings?.find(s=>s.key===k)?.value;
+      const sName = get('store_name');
+      if(sName){
+        const parts=sName.split(' ');
+        document.getElementById('storeLogo').innerHTML=parts[0]+'<span>'+parts.slice(1).join(' ')+'</span>';
+      }
+    }catch(e){}
+
     if(!cats || cats.length===0){
       document.getElementById('catGrid').innerHTML='<div style="grid-column:span 2;text-align:center;padding:20px">Belum ada kategori. Tambah di Admin Card 5.</div>';
       return;
     }
-
     document.getElementById('catGrid').innerHTML = cats.map(c=>{
-      // cari 1 produk pertama di kategori ini buat jadi cover
       const prod = prods?.find(p => (p.category||'').toLowerCase() === c.name.toLowerCase()) || prods?.find(p => c.name.toLowerCase().includes((p.category||'').toLowerCase()));
       const count = prods?.filter(p => (p.category||'').toLowerCase() === c.name.toLowerCase()).length || 0;
-
       let img = c.image_url || prod?.image_url || koleksiCover || 'https://via.placeholder.com/600x800/F6EEE3/8C7A6B?text='+encodeURIComponent(c.name);
-      // kalau masih nama file doang (sisa file lama) -> ganti pakai produk
-      if(img &&!img.startsWith('http') &&!img.startsWith('data:')){
-        img = prod?.image_url || koleksiCover || 'https://via.placeholder.com/600x800/F6EEE3/8C7A6B?text='+encodeURIComponent(c.name);
-      }
-
-      return `
-      <div class="cat-card" onclick="location.href='produk.html?cat=${encodeURIComponent(c.name.toLowerCase())}'">
-        <img src="${img}" loading="lazy">
-        <div class="cat-info"><b>${c.name.toUpperCase()} <span class="badge-count">${count}</span></b><br><span>KLIK UNTUK LIHAT PRODUK</span></div>
-      </div>`;
+      if(img &&!img.startsWith('http') &&!img.startsWith('data:')){ img = prod?.image_url || koleksiCover || 'https://via.placeholder.com/600x800/F6EEE3/8C7A6B?text='+encodeURIComponent(c.name); }
+      return `<div class="cat-card" onclick="location.href='produk.html?cat=${encodeURIComponent(c.name.toLowerCase())}'"><img src="${img}" loading="lazy"><div class="cat-info"><b>${c.name.toUpperCase()} <span class="badge-count">${count}</span></b><br><span>KLIK UNTUK LIHAT PRODUK</span></div></div>`;
     }).join('') + `<div class="cat-card" onclick="location.href='produk.html'"><img src="${koleksiCover || 'https://via.placeholder.com/600x800/F6EEE3/8C7A6B?text=ALL'}"><div class="cat-info"><b>ALL COLLECTION <span class="badge-count">${prods?.length||0}</span></b><br><span>LIHAT SEMUA PRODUK</span></div></div>`;
-
     document.getElementById('catSub').innerText = `${cats.length} KATEGORI • ${prods?.length||0} PRODUK READY`;
   }catch(e){ console.log(e); document.getElementById('catGrid').innerHTML='Gagal load kategori: '+e.message }
 }
