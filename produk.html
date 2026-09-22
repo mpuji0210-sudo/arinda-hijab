@@ -1,6 +1,5 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Produk - ARINDA HIJAB PREMIUM</title>
-<meta property="og:image" content="https://arinda-hijab.vercel.app/banner.jpg">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Plus+Jakarta+Sans:wght@400&display=swap" rel="stylesheet">
 <style>
@@ -21,7 +20,6 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 #cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:flex-end}
 #cartBox{background:#fff;width:100%;max-width:480px;margin:0 auto;max-height:85vh;overflow:auto;border-radius:16px 16px 0 0;padding:16px}
 .btn{width:100%;padding:12px;background:var(--esp);color:#fff;border:none;border-radius:10px;letter-spacing:2px;font-size:11px;font-weight:bold;cursor:pointer}
-/* ===== FIX UTAMA FOTO BESAR KEPOTONG ===== */
 #prodModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;align-items:center;justify-content:center;padding:10px}
 #prodModal.show{display:flex}
 .p-box{background:#fff;max-width:900px;width:100%;border-radius:16px;overflow:hidden;display:grid;grid-template-columns:1fr 380px;max-height:92vh}
@@ -32,7 +30,14 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 .p-thumbs img{width:54px;height:68px;object-fit:cover;object-position:top;border-radius:8px;cursor:pointer;opacity:.65;border:1.5px solid transparent;background:#fff}
 .p-thumbs img.active{opacity:1;border-color:var(--esp)}
 .p-info{padding:14px;overflow:auto}
-@media(max-width:800px){.p-box{grid-template-columns:1fr;max-height:95vh;overflow:auto}.p-gallery{grid-template-columns:1fr 58px}.p-main{aspect-ratio:4/5}.p-thumbs img{width:50px;height:64px}}
+@media(max-width:800px){.p-box{grid-template-columns:1fr;max-height:95vh;overflow:auto}.p-gallery{grid-template-columns:1fr 58px}.p-thumbs img{width:50px;height:64px}}
+/* TOAST MODEL HIJAB LEWAT CANTIK - FIX ALERT JELEK */
+#cartToast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#2B1B12;color:#fff;padding:10px 18px 10px 12px;border-radius:30px;display:flex;align-items:center;gap:12px;z-index:9999;box-shadow:0 12px 30px rgba(0,0,0,.35);transition:all.6s cubic-bezier(.68,-0.55,.27,1.55);opacity:0;pointer-events:none}
+#cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}
+#cartToast img{width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid #fff;animation:hijabWalk.7s ease-in-out infinite alternate}
+#toastText{font-size:12px;font-weight:600;letter-spacing:.3px}
+@keyframes hijabWalk{0%{transform:rotate(-6deg) translateY(0)}100%{transform:rotate(6deg) translateY(-4px)}}
+#cartFly{position:fixed;z-index:9998;width:60px;height:60px;border-radius:50%;object-fit:cover;object-position:top;pointer-events:none;display:none}
 </style></head><body>
 <nav><div class="nav-in"><div class="nav-top"><div class="logo" id="storeLogo">ARINDA</div><div class="icons">
 <a href="index.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16L20 20" stroke-linecap="round"/></svg></a>
@@ -65,6 +70,10 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 </div></div>
 
 <div id="prodModal" onclick="if(event.target.id=='prodModal') closeProd()"><div class="p-box" id="pBox">Loading...</div></div>
+
+<!-- TOAST CANTIK + FOTO TERBANG -->
+<div id="cartToast"><img id="toastImg" src=""><span id="toastText"></span></div>
+<img id="cartFly" src="">
 
 <script>
 const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
@@ -108,8 +117,31 @@ function pickColor(color,img,idx){
  curVariants.forEach((v,i)=>{const b=document.getElementById('btn-'+i); if(b){ b.style.background=i==idx?'#2B1B12':'#fff'; b.style.color=i==idx?'#fff':'#000'; }});
 }
 function closeProd(){document.getElementById('prodModal').classList.remove('show');}
-function addToCartFromModal(){addCart(curProd.name+' - '+curColor, curProd.price, curImg); alert('Masuk keranjang: '+curColor);}
-function buyFromModal(){addToCartFromModal(); closeProd(); openCart();}
+// ===== FIX TOAST CANTIK MODEL HIJAB LEWAT =====
+function showCartToast(color,img){
+ const toast=document.getElementById('cartToast');
+ document.getElementById('toastImg').src=img;
+ document.getElementById('toastText').innerText=color+' masuk keranjang! 🧕';
+ // animasi terbang ke icon keranjang
+ const fly=document.getElementById('cartFly');
+ fly.src=img; fly.style.display='block';
+ fly.style.left='50%'; fly.style.top='50%';
+ fly.animate([
+   {transform:'translate(-50%,-50%) scale(1)', opacity:1},
+   {transform:'translate(40vw,-40vh) scale(0.2)', opacity:0}
+ ],{duration:800, easing:'cubic-bezier(.4,0,.2,1)'}).onfinish=()=>fly.style.display='none';
+ toast.classList.add('show');
+ setTimeout(()=>toast.classList.remove('show'),2800);
+}
+function addToCartFromModal(){
+ addCart(curProd.name+' - '+curColor, curProd.price, curImg);
+ showCartToast(curColor, curImg);
+}
+function buyFromModal(){
+ // BELI SEKARANG LANGSUNG WA - SESUAI REQUEST KAMU
+ let msg=`Halo ${STORE_NAME} 👋%0A%0ASaya mau langsung beli:%0A- ${curProd.name} - ${curColor} = Rp${Number(curProd.price).toLocaleString('id-ID')}%0A%0ATotal: Rp${Number(curProd.price).toLocaleString('id-ID')}%0A%0AMohon diproses ya kak`;
+ window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');
+}
 function addCart(n,p,i){let c=getCart();let idx=c.findIndex(a=>a.warna==n);if(idx>-1)c[idx].qty++;else c.push({warna:n,qty:1,harga:Number(p),img:i});saveCart(c);}
 function openCart(){renderCart();document.getElementById('cartModal').style.display='flex';}
 function closeCart(){document.getElementById('cartModal').style.display='none';}
