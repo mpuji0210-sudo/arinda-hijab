@@ -4,12 +4,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--bg:#FFFCF9}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(--esp)}
-nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(10px);border-bottom:1px solid var(--champ)}
-.nav-in{max-width:1120px;margin:0 auto;padding:10px 14px}.nav-top{display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:18px}
-.menu{display:flex;gap:14px;margin-top:8px;padding-top:8px;border-top:1px solid var(--champ)}.menu a{font-size:11px;letter-spacing:1.5px;color:var(--taupe);text-decoration:none}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
-.search-wrap{padding:10px 0 0}.search-wrap input{width:100%;padding:12px 16px;border:1px solid var(--champ);border-radius:24px;font-size:13px;outline:none;background:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(--esp);overflow-x:hidden}
+nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.98);backdrop-filter:blur(10px);border-bottom:1px solid var(--champ)}
+.nav-in{max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:3px;font-size:18px;line-height:1}
+.logo span{display:block;font-family:'Plus Jakarta Sans';font-size:9px;letter-spacing:4px;color:var(--taupe);margin-top:3px;font-weight:500}
+.menu{display:flex;gap:20px;align-items:center}
+.menu a{font-size:11px;letter-spacing:2px;color:var(--taupe);text-decoration:none;padding-bottom:3px;border-bottom:1.5px solid transparent;white-space:nowrap}
+.menu a.active{color:var(--esp);border-color:var(--esp)}
+.search-wrap{width:100%;padding:10px 0 0}
+.search-wrap input{width:100%;padding:12px 16px;border:1px solid var(--champ);border-radius:24px;font-size:13px;outline:none;background:#fff}
+
 .section{max-width:1120px;margin:0 auto;padding:14px}
 .filter{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.filter button{padding:8px 16px;border:1px solid var(--champ);background:#fff;border-radius:20px;font-size:11px;cursor:pointer;font-weight:700;letter-spacing:.5px}
 .filter button.active{background:var(--esp);color:#fff;border-color:var(--esp)}
@@ -42,11 +47,27 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 #cartFly{position:fixed;z-index:9998;width:60px;height:60px;border-radius:50%;object-fit:cover;object-position:top;pointer-events:none;display:none}
 .badge{position:absolute;top:-3px;right:-4px;background:var(--esp);color:#fff;font-size:9px;min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 .icon-btn{background:none;border:none;cursor:pointer;position:relative}
+
+/* === FIX ELEGAN 2 LANTAI - ANTI TUMPUK === */
+@media(max-width:750px){
+.nav-in{flex-direction:column;align-items:center;padding:0;gap:0}
+.logo{width:100%;text-align:center;padding:16px 0 12px;background:#FFFCF9;border-bottom:1px solid #F6EEE6;font-size:20px;letter-spacing:4px}
+.logo span{letter-spacing:5px;font-size:10px}
+.menu{width:100%;justify-content:center;gap:0;padding:10px 6px;background:#fff;border-bottom:1px solid #EEE6DF;overflow-x:auto;order:2}
+.menu a{padding:8px 14px;margin:0 4px;border-radius:20px;border:1px solid #EEE6DF;background:#FFFCF9;font-size:9.5px;letter-spacing:1.2px;flex-shrink:0}
+.menu a.active{background:#2B1B12;color:#fff;border-color:#2B1B12}
+.search-wrap{order:3;padding:10px 14px;background:#FFFCF9;border-bottom:1px solid #F6EEE6}
+.icon-btn{position:absolute;top:14px;right:14px}
+}
 </style></head><body>
-<nav><div class="nav-in"><div class="nav-top"><div class="logo" id="storeLogo">ARINDA</div><div class="icons">
+<nav><div class="nav-in">
+<div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div>
+<div class="menu"><a href="index.html">BERANDA</a><a class="active" href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a href="kontak.html">KONTAK</a></div>
 <button class="icon-btn" onclick="openCart()"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#2B1B12;fill:none;stroke-width:1.6"><path d="M6 8h12l-1 10H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cCount">0</span></button>
-</div></div><div class="menu"><a href="index.html">BERANDA</a><a class="active">PRODUK</a><a href="kategori.html">KATEGORI</a></div><div class="search-wrap"><form onsubmit="doSearch(event)"><input id="q" type="search" placeholder="Cari hijab... (krem, hitam, navy)"></form></div></div></nav>
-<div class="section"><div style="font-family:'Cormorant Garamond';font-size:24px;font-weight:700">Produk Ready </div><div style="font-size:10px;letter-spacing:2px;color:#16A34A;margin-bottom:8px"></div><div class="filter" id="filterWrap"><button class="active" onclick="filterColor('ALL',this)">ALL</button></div><div id="list" class="prod-grid">Loading...</div></div>
+<div class="search-wrap"><form onsubmit="doSearch(event)"><input id="q" type="search" placeholder="Cari hijab... (krem, hitam, navy)"></form></div>
+</div></nav>
+
+<div class="section"><div style="font-family:'Cormorant Garamond';font-size:24px;font-weight:700">Produk Ready </div><div class="filter" id="filterWrap"><button class="active" onclick="filterColor('ALL',this)">ALL</button></div><div id="list" class="prod-grid">Loading...</div></div>
 <div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()"><div id="cartBox">
 <div style="display:flex;justify-content:space-between;align-items:center"><b>Keranjang (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:22px;cursor:pointer">×</button></div>
 <div id="cartList" style="margin-top:12px"></div>
@@ -78,22 +99,16 @@ function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'
 function saveCart(c){localStorage.setItem('arinda_cart2',JSON.stringify(c)); updateCount(); renderCart();}
 function updateCount(){document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+(b.qty||0),0);}
 function doSearch(e){e.preventDefault(); const q=document.getElementById('q').value.toLowerCase(); render(allProducts.filter(p=>p.name.toLowerCase().includes(q)|| (window._varMap[p.id]||[]).some(v=>v.color_name.toLowerCase().includes(q))));}
-
-// V26 FIX - FILTER AMBIL DARI VARIANTS LANGSUNG (SINKRON ADMIN)
 async function loadFilters(){
   try{
     const {data:vars}=await supabaseClient.from('product_variants').select('color_name');
     let colors=[...new Set((vars||[]).map(v=>v.color_name.toUpperCase()))];
     if(colors.length===0) colors=['NAVY','HITAM','KREM','MAROON'];
-    // Urutkan: KREM, HITAM, NAVY, MAROON biar sesuai video kamu
     const order=['KREM','HITAM','NAVY','MAROON'];
     colors.sort((a,b)=>{const ia=order.indexOf(a), ib=order.indexOf(b); if(ia!==-1&&ib!==-1) return ia-ib; if(ia!==-1) return -1; if(ib!==-1) return 1; return a.localeCompare(b);});
     document.getElementById('filterWrap').innerHTML='<button class="active" onclick="filterColor(\'ALL\',this)">ALL</button>' + colors.slice(0,12).map(c=>`<button onclick="filterColor('${c}',this)">${c}</button>`).join('');
-  }catch(e){
-    document.getElementById('filterWrap').innerHTML='<button class="active" onclick="filterColor(\'ALL\',this)">ALL</button><button onclick="filterColor(\'MAROON\',this)">MAROON</button><button onclick="filterColor(\'KREM\',this)">KREM</button>';
-  }
+  }catch(e){}
 }
-
 function filterColor(color,btn){
   activeFilter=color;
   document.querySelectorAll('.filter button').forEach(b=>b.classList.remove('active'));
@@ -102,7 +117,6 @@ function filterColor(color,btn){
   const f=allProducts.filter(p=> (window._varMap[p.id]||[]).some(v=>v.color_name.toUpperCase()===color || v.color_name.toUpperCase().includes(color)) );
   render(f);
 }
-
 function render(list){
   const el=document.getElementById('list');
   if(!list||list.length==0){el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:#8C7A6B">Tidak ada produk untuk warna '+activeFilter+'</div>';return;}
@@ -116,7 +130,6 @@ function render(list){
     return `<div class="prod-card" onclick="openProd('${p.id}')"><img src="${img}" loading="lazy"><div style="padding:10px"><div style="font-size:12px;font-weight:600">${p.name}</div><div style="font-size:10px;color:#8C7A6B">${activeFilter!=='ALL'? 'Preview: '+activeFilter : (p.category||'Voal Premium')}</div><div style="font-size:12px;font-weight:700;margin-top:6px">Rp${Number(p.price).toLocaleString('id-ID')}</div><div style="display:flex;gap:4px;margin-top:6px">${vars.slice(0,4).map(v=>`<div style="width:18px;height:18px;border-radius:50%;overflow:hidden;border:${activeFilter!=='ALL'&&v.color_name.toUpperCase()===activeFilter?'2px solid #2B1B12':'1px solid #EAE6E1'}"><img src="${v.image_url}" style="width:100%;height:100%;object-fit:cover"></div>`).join('')}${vars.length>4? `<span style="font-size:10px">+${vars.length-4}</span>`:''}</div></div></div>`;
   }).join('');
 }
-
 async function openProd(id){
  document.getElementById('prodModal').classList.add('show');
  document.getElementById('pBox').innerHTML='<div style="padding:20px">Loading...</div>';
@@ -126,7 +139,7 @@ async function openProd(id){
  if(curVariants.length==0) curVariants=[{color_name:p.category||'KREM', image_url:p.image_url}];
  curColor=curVariants[0].color_name; curImg=curVariants[0].image_url;
  if(activeFilter!=='ALL'){const mf=curVariants.find(v=>v.color_name.toUpperCase()===activeFilter)||curVariants.find(v=>v.color_name.toUpperCase().includes(activeFilter)); if(mf){curColor=mf.color_name; curImg=mf.image_url;}}
- document.getElementById('pBox').innerHTML=`<div class="p-gallery"><div class="p-main"><img id="bigImg" src="${curImg}"></div><div class="p-thumbs">${curVariants.map((v,i)=>`<img src="${v.image_url}" class="${v.image_url===curImg?'active':''}" onclick="pickColor('${v.color_name}','${v.image_url}',${i})">`).join('')}</div></div><div class="p-info"><div style="display:flex;justify-content:space-between"><div style="font-size:11px;letter-spacing:2px;color:#8C7A6B">BESTSELLER V26</div><div style="cursor:pointer;font-size:22px" onclick="closeProd()">×</div></div><div style="font-family:'Cormorant Garamond';font-size:22px;margin-top:6px">${p.name}</div><div style="font-family:'Cormorant Garamond';font-size:36px;font-weight:700;margin:6px 0">Rp${Number(p.price).toLocaleString('id-ID')}</div><div style="font-size:12px;color:#666">Voal premium 115x115, adem tidak nerawang.</div><div style="font-size:11px;letter-spacing:2px;margin:16px 0 8px">PILIH WARNA: <b id="selCol">${curColor}</b></div><div style="display:flex;gap:8px;flex-wrap:wrap">${curVariants.map((v,i)=>`<button id="btn-${i}" style="padding:10px 16px;border:1px solid ${v.image_url===curImg?'#2B1B12':'#EAE6E1'};background:${v.image_url===curImg?'#2B1B12':'#fff'};color:${v.image_url===curImg?'#fff':'#000'};font-size:11px;border-radius:8px;cursor:pointer" onclick="pickColor('${v.color_name}','${v.image_url}',${i})">${v.color_name}</button>`).join('')}</div><div style="display:flex;gap:8px;margin-top:18px"><button class="btn" style="background:#fff;border:1px solid #2B1B12;color:#2B1B12" onclick="addToCartFromModal()">+ Keranjang</button><button class="btn" onclick="buyFromModal()">Beli Sekarang</button></div></div>`;
+ document.getElementById('pBox').innerHTML=`<div class="p-gallery"><div class="p-main"><img id="bigImg" src="${curImg}"></div><div class="p-thumbs">${curVariants.map((v,i)=>`<img src="${v.image_url}" class="${v.image_url===curImg?'active':''}" onclick="pickColor('${v.color_name}','${v.image_url}',${i})">`).join('')}</div></div><div class="p-info"><div style="display:flex;justify-content:space-between"><div style="font-size:11px;letter-spacing:2px;color:#8C7A6B">BESTSELLER</div><div style="cursor:pointer;font-size:22px" onclick="closeProd()">×</div></div><div style="font-family:'Cormorant Garamond';font-size:22px;margin-top:6px">${p.name}</div><div style="font-family:'Cormorant Garamond';font-size:36px;font-weight:700;margin:6px 0">Rp${Number(p.price).toLocaleString('id-ID')}</div><div style="font-size:12px;color:#666">Voal premium 115x115, adem tidak nerawang.</div><div style="font-size:11px;letter-spacing:2px;margin:16px 0 8px">PILIH WARNA: <b id="selCol">${curColor}</b></div><div style="display:flex;gap:8px;flex-wrap:wrap">${curVariants.map((v,i)=>`<button id="btn-${i}" style="padding:10px 16px;border:1px solid ${v.image_url===curImg?'#2B1B12':'#EAE6E1'};background:${v.image_url===curImg?'#2B1B12':'#fff'};color:${v.image_url===curImg?'#fff':'#000'};font-size:11px;border-radius:8px;cursor:pointer" onclick="pickColor('${v.color_name}','${v.image_url}',${i})">${v.color_name}</button>`).join('')}</div><div style="display:flex;gap:8px;margin-top:18px"><button class="btn" style="background:#fff;border:1px solid #2B1B12;color:#2B1B12" onclick="addToCartFromModal()">+ Keranjang</button><button class="btn" onclick="buyFromModal()">Beli Sekarang</button></div></div>`;
 }
 function pickColor(color,img,idx){curColor=color; curImg=img; document.getElementById('bigImg').src=img; document.getElementById('selCol').innerText=color; document.querySelectorAll('.p-thumbs img').forEach((el,i)=>el.classList.toggle('active',i==idx)); curVariants.forEach((v,i)=>{const b=document.getElementById('btn-'+i); if(b){ const active=v.image_url===img; b.style.background=active?'#2B1B12':'#fff'; b.style.color=active?'#fff':'#000'; b.style.borderColor=active?'#2B1B12':'#EAE6E1';}});}
 function closeProd(){document.getElementById('prodModal').classList.remove('show');}
@@ -138,13 +151,13 @@ function openCart(){renderCart();document.getElementById('cartModal').classList.
 function closeCart(){document.getElementById('cartModal').classList.remove('open');}
 function renderCart(){const c=getCart();const list=document.getElementById('cartList');const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);document.getElementById('cartTotalQty').innerText=c.reduce((a,b)=>a+b.qty,0);document.getElementById('cartSubtotal').innerText='Rp'+sub.toLocaleString('id-ID');document.getElementById('ongkirPrice').innerText='Rp'+selectedOngkirCost.toLocaleString('id-ID');document.getElementById('cartTotalPrice').innerText='Rp'+(sub+selectedOngkirCost).toLocaleString('id-ID');if(c.length==0){list.innerHTML='<p style="font-size:12px;color:#8C7A6B;text-align:center;padding:20px">Keranjang kosong</p>';return;}list.innerHTML=c.map((it,i)=>`<div style="display:flex;gap:10px;align-items:center;border-bottom:1px solid #eee;padding:10px 0"><img src="${it.img}" style="width:54px;height:54px;object-fit:cover;object-position:top;border-radius:10px;border:1px solid #EAE6E1"><div style="flex:1"><div style="font-size:12px;font-weight:600">${it.warna}</div><div style="font-size:11px">Rp${it.harga.toLocaleString('id-ID')} x ${it.qty}</div></div><button onclick="changeQty(${i},-1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#fff;cursor:pointer">-</button><span style="margin:0 6px;font-size:12px">${it.qty}</span><button onclick="changeQty(${i},1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#fff;cursor:pointer">+</button></div>`).join('');}
 function changeQty(i,d){let c=getCart();c[i].qty+=d;if(c[i].qty<=0)c.splice(i,1);saveCart(c);}
-function askClearCart(){if(getCart().length===0){showCartToast('Kosong','https://via.placeholder.com/100');return;} showConfirm('Kosongkan Keranjang?','Semua item di keranjang akan dihapus. Yakin?',()=>{saveCart([]); selectedOngkirCost=0; selectedService=''; document.getElementById('ongkirLabel').innerText='belum cek'; document.getElementById('ongkirPrice').innerText='Rp0'; renderCart();});}
-function showToastInfo(msg){const t=document.getElementById('cartToast'); document.getElementById('toastImg').src=''; document.getElementById('toastText').innerText=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500);}
+function askClearCart(){if(getCart().length===0)return; showConfirm('Kosongkan Keranjang?','Semua item di keranjang akan dihapus. Yakin?',()=>{saveCart([]); selectedOngkirCost=0; selectedService=''; document.getElementById('ongkirLabel').innerText='belum cek'; document.getElementById('ongkirPrice').innerText='Rp0'; renderCart();});}
+function showToastInfo(msg){const t=document.getElementById('cartToast'); document.getElementById('toastText').innerText=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500);}
 async function searchDest(){const q=document.getElementById('destSearch').value.trim(); if(!q){ showToastInfo('Ketik kecamatan dulu ya'); return; } const dl=document.getElementById('destList'); dl.style.display='block'; dl.innerHTML='⏳ Mencari...'; try{const r=await fetch('/api/search?q='+encodeURIComponent(q));const j=await r.json();dl.innerHTML=j.data.map(d=>`<div style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;" onclick="pilihDest('${d.id}','${d.label.replace(/'/g,"")}')">${d.label} - <b>KLIK PILIH</b></div>`).join('');}catch(e){dl.innerHTML='Error';}}
 function pilihDest(id,label){selectedDestId=id;selectedDestLabel=label;document.getElementById('destSearch').value=label;document.getElementById('destList').innerHTML='<div style="padding:10px;background:#dcfce7;border-radius:10px;">✅ Tujuan: <b>'+label+'</b></div>';}
 async function cekOngkir(){if(!selectedDestId){ showToastInfo('Pilih kecamatan dulu!'); return; } document.getElementById('ongkirResult').innerHTML='⏳ Mengecek...'; try{ const res=await fetch('/api/cost',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({origin:tokoOriginId,destination:selectedDestId,weight:1000,courier:document.getElementById('courierSelect').value})}); const data=await res.json(); const arr=data.data||data.costs||data; const list=Array.isArray(arr)?arr:(arr.costs||[]); let html='<div style="font-size:11px;margin-bottom:4px;">Pilih layanan:</div>'; list.forEach(c=>{html+=`<div onclick="setOngkir(${c.cost||0},'${c.service||'REG'}','${c.etd||'-'}')" style="padding:10px;border:1px solid #EAE6E1;margin:4px 0;border-radius:10px;display:flex;justify-content:space-between;cursor:pointer;background:#fff;"><div><b>${c.service}</b><br><small>${c.etd} hari</small></div><b>Rp${Number(c.cost).toLocaleString('id-ID')}</b></div>`;}); document.getElementById('ongkirResult').innerHTML=html; }catch(e){document.getElementById('ongkirResult').innerHTML='❌ '+e.message;}}
 function setOngkir(cost,service,etd){selectedOngkirCost=Number(cost);selectedService=service+' ('+etd+' hari)';document.getElementById('ongkirLabel').innerText=selectedService;document.getElementById('ongkirResult').innerHTML='<div style="padding:10px;background:#dcfce7;border-radius:10px;">✅ Dipilih: <b>'+service+'</b> - Rp'+selectedOngkirCost.toLocaleString('id-ID')+'</div>';renderCart();}
 function checkoutWA(){const c=getCart(); if(c.length==0){showToastInfo('Keranjang kosong');return;} let msg=`Halo ${STORE_NAME} 👋%0A%0ASaya mau pesan:%0A`; c.forEach(it=>{msg+=`- ${it.warna} x${it.qty} = Rp${(it.harga*it.qty).toLocaleString('id-ID')}%0A`}); const sub=c.reduce((a,b)=>a+b.harga*b.qty,0); msg+=`%0ASubtotal: Rp${sub.toLocaleString('id-ID')}%0A`; if(selectedOngkirCost>0)msg+=`Ongkir (${selectedService}): Rp${selectedOngkirCost.toLocaleString('id-ID')}%0A`; msg+=`Total: Rp${(sub+selectedOngkirCost).toLocaleString('id-ID')}%0A`; window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');}
-async function load(){try{const {data}=await supabaseClient.from('settings').select('*'); if(data){ const n=data.find(s=>s.key==='store_name')?.value; const wa=data.find(s=>s.key==='wa_number')?.value; const oid=data.find(s=>s.key==='toko_origin_id')?.value; const olabel=data.find(s=>s.key==='toko_origin_label')?.value; if(n)STORE_NAME=n,document.getElementById('storeLogo').innerText=n; if(wa)WA_NUMBER=wa; if(oid){tokoOriginId=oid; document.getElementById('originInfo').innerText=olabel+' ('+oid+')';} }}catch(e){} try{const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false}); const {data:vars}=await supabaseClient.from('product_variants').select('*'); allProducts=data||[]; window._varMap={}; (vars||[]).forEach(v=>{ if(!window._varMap[v.product_id]) window._varMap[v.product_id]=[]; window._varMap[v.product_id].push(v); }); render(allProducts); await loadFilters();}catch(e){} updateCount();}
+async function load(){try{const {data}=await supabaseClient.from('settings').select('*'); if(data){ const n=data.find(s=>s.key==='store_name')?.value; const wa=data.find(s=>s.key==='wa_number')?.value; const oid=data.find(s=>s.key==='toko_origin_id')?.value; const olabel=data.find(s=>s.key==='toko_origin_label')?.value; if(n){STORE_NAME=n; const parts=n.split(' '); document.getElementById('storeLogo').innerHTML=parts[0]+'<span>'+parts.slice(1).join(' ')+'</span>';} if(wa)WA_NUMBER=wa; if(oid){tokoOriginId=oid; document.getElementById('originInfo').innerText=olabel+' ('+oid+')';} }}catch(e){} try{const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false}); const {data:vars}=await supabaseClient.from('product_variants').select('*'); allProducts=data||[]; window._varMap={}; (vars||[]).forEach(v=>{ if(!window._varMap[v.product_id]) window._varMap[v.product_id]=[]; window._varMap[v.product_id].push(v); }); render(allProducts); await loadFilters();}catch(e){} updateCount();}
 load();
 </script></body></html>
