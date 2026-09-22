@@ -17,28 +17,28 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 .filter{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.filter button{padding:8px 14px;border:1px solid var(--champ);background:#fff;border-radius:20px;font-size:11px;cursor:pointer}
 .filter button.active{background:var(--esp);color:#fff;border-color:var(--esp)}
 .prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.prod-card{border:1px solid #EAE6E1;background:#fff;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer}
-.prod-card img{width:100%;height:220px;object-fit:cover}
+.prod-card img{width:100%;height:220px;object-fit:cover;object-position:top}
 #cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:flex-end}
 #cartBox{background:#fff;width:100%;max-width:480px;margin:0 auto;max-height:85vh;overflow:auto;border-radius:16px 16px 0 0;padding:16px}
 .btn{width:100%;padding:12px;background:var(--esp);color:#fff;border:none;border-radius:10px;letter-spacing:2px;font-size:11px;font-weight:bold;cursor:pointer}
-/* FIX: FOTO KECIL MINI DI KANAN */
+/* ===== FIX UTAMA FOTO BESAR KEPOTONG ===== */
 #prodModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;align-items:center;justify-content:center;padding:10px}
 #prodModal.show{display:flex}
 .p-box{background:#fff;max-width:900px;width:100%;border-radius:16px;overflow:hidden;display:grid;grid-template-columns:1fr 380px;max-height:92vh}
 .p-gallery{display:grid;grid-template-columns:1fr 62px;gap:8px;padding:8px;background:#F6EEE3;align-items:start}
-.p-main{width:100%;aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:#fff}
-.p-main img{width:100%;height:100%;object-fit:cover}
+.p-main{width:100%;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:#F6EEE3;display:flex;align-items:flex-start;justify-content:center}
+.p-main img{width:100%;height:100%;object-fit:contain;object-position:top center;background:#F6EEE3}
 .p-thumbs{display:flex;flex-direction:column;gap:6px}
-.p-thumbs img{width:54px;height:68px;object-fit:cover;border-radius:6px;cursor:pointer;opacity:.65;border:1.5px solid transparent}
+.p-thumbs img{width:54px;height:68px;object-fit:cover;object-position:top;border-radius:8px;cursor:pointer;opacity:.65;border:1.5px solid transparent;background:#fff}
 .p-thumbs img.active{opacity:1;border-color:var(--esp)}
 .p-info{padding:14px;overflow:auto}
-@media(max-width:800px){.p-box{grid-template-columns:1fr;max-height:95vh;overflow:auto}.p-gallery{grid-template-columns:1fr 58px}.p-thumbs img{width:50px;height:64px}}
+@media(max-width:800px){.p-box{grid-template-columns:1fr;max-height:95vh;overflow:auto}.p-gallery{grid-template-columns:1fr 58px}.p-main{aspect-ratio:4/5}.p-thumbs img{width:50px;height:64px}}
 </style></head><body>
 <nav><div class="nav-in"><div class="nav-top"><div class="logo" id="storeLogo">ARINDA</div><div class="icons">
 <a href="index.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16L20 20" stroke-linecap="round"/></svg></a>
 <button class="icon-btn" onclick="openCart()"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 10H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cCount">0</span></button>
 </div></div><div class="menu"><a href="index.html">BERANDA</a><a class="active">PRODUK</a><a href="kategori.html">KATEGORI</a></div><div class="search-wrap"><form onsubmit="doSearch(event)"><input id="q" type="search" placeholder="Cari hijab..."></form></div></div></nav>
-<div class="section"><div style="font-family:'Cormorant Garamond';font-size:22px">Produk Ready Stock</div><div style="font-size:10px;letter-spacing:2px;color:#8C7A6B;margin-bottom:8px">KLIK FOTO UNTUK PREVIEW WARNA - FOTO KECIL DI KANAN MINI</div><div class="filter"><button class="active" onclick="filterColor('ALL',this)">ALL</button><button onclick="filterColor('NAVY',this)">NAVY</button><button onclick="filterColor('HITAM',this)">HITAM</button><button onclick="filterColor('KREM',this)">KREM</button><button onclick="filterColor('MAROON',this)">MAROON</button></div><div id="list" class="prod-grid">Loading...</div></div>
+<div class="section"><div style="font-family:'Cormorant Garamond';font-size:22px">Produk Ready Stock</div><div style="font-size:10px;letter-spacing:2px;color:#8C7A6B;margin-bottom:8px">KLIK FOTO UNTUK PREVIEW WARNA - FOTO KECIL DI KANAN MINI 54px</div><div class="filter"><button class="active" onclick="filterColor('ALL',this)">ALL</button><button onclick="filterColor('NAVY',this)">NAVY</button><button onclick="filterColor('HITAM',this)">HITAM</button><button onclick="filterColor('KREM',this)">KREM</button><button onclick="filterColor('MAROON',this)">MAROON</button></div><div id="list" class="prod-grid">Loading...</div></div>
 
 <div id="cartModal" onclick="if(event.target==this)closeCart()"><div id="cartBox">
 <div style="display:flex;justify-content:space-between;align-items:center"><b>Keranjang (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:20px">×</button></div>
@@ -113,7 +113,7 @@ function buyFromModal(){addToCartFromModal(); closeProd(); openCart();}
 function addCart(n,p,i){let c=getCart();let idx=c.findIndex(a=>a.warna==n);if(idx>-1)c[idx].qty++;else c.push({warna:n,qty:1,harga:Number(p),img:i});saveCart(c);}
 function openCart(){renderCart();document.getElementById('cartModal').style.display='flex';}
 function closeCart(){document.getElementById('cartModal').style.display='none';}
-function renderCart(){const c=getCart();const list=document.getElementById('cartList');const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);document.getElementById('cartTotalQty').innerText=c.reduce((a,b)=>a+b.qty,0);document.getElementById('cartSubtotal').innerText='Rp'+sub.toLocaleString('id-ID');document.getElementById('ongkirPrice').innerText='Rp'+selectedOngkirCost.toLocaleString('id-ID');document.getElementById('cartTotalPrice').innerText='Rp'+(sub+selectedOngkirCost).toLocaleString('id-ID');if(c.length==0){list.innerHTML='<p style="font-size:12px;color:#8C7A6B">Keranjang kosong</p>';return;}list.innerHTML=c.map((it,i)=>`<div style="display:flex;gap:10px;align-items:center;border-bottom:1px solid #eee;padding:8px 0"><img src="${it.img}" style="width:50px;height:50px;object-fit:cover;border-radius:8px"><div style="flex:1"><div style="font-size:12px;font-weight:600">${it.warna}</div><div style="font-size:11px">Rp${it.harga.toLocaleString('id-ID')} x ${it.qty}</div></div><button onclick="changeQty(${i},-1)" style="width:26px;height:26px;border-radius:50%;border:1px solid #ddd">-</button><span style="margin:0 6px">${it.qty}</span><button onclick="changeQty(${i},1)" style="width:26px;height:26px;border-radius:50%;border:1px solid #ddd">+</button></div>`).join('');}
+function renderCart(){const c=getCart();const list=document.getElementById('cartList');const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);document.getElementById('cartTotalQty').innerText=c.reduce((a,b)=>a+b.qty,0);document.getElementById('cartSubtotal').innerText='Rp'+sub.toLocaleString('id-ID');document.getElementById('ongkirPrice').innerText='Rp'+selectedOngkirCost.toLocaleString('id-ID');document.getElementById('cartTotalPrice').innerText='Rp'+(sub+selectedOngkirCost).toLocaleString('id-ID');if(c.length==0){list.innerHTML='<p style="font-size:12px;color:#8C7A6B">Keranjang kosong</p>';return;}list.innerHTML=c.map((it,i)=>`<div style="display:flex;gap:10px;align-items:center;border-bottom:1px solid #eee;padding:8px 0"><img src="${it.img}" style="width:50px;height:50px;object-fit:cover;object-position:top;border-radius:8px"><div style="flex:1"><div style="font-size:12px;font-weight:600">${it.warna}</div><div style="font-size:11px">Rp${it.harga.toLocaleString('id-ID')} x ${it.qty}</div></div><button onclick="changeQty(${i},-1)" style="width:26px;height:26px;border-radius:50%;border:1px solid #ddd">-</button><span style="margin:0 6px">${it.qty}</span><button onclick="changeQty(${i},1)" style="width:26px;height:26px;border-radius:50%;border:1px solid #ddd">+</button></div>`).join('');}
 function changeQty(i,d){let c=getCart();c[i].qty+=d;if(c[i].qty<=0)c.splice(i,1);saveCart(c);}
 function clearCart(){if(!confirm('Kosongkan?'))return;saveCart([]);selectedOngkirCost=0;selectedService='';renderCart();}
 async function searchDest(){const q=destSearch.value.trim();if(!q)return alert('Ketik kecamatan');destList.style.display='block';destList.innerHTML='⏳ Mencari...';try{const r=await fetch('/api/search?q='+encodeURIComponent(q));const j=await r.json();destList.innerHTML=j.data.map(d=>`<div style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;" onclick="pilihDest('${d.id}','${d.label.replace(/'/g,"")}')">${d.label} - <b>KLIK PILIH</b></div>`).join('');}catch(e){destList.innerHTML='Error';}}
