@@ -15,20 +15,28 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-
 .nav-menu{border-top:1px solid #F6F1EB;background:#fff;overflow-x:auto;scrollbar-width:none}.nav-menu::-webkit-scrollbar{display:none}
 .menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:40px}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:14px 0;opacity:.4;white-space:nowrap;border-bottom:1px solid transparent}.menu a.active{opacity:1;border-bottom-color:#111}
 #searchBox{display:none;max-width:1240px;margin:0 auto;padding:12px 20px}#searchBox input{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;background:transparent;font-size:13px;outline:none}
-/* BANNER ANTI KEPOTONG */
 .hero{position:relative;width:100%;height:88vh;min-height:640px;background:#E8DDD0;overflow:hidden}
 .hero img{width:100%;height:100%;object-fit:cover;display:block}
 .hero img.desktop-only{object-position:75% center}
 .hero img.mobile-only{object-position:center top}
 .desktop-only{display:block}.mobile-only{display:none}
 .btn{display:inline-block;background:#111;color:#fff;padding:17px 36px;font-size:9px;letter-spacing:4px;text-decoration:none;border:none;cursor:pointer}
-/* FIX KOTAK GAK NYATU */
 .section{max-width:1240px;margin:0 auto;padding:28px 16px 0 16px}
 .sub{font-size:9px;letter-spacing:5px;color:#111;margin:0}
 .colors{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px}
-.k-card{background:#fff;border:1px solid #F2EFEA;cursor:pointer;overflow:hidden}
+.k-card{background:#fff;border:1px solid #F2EFEA;cursor:pointer;overflow:hidden;position:relative}
 .k-card img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;object-position:top}
 .hero-text{position:absolute;left:24px;bottom:32px;background:transparent!important;border:none;padding:0;max-width:440px;z-index:2}
+/* HEART LV STYLE */
+.heart-btn{position:absolute;top:8px;right:8px;z-index:3;width:32px;height:32px;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #F2EFEA;transition:.2s}
+.heart-btn:active{transform:scale(0.9);background:#111}
+.heart-btn:active svg{stroke:#fff;fill:#fff}
+.heart-btn svg{width:15px;height:15px;stroke:#111;fill:none;stroke-width:1.2}
+.heart-btn.loved svg{fill:#111}
+#cartToast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#111;color:#fff;padding:10px 18px;border-radius:30px;display:flex;align-items:center;gap:12px;z-index:9999;transition:.6s;opacity:0;pointer-events:none}
+#cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}
+#cartToast img{width:38px;height:38px;border-radius:50%;object-fit:cover}
+#cartFly{position:fixed;z-index:9998;width:60px;height:60px;border-radius:50%;object-fit:cover;pointer-events:none;display:none}
 @media(min-width:700px){.colors{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:800px){
 .nav-top{padding:15px 16px}.logo{font-size:18px;letter-spacing:6px}.menu{padding:0 16px;gap:28px}
@@ -62,12 +70,28 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-
 <div style="margin-top:6px;font-size:7px;letter-spacing:2px;color:#8C7A6B;opacity:.5">Bahan Adem, Tidak Nerawang | Made in Indonesia</div>
 </footer>
 
+<div id="cartToast"><img id="toastImg" src=""><span id="toastText" style="font-size:10px;letter-spacing:1px"></span></div><img id="cartFly" src="">
+
 <script>
 const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
 function toggleSearch(){const b=document.getElementById('searchBox');b.style.display=b.style.display=='block'?'none':'block';if(b.style.display=='block')document.getElementById('q').focus();}
 function goSearch(e){e.preventDefault();const v=document.getElementById('q').value.trim();if(v)location.href='produk.html?q='+encodeURIComponent(v);}
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return []}}
+function saveCart(c){localStorage.setItem('arinda_cart2',JSON.stringify(c));updateCount();}
 function updateCount(){document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+Number(b.qty||0),0);}
+function addCart(n,p,i){let c=getCart();let idx=c.findIndex(a=>a.warna==n);if(idx>-1)c[idx].qty++;else c.push({warna:n,qty:1,harga:Number(p),img:i});saveCart(c);}
+function showCartToast(color,img){
+  const toast=document.getElementById('cartToast');document.getElementById('toastImg').src=img;document.getElementById('toastText').innerText=color+' masuk keranjang!';
+  const fly=document.getElementById('cartFly');fly.src=img;fly.style.display='block';fly.style.left='50%';fly.style.top='50%';
+  fly.animate([{transform:'translate(-50%,-50%) scale(1)',opacity:1},{transform:'translate(40vw,-40vh) scale(0.2)',opacity:0}],{duration:800}).onfinish=()=>fly.style.display='none';
+  toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2800);
+}
+function quickAdd(title,img,btnEl){
+  if(btnEl){btnEl.classList.add('loved');setTimeout(()=>btnEl.classList.remove('loved'),600);}
+  // harga default 99000, ambil dari produk jika ada
+  addCart(title,99000,img);
+  showCartToast(title,img);
+}
 async function load(){
   try{
     const {data:banners}=await supabaseClient.from('banners').select('*').eq('is_active',true).order('created_at',{ascending:false}).limit(1);
@@ -80,16 +104,26 @@ async function load(){
     }
     const {data:settings}=await supabaseClient.from('settings').select('*');
     let html='';
+    let bestSellerData = [];
     if(settings){
       const get=k=>settings.find(s=>s.key===k)?.value;
       let raw=[]; try{const v=get('home_koleksi_terlaris'); if(v) raw=JSON.parse(v);}catch(e){}
       if(raw.length && typeof raw[0]==='object'){
-        html=raw.slice(0,4).map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.url}"><div style="padding:12px 10px;border-top:1px solid #F6F1EB"><div style="font-size:9px;letter-spacing:2px;font-family:'Inter';opacity:.6">${v.title||''}</div></div></div>`).join('');
+        bestSellerData = raw.slice(0,4);
+        html=bestSellerData.map(v=>`
+          <div class="k-card">
+            <div class="heart-btn" onclick="event.stopPropagation();quickAdd('${(v.title||'BEST SELLER').replace(/'/g,"")}','${v.url}',this)"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div>
+            <div onclick="location.href='produk.html'"><img src="${v.url}"><div style="padding:12px 10px;border-top:1px solid #F6F1EB"><div style="font-size:9px;letter-spacing:2px;font-family:'Inter';opacity:.6">${v.title||''}</div></div></div>
+          </div>`).join('');
       }
     }
     if(!html){
       const {data:fallback}=await supabaseClient.from('product_variants').select('*').order('id',{ascending:false}).limit(4);
-      if(fallback) html=fallback.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"></div>`).join('');
+      if(fallback) html=fallback.map(v=>`
+        <div class="k-card">
+          <div class="heart-btn" onclick="event.stopPropagation();quickAdd('BEST SELLER','${v.image_url}',this)"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div>
+          <div onclick="location.href='produk.html'"><img src="${v.image_url}"></div>
+        </div>`).join('');
     }
     if(html) document.getElementById('koleksi4Grid').innerHTML=html;
   }catch(e){console.error(e);}
