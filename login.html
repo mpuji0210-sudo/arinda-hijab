@@ -1,32 +1,45 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Login Arinda</title>
+<html lang="id"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login - ARINDA ADMIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet">
 <style>
-body{background:#FFFCF9;display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;margin:0}
-.card{background:#fff;padding:24px;border-radius:16px;width:300px;border:1px solid #EAE6E1}
-.input{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}
-.btn{background:#2B1B12;color:#fff;border:none;padding:12px;width:100%;border-radius:10px;font-weight:bold;cursor:pointer}
-</style>
-</head>
-<body>
+body{margin:0;background:#F9F3EE;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Plus Jakarta Sans',sans-serif;color:#2B1B12}
+.card{background:#fff;padding:28px;border-radius:20px;width:340px;border:1px solid #EEE6DF;box-shadow:0 12px 30px rgba(43,27,18,.08)}
+.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:22px;text-align:center;margin-bottom:4px}
+.sub{font-size:10px;letter-spacing:2px;color:#8C7A6B;text-align:center;margin-bottom:20px}
+.input{width:100%;padding:13px 14px;margin:8px 0;border:1px solid #E7DDD5;border-radius:12px;box-sizing:border-box;background:#FFFCF9;font-size:13px;outline:none}
+.input:focus{border-color:#2B1B12}
+.btn{background:#2B1B12;color:#fff;border:none;padding:13px;width:100%;border-radius:12px;font-weight:700;cursor:pointer;letter-spacing:1px;margin-top:10px}
+.small{font-size:11px;color:#8C7A6B;text-align:center;margin-top:12px;line-height:1.5}
+.eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:12px;color:#8C7A6B}
+</style></head><body>
 <div class="card">
-<h2 style="margin:0 0 10px">Login Arinda</h2>
-<input id="user" class="input" placeholder="Username">
-<input id="pass" class="input" type="password" placeholder="Password">
-<button class="btn" onclick="doLogin()">LOGIN</button>
+<div class="logo">ARINDA</div><div class="sub">ADMIN V25 - SECURE LOGIN</div>
+<input id="user" class="input" placeholder="Username" value="admin" autocomplete="username">
+<div style="position:relative">
+<input id="pass" class="input" type="password" placeholder="Password" autocomplete="current-password">
+<span class="eye" onclick="togglePass()">👁️</span>
+</div>
+<button class="btn" onclick="doLogin()">LOGIN →</button>
+<div class="small">Default: <b>admin / admin123</b><br>Login tersimpan di browser kamu aja<br><br><a href="index.html" style="color:#8C5A2B;text-decoration:none">← Kembali ke Beranda</a></div>
+<div id="msg" class="small" style="color:#B42318;display:none"></div>
 </div>
 <script>
+function togglePass(){const p=document.getElementById('pass');p.type=p.type==='password'?'text':'password';}
 function doLogin(){
-  if(document.getElementById('user').value==='admin' && document.getElementById('pass').value==='admin123'){
+  const u=document.getElementById('user').value.trim();
+  const p=document.getElementById('pass').value.trim();
+  if(u==='admin' && p==='admin123'){
     localStorage.setItem('arinda_admin','login');
+    localStorage.setItem('arinda_login_time',Date.now());
     location.href='admin.html';
   } else {
-    alert('Salah! Pakai admin / admin123');
+    const m=document.getElementById('msg');
+    m.style.display='block'; m.innerText='❌ Salah! Pakai admin / admin123';
+    setTimeout(()=>m.style.display='none',2500);
   }
 }
-</script>
-</body>
-</html>
+document.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+if(localStorage.getItem('arinda_admin')==='login'){location.href='admin.html';}
+</script></body></html>
