@@ -1,126 +1,98 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kontak - ARINDA HIJAB PREMIUM | Konsultasi Warna & Ongkir</title>
-<meta name="description" content="Hubungi ARINDA HIJAB PREMIUM - Konsultasi warna hijab sesuai undertone, cek stok, cek ongkir otomatis.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://arinda-hijab.vercel.app/kontak.html">
-<meta property="og:title" content="Hubungi ARINDA HIJAB PREMIUM - Konsultasi Warna">
-<meta property="og:description" content="Konsultasi warna, ukuran, dan cek ongkir otomatis. WA 08.00-21.00 WIB. Rating 4.9/5 dari 1200+ pembeli.">
-<meta property="og:image" content="https://via.placeholder.com/1200x630/F6EEE3/2B1B12?text=ARINDA+HIJAB+PREMIUM">
-<meta property="og:site_name" content="ARINDA HIJAB PREMIUM">
-<meta name="twitter:card" content="summary_large_image">
+<title>Kontak - ARINDA HIJAB PREMIUM</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
-:root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--off:#FFFCF9}
-*{box-sizing:border-box}body{margin:0;background:var(--off);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden}
-nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.98);backdrop-filter:blur(12px);border-bottom:1px solid var(--champ)}
-.nav-in{max-width:1000px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
-.logo{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:3px;font-size:18px;line-height:1}
-.logo span{display:block;font-family:'Plus Jakarta Sans';font-size:9px;letter-spacing:4px;color:var(--taupe);margin-top:3px;font-weight:500}
-.menu{display:flex;gap:20px}
-.menu a{text-decoration:none;font-size:11px;letter-spacing:2px;color:var(--taupe);border-bottom:1.5px solid transparent;padding-bottom:3px;white-space:nowrap}
-.menu a.active{color:var(--esp);border-color:var(--esp)}
-.wrap{max-width:1000px;margin:0 auto;padding:32px 20px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.card{border:1px solid var(--champ);background:#fff;padding:20px;border-radius:16px}
-input,textarea,select{width:100%;padding:12px;border:1px solid var(--champ);font-family:inherit;font-size:13px;margin-top:6px;border-radius:10px;background:#FFFCF9;outline:none}
-input:focus,textarea:focus,select:focus{border-color:var(--esp)}
-.btn{padding:14px;background:var(--esp);color:#fff;text-align:center;font-size:11px;letter-spacing:2px;cursor:pointer;border:none;width:100%;margin-top:12px;border-radius:12px;font-weight:bold}
-
-/* MODAL CANTIK */
-.arinda-modal-bg{position:fixed;inset:0;background:rgba(43,27,18,.55);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:99999;padding:20px}
+:root{--esp:#111;--taupe:#8C7A6B;--line:#E9E6E1;--bg:#FFFCF9}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden}
+nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-top{max-width:1240px;margin:0 auto;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Cormorant Garamond';font-weight:400;letter-spacing:8px;font-size:21px}
+.logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;color:var(--taupe);margin-top:5px}
+.icons{display:flex;gap:22px;align-items:center}.icon-btn{background:none;border:none;cursor:pointer;position:relative;padding:0}.icon-btn svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.1}
+.badge{position:absolute;top:-7px;right:-9px;background:#111;color:#fff;font-size:7px;min-width:13px;height:13px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.nav-menu{border-top:1px solid #F6F1EB;background:#fff;overflow-x:auto;scrollbar-width:none}.nav-menu::-webkit-scrollbar{display:none}
+.menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:40px}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:14px 0;opacity:.4;white-space:nowrap;border-bottom:1px solid transparent}.menu a.active{opacity:1;border-bottom-color:#111}
+.wrap{max-width:1240px;margin:0 auto;padding:32px 16px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.card{border:1px solid #F2EFEA;background:#fff;padding:20px}
+input,textarea,select{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;font-family:'Inter';font-size:12px;margin-top:8px;background:transparent;outline:none;letter-spacing:.5px;border-radius:0}
+input:focus,textarea:focus,select:focus{border-bottom-color:#111}
+.btn{padding:14px;background:#111;color:#fff;text-align:center;font-size:9px;letter-spacing:3px;cursor:pointer;border:none;width:100%;margin-top:18px;border-radius:0}
+.arinda-modal-bg{position:fixed;inset:0;background:rgba(17,17,17,.45);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:99999;padding:20px}
 .arinda-modal-bg.show{display:flex}
-.arinda-modal{background:#FFFCF9;border:1px solid #EEE6DF;border-radius:24px;padding:24px;max-width:360px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(43,27,18,.2);animation:pop.25s ease}
-@keyframes pop{0%{transform:scale(.9);opacity:0}100%{transform:scale(1);opacity:1}}
-.arinda-modal-icon{width:60px;height:60px;background:#F6EEE6;border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:30px}
-.arinda-modal h4{font-family:'Cormorant Garamond';font-size:22px;margin:0 0 8px;color:#2B1B12}
-.arinda-modal p{font-size:13px;color:#8C7A6B;line-height:1.6;margin:0 0 20px}
-.arinda-modal-btn{background:#2B1B12;color:#fff;border:none;padding:13px 24px;border-radius:12px;font-weight:700;width:100%;cursor:pointer}
-
-/* === FIX RAPIH ELEGAN - ANTI TUMPUK === */
-@media(max-width:750px){
- .nav-in{flex-direction:column;align-items:center;padding:0;gap:0}
- .logo{width:100%;text-align:center;padding:16px 0 12px;background:#FFFCF9;border-bottom:1px solid #F6EEE6;font-size:20px;letter-spacing:4px}
- .logo span{letter-spacing:5px;font-size:10px}
- .menu{width:100%;justify-content:center;gap:0;padding:10px 6px;background:#fff;border-bottom:1px solid #EEE6DF;overflow-x:auto}
- .menu a{padding:8px 14px;margin:0 4px;border-radius:20px;border:1px solid #EEE6DF;background:#FFFCF9;font-size:9.5px;letter-spacing:1.2px;flex-shrink:0}
- .menu a.active{background:#2B1B12;color:#fff;border-color:#2B1B12}
- .wrap{grid-template-columns:1fr;padding:20px 14px;gap:16px}
+.arinda-modal{background:#FFFCF9;border:1px solid #F2EFEA;padding:24px;max-width:360px;width:100%;text-align:center}
+.arinda-modal h4{font-family:'Cormorant Garamond';font-size:22px;margin:0 0 8px;font-weight:400;letter-spacing:1px}
+.arinda-modal p{font-size:11px;opacity:.6;line-height:1.6;margin:0 0 20px}
+.arinda-modal-btn{background:#111;color:#fff;border:none;padding:13px 24px;width:100%;cursor:pointer;font-size:9px;letter-spacing:3px}
+@media(max-width:800px){
+.nav-top{padding:15px 16px}.logo{font-size:18px;letter-spacing:6px}.menu{padding:0 16px;gap:28px}
+.wrap{grid-template-columns:1fr;padding:20px 16px;gap:16px}
 }
-</style>
-</head><body>
-<nav><div class="nav-in"><div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a href="kontak.html" class="active">KONTAK</a></div></div></nav>
+</style></head><body>
+<nav><div class="nav-top"><div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons"><a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a></div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a href="kontak.html" class="active">KONTAK</a></div></div></nav>
 
 <div class="wrap">
 <div>
-<h1 style="font-family:'Cormorant Garamond';font-size:42px;line-height:.9;margin:0">Hubungi<br><i style="font-weight:400">Kami</i></h1>
-<p style="color:var(--taupe);font-size:13px;margin-top:12px">Konsultasi warna sesuai undertone, cek stok & ongkir.</p>
+<h1 style="font-family:'Cormorant Garamond';font-size:42px;line-height:.9;margin:0;font-weight:300;letter-spacing:-1px">Hubungi<br><i style="font-weight:300">Kami</i></h1>
+<p style="opacity:.5;font-size:11px;margin-top:12px;letter-spacing:1px;line-height:1.8">Konsultasi warna sesuai undertone, cek stok & ongkir.</p>
 <div style="display:grid;gap:12px;margin-top:20px">
-<div class="card">📍 <span id="originText">Jakarta - Kirim seluruh Indonesia</span><br><span style="font-size:11px;color:var(--taupe)">COD & QRIS Ready</span></div>
-<div class="card">💬 WhatsApp: <span id="waText">6285178098354</span><br><span style="font-size:11px;color:var(--taupe)">Jam 08.00 - 21.00 WIB</span></div>
-<div class="card">⭐ Rating 4.9/5,dari 1.200+ pembeli • <span id="koleksiInfo">Loading koleksi...</span></div>
+<div class="card" style="font-size:11px;letter-spacing:1px">📍 <span id="originText">Jakarta - Kirim seluruh Indonesia</span><br><span style="font-size:9px;opacity:.5">COD & QRIS Ready</span></div>
+<div class="card" style="font-size:11px;letter-spacing:1px">💬 WhatsApp: <span id="waText">6285178098354</span><br><span style="font-size:9px;opacity:.5">Jam 08.00 - 21.00 WIB</span></div>
+<div class="card" style="font-size:11px;letter-spacing:1px">⭐ Rating 4.9/5 dari 1.200+ pembeli • <span id="koleksiInfo">Loading...</span></div>
 </div>
 </div>
-
 <div class="card">
-<div style="font-size:11px;letter-spacing:2px;font-weight:700">FORM PESAN </div>
-<label style="font-size:11px;margin-top:12px;display:block">Nama</label><input id="nama" placeholder="Nama kamu">
-<label style="font-size:11px;margin-top:12px;display:block">Warna yang diminati</label>
-<select id="warna"><option>Loading warna bestseller...</option></select>
-<label style="font-size:11px;margin-top:12px;display:block">Pesan</label><textarea id="pesan" rows="4" placeholder="Mau tanya stok, ukuran, ongkir..."></textarea>
+<div style="font-size:9px;letter-spacing:4px">FORM PESAN</div>
+<label style="font-size:9px;letter-spacing:2px;margin-top:14px;display:block;opacity:.6">NAMA</label><input id="nama" placeholder="Nama kamu">
+<label style="font-size:9px;letter-spacing:2px;margin-top:14px;display:block;opacity:.6">WARNA YANG DIMINATI</label>
+<select id="warna"><option>Loading warna...</option></select>
+<label style="font-size:9px;letter-spacing:2px;margin-top:14px;display:block;opacity:.6">PESAN</label><textarea id="pesan" rows="4" placeholder="Mau tanya stok, ukuran, ongkir..."></textarea>
 <button class="btn" onclick="kirimWA()">KIRIM KE WHATSAPP</button>
-<div style="font-size:10px;color:var(--taupe);text-align:center;margin-top:8px">Langsung terhubung ke admin <span id="storeName2">ARINDA</span></div>
+<div style="font-size:8px;opacity:.4;text-align:center;margin-top:10px;letter-spacing:2px">Langsung terhubung ke admin <span id="storeName2">ARINDA</span></div>
 </div>
 </div>
 
-<div id="arindaModal" class="arinda-modal-bg" onclick="if(event.target===this)closeArindaModal()">
-  <div class="arinda-modal">
-    <div class="arinda-modal-icon">👋</div>
-    <h4 id="modalTitle">Hai Kak!</h4>
-    <p id="modalMsg">Isi nama dulu ya</p>
-    <button class="arinda-modal-btn" onclick="closeArindaModal()">Oke, Siap!</button>
-  </div>
-</div>
+<footer style="margin-top:32px;background:#FFFCF9;padding:48px 16px 36px;text-align:center;border-top:1px solid #F2EFEA">
+<div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div>
+<div style="font-size:7px;letter-spacing:5px;color:#8C7A6B;margin-top:6px">HIJAB PREMIUM</div>
+<div style="margin-top:18px;font-size:8px;letter-spacing:3px;opacity:.4">© 2026 ARINDA HIJAB PREMIUM</div>
+</footer>
+
+<div id="arindaModal" class="arinda-modal-bg" onclick="if(event.target===this)closeArindaModal()"><div class="arinda-modal"><h4 id="modalTitle">Hai Kak!</h4><p id="modalMsg">Isi nama dulu ya</p><button class="arinda-modal-btn" onclick="closeArindaModal()">OKE, SIAP!</button></div></div>
 
 <script>
 const supabaseClient=supabase.createClient("https://qjgevvizqeebtdqcbqmt.supabase.co","sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19");
 let WA_NUMBER="6285178098354"; let STORE_NAME="ARINDA";
+function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return []}}
+function updateCount(){const el=document.getElementById('cCount');if(el)el.innerText=getCart().reduce((a,b)=>a+(b.qty||0),0);}
 function showArindaModal(msg,title){document.getElementById('modalMsg').innerText=msg;if(title)document.getElementById('modalTitle').innerText=title;document.getElementById('arindaModal').classList.add('show');}
 function closeArindaModal(){document.getElementById('arindaModal').classList.remove('show');}
 async function loadSetting(){
+  updateCount();
   try{
     const {data} = await supabaseClient.from('settings').select('*');
-    const {data:banners} = await supabaseClient.from('banners').select('*').eq('is_active',true).order('id',{ascending:false}).limit(1);
     const {data:variants} = await supabaseClient.from('product_variants').select('color_name').limit(20);
-    if(banners && banners[0]){
-      const meta=document.querySelector('meta[property="og:image"]'); if(meta) meta.content=banners[0].image_url;
-    }
     if(data){
       const get=k=>data.find(s=>s.key===k)?.value;
       const sName=get('store_name'); const sWa=get('wa_number'); const sOrigin=get('toko_origin_label');
-      if(sName){
-        STORE_NAME=sName;
-        const parts=sName.split(' ');
-        document.getElementById('storeLogo').innerHTML=parts[0]+'<span>'+parts.slice(1).join(' ')+'</span>';
-        document.getElementById('storeName2').innerText=sName; document.title="Kontak - "+sName;
-      }
+      if(sName){STORE_NAME=sName;const parts=sName.split(' ');document.getElementById('storeLogo').innerHTML=parts[0]+'<span>'+parts.slice(1).join(' ')+'</span>';document.getElementById('storeName2').innerText=sName;}
       if(sWa){WA_NUMBER=sWa;document.getElementById('waText').innerText=sWa;}
       if(sOrigin){document.getElementById('originText').innerText=sOrigin+" - Kirim seluruh Indonesia";}
       let warnaList=[]; try{const raw=get('home_koleksi_terlaris')?JSON.parse(get('home_koleksi_terlaris')):[]; if(raw.length>0&&typeof raw[0]==='object'){warnaList=raw.map(x=>x.title).filter(Boolean); document.getElementById('koleksiInfo').innerText=raw.length+' warna bestseller';}}catch(e){}
       if(warnaList.length==0&&variants){warnaList=[...new Set(variants.map(v=>v.color_name))].slice(0,8);}
       if(warnaList.length==0)warnaList=['HITAM','KREM','MAROON','NAVY'];
-      document.getElementById('warna').innerHTML=warnaList.map(w=>`<option value="${w}">${w}</option>`).join('')+`<option value="Lainnya - Tanya Admin">Lainnya - Tanya Admin</option>`;
+      document.getElementById('warna').innerHTML=warnaList.map(w=>`<option value="${w}">${w}</option>`).join('')+`<option value="Lainnya - Tanya Admin">Lainnya</option>`;
     }
-  }catch(e){console.log(e)}
+  }catch(e){}
 }
 loadSetting();
 function kirimWA(){
  let n=document.getElementById('nama').value.trim();
- if(!n){showArindaModal(`Kak, isi nama dulu ya biar ${STORE_NAME} tau mau sapa siapa ✨`,"Isi Nama Dulu Yuk"); return;}
+ if(!n){showArindaModal(`Kak, isi nama dulu ya biar ${STORE_NAME} tau mau sapa siapa`,"Isi Nama Dulu Yuk"); return;}
  let w=document.getElementById('warna').value;
  let p=document.getElementById('pesan').value||'Mau tanya hijab';
  let msg=`Halo ${STORE_NAME}, saya ${n} \n\nWarna yang diminati: ${w}\nPesan: ${p}\n\nMohon infonya ya 🙏`;
  window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(msg),'_blank');
 }
-</script>
-</body></html>
+</script></body></html>
