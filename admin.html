@@ -66,7 +66,7 @@ function addVarRow(color='',img=''){
  const fileInput=document.createElement('input');fileInput.type='file';fileInput.className='var-file';fileInput.accept='image/*';fileInput.style.display='none';fileInput.id=id;fileInput.onchange=()=>previewNew(fileInput);
  const label=document.createElement('label');label.htmlFor=id;label.className='file-btn';label.innerText=img?'📸 Ganti Foto Warna':'📸 Pilih Foto Warna';
  const hidden=document.createElement('input');hidden.type='hidden';hidden.className='var-old-url';hidden.value=img||'';
- d.appendChild(fileInput);d.appendChild(label);d.appendChild(hidden);$("var Inputs").appendChild(d);
+ d.appendChild(fileInput);d.appendChild(label);d.appendChild(hidden);$("varInputs").appendChild(d);
 }
 window.previewNew=(input)=>{const slot=input.closest('.slot');const file=input.files[0];if(!file)return;const url=URL.createObjectURL(file);let img=slot.querySelector('.preview-img');if(!img){img=document.createElement('img');img.className='preview-img';img.style.cssText='width:100%;height:200px;object-fit:cover;border-radius:12px;margin-top:8px';slot.insertBefore(img,input);}img.src=url;slot.querySelector('.var-old-url').value='';};
 $("btnAddVar").onclick=()=>addVarRow();
@@ -94,7 +94,7 @@ window.delP=async(id)=>{if(!confirm('Hapus produk & semua warnanya?'))return;awa
 $("btnSaveProd").onclick=async()=>{
  const name=$("pName").value.trim();const price=Number($("pPrice").value);
  if(!name||!price){showToast('Isi nama & harga dulu',true);return;}
- const rows=[...document.querySelectorAll('#varInputs.slot')];
+ const rows=[...document.querySelectorAll('#varInputs. slot')];
  console.log('V31 TERDETEKSI:',rows.length,'slot - UNLIMITED!');
  $("saveStatus").innerText='⏳ Terdeteksi '+rows.length+' warna...';
  let finalVars=[];
