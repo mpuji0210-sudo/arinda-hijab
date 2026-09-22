@@ -1,7 +1,6 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ARINDA HIJAB PREMIUM</title>
-<meta name="description" content="ARINDA HIJAB PREMIUM - Hijab voal premium adem, tidak menerawang, 115x115cm laser cut rapi.">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -18,12 +17,19 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 .desktop-only{display:block}.mobile-only{display:none}
 .btn{display:inline-block;background:var(--esp);color:#fff;padding:11px 20px;font-size:11px;letter-spacing:2px;text-decoration:none;border:none;cursor:pointer;border-radius:8px;font-weight:bold}
 .section{max-width:1120px;margin:0 auto;padding:16px 14px}.sub{font-size:10px;letter-spacing:2.5px;color:var(--taupe);margin:4px 0 12px}
-.colors{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.k-card{border:1px solid var(--champ);background:#fff;border-radius:12px;overflow:hidden;cursor:pointer}.k-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block}
-.undertone-section{margin-top:22px;background:#fff;border:1px solid var(--champ);border-radius:14px;padding:16px}
+/* KOLEKSI FLEKSIBEL VERTIKAL - BISA 4 SAMPAI 20 FOTO */
+.colors{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:700px){.colors{grid-template-columns:repeat(5,1fr)}}
+.k-card{border:1px solid var(--champ);background:#fff;border-radius:16px;overflow:hidden;cursor:pointer;transition:.2s}
+.k-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.k-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block}
+/* UNDERTONE FOTO PERGELANGAN - BALIK LAGI */
+.undertone-section{margin-top:22px;background:#fff;border:1px solid var(--champ);border-radius:20px;overflow:hidden}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
 .info-box{background:#fff;border:1px solid var(--champ);border-radius:10px;padding:14px}.info-box b{font-size:12px}.info-box p{font-size:11px;line-height:1.6;color:#5a4a40;margin:6px 0 0}
-.faq{border:1px solid #EAE6E1;background:#fff;margin-top:10px;border-radius:10px;overflow:hidden}.faq-item{border-bottom:1px solid #EAE6E1}.faq-item:last-child{border:none}.faq-q{width:100%;text-align:left;background:#fff;border:none;padding:14px;font-size:13px;font-weight:600;display:flex;justify-content:space-between;align-items:center;cursor:pointer}.arrow{transition:transform.3s}.faq-item.active.arrow{transform:rotate(180deg)}.faq-a{max-height:0;overflow:hidden;transition:max-height.3s ease;background:#FFFCF9}.faq-item.active.faq-a{max-height:400px}.faq-a p{font-size:11.5px;line-height:1.7;color:#5a4a40;margin:0;padding:0 14px 14px}
-@media(max-width:800px){.desktop-only{display:none!important}.mobile-only{display:block!important}.colors{grid-template-columns:repeat(2,1fr)}.hero{height:75vh}.hero-text{left:14px;right:14px;top:auto;bottom:14px;transform:none;max-width:100%;position:absolute;background:#fff;padding:20px;border:1px solid var(--champ)}.info-grid{grid-template-columns:1fr}}
+.faq{border:1px solid #EAE6E1;background:#fff;margin-top:10px;border-radius:10px;overflow:hidden}.faq-item{border-bottom:1px solid #EAE6E1}.faq-item:last-child{border:none}.faq-q{width:100%;text-align:left;background:#fff;border:none;padding:14px;font-size:13px;font-weight:600;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;background:#FFFCF9}.faq-item.active .faq-a{max-height:400px}.faq-a p{font-size:11.5px;line-height:1.7;color:#5a4a40;margin:0;padding:0 14px 14px}
+@media(max-width:800px){.desktop-only{display:none!important}.mobile-only{display:block!important}.colors{grid-template-columns:repeat(2,1fr)}.hero{height:75vh}.hero-text{left:14px;right:14px;bottom:14px;position:absolute;background:#fff;padding:20px;border:1px solid var(--champ)}.info-grid{grid-template-columns:1fr}}
 </style></head><body>
 <nav><div class="nav-in"><div class="nav-top"><div class="logo" id="storeLogo">ARINDA HIJAB PREMIUM</div><div class="icons">
 <button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16L20 20" stroke-linecap="round"/></svg></button>
@@ -37,21 +43,19 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 </div>
 
 <div class="section">
-<div class="sub" id="koleksiTitle">Koleksi Terlaris ARINDA HIJAB PREMIUM</div>
-<div class="colors" id="koleksi4Grid">
-  <div class="k-card"><img src="navy.jpg"><div style="padding:8px;font-size:11px;text-align:center;font-weight:600">NAVY</div></div>
-  <div class="k-card"><img src="hitam.jpg"><div style="padding:8px;font-size:11px;text-align:center;font-weight:600">HITAM</div></div>
-  <div class="k-card"><img src="krem.jpg"><div style="padding:8px;font-size:11px;text-align:center;font-weight:600">KREM</div></div>
-  <div class="k-card"><img src="maroon.jpg"><div style="padding:8px;font-size:11px;text-align:center;font-weight:600">MAROON</div></div>
-</div>
+<div class="sub" id="koleksiTitle">KOLEKSI TERLARIS</div>
+<div class="colors" id="koleksi4Grid">Loading koleksi...</div>
 
-<!-- UNDERTONE SEBELUM INFORMASI PRODUK - BISA DIEDIT DARI ADMIN -->
+<!-- UNDERTONE FOTO PERGELANGAN TANGAN - BISA EDIT DARI ADMIN -->
 <div class="undertone-section" id="underSection">
-<div style="font-family:'Cormorant Garamond';font-size:22px" id="underMainTitle">🎨 4 WARNA BESTSELLER</div>
-<div class="sub" style="margin-top:4px">PANDUAN UNDERTONE - BISA EDIT DARI ADMIN</div>
-<div style="font-size:12.5px;line-height:1.7;color:#5a4a40;margin-top:8px" id="underMainDesc">Navy (Cool), Hitam (Bestseller), Krem Warm & Neutral, Maroon Warm Undertone. Masuk semua undertone.</div>
-<div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap" id="underChips"></div>
-<div style="font-size:11px;color:#8C7A6B;margin-top:10px;line-height:1.5" id="underListText"></div>
+<img id="underImage" src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800" style="width:100%;height:240px;object-fit:cover;display:block" alt="Cek undertone pergelangan">
+<div style="padding:18px">
+<div style="font-family:'Cormorant Garamond';font-size:24px;font-weight:700" id="underMainTitle">🎨 PANDUAN UNDERTONE - CEK PERGELANGAN</div>
+<div class="sub" style="margin-top:4px">FOTO PERGELANGAN BISA GANTI DARI ADMIN</div>
+<div style="font-size:13px;line-height:1.8;color:#5a4a40;margin-top:10px" id="underMainDesc">Lihat warna urat di pergelangan tangan kamu. Jika urat biru/ungu = Cool Undertone cocok Navy, Hitam. Jika hijau = Warm Undertone cocok Krem, Maroon. Netral masuk semua warna.</div>
+<div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap" id="underChips"></div>
+<div style="font-size:11px;color:#8C7A6B;margin-top:12px;line-height:1.6" id="underListText"></div>
+</div>
 </div>
 
 <div id="customSection" style="display:none;margin-top:24px;border-top:1px solid var(--champ);padding-top:16px"><div class="sub">PRODUK READY STOCK</div><div id="dynamicList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div></div>
@@ -81,16 +85,6 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 <div class="info-box"><b>✨ PREMIUM</b><p>Jahitan rapi, bahan tidak licin, mudah dibentuk.</p></div>
 </div>
 </div>
-
-<div style="margin-top:28px">
-<div style="font-family:'Cormorant Garamond';font-size:24px">FAQ - Tanya Jawab</div>
-<div class="sub">PERTANYAAN YANG SERING DITANYA</div>
-<div class="faq">
-<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Apakah menerawang? <span class="arrow">⌄</span></button><div class="faq-a"><p>Tidak sama sekali. Voal premium tebal tapi adem.</p></div></div>
-<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Ukuran berapa? <span class="arrow">⌄</span></button><div class="faq-a"><p>115x115cm standar premium.</p></div></div>
-<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Bisa cek ongkir dulu? <span class="arrow">⌄</span></button><div class="faq-a"><p>Bisa pakai fitur cek ongkir otomatis di atas.</p></div></div>
-</div>
-</div>
 </div>
 
 <script>
@@ -109,33 +103,29 @@ async function load(){
       if(get('store_name')) document.getElementById('storeLogo').innerText=get('store_name');
       const oid=get('toko_origin_id'); const olabel=get('toko_origin_label'); if(oid) tokoOriginId=oid;
       document.getElementById('originInfo').innerText=olabel?olabel+' ('+oid+')':'CENGKARENG BARAT - '+oid;
-
-      // KOLEKSI 4 - FOTO BISA GANTI LEWAT ADMIN
       if(get('home_koleksi_title')) document.getElementById('koleksiTitle').innerText=get('home_koleksi_title');
-      const koleksiIds=get('home_koleksi_4')?JSON.parse(get('home_koleksi_4')):[];
+      let koleksiIds=[]; if(get('home_koleksi_terlaris')) koleksiIds=JSON.parse(get('home_koleksi_terlaris')); else if(get('home_koleksi_4')) koleksiIds=JSON.parse(get('home_koleksi_4'));
       if(koleksiIds.length>0){
         const {data:vars}=await supabaseClient.from('product_variants').select('*').in('id',koleksiIds);
-        if(vars && vars.length>0){
-          const ordered=koleksiIds.map(id=>vars.find(v=>String(v.id)===String(id))).filter(Boolean);
-          document.getElementById('koleksi4Grid').innerHTML=ordered.map(v=>`
-            <div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"><div style="padding:8px;font-size:11px;text-align:center;font-weight:600">${v.color_name}</div></div>
-          `).join('');
+        if(vars){const ordered=koleksiIds.map(id=>vars.find(v=>String(v.id)===String(id))).filter(Boolean);
+          if(ordered.length>0){
+            if(!get('home_koleksi_title')) document.getElementById('koleksiTitle').innerText=`KOLEKSI ${ordered.length} WARNA TERLARIS`;
+            document.getElementById('koleksi4Grid').innerHTML=ordered.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"><div style="padding:9px;font-size:11px;text-align:center;font-weight:700">${v.color_name}</div></div>`).join('');
+          }
         }
       }
-
-      // UNDERTONE SEBELUM INFORMASI PRODUK - BISA EDIT DARI ADMIN
       if(get('home_undertone_title')) document.getElementById('underMainTitle').innerText='🎨 '+get('home_undertone_title');
       if(get('home_undertone_desc')) document.getElementById('underMainDesc').innerText=get('home_undertone_desc');
+      if(get('home_undertone_image')) document.getElementById('underImage').src=get('home_undertone_image');
       if(get('home_undertone_list')){
-        const list=get('home_undertone_list');
-        document.getElementById('underListText').innerText=list;
-        document.getElementById('underChips').innerHTML=list.split(',').map(s=>`<span style="padding:6px 12px;background:#2B1B12;color:#fff;border-radius:20px;font-size:10px">${s.trim()}</span>`).join('');
+        const list=get('home_undertone_list'); document.getElementById('underListText').innerText=list;
+        document.getElementById('underChips').innerHTML=list.split(',').map(s=>`<span style="padding:7px 14px;background:#2B1B12;color:#fff;border-radius:20px;font-size:11px">${s.trim()}</span>`).join('');
       }
     }
   }catch(e){console.log(e)}
   try{
     const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false});
-    if(data&&data.length>0){document.getElementById('customSection').style.display='block';document.getElementById('dynamicList').innerHTML=data.map(p=>`<div style="border:1px solid #EAE6E1;background:#fff;border-radius:10px;overflow:hidden" onclick="location.href='produk.html'"><img src="${p.image_url}" style="width:100%;height:160px;object-fit:cover;object-position:top"><div style="padding:8px"><div style="font-size:12px;font-weight:600">${p.name}</div><div style="font-size:11px;color:#8C7A6B">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`).join('');}
+    if(data&&data.length>0){document.getElementById('customSection').style.display='block';document.getElementById('dynamicList').innerHTML=data.map(p=>`<div style="border:1px solid #EAE6E1;background:#fff;border-radius:12px;overflow:hidden" onclick="location.href='produk.html'"><img src="${p.image_url}" style="width:100%;height:160px;object-fit:cover;object-position:top"><div style="padding:8px"><div style="font-size:12px;font-weight:600">${p.name}</div><div style="font-size:11px;color:#8C7A6B">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`).join('');}
   }catch(e){}
   try{
     const {data: bn} = await supabaseClient.from('banners').select('*').eq('is_active',true).order('id',{ascending:false}).limit(1);
