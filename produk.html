@@ -15,21 +15,25 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-
 .menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:40px}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:14px 0;opacity:.4;white-space:nowrap;border-bottom:1px solid transparent}.menu a.active{opacity:1;border-bottom-color:#111}
 .search-wrap{max-width:1240px;margin:0 auto;padding:12px 20px;display:flex;gap:10px}
 .search-wrap input{flex:1;padding:12px 0;border:none;border-bottom:1px solid #111;background:transparent;font-size:12px;outline:none;letter-spacing:1px}
-
 .section{max-width:1240px;margin:0 auto;padding:14px 16px 0}
 .filter{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.filter button{padding:8px 16px;border:1px solid var(--line);background:#fff;border-radius:20px;font-size:9px;letter-spacing:2px;cursor:pointer;font-family:'Inter'}
 .filter button.active{background:#111;color:#fff;border-color:#111}
 .prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 @media(min-width:700px){.prod-grid{grid-template-columns:repeat(4,1fr)}}
-.prod-card{border:1px solid #F2EFEA;background:#fff;cursor:pointer;overflow:hidden}
+.prod-card{border:1px solid #F2EFEA;background:#fff;cursor:pointer;overflow:hidden;position:relative}
 .prod-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block}
+/* HEART ICON LV STYLE */
+.heart-btn{position:absolute;top:8px;right:8px;z-index:3;width:32px;height:32px;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #F2EFEA;transition:.2s}
+.heart-btn:active{transform:scale(0.9);background:#111}
+.heart-btn:active svg{stroke:#fff;fill:#fff}
+.heart-btn svg{width:15px;height:15px;stroke:#111;fill:none;stroke-width:1.2;transition:.2s}
+.heart-btn.loved svg{fill:#111;stroke:#111}
 
 #cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:flex-end}
 #cartModal.open{display:flex}
 #cartBox{background:#fff;width:100%;max-width:480px;margin:0 auto;max-height:85vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px}
 .btn{width:100%;padding:13px;background:#111;color:#fff;border:none;border-radius:12px;letter-spacing:3px;font-size:9px;cursor:pointer}
 .btn-light{width:100%;padding:11px;background:#fff;border:1px solid #E9E6E1;border-radius:12px;font-size:9px;letter-spacing:2px;cursor:pointer;margin-top:8px}
-
 #prodModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;align-items:center;justify-content:center;padding:10px}
 #prodModal.show{display:flex}
 .p-box{background:#fff;max-width:900px;width:100%;border-radius:0;overflow:hidden;display:grid;grid-template-columns:1fr 380px;max-height:92vh;border:1px solid #F2EFEA}
@@ -41,26 +45,21 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-
 .p-thumbs img.active{opacity:1;border-color:#111}
 .p-info{padding:16px;overflow:auto}
 @media(max-width:800px){.p-box{grid-template-columns:1fr;max-height:95vh;overflow:auto}}
-
 #confirmModal{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
 #confirmModal.open{display:flex}
 .confirm-box{background:#fff;padding:22px;max-width:340px;width:100%;text-align:center;border:1px solid #F2EFEA}
-#cartToast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#111;color:#fff;padding:10px 18px;border-radius:30px;display:flex;align-items:center;gap:12px;z-index:9999;transition:.6s;opacity:0}
+#cartToast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#111;color:#fff;padding:10px 18px;border-radius:30px;display:flex;align-items:center;gap:12px;z-index:9999;transition:.6s;opacity:0;pointer-events:none}
 #cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}
 #cartToast img{width:38px;height:38px;border-radius:50%;object-fit:cover}
 #cartFly{position:fixed;z-index:9998;width:60px;height:60px;border-radius:50%;object-fit:cover;pointer-events:none;display:none}
 </style></head><body>
 <nav><div class="nav-top"><div class="logo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons"><button class="icon-btn" onclick="document.getElementById('q').focus()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button><button class="icon-btn" onclick="openCart()"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></button></div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a class="active" href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div></div><div class="search-wrap"><input id="q" type="search" placeholder="Cari hijab... krem, hitam, navy" oninput="doSearch()"></div></nav>
-
 <div class="section"><div style="font-family:'Cormorant Garamond';font-size:24px;font-weight:400;letter-spacing:2px">Produk Ready</div><div class="filter" id="filterWrap"><button class="active" onclick="filterColor('ALL',this)">ALL</button></div><div id="list" class="prod-grid">Loading...</div></div>
-
 <footer style="margin-top:32px;background:#FFFCF9;padding:48px 16px 36px;text-align:center;border-top:1px solid #F2EFEA"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div><div style="font-size:7px;letter-spacing:5px;color:#8C7A6B;margin-top:6px">HIJAB PREMIUM</div><div style="margin-top:18px;font-size:8px;letter-spacing:3px;opacity:.4">© 2026 ARINDA HIJAB PREMIUM — ALL RIGHTS RESERVED</div></footer>
-
 <div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()"><div id="cartBox"><div style="display:flex;justify-content:space-between"><b style="font-family:'Cormorant Garamond';letter-spacing:2px">KERANJANG (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:22px;cursor:pointer">×</button></div><div id="cartList" style="margin-top:12px"></div><div style="margin-top:14px;padding:12px;background:#FFFCF9;border:1px solid #F2EFEA"><div style="font-size:10px;letter-spacing:2px">🚚 Cek Ongkir - <span id="originInfo">Loading</span></div><div style="display:flex;gap:6px;margin-top:8px"><input id="destSearch" placeholder="Kecamatan pembeli" style="flex:1;padding:10px;border:1px solid #E9E6E1;border-radius:10px;font-size:11px"><button onclick="searchDest()" class="btn" style="width:auto;padding:10px 14px">Cari</button></div><div id="destList" style="margin:6px 0;max-height:120px;overflow:auto;display:none;border:1px solid #F2EFEA"></div><div style="display:flex;gap:6px;margin-top:8px"><select id="courierSelect" style="padding:10px;border:1px solid #E9E6E1;border-radius:10px;flex:1;font-size:11px"><option value="jne">JNE</option><option value="jnt">J&T</option><option value="sicepat">SiCepat</option><option value="pos">POS</option></select><button onclick="cekOngkir()" class="btn" style="flex:1">CEK</button></div><div id="ongkirResult" style="margin-top:8px;font-size:11px"></div></div><div style="border-top:1px solid #EAE6E1;margin-top:12px;padding-top:12px"><div style="display:flex;justify-content:space-between;font-size:11px"><span>Subtotal</span><span id="cartSubtotal">Rp0</span></div><div style="display:flex;justify-content:space-between;font-size:11px;margin-top:4px"><span>Ongkir (<span id="ongkirLabel">belum cek</span>)</span><span id="ongkirPrice">Rp0</span></div><div style="display:flex;justify-content:space-between;font-weight:400;margin-top:8px;font-size:14px;font-family:'Cormorant Garamond'"><span>Total</span><span id="cartTotalPrice">Rp0</span></div><button onclick="checkoutWA()" class="btn" style="margin-top:12px;padding:14px">CHAT WA & PESAN SEKARANG →</button><button onclick="askClearCart()" class="btn-light">Kosongkan Keranjang</button></div></div></div>
 <div id="prodModal" onclick="if(event.target.id=='prodModal')closeProd()"><div class="p-box" id="pBox">Loading...</div></div>
 <div id="confirmModal"><div class="confirm-box"><div id="confirmTitle" style="font-family:'Cormorant Garamond';font-size:20px">Hapus?</div><div id="confirmDesc" style="font-size:11px;color:#8C7A6B;margin-top:6px"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px"><button onclick="closeConfirm()" style="padding:11px;border:1px solid #EEE6DF;background:#FFFCF9;cursor:pointer">Batal</button><button id="confirmOk" style="padding:11px;background:#B42318;color:#fff;border:none;cursor:pointer">Ya</button></div></div></div>
 <div id="cartToast"><img id="toastImg" src=""><span id="toastText" style="font-size:10px;letter-spacing:1px"></span></div><img id="cartFly" src="">
-
 <script>
 const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
 let allProducts=[], WA_NUMBER="6285178098354", STORE_NAME="ARINDA", tokoOriginId="17523", tokoOriginLabel="CENGKARENG BARAT";
@@ -75,7 +74,40 @@ function updateCount(){document.getElementById('cCount').innerText=getCart().red
 function doSearch(){const q=document.getElementById('q').value.toLowerCase();render(allProducts.filter(p=>p.name.toLowerCase().includes(q)||(window._varMap[p.id]||[]).some(v=>v.color_name.toLowerCase().includes(q))));}
 async function loadFilters(){try{const {data:vars}=await supabaseClient.from('product_variants').select('color_name');let colors=[...new Set((vars||[]).map(v=>v.color_name.toUpperCase()))];if(colors.length==0)colors=['NAVY','HITAM','KREM','MAROON'];const order=['KREM','HITAM','NAVY','MAROON'];colors.sort((a,b)=>{const ia=order.indexOf(a),ib=order.indexOf(b);if(ia!==-1&&ib!==-1)return ia-ib;if(ia!==-1)return-1;if(ib!==-1)return 1;return a.localeCompare(b);});document.getElementById('filterWrap').innerHTML='<button class="active" onclick="filterColor(\'ALL\',this)">ALL</button>'+colors.slice(0,12).map(c=>`<button onclick="filterColor('${c}',this)">${c}</button>`).join('');}catch(e){}}
 function filterColor(color,btn){activeFilter=color;document.querySelectorAll('.filter button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');if(color==='ALL'){render(allProducts);return;}const f=allProducts.filter(p=>(window._varMap[p.id]||[]).some(v=>v.color_name.toUpperCase()===color||v.color_name.toUpperCase().includes(color)));render(f);}
-function render(list){const el=document.getElementById('list');if(!list||list.length==0){el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:#8C7A6B;font-size:11px">Tidak ada produk untuk '+activeFilter+'</div>';return;}el.innerHTML=list.map(p=>{const vars=window._varMap[p.id]||[];let img=p.image_url;if(activeFilter!=='ALL'){const m=vars.find(v=>v.color_name.toUpperCase()===activeFilter)||vars.find(v=>v.color_name.toUpperCase().includes(activeFilter));if(m)img=m.image_url;}return `<div class="prod-card" onclick="openProd('${p.id}')"><img src="${img}" loading="lazy"><div style="padding:10px"><div style="font-size:11px;font-family:'Cormorant Garamond';letter-spacing:1px">${p.name}</div><div style="font-size:8px;letter-spacing:2px;opacity:.5;margin-top:2px">${activeFilter!=='ALL'?activeFilter:p.category||'Voal Premium'}</div><div style="font-size:12px;font-family:'Cormorant Garamond';margin-top:6px">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;}).join('');}
+function render(list){
+  const el=document.getElementById('list');
+  if(!list||list.length==0){el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:#8C7A6B;font-size:11px">Tidak ada produk untuk '+activeFilter+'</div>';return;}
+  el.innerHTML=list.map(p=>{
+    const vars=window._varMap[p.id]||[];
+    let img=p.image_url;
+    let colName = vars[0]?.color_name || 'KREM';
+    if(activeFilter!=='ALL'){
+      const m=vars.find(v=>v.color_name.toUpperCase()===activeFilter)||vars.find(v=>v.color_name.toUpperCase().includes(activeFilter));
+      if(m){img=m.image_url; colName=m.color_name;}
+    }
+    return `<div class="prod-card" onclick="openProd('${p.id}')">
+      <div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this)"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div>
+      <img src="${img}" loading="lazy">
+      <div style="padding:10px"><div style="font-size:11px;font-family:'Cormorant Garamond';letter-spacing:1px">${p.name}</div><div style="font-size:8px;letter-spacing:2px;opacity:.5;margin-top:2px">${activeFilter!=='ALL'?activeFilter:p.category||'Voal Premium'}</div><div style="font-size:12px;font-family:'Cormorant Garamond';margin-top:6px">Rp${Number(p.price).toLocaleString('id-ID')}</div></div>
+    </div>`;
+  }).join('');
+}
+function quickAdd(id,btnEl){
+  const p=allProducts.find(x=>String(x.id)===String(id));
+  if(!p) return;
+  const vars=window._varMap[id]||[];
+  let v=vars[0];
+  if(activeFilter!=='ALL'){
+    const mf=vars.find(x=>x.color_name.toUpperCase()===activeFilter)||vars.find(x=>x.color_name.toUpperCase().includes(activeFilter));
+    if(mf) v=mf;
+  }
+  const name=v? p.name+' - '+v.color_name : p.name;
+  const img=v? v.image_url : p.image_url;
+  const color=v? v.color_name : 'KREM';
+  if(btnEl){ btnEl.classList.add('loved'); setTimeout(()=>btnEl.classList.remove('loved'),600); }
+  addCart(name,p.price,img);
+  showCartToast(color,img);
+}
 async function openProd(id){document.getElementById('prodModal').classList.add('show');document.getElementById('pBox').innerHTML='<div style="padding:20px">Loading...</div>';const {data:p}=await supabaseClient.from('products').select('*').eq('id',id).single();const {data:vars}=await supabaseClient.from('product_variants').select('*').eq('product_id',id).order('id');curProd=p;curVariants=vars||[];if(curVariants.length==0)curVariants=[{color_name:p.category||'KREM',image_url:p.image_url}];curColor=curVariants[0].color_name;curImg=curVariants[0].image_url;if(activeFilter!=='ALL'){const mf=curVariants.find(v=>v.color_name.toUpperCase()===activeFilter)||curVariants.find(v=>v.color_name.toUpperCase().includes(activeFilter));if(mf){curColor=mf.color_name;curImg=mf.image_url;}}document.getElementById('pBox').innerHTML=`<div class="p-gallery"><div class="p-main"><img id="bigImg" src="${curImg}"></div><div class="p-thumbs">${curVariants.map((v,i)=>`<img src="${v.image_url}" class="${v.image_url===curImg?'active':''}" onclick="pickColor('${v.color_name}','${v.image_url}',${i})">`).join('')}</div></div><div class="p-info"><div style="display:flex;justify-content:space-between"><div style="font-size:9px;letter-spacing:3px;opacity:.5">BESTSELLER</div><div style="cursor:pointer;font-size:22px" onclick="closeProd()">×</div></div><div style="font-family:'Cormorant Garamond';font-size:22px;margin-top:6px">${p.name}</div><div style="font-family:'Cormorant Garamond';font-size:32px;margin:6px 0">Rp${Number(p.price).toLocaleString('id-ID')}</div><div style="font-size:11px;opacity:.6">Voal premium 115x115, adem tidak nerawang.</div><div style="font-size:9px;letter-spacing:2px;margin:16px 0 8px">PILIH WARNA: <b id="selCol">${curColor}</b></div><div style="display:flex;gap:8px;flex-wrap:wrap">${curVariants.map((v,i)=>`<button id="btn-${i}" style="padding:10px 16px;border:1px solid ${v.image_url===curImg?'#111':'#E9E6E1'};background:${v.image_url===curImg?'#111':'#fff'};color:${v.image_url===curImg?'#fff':'#000'};font-size:9px;letter-spacing:1px;cursor:pointer" onclick="pickColor('${v.color_name}','${v.image_url}',${i})">${v.color_name}</button>`).join('')}</div><div style="display:flex;gap:8px;margin-top:18px"><button class="btn" style="background:#fff;border:1px solid #111;color:#111" onclick="addToCartFromModal()">+ Keranjang</button><button class="btn" onclick="buyFromModal()">Beli Sekarang</button></div></div>`;}
 function pickColor(c,i,idx){curColor=c;curImg=i;document.getElementById('bigImg').src=i;document.getElementById('selCol').innerText=c;document.querySelectorAll('.p-thumbs img').forEach((el,j)=>el.classList.toggle('active',j==idx));curVariants.forEach((v,j)=>{const b=document.getElementById('btn-'+j);if(b){const a=v.image_url===i;b.style.background=a?'#111':'#fff';b.style.color=a?'#fff':'#000';b.style.borderColor=a?'#111':'#E9E6E1';}});}
 function closeProd(){document.getElementById('prodModal').classList.remove('show');}
