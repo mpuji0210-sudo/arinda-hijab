@@ -2,17 +2,22 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ARINDA HIJAB PREMIUM</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--bg:#FFFCF9}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif}
-nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(10px);border-bottom:1px solid var(--champ)}
-.nav-in{max-width:1120px;margin:0 auto;padding:10px 14px}.nav-top{display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:18px}
-.menu{display:flex;gap:14px;margin-top:8px;padding-top:8px;border-top:1px solid var(--champ)}.menu a{font-size:11px;letter-spacing:1.5px;color:var(--taupe);text-decoration:none}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
-.icons{display:flex;gap:10px}.icon-btn{background:none;border:none;cursor:pointer;padding:4px;position:relative}.icon-btn svg{width:21px;height:21px;stroke:var(--esp);fill:none;stroke-width:1.6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden}
+nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.98);backdrop-filter:blur(10px);border-bottom:1px solid var(--champ)}
+.nav-in{max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:3px;font-size:18px;line-height:1}
+.logo span{display:block;font-family:'Plus Jakarta Sans';font-size:9px;letter-spacing:4px;color:var(--taupe);margin-top:3px;font-weight:500}
+.menu{display:flex;gap:20px;align-items:center}
+.menu a{font-size:11px;letter-spacing:2px;color:var(--taupe);text-decoration:none;padding-bottom:3px;border-bottom:1.5px solid transparent;white-space:nowrap}
+.menu a.active{color:var(--esp);border-color:var(--esp)}
+.icons{display:flex;gap:10px;align-items:center}
+.icon-btn{background:none;border:none;cursor:pointer;padding:4px;position:relative}
+.icon-btn svg{width:21px;height:21px;stroke:var(--esp);fill:none;stroke-width:1.6}
 .badge{position:absolute;top:-3px;right:-4px;background:var(--esp);color:#fff;font-size:9px;min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-#searchBox{display:none;padding:8px 0 0}#searchBox input{width:100%;padding:12px 16px;border:1px solid var(--champ);border-radius:24px;font-size:13px;outline:none}
+#searchBox{display:none;width:100%;padding:8px 0 0}#searchBox input{width:100%;padding:12px 16px;border:1px solid var(--champ);border-radius:24px;font-size:13px;outline:none}
 .hero{position:relative;width:100%;height:70vh;min-height:420px;background:#F6EEE3;overflow:hidden}.hero img{width:100%;height:100%;object-fit:cover;display:block}
 .desktop-only{display:block}.mobile-only{display:none}
 .btn{display:inline-block;background:var(--esp);color:#fff;padding:11px 20px;font-size:11px;letter-spacing:2px;text-decoration:none;border:none;cursor:pointer;border-radius:8px;font-weight:bold}
@@ -25,18 +30,35 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 .undertone-section{margin-top:22px;background:#fff;border:1px solid var(--champ);border-radius:20px;overflow:hidden}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
 .info-box{background:#fff;border:1px solid var(--champ);border-radius:10px;padding:14px}.info-box b{font-size:12px}.info-box p{font-size:11px;line-height:1.6;color:#5a4a40;margin:6px 0 0}
-.faq{border:1px solid #EAE6E1;background:#fff;margin-top:10px;border-radius:14px;overflow:hidden}.faq-item{border-bottom:1px solid #EAE6E1}.faq-item:last-child{border:none}.faq-q{width:100%;text-align:left;background:#fff;border:none;padding:14px 16px;font-size:13px;font-weight:600;display:flex;justify-content:space-between;align-items:center;cursor:pointer}.faq-q.arrow{transition:.3s}.faq-item.active.arrow{transform:rotate(180deg)}.faq-a{max-height:0;overflow:hidden;transition:max-height.3s ease;background:#FFFCF9}.faq-item.active.faq-a{max-height:500px}.faq-a p{font-size:12px;line-height:1.7;color:#5a4a40;margin:0;padding:0 16px 14px}
-@media(max-width:800px){.desktop-only{display:none!important}.mobile-only{display:block!important}.colors{grid-template-columns:repeat(2,1fr)}.hero{height:75vh}.hero-text{left:14px;right:14px;bottom:14px;position:absolute;background:#fff;padding:20px;border:1px solid var(--champ)}.info-grid{grid-template-columns:1fr}}
+.faq{border:1px solid #EAE6E1;background:#fff;margin-top:10px;border-radius:14px;overflow:hidden}.faq-item{border-bottom:1px solid #EAE6E1}.faq-item:last-child{border:none}.faq-q{width:100%;text-align:left;background:#fff;border:none;padding:14px 16px;font-size:13px;font-weight:600;display:flex;justify-content:space-between;align-items:center;cursor:pointer}.faq-a{max-height:0;overflow:hidden;transition:max-height.3s ease;background:#FFFCF9}.faq-item.active.faq-a{max-height:500px}.faq-a p{font-size:12px;line-height:1.7;color:#5a4a40;margin:0;padding:0 16px 14px}
+
+/* === HEADER ELEGAN 2 LANTAI - ANTI TUMPUK === */
+@media(max-width:800px){
+.nav-in{flex-direction:column;align-items:center;padding:0;gap:0}
+.logo{width:100%;text-align:center;padding:16px 0 12px;background:#FFFCF9;border-bottom:1px solid #F6EEE6;font-size:20px;letter-spacing:4px}
+.logo span{letter-spacing:5px;font-size:10px}
+.icons{position:absolute;top:12px;right:10px}
+.menu{width:100%;justify-content:center;gap:0;padding:10px 6px;background:#fff;border-bottom:1px solid #EEE6DF;overflow-x:auto;order:2}
+.menu a{padding:8px 14px;margin:0 4px;border-radius:20px;border:1px solid #EEE6DF;background:#FFFCF9;font-size:9.5px;letter-spacing:1.2px;flex-shrink:0}
+.menu a.active{background:#2B1B12;color:#fff;border-color:#2B1B12}
+ #searchBox{order:3;padding:10px 14px;background:#FFFCF9;border-bottom:1px solid #F6EEE6}
+.desktop-only{display:none!important}.mobile-only{display:block!important}.colors{grid-template-columns:repeat(2,1fr)}.hero{height:75vh}.hero-text{left:14px;right:14px;bottom:14px;position:absolute;background:#fff;padding:20px;border:1px solid var(--champ)}.info-grid{grid-template-columns:1fr}
+}
 </style></head><body>
-<nav><div class="nav-in"><div class="nav-top"><div class="logo" id="storeLogo">ARINDA HIJAB PREMIUM</div><div class="icons">
+<nav><div class="nav-in">
+<div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div>
+<div class="menu"><a class="active" href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a href="kontak.html">KONTAK</a></div>
+<div class="icons">
 <button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16L20 20" stroke-linecap="round"/></svg></button>
 <a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></a>
 <a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 10H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cCount">0</span></a>
-</div></div><div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div><div id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" placeholder="Cari hijab..."></form></div></div></nav>
+</div>
+<div id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" placeholder="Cari hijab..."></form></div>
+</div></nav>
 
 <div class="hero" id="heroBanner">
 <img class="desktop-only" id="bannerPC" src="https://via.placeholder.com/1400x700/F6EEE3/8C7A6B?text=ARINDA+BANNER+PC"><img class="mobile-only" id="bannerHP" src="https://via.placeholder.com/800x1200/F6EEE3/8C7A6B?text=ARINDA+BANNER+HP">
-<div class="hero-text"><div style="font-size:10px;letter-spacing:3px;color:#8C7A6B" id="bannerTitle">NEW COLLECTION - READY STOCK</div><h1 style="font-family:'Cormorant Garamond';font-size:36px;line-height:.95;margin:6px 0 8px">Bahan Adem,<br>Dan Tidak Nerawang</h1><p style="font-size:12px;color:#8C7A6B;line-height:1.5;margin:0 0 14px">MENUTUP AURAT DENGAN BAHAN PREMIUM</p><a id="bannerLink" href="produk.html" class="btn">LIHAT PRODUK →</a></div>
+<div class="hero-text" style="position:absolute;left:20px;bottom:20px;background:#fff;padding:20px;border:1px solid var(--champ);max-width:320px"><div style="font-size:10px;letter-spacing:3px;color:#8C7A6B" id="bannerTitle">NEW COLLECTION - READY STOCK</div><h1 style="font-family:'Cormorant Garamond';font-size:36px;line-height:.95;margin:6px 0 8px">Bahan Adem,<br>Dan Tidak Nerawang</h1><p style="font-size:12px;color:#8C7A6B;line-height:1.5;margin:0 0 14px">MENUTUP AURAT DENGAN BAHAN PREMIUM</p><a id="bannerLink" href="produk.html" class="btn">LIHAT PRODUK →</a></div>
 </div>
 
 <div class="section">
@@ -54,7 +76,7 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 </div>
 </div>
 
-<div style="margin-top:24px;background:#fff;border:1px solid var(--champ);border-radius:12px;padding:14px;">
+<div style="margin-top:22px;background:#fff;border:1px solid var(--champ);border-radius:12px;padding:14px;">
 <div style="font-family:'Cormorant Garamond';font-size:20px">🚚 Cek Ongkir Otomatis</div>
 <div class="sub" style="margin-bottom:10px;">Asal toko: <b id="originInfo">Loading...</b></div>
 <div style="display:flex;gap:6px;margin-top:8px;">
@@ -95,20 +117,20 @@ async function load(){
     }
     if(data){
       const get=k=>data.find(s=>s.key===k)?.value;
-      if(get('store_name')) document.getElementById('storeLogo').innerText=get('store_name');
+      if(get('store_name')){
+        const sName=get('store_name');
+        const parts=sName.split(' ');
+        document.getElementById('storeLogo').innerHTML=parts[0]+'<span>'+parts.slice(1).join(' ')+'</span>';
+      }
       const oid=get('toko_origin_id'); const olabel=get('toko_origin_label'); if(oid) tokoOriginId=oid;
       document.getElementById('originInfo').innerText=olabel?olabel+' ('+oid+')':'CENGKARENG BARAT - '+oid;
       if(get('home_koleksi_title')) document.getElementById('koleksiTitle').innerText=get('home_koleksi_title');
-
-      // KOLEKSI V25 - FULL CUSTOM OBJECT
       let koleksiRaw=[]; try{if(get('home_koleksi_terlaris')) koleksiRaw=JSON.parse(get('home_koleksi_terlaris')); else if(get('home_koleksi_4')) koleksiRaw=JSON.parse(get('home_koleksi_4'));}catch(e){}
       if(koleksiRaw.length>0){
         let html='';
-        // format baru object {url,title,desc}
         if(typeof koleksiRaw[0]==='object'){
           html=koleksiRaw.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.url}"><div style="padding:9px;text-align:center"><div style="font-size:11px;font-weight:700">${v.title||'BESTSELLER'}</div>${v.desc?`<div style="font-size:10px;color:#8C7A6B">${v.desc}</div>`:''}</div></div>`).join('');
         } else {
-          // backward compat url string / id varian
           const ids=koleksiRaw.filter(v=>!String(v).startsWith('http')&&!String(v).startsWith('data:'));
           const urls=koleksiRaw.filter(v=>String(v).startsWith('http')||String(v).startsWith('data:'));
           if(ids.length>0){const {data:vars}=await supabaseClient.from('product_variants').select('*').in('id',ids); if(vars){const ordered=ids.map(id=>vars.find(v=>String(v.id)===String(id))).filter(Boolean); html+=ordered.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"><div style="padding:9px;font-size:11px;text-align:center;font-weight:700">${v.color_name}</div></div>`).join('');}}
@@ -116,8 +138,6 @@ async function load(){
         }
         if(html) document.getElementById('koleksi4Grid').innerHTML=html;
       }
-
-      // UNDERTONE V25 - FULL CUSTOM OBJECT
       if(get('home_undertone_title')) document.getElementById('underMainTitle').innerText='🎨 '+get('home_undertone_title');
       if(get('home_undertone_desc')) document.getElementById('underMainDesc').innerText=get('home_undertone_desc');
       let underImgs=[]; try{if(get('home_undertone_images')) underImgs=JSON.parse(get('home_undertone_images')); else if(get('home_undertone_image')) underImgs=[get('home_undertone_image')];}catch(e){}
@@ -129,12 +149,10 @@ async function load(){
         }
       }
       if(get('home_undertone_list')){ const list=get('home_undertone_list'); document.getElementById('underListText').innerText=list; document.getElementById('underChips').innerHTML=list.split(',').map(s=>`<span style="padding:7px 14px;background:#2B1B12;color:#fff;border-radius:20px;font-size:11px">${s.trim()}</span>`).join(''); }
-
-      // FAQ
       if(get('home_faq_list')){
         try{
           const faqs=JSON.parse(get('home_faq_list'));
-          if(faqs.length>0) document.getElementById('faqList').innerHTML=faqs.map(f=>`<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">${f.q} <span class="arrow">⌄</span></button><div class="faq-a"><p>${f.a}</p></div></div>`).join('');
+          if(faqs.length>0) document.getElementById('faqList').innerHTML=faqs.map(f=>`<div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('active')">${f.q} <span>⌄</span></button><div class="faq-a"><p>${f.a}</p></div></div>`).join('');
         }catch(e){}
       }
     }
