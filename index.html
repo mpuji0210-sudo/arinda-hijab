@@ -8,20 +8,14 @@
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden}
 nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .nav-top{max-width:1240px;margin:0 auto;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Cormorant Garamond';font-weight:400;letter-spacing:8px;font-size:21px;line-height:1}
+.logo{font-family:'Cormorant Garamond';font-weight:400;letter-spacing:8px;font-size:21px}
 .logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;color:var(--taupe);margin-top:5px}
-.icons{display:flex;gap:22px;align-items:center}
-.icon-btn{background:none;border:none;cursor:pointer;position:relative;padding:0}
-.icon-btn svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.1}
+.icons{display:flex;gap:22px;align-items:center}.icon-btn{background:none;border:none;cursor:pointer;position:relative;padding:0}.icon-btn svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.1}
 .badge{position:absolute;top:-7px;right:-9px;background:#111;color:#fff;font-size:7px;min-width:13px;height:13px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.nav-menu{border-top:1px solid #F6F1EB;background:#fff;overflow-x:auto;scrollbar-width:none}
-.nav-menu::-webkit-scrollbar{display:none}
-.menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:40px}
-.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:14px 0;opacity:.4;white-space:nowrap;border-bottom:1px solid transparent}
-.menu a.active,.menu a:hover{opacity:1;border-bottom-color:#111}
-#searchBox{display:none;max-width:1240px;margin:0 auto;padding:12px 20px}
-#searchBox input{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;background:transparent;font-size:13px;outline:none}
-.hero{position:relative;width:100%;height:80vh;min-height:520px;background:#F6EEE3;overflow:hidden}.hero img{width:100%;height:100%;object-fit:cover;display:block;transition:.3s}
+.nav-menu{border-top:1px solid #F6F1EB;background:#fff;overflow-x:auto;scrollbar-width:none}.nav-menu::-webkit-scrollbar{display:none}
+.menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:40px}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:14px 0;opacity:.4;white-space:nowrap;border-bottom:1px solid transparent}.menu a.active{opacity:1;border-bottom-color:#111}
+#searchBox{display:none;max-width:1240px;margin:0 auto;padding:12px 20px}#searchBox input{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;background:transparent;font-size:13px;outline:none}
+.hero{position:relative;width:100%;height:80vh;min-height:520px;background:#F6EEE3;overflow:hidden}.hero img{width:100%;height:100%;object-fit:cover;display:block}
 .desktop-only{display:block}.mobile-only{display:none}
 .btn{display:inline-block;background:#111;color:#fff;padding:17px 36px;font-size:9px;letter-spacing:4px;text-decoration:none;border:none;cursor:pointer}
 .section{max-width:1240px;margin:0 auto;padding:28px 16px 40px}.sub{font-size:9px;letter-spacing:5px;color:#111;margin:0}
@@ -30,11 +24,7 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-
 @media(min-width:700px){.colors{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:800px){.nav-top{padding:15px 16px}.logo{font-size:18px;letter-spacing:6px}.menu{padding:0 16px;gap:28px}.desktop-only{display:none!important}.mobile-only{display:block!important}.hero{height:78vh;min-height:500px}.hero-text{left:16px;right:16px;bottom:22px;max-width:none}}
 </style></head><body>
-<nav>
-<div class="nav-top"><div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons"><button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button><a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><path d="M5 19c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></a><a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a></div></div>
-<div class="nav-menu"><div class="menu"><a class="active" href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div></div>
-<div id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" placeholder="Search"></form></div>
-</nav>
+<nav><div class="nav-top"><div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons"><button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button><a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><path d="M5 19c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></a><a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a></div></div><div class="nav-menu"><div class="menu"><a class="active" href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div></div><div id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" placeholder="Search"></form></div></nav>
 
 <div class="hero" id="heroBanner">
 <img class="desktop-only" id="bannerPC" src="https://via.placeholder.com/1400x900/F6EEE3/8C7A6B?text=ARINDA"><img class="mobile-only" id="bannerHP" src="https://via.placeholder.com/800x1200/F6EEE3/8C7A6B?text=ARINDA">
@@ -48,7 +38,7 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-
 
 <div class="section">
 <div style="display:flex;justify-content:space-between;align-items:center"><div class="sub">BEST SELLER COLLECTION</div><a href="produk.html" style="font-size:9px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;padding-bottom:4px">VIEW ALL</a></div>
-<div class="colors" id="koleksi4Grid"><div style="grid-column:1/-1;padding:30px;text-align:center;font-size:10px;letter-spacing:2px;opacity:.5">Loading...</div></div>
+<div class="colors" id="koleksi4Grid">Loading...</div>
 </div>
 
 <script>
@@ -60,47 +50,38 @@ function updateCount(){document.getElementById('cCount').innerText=getCart().red
 
 async function load(){
   try{
-    console.log('=== LOAD ARINDA ===');
-    // FIX BANNER: pakai created_at bukan id, + anti cache
-    const {data:banners, error:bannerErr} = await supabaseClient.from('banners').select('*').eq('is_active',true).order('created_at',{ascending:false}).limit(1);
-    console.log('BANNERS:', banners, 'ERR:', bannerErr);
-    if(bannerErr) console.error('BANNER RLS ERROR - cek Policy SELECT anon', bannerErr);
+    // FIX BANNER: order by created_at biar banner terbaru kepasang
+    const {data:banners, error} = await supabaseClient.from('banners').select('*').eq('is_active',true).order('created_at',{ascending:false}).limit(1);
+    if(error) console.error('BANNER ERR:', error);
     if(banners && banners[0]){
-      const cacheBuster = '?v=' + Date.now();
-      const pcUrl = banners[0].image_url + cacheBuster;
-      const hpUrl = (banners[0].image_mobile_url || banners[0].image_url) + cacheBuster;
-      document.getElementById('bannerPC').src = pcUrl;
-      document.getElementById('bannerHP').src = hpUrl;
-      console.log('Banner dipasang:', pcUrl);
+      const bust='?t='+Date.now();
+      document.getElementById('bannerPC').src = banners[0].image_url + bust;
+      document.getElementById('bannerHP').src = (banners[0].image_mobile_url||banners[0].image_url) + bust;
       if(banners[0].title) document.getElementById('bannerTitle').innerText=banners[0].title;
       if(banners[0].link_url) document.getElementById('bannerLink').href=banners[0].link_url;
-    } else {
-      console.warn('TIDAK ADA BANNER AKTIF! Cek is_active=true di Supabase');
     }
 
-    let html='';
     const {data:settings}=await supabaseClient.from('settings').select('*');
+    let html='';
     if(settings){
       const get=k=>settings.find(s=>s.key===k)?.value;
-      if(get('store_name')){
-        const parts=get('store_name').split(' ');
-        document.getElementById('storeLogo').innerHTML=parts[0]+'<span>'+parts.slice(1).join(' ')+'</span>';
-      }
-      let raw=[]; try{if(get('home_koleksi_terlaris')) raw=JSON.parse(get('home_koleksi_terlaris'));}catch(e){}
-      if(raw.length){
-        const ids=raw.filter(v=>!String(v).startsWith('http')).slice(0,4);
-        if(ids.length){
-          const {data:vars}=await supabaseClient.from('product_variants').select('*').in('id',ids);
-          if(vars){ const ordered=ids.map(id=>vars.find(x=>String(x.id)===String(id))).filter(Boolean); html=ordered.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"></div>`).join(''); }
-        }
+      let raw=[]; try{ const v=get('home_koleksi_terlaris'); if(v) raw=JSON.parse(v); }catch(e){}
+      // ADMIN V32 simpan object {url,title,desc} -> index harus baca url
+      if(raw.length && typeof raw[0]==='object'){
+        html = raw.slice(0,4).map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.url}"><div style="padding:10px"><div style="font-size:10px;letter-spacing:1px;font-family:'Cormorant Garamond'">${v.title||''}</div></div></div>`).join('');
+      } else if(raw.length){
+        const ids=raw.slice(0,4);
+        const {data:vars}=await supabaseClient.from('product_variants').select('*').in('id',ids);
+        if(vars){ const ordered=ids.map(id=>vars.find(x=>String(x.id)===String(id))).filter(Boolean); html=ordered.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"></div>`).join(''); }
       }
     }
+    // fallback kalau admin belum set koleksi
     if(!html){
       const {data:fallback}=await supabaseClient.from('product_variants').select('*').order('id',{ascending:false}).limit(4);
       if(fallback) html=fallback.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"></div>`).join('');
     }
     if(html) document.getElementById('koleksi4Grid').innerHTML=html;
-  }catch(e){ console.error('LOAD ERROR:', e); }
+  }catch(e){ console.error(e); }
   updateCount();
 }
 load();
