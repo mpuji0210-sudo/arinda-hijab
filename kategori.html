@@ -1,16 +1,6 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kategori - ARINDA HIJAB PREMIUM | Pilih Warna Otomatis</title>
-<meta name="description" content="Pilih kategori hijab ARINDA - Navy, Hitam, Krem, Maroon. Otomatis dari admin, konek Supabase. Tips undertone cool warm neutral.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://arinda-hijab.vercel.app/kategori.html">
-<meta property="og:title" content="Kategori - ARINDA HIJAB PREMIUM">
-<meta property="og:description" content="Pilih warna hijab sesuai undertone kamu - Navy, Hitam, Krem, Maroon. Otomatis dari admin!">
-<meta property="og:image" content="https://arinda-hijab.vercel.app/banner.jpg">
-<meta property="og:site_name" content="ARINDA HIJAB PREMIUM">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://arinda-hijab.vercel.app/banner.jpg">
-
+<title>Kategori - ARINDA HIJAB PREMIUM</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -22,68 +12,42 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 .logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:18px}
 .menu{display:flex;gap:14px;margin-top:8px;padding-top:8px;border-top:1px solid var(--champ)}
 .menu a{font-size:11px;letter-spacing:1.5px;color:var(--taupe);text-decoration:none}.menu a.active{color:var(--esp);border-bottom:1.5px solid var(--esp)}
-.icons{display:flex;gap:10px}.icon-btn{background:none;border:none;cursor:pointer;padding:4px;position:relative}
-.icon-btn svg{width:21px;height:21px;stroke:var(--esp);fill:none;stroke-width:1.6}
-.badge{position:absolute;top:-3px;right:-4px;background:var(--esp);color:#fff;font-size:9px;min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.search-wrap{padding:10px 0 0;display:none}.search-wrap input{width:100%;padding:12px 16px;border:1px solid var(--champ);border-radius:24px;font-size:13px;outline:none}
-.btn{background:var(--esp);color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:bold;cursor:pointer}
-.section{max-width:1120px;margin:0 auto;padding:14px}
 .cat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
-.cat-card{position:relative;border:1px solid var(--champ);border-radius:12px;overflow:hidden;background:#fff;cursor:pointer}
-.cat-card img{width:100%;height:180px;object-fit:cover;display:block}
-.cat-info{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top, rgba(0,0,0,.6), transparent);padding:12px;color:#fff}
+.cat-card{position:relative;border:1px solid var(--champ);border-radius:12px;overflow:hidden;background:#fff;cursor:pointer;transition:transform .15s}
+.cat-card:active{transform:scale(.97)}
+.cat-card img{width:100%;height:190px;object-fit:cover;display:block;background:var(--champ)}
+.cat-info{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top, rgba(0,0,0,.65), transparent);padding:12px;color:#fff}
 .cat-info b{font-family:'Cormorant Garamond';font-size:18px;letter-spacing:1px}
 .cat-info span{font-size:10px;letter-spacing:1.5px;opacity:.9}
 </style></head><body>
-<nav><div class="nav-in">
-<div class="nav-top"><div class="logo" id="storeLogo">ARINDA</div>
-<div class="icons">
-<button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16L20 20" stroke-linecap="round"/></svg></button>
-<a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></a>
-<a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 10H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cCount">0</span></a>
-</div></div>
-<div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a class="active">KATEGORI</a></div>
-<div class="search-wrap" id="searchBox"><form onsubmit="goSearch(event)"><div style="display:flex;gap:6px;"><input id="q" type="search" placeholder="Cari hijab..." style="flex:1;"><button type="submit" class="btn">Cari</button></div></form></div>
-</div></nav>
-
-<div class="section">
+<nav><div class="nav-in"><div class="nav-top"><div class="logo">ARINDA PREMIUM</div></div>
+<div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a class="active">KATEGORI</a></div></div></nav>
+<div style="max-width:1120px;margin:0 auto;padding:14px">
 <div style="font-family:'Cormorant Garamond';font-size:24px">Kategori Warna</div>
-<div style="font-size:10px;letter-spacing:2px;color:#8C7A6B;margin:4px 0 12px">PILIH WARNA - OTOMATIS DARI ADMIN - KONEK SUPABASE</div>
-<div class="cat-grid" id="catGrid">
-<div class="cat-card" onclick="location.href='produk.html?q=Navy'"><img src="navy.jpg"><div class="cat-info"><b>NAVY</b><br><span>COOL UNDERTONE</span></div></div>
-<div class="cat-card" onclick="location.href='produk.html?q=Hitam'"><img src="hitam.jpg"><div class="cat-info"><b>HITAM</b><br><span>BEST SELLER</span></div></div>
-<div class="cat-card" onclick="location.href='produk.html?q=Krem'"><img src="krem.jpg"><div class="cat-info"><b>KREM</b><br><span>WARM & NEUTRAL</span></div></div>
-<div class="cat-card" onclick="location.href='produk.html?q=Maroon'"><img src="maroon.jpg"><div class="cat-info"><b>MAROON</b><br><span>WARM UNDERTONE</span></div></div>
+<div style="font-size:10px;letter-spacing:2px;color:#8C7A6B;margin:4px 0 12px">PILIH WARNA - OTOMATIS DARI ADMIN</div>
+<div class="cat-grid" id="catGrid"><div style="grid-column:span 2;text-align:center;padding:40px;color:#8C7A6B">Memuat kategori...</div></div>
 </div>
-<div style="margin-top:24px;background:#fff;border:1px solid var(--champ);padding:14px;border-radius:10px">
-<div style="font-family:'Cormorant Garamond';font-size:18px">Tips Undertone</div>
-<div style="font-size:11px;color:var(--taupe);margin-top:6px;line-height:1.6"><b>Cool (biru)</b> → Navy & Hitam<br><b>Warm (hijau)</b> → Krem & Maroon<br><b>Neutral</b> → Semua masuk</div>
-</div>
-</div>
-
 <script>
 const supa = supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
-function toggleSearch(){const b=document.getElementById('searchBox');b.style.display=b.style.display=='block'?'none':'block';if(b.style.display=='block')document.getElementById('q').focus();}
-function goSearch(e){e.preventDefault();const v=document.getElementById('q').value.trim();if(!v)return;location.href='produk.html?q='+encodeURIComponent(v);}
-function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return[]}}
-document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+(b.qty||0),0);
+
 async function load(){
- try{
-  const {data} = await supa.from('settings').select('*');
-  if(data){const name=data.find(s=>s.key==='store_name')?.value; if(name) document.getElementById('storeLogo').innerText=name;}
- }catch(e){}
- try{
-  const {data: cats} = await supa.from('categories').select('*').order('name');
-  if(cats && cats.length>0){
-    document.getElementById('catGrid').innerHTML = cats.map(c=>`
-      <div class="cat-card" onclick="location.href='produk.html?q=${encodeURIComponent(c.name)}'">
-        <img src="${c.image_url||'banner.jpg'}" onerror="this.src='banner.jpg'">
+  try{
+    const {data: cats} = await supa.from('categories').select('*').order('name');
+    if(!cats || cats.length===0) return;
+    
+    document.getElementById('catGrid').innerHTML = cats.map(c=>{
+      // fix image URL jika storage private
+      let img = c.image_url || 'https://arinda-hijab.vercel.app/banner.jpg';
+      // kalau masih nama file doang, tempel base url
+      if(img && !img.startsWith('http')) img = 'https://arinda-hijab.vercel.app/' + img;
+
+      return `
+      <div class="cat-card" onclick="location.href='produk.html?cat=${encodeURIComponent(c.name.toLowerCase())}'">
+        <img src="${img}" loading="lazy" onerror="this.src='https://arinda-hijab.vercel.app/banner.jpg'">
         <div class="cat-info"><b>${c.name.toUpperCase()}</b><br><span>KLIK UNTUK LIHAT PRODUK</span></div>
-      </div>
-    `).join('') + `<div class="cat-card" onclick="location.href='produk.html'"><img src="banner-hp.jpg" onerror="this.src='banner.jpg'"><div class="cat-info"><b>ALL COLLECTION</b><br><span>LIHAT SEMUA</span></div></div>`;
-  }
- }catch(e){console.log('cat',e)}
+      </div>`;
+    }).join('') + `<div class="cat-card" onclick="location.href='produk.html'"><img src="https://arinda-hijab.vercel.app/banner-hp.jpg"><div class="cat-info"><b>ALL COLLECTION</b><br><span>LIHAT SEMUA</span></div></div>`;
+  }catch(e){ console.log(e); document.getElementById('catGrid').innerHTML='Gagal load kategori' }
 }
 load();
-</script>
-</body></html>
+</script></body></html>
