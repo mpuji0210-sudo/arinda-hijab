@@ -1,6 +1,8 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ARINDA HIJAB PREMIUM</title>
+<meta name="description" content="ARINDA HIJAB PREMIUM - Hijab voal premium adem, tidak menerawang, 115x115cm laser cut rapi.">
+<meta property="og:image" content="https://arinda-hijab.vercel.app/banner.jpg">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -19,19 +21,15 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 .btn{display:inline-block;background:var(--esp);color:#fff;padding:11px 20px;font-size:11px;letter-spacing:2px;text-decoration:none;border:none;cursor:pointer;border-radius:8px;font-weight:bold}
 .section{max-width:1120px;margin:0 auto;padding:16px 14px}.sub{font-size:10px;letter-spacing:2.5px;color:var(--taupe);margin:4px 0 12px}
 .colors{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.colors img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#fff;border:1px solid var(--champ)}
-.card{border:1px solid var(--champ);padding:8px;text-align:center;background:#fff}.card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
-.badge2{display:inline-block;font-size:9px;padding:4px 8px;background:var(--esp);color:#fff;margin-top:6px;border-radius:12px}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
 .info-box{background:#fff;border:1px solid var(--champ);border-radius:10px;padding:14px}
-.info-box b{font-size:12px;letter-spacing:1px}
-.info-box p{font-size:11px;line-height:1.6;color:#5a4a40;margin:6px 0 0}
+.info-box b{font-size:12px;letter-spacing:1px}.info-box p{font-size:11px;line-height:1.6;color:#5a4a40;margin:6px 0 0}
 .faq{border:1px solid #EAE6E1;background:#fff;margin-top:10px;border-radius:10px;overflow:hidden}
 .faq-item{border-bottom:1px solid #EAE6E1}.faq-item:last-child{border:none}
 .faq-q{width:100%;text-align:left;background:#fff;border:none;padding:14px;font-size:13px;font-weight:600;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
 .arrow{transition:transform .3s}.faq-item.active .arrow{transform:rotate(180deg)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;background:#FFFCF9}
-.faq-item.active .faq-a{max-height:400px}
-.faq-a p{font-size:11.5px;line-height:1.7;color:#5a4a40;margin:0;padding:0 14px 14px}
+.faq-item.active .faq-a{max-height:400px}.faq-a p{font-size:11.5px;line-height:1.7;color:#5a4a40;margin:0;padding:0 14px 14px}
 @media(max-width:800px){.desktop-only{display:none!important}.mobile-only{display:block!important}.colors{grid-template-columns:repeat(2,1fr)}.hero{height:75vh}.hero-text{left:14px;right:14px;top:auto;bottom:14px;transform:none;max-width:100%;position:absolute;background:#fff;padding:20px;border:1px solid var(--champ)}.info-grid{grid-template-columns:1fr}}
 </style></head><body>
 <nav><div class="nav-in"><div class="nav-top"><div class="logo" id="storeLogo">ARINDA HIJAB PREMIUM</div><div class="icons">
@@ -40,18 +38,18 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 <a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 10H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cCount">0</span></a>
 </div></div><div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div><div id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" placeholder="Cari hijab..."></form></div></div></nav>
 
-<div class="hero">
-<img class="desktop-only" src="banner.jpg"><img class="mobile-only" src="banner-hp.jpg" onerror="this.src='banner.jpg'">
-<div class="hero-text"><div style="font-size:10px;letter-spacing:3px;color:#8C7A6B">NEW COLLECTION - READY STOCK</div><h1 style="font-family:'Cormorant Garamond';font-size:36px;line-height:.95;margin:6px 0 8px">Bahan Adem,<br>Dan Tidak Nerawang</h1><p style="font-size:12px;color:#8C7A6B;line-height:1.5;margin:0 0 14px">MENUTUP AURAT DENGAN BAHAN PREMIUM</p><a href="produk.html" class="btn">LIHAT PRODUK →</a></div>
+<!-- HERO DINAMIS - BISA DIGANTI DARI ADMIN -->
+<div class="hero" id="heroBanner">
+<img class="desktop-only" id="bannerPC" src="banner.jpg" alt="Banner PC">
+<img class="mobile-only" id="bannerHP" src="banner-hp.jpg" alt="Banner HP" onerror="this.src=document.getElementById('bannerPC').src">
+<div class="hero-text"><div style="font-size:10px;letter-spacing:3px;color:#8C7A6B" id="bannerTitle">NEW COLLECTION - READY STOCK</div><h1 style="font-family:'Cormorant Garamond';font-size:36px;line-height:.95;margin:6px 0 8px">Bahan Adem,<br>Dan Tidak Nerawang</h1><p style="font-size:12px;color:#8C7A6B;line-height:1.5;margin:0 0 14px">MENUTUP AURAT DENGAN BAHAN PREMIUM</p><a id="bannerLink" href="produk.html" class="btn">LIHAT PRODUK →</a></div>
 </div>
 
 <div class="section">
 <div class="sub">KOLEKSI 4 WARNA BESTSELLER</div><div class="colors"><img src="navy.jpg"><img src="hitam.jpg"><img src="krem.jpg"><img src="maroon.jpg"></div>
 
-<!-- PRODUK DINAMIS DARI SUPABASE -->
 <div id="customSection" style="display:none;margin-top:24px;border-top:1px solid var(--champ);padding-top:16px"><div class="sub">PRODUK READY STOCK </div><div id="dynamicList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div></div>
 
-<!-- CEK ONGKIR -->
 <div style="margin-top:24px;background:#fff;border:1px solid var(--champ);border-radius:12px;padding:14px;">
 <div style="font-family:'Cormorant Garamond';font-size:20px">🚚 Cek Ongkir Otomatis</div>
 <div class="sub" style="margin-bottom:10px;">Asal toko: <b id="originInfo">Loading...</b></div>
@@ -67,31 +65,28 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9F2;backdrop-filter:blur(1
 <div id="ongkirResult" style="margin-top:10px;font-size:12px;"></div>
 </div>
 
-<!-- BAGIAN BARU: INFORMASI PRODUK -->
 <div style="margin-top:28px">
 <div style="font-family:'Cormorant Garamond';font-size:24px">Informasi Produk</div>
 <div class="sub">KAMU HARUS TAU INI </div>
 <div class="info-grid">
 <div class="info-box"><b>📏 SPESIFIKASI</b><p>Ukuran 115x115cm, bahan Voal Premium & Paris Premium, finishing laser cut super rapi, tidak perlu setrika berat.</p></div>
-<div class="info-box"><b>☁️ BAHAN ADEM</b><p>Adem, ringan, tidak menerawang sama sekali. Nyaman dipakai seharian, tidak bikin gerah di daerah Cengkareng & Jakarta.</p></div>
+<div class="info-box"><b>☁️ BAHAN ADEM</b><p>Adem, ringan, tidak menerawang sama sekali. Nyaman dipakai seharian, tidak bikin gerah.</p></div>
 <div class="info-box"><b>🎨 4 WARNA BESTSELLER</b><p>Navy (Cool), Hitam (Bestseller), Krem Warm & Neutral, Maroon Warm Undertone. Masuk semua undertone.</p></div>
-<div class="info-box"><b>📦 READY STOCK</b><p>Stock redy selama ada di etalase produk </p></div>
+<div class="info-box"><b>📦 READY STOCK</b><p>Stock ready selama ada di etalase produk. Dikirim H+1 dari Cengkareng Barat.</p></div>
 </div>
 </div>
 
-<!-- BAGIAN BARU: FAQ -->
 <div style="margin-top:28px">
 <div style="font-family:'Cormorant Garamond';font-size:24px">FAQ - Tanya Jawab</div>
 <div class="sub">PERTANYAAN YANG SERING DITANYA</div>
-<div class="faq" id="faqWrap">
-<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Apakah menerawang? <span class="arrow">⌄</span></button><div class="faq-a"><p>Tidak sama sekali Puji. Arinda pakai voal premium tebal tapi adem. Sudah di-test pakai inner hitam tetap tidak nerawang.</p></div></div>
+<div class="faq">
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Apakah menerawang? <span class="arrow">⌄</span></button><div class="faq-a"><p>Tidak sama sekali. Arinda pakai voal premium tebal tapi adem. Sudah di-test pakai inner hitam tetap tidak nerawang.</p></div></div>
 <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Ukuran berapa? <span class="arrow">⌄</span></button><div class="faq-a"><p>115x115cm standar premium. Bisa dipakai syar'i menutup dada, laser cut jadi tidak perlu dijahit lagi.</p></div></div>
-<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Bisa cek ongkir dulu? <span class="arrow">⌄</span></button><div class="faq-a"><p>Bisa banget. Pakai fitur cek ongkir otomatis di atas, ketik kecamatan kamu, pilih kurir JNE, J&T, SiCepat, AnterAja, POS. Ongkir real dari RajaOngkir.</p></div></div>
-<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Pengiriman dari mana? <span class="arrow">⌄</span></button><div class="faq-a"><p>Dari Cengkareng Barat, Jakarta Barat 11730. Ready stock, dikirim H+1 setelah pembayaran. Resi otomatis masuk WA.</p></div></div>
-<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Bisa COD? <span class="arrow">⌄</span></button><div class="faq-a"><p>Bisa COD via J&T & JNE.Chat admin di halaman kontak ya.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Bisa cek ongkir dulu? <span class="arrow">⌄</span></button><div class="faq-a"><p>Bisa banget. Pakai fitur cek ongkir otomatis di atas, ketik kecamatan kamu, pilih kurir JNE, J&T, SiCepat, AnterAja, POS.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Pengiriman dari mana? <span class="arrow">⌄</span></button><div class="faq-a"><p>Dari Cengkareng Barat, Jakarta Barat 11730. Ready stock, dikirim H+1 setelah pembayaran.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Bisa COD? <span class="arrow">⌄</span></button><div class="faq-a"><p>Bisa COD via J&T & JNE. Chat admin di halaman kontak ya.</p></div></div>
 </div>
 </div>
-
 </div>
 
 <script>
@@ -111,16 +106,20 @@ async function load(){
     const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false});
     if(data&&data.length>0){document.getElementById('customSection').style.display='block';document.getElementById('dynamicList').innerHTML=data.map(p=>`<div style="border:1px solid #EAE6E1;background:#fff;border-radius:10px;overflow:hidden" onclick="location.href='produk.html'"><img src="${p.image_url}" style="width:100%;height:160px;object-fit:cover"><div style="padding:8px"><div style="font-size:12px;font-weight:600">${p.name}</div><div style="font-size:11px;color:#8C7A6B">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`).join('');}
   }catch(e){}
+  // LOAD BANNER DINAMIS DARI ADMIN
+  try{
+    const {data: bn} = await supabaseClient.from('banners').select('*').eq('is_active',true).order('id',{ascending:false}).limit(1);
+    if(bn && bn[0]){
+      if(bn[0].image_url){ document.getElementById('bannerPC').src = bn[0].image_url; }
+      if(bn[0].image_mobile_url){ document.getElementById('bannerHP').src = bn[0].image_mobile_url; } else { document.getElementById('bannerHP').src = bn[0].image_url; }
+      if(bn[0].title){ document.getElementById('bannerTitle').innerText = bn[0].title; }
+      if(bn[0].link_url){ document.getElementById('bannerLink').href = bn[0].link_url; }
+    }
+  }catch(e){ console.log('banner off',e) }
   updateCount();
 }
-async function searchDest(){
-  const q=document.getElementById('destSearch').value.trim();if(!q)return alert('Ketik kecamatan dulu');const list=document.getElementById('destList');list.style.display='block';list.innerHTML='⏳ Mencari...';
-  try{const r=await fetch('/api/search?q='+encodeURIComponent(q));const j=await r.json();if(!j.data||j.data.length==0){list.innerHTML='<div style="padding:10px">Tidak ketemu</div>';return;}list.innerHTML=j.data.map(d=>`<div style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;" onclick="pilihDest('${d.id}','${d.label.replace(/'/g,"")}')">${d.label} - <b>KLIK PILIH</b></div>`).join('');}catch(e){list.innerHTML='Error: '+e.message;}
-}
+async function searchDest(){const q=document.getElementById('destSearch').value.trim();if(!q)return alert('Ketik kecamatan dulu');const list=document.getElementById('destList');list.style.display='block';list.innerHTML='⏳ Mencari...';try{const r=await fetch('/api/search?q='+encodeURIComponent(q));const j=await r.json();if(!j.data||j.data.length==0){list.innerHTML='<div style="padding:10px">Tidak ketemu</div>';return;}list.innerHTML=j.data.map(d=>`<div style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;" onclick="pilihDest('${d.id}','${d.label.replace(/'/g,"")}')">${d.label} - <b>KLIK PILIH</b></div>`).join('');}catch(e){list.innerHTML='Error: '+e.message;}}
 function pilihDest(id,label){selectedDestId=id;document.getElementById('destSearch').value=label;document.getElementById('destList').innerHTML='<div style="padding:10px;background:#dcfce7;border-radius:8px;">✅ Tujuan: <b>'+label+'</b> ('+id+')</div>';}
-async function cekOngkir(){
-  if(!selectedDestId)return alert('Pilih kecamatan dulu!');const courier=document.getElementById('courierSelect').value;const result=document.getElementById('ongkirResult');result.innerHTML='⏳ Mengecek ongkir...';
-  try{const res=await fetch('/api/cost',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({origin:tokoOriginId,destination:selectedDestId,weight:1000,courier})});const data=await res.json();if(data.error){result.innerHTML='❌ '+data.error;return;}const costs=data.data||data;const arr=Array.isArray(costs)?costs:(costs.costs||[]);if(arr.length==0){result.innerHTML='Tidak ada layanan';return;}let html='<div style="font-weight:bold;margin-bottom:6px;">Ongkir '+courier.toUpperCase()+':</div>';arr.forEach(c=>{html+=`<div style="padding:10px;border:1px solid #EAE6E1;margin:6px 0;border-radius:8px;display:flex;justify-content:space-between;"><div><b>${c.service||'REG'}</b><br><small>${c.etd||'-'} hari</small></div><b>Rp${Number(c.cost||0).toLocaleString('id-ID')}</b></div>`;});result.innerHTML=html;}catch(e){result.innerHTML='❌ Error: '+e.message;}
-}
+async function cekOngkir(){if(!selectedDestId)return alert('Pilih kecamatan dulu!');const courier=document.getElementById('courierSelect').value;const result=document.getElementById('ongkirResult');result.innerHTML='⏳ Mengecek ongkir...';try{const res=await fetch('/api/cost',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({origin:tokoOriginId,destination:selectedDestId,weight:1000,courier})});const data=await res.json();if(data.error){result.innerHTML='❌ '+data.error;return;}const costs=data.data||data;const arr=Array.isArray(costs)?costs:(costs.costs||[]);if(arr.length==0){result.innerHTML='Tidak ada layanan';return;}let html='<div style="font-weight:bold;margin-bottom:6px;">Ongkir '+courier.toUpperCase()+':</div>';arr.forEach(c=>{html+=`<div style="padding:10px;border:1px solid #EAE6E1;margin:6px 0;border-radius:8px;display:flex;justify-content:space-between;"><div><b>${c.service||'REG'}</b><br><small>${c.etd||'-'} hari</small></div><b>Rp${Number(c.cost||0).toLocaleString('id-ID')}</b></div>`;});result.innerHTML=html;}catch(e){result.innerHTML='❌ Error: '+e.message;}}
 load();
 </script></body></html>
