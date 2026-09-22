@@ -89,7 +89,7 @@ window.delP=async(id)=>{if(!confirm('Hapus produk & semua warnanya?'))return;awa
 $("btnSaveProd").onclick=async()=>{
  const name=$("pName").value.trim();const price=Number($("pPrice").value);
  if(!name||!price){showToast('Isi nama & harga dulu',true);return;}
- const rows=[...document.querySelectorAll('#varInputs.slot')];
+ const rows=[...document.querySelectorAll('#varInputs .slot')];
  console.log('V32 TERDETEKSI:',rows.length,'slot - SPASI BENER!');
  $("saveStatus").innerText='⏳ Terdeteksi '+rows.length+' warna...';
  let finalVars=[];
