@@ -16,7 +16,7 @@
 .prod-img{width:100%;height:140px;object-fit:cover;object-position:top}.hidden{display:none}
 .badge{position:absolute;top:8px;left:8px;background:#16A34A;color:#fff;font-size:9px;padding:4px 8px;border-radius:10px}
 </style></head><body>
-<div class="header"><div><b style="font-family:'Cormorant Garamond';font-size:20px">ARINDA ADMIN V32 FIX FINAL</b><div style="font-size:9px;letter-spacing:2px;color:#16A34A">✅ SPASI BENER - UNLIMITED</div></div><button onclick="localStorage.clear();location.href='login.html'" style="background:#B42318;color:#fff;padding:8px 12px;border-radius:10px;border:none;font-weight:700;font-size:11px">LOGOUT</button></div>
+<div class="header"><div><b style="font-family:'Cormorant Garamond';font-size:20px">ARINDA ADMIN </b><div style="font-size:9px;letter-spacing:2px;color:#16A34A">✅ SPASI BENER - UNLIMITED</div></div><button onclick="localStorage.clear();location.href='login.html'" style="background:#B42318;color:#fff;padding:8px 12px;border-radius:10px;border:none;font-weight:700;font-size:11px">LOGOUT</button></div>
 <div class="tabs">
 <button class="tab active" onclick="openTab('toko')">1. Toko</button>
 <button class="tab" onclick="openTab('koleksi')">2. Koleksi</button>
@@ -89,7 +89,7 @@ window.delP=async(id)=>{if(!confirm('Hapus produk & semua warnanya?'))return;awa
 $("btnSaveProd").onclick=async()=>{
  const name=$("pName").value.trim();const price=Number($("pPrice").value);
  if(!name||!price){showToast('Isi nama & harga dulu',true);return;}
- const rows=[...document.querySelectorAll('#varInputs .slot')];
+ const rows=[...document.querySelectorAll('#varInputs  .slot')];
  console.log('V32 TERDETEKSI:',rows.length,'slot - SPASI BENER!');
  $("saveStatus").innerText='⏳ Terdeteksi '+rows.length+' warna...';
  let finalVars=[];
