@@ -1,16 +1,14 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kontak - ARINDA HIJAB PREMIUM | Konsultasi Warna & Ongkir</title>
-<meta name="description" content="Hubungi ARINDA HIJAB PREMIUM - Konsultasi warna hijab sesuai undertone, cek stok, cek ongkir otomatis. WA 08.00-21.00 WIB. Kirim seluruh Indonesia COD & QRIS Ready.">
+<meta name="description" content="Hubungi ARINDA HIJAB PREMIUM - Konsultasi warna hijab sesuai undertone, cek stok, cek ongkir otomatis.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://arinda-hijab.vercel.app/kontak.html">
 <meta property="og:title" content="Hubungi ARINDA HIJAB PREMIUM - Konsultasi Warna">
 <meta property="og:description" content="Konsultasi warna, ukuran, dan cek ongkir otomatis. WA 08.00-21.00 WIB. Rating 4.9/5 dari 1200+ pembeli.">
-<meta property="og:image" content="https://arinda-hijab.vercel.app/banner.jpg">
+<meta property="og:image" content="https://via.placeholder.com/1200x630/F6EEE3/2B1B12?text=ARINDA+HIJAB+PREMIUM">
 <meta property="og:site_name" content="ARINDA HIJAB PREMIUM">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://arinda-hijab.vercel.app/banner.jpg">
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -20,8 +18,8 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.98);backdrop-f
 .nav-in{max-width:1000px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
 .logo{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:4px;font-size:20px}.menu{display:flex;gap:18px}.menu a{text-decoration:none;font-size:11px;letter-spacing:2px;color:var(--taupe);border-bottom:1.5px solid transparent;padding-bottom:3px}.menu a.active{color:var(--esp);border-color:var(--esp)}
 .wrap{max-width:1000px;margin:0 auto;padding:32px 20px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.card{border:1px solid var(--champ);background:#fff;padding:20px;border-radius:10px}
-input,textarea,select{width:100%;padding:12px;border:1px solid var(--champ);font-family:inherit;font-size:13px;margin-top:6px;border-radius:8px}
+.card{border:1px solid var(--champ);background:#fff;padding:20px;border-radius:12px}
+input,textarea,select{width:100%;padding:12px;border:1px solid var(--champ);font-family:inherit;font-size:13px;margin-top:6px;border-radius:10px;background:#FFFCF9}
 .btn{padding:14px;background:var(--esp);color:#fff;text-align:center;font-size:11px;letter-spacing:2px;cursor:pointer;border:none;width:100%;margin-top:12px;border-radius:10px;font-weight:bold}
 @media(max-width:750px){.wrap{grid-template-columns:1fr}}
 </style>
@@ -31,11 +29,11 @@ input,textarea,select{width:100%;padding:12px;border:1px solid var(--champ);font
 <div class="wrap">
 <div>
 <h1 style="font-family:'Cormorant Garamond';font-size:42px;line-height:.9;margin:0">Hubungi<br><i style="font-weight:400">Kami</i></h1>
-<p style="color:var(--taupe);font-size:13px;margin-top:12px">Konsultasi warna, ukuran, dan pre-order koleksi terbaru.</p>
+<p style="color:var(--taupe);font-size:13px;margin-top:12px">Konsultasi warna sesuai undertone, cek stok & ongkir.</p>
 <div style="display:grid;gap:12px;margin-top:20px">
-<div class="card">📍 <span id="originText">Jakarta - Kirim seluruh Indonesia</span><br><span style="font-size:11px;color:var(--taupe)">COD & QRIS Ready - Cek ongkir otomatis</span></div>
+<div class="card">📍 <span id="originText">Jakarta - Kirim seluruh Indonesia</span><br><span style="font-size:11px;color:var(--taupe)">COD & QRIS Ready</span></div>
 <div class="card">💬 WhatsApp: <span id="waText">6285178098354</span><br><span style="font-size:11px;color:var(--taupe)">Jam 08.00 - 21.00 WIB</span></div>
-<div class="card">⭐ Rating 4.9/5 dari 1.200+ pembeli</div>
+<div class="card">⭐ Rating 4.9/5 ,dari 1.200+ pembeli • <span id="koleksiInfo">Loading koleksi...</span></div>
 </div>
 </div>
 
@@ -43,7 +41,7 @@ input,textarea,select{width:100%;padding:12px;border:1px solid var(--champ);font
 <div style="font-size:11px;letter-spacing:2px">FORM PESAN - KONEK SUPABASE</div>
 <label style="font-size:11px;margin-top:12px;display:block">Nama</label><input id="nama" placeholder="Nama kamu">
 <label style="font-size:11px;margin-top:12px;display:block">Warna yang diminati</label>
-<select id="warna"><option>HITAM</option><option>KREM</option><option>MAROON</option><option>NAVY</option></select>
+<select id="warna"><option>Loading warna bestseller...</option></select>
 <label style="font-size:11px;margin-top:12px;display:block">Pesan</label><textarea id="pesan" rows="4" placeholder="Mau tanya stok, ukuran, ongkir..."></textarea>
 <button class="btn" onclick="kirimWA()">KIRIM KE WHATSAPP</button>
 <div style="font-size:10px;color:var(--taupe);text-align:center;margin-top:8px">Langsung terhubung ke admin <span id="storeName2">ARINDA</span></div>
@@ -52,23 +50,47 @@ input,textarea,select{width:100%;padding:12px;border:1px solid var(--champ);font
 
 <script>
 const supabaseClient=supabase.createClient("https://qjgevvizqeebtdqcbqmt.supabase.co","sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19");
-let WA_NUMBER="6285178098354";
-let STORE_NAME="ARINDA";
+let WA_NUMBER="6285178098354"; let STORE_NAME="ARINDA";
 async function loadSetting(){
   try{
     const {data} = await supabaseClient.from('settings').select('*');
+    const {data:banners} = await supabaseClient.from('banners').select('*').eq('is_active',true).order('id',{ascending:false}).limit(1);
+    const {data:variants} = await supabaseClient.from('product_variants').select('color_name').limit(20);
+
+    // update OG image dari banner aktif
+    if(banners && banners[0]){
+      const meta = document.querySelector('meta[property="og:image"]');
+      if(meta) meta.content = banners[0].image_url;
+      const tw = document.querySelector('meta[name="twitter:image"]');
+      if(tw) tw.content = banners[0].image_url;
+    }
+
     if(data){
-      const sName = data.find(s=>s.key==='store_name')?.value;
-      const sWa = data.find(s=>s.key==='wa_number')?.value;
-      const sOrigin = data.find(s=>s.key==='toko_origin_label')?.value;
-      if(sName){
-        STORE_NAME=sName;
-        document.getElementById('storeLogo').innerText=sName;
-        document.getElementById('storeName2').innerText=sName;
-        document.title = "Kontak - "+sName;
-      }
+      const get=k=>data.find(s=>s.key===k)?.value;
+      const sName=get('store_name'); const sWa=get('wa_number'); const sOrigin=get('toko_origin_label');
+      if(sName){ STORE_NAME=sName; document.getElementById('storeLogo').innerText=sName; document.getElementById('storeName2').innerText=sName; document.title="Kontak - "+sName; }
       if(sWa){ WA_NUMBER=sWa; document.getElementById('waText').innerText=sWa; }
       if(sOrigin){ document.getElementById('originText').innerText = sOrigin + " - Kirim seluruh Indonesia"; }
+
+      // WARNA DYNAMIC DARI KOLEKSI CUSTOM V25
+      let warnaList = [];
+      try{
+        const koleksiRaw = get('home_koleksi_terlaris')? JSON.parse(get('home_koleksi_terlaris')) : [];
+        if(koleksiRaw.length>0 && typeof koleksiRaw[0]==='object'){
+          warnaList = koleksiRaw.map(x=>x.title).filter(Boolean);
+          document.getElementById('koleksiInfo').innerText = koleksiRaw.length + ' warna bestseller';
+        } else if(koleksiRaw.length>0){
+          warnaList = koleksiRaw.filter(v=>!String(v).startsWith('http')).slice(0,8);
+        }
+      }catch(e){}
+
+      // fallback dari product_variants kalau koleksi kosong
+      if(warnaList.length==0 && variants){
+        warnaList = [...new Set(variants.map(v=>v.color_name))].slice(0,8);
+      }
+      if(warnaList.length==0) warnaList=['HITAM','KREM','MAROON','NAVY'];
+
+      document.getElementById('warna').innerHTML = warnaList.map(w=>`<option value="${w}">${w}</option>`).join('') + `<option value="Lainnya - Tanya Admin">Lainnya - Tanya Admin</option>`;
     }
   }catch(e){console.log(e)}
 }
@@ -78,7 +100,7 @@ function kirimWA(){
  if(!n){alert('Kak, isi nama dulu ya biar '+STORE_NAME+' tau mau sapa siapa 🖐️'); return;}
  let w=document.getElementById('warna').value;
  let p=document.getElementById('pesan').value||'Mau tanya hijab';
- let msg=`Halo ${STORE_NAME}, saya ${n} \n\nWarna: ${w}\nPesan: ${p}\n\nMohon infonya ya 🙏`;
+ let msg=`Halo ${STORE_NAME}, saya ${n} \n\nWarna yang diminati: ${w}\nPesan: ${p}\n\nMohon infonya ya 🙏`;
  window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(msg),'_blank');
 }
 </script>
