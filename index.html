@@ -2,38 +2,48 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ARINDA HIJAB PREMIUM</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;6..96,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root{--esp:#111;--taupe:#8C7A6B;--line:#E9E6E1;--bg:#FFFCF9}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden}
-nav{position:sticky;top:0;z-index:99;background:#FFFCF9;border-bottom:1px solid var(--line)}
-.nav-top{max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Cormorant Garamond';font-weight:600;letter-spacing:7px;font-size:20px;line-height:1}
-.logo span{display:block;font-family:'Plus Jakarta Sans';font-size:8px;letter-spacing:7px;color:var(--taupe);margin-top:4px;font-weight:400}
-.icons{display:flex;gap:20px;align-items:center}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden;letter-spacing:.2px}
+nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-top{max-width:1240px;margin:0 auto;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Bodoni Moda';font-weight:300;letter-spacing:8px;font-size:21px;line-height:1}
+.logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;color:var(--taupe);margin-top:5px;font-weight:300}
+.icons{display:flex;gap:22px;align-items:center}
 .icon-btn{background:none;border:none;cursor:pointer;position:relative;padding:0}
-.icon-btn svg{width:19px;height:19px;stroke:#111;fill:none;stroke-width:1.2}
-.badge{position:absolute;top:-7px;right:-9px;background:#111;color:#fff;font-size:8px;min-width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.nav-menu{border-top:1px solid #F6F1EB;background:#fff;overflow-x:auto;scrollbar-width:none}
+.icon-btn svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.1}
+.badge{position:absolute;top:-7px;right:-9px;background:#111;color:#fff;font-size:7px;min-width:13px;height:13px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Inter'}
+.nav-menu{border-top:1px solid #F6F1EB;background:transparent;overflow-x:auto;scrollbar-width:none}
 .nav-menu::-webkit-scrollbar{display:none}
-.menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:36px}
-.menu a{font-size:10px;letter-spacing:3.5px;color:#111;text-decoration:none;padding:13px 0;opacity:.5;white-space:nowrap;border-bottom:1px solid transparent}
+.menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:40px}
+.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:14px 0;opacity:.4;white-space:nowrap;border-bottom:1px solid transparent;transition:.3s;font-weight:300}
 .menu a.active,.menu a:hover{opacity:1;border-bottom-color:#111}
 #searchBox{display:none;max-width:1240px;margin:0 auto;padding:12px 20px}
-#searchBox input{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;background:transparent;font-size:13px;outline:none}
-.hero{position:relative;width:100%;height:78vh;min-height:500px;background:#F6EEE3;overflow:hidden}.hero img{width:100%;height:100%;object-fit:cover;display:block}
+#searchBox input{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;background:transparent;font-size:13px;outline:none;font-family:'Inter';font-weight:300}
+.hero{position:relative;width:100%;height:84vh;min-height:560px;background:#F6EEE3;overflow:hidden}.hero img{width:100%;height:100%;object-fit:cover;display:block}
 .desktop-only{display:block}.mobile-only{display:none}
-.btn{display:inline-block;background:#111;color:#fff;padding:14px 28px;font-size:10px;letter-spacing:3px;text-decoration:none;border:none;cursor:pointer}
-.section{max-width:1240px;margin:0 auto;padding:32px 16px}
-.sub{font-size:9px;letter-spacing:5px;color:#111;margin:0}
-.colors{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#E9E6E1;border:1px solid #E9E6E1;margin-top:18px}
-.k-card{background:#fff;cursor:pointer;transition:opacity.2s}.k-card:hover{opacity:.8}
-.k-card img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
-.k-card.k-info{padding:12px 10px}
-.k-card.k-name{font-size:11px;letter-spacing:1.5px}
+.btn{display:inline-block;background:#111;color:#fff;padding:16px 32px;font-size:9px;letter-spacing:4px;text-decoration:none;border:none;cursor:pointer;font-weight:300;font-family:'Inter'}
+.section{max-width:1240px;margin:0 auto;padding:40px 16px}
+.sub{font-size:9px;letter-spacing:5px;color:#111;margin:0;font-weight:300}
+.colors{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#E9E6E1;border:1px solid #E9E6E1;margin-top:20px}
+.k-card{background:#fff;cursor:pointer}.k-card img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+
+/* CARD TRANSPARAN LV - KACA BLUR */
+.hero-text{
+position:absolute;left:24px;bottom:24px;
+background:rgba(255,255,255,0.58);
+backdrop-filter:blur(22px);
+-webkit-backdrop-filter:blur(22px);
+border:1px solid rgba(255,255,255,0.35);
+padding:32px 32px;
+max-width:380px;
+}
+
 @media(min-width:700px){.colors{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:800px){
-.nav-top{padding:14px 16px}.logo{font-size:18px;letter-spacing:5px}.menu{padding:0 16px;gap:26px}.menu a{font-size:9px;padding:14px 0}.desktop-only{display:none!important}.mobile-only{display:block!important}.hero{height:82vh}.hero-text{left:16px;right:16px;bottom:16px;position:absolute;background:#fff;padding:24px}
+.nav-top{padding:15px 16px}.logo{font-size:18px;letter-spacing:6px}.menu{padding:0 16px;gap:28px}.menu a{font-size:9px}.desktop-only{display:none!important}.mobile-only{display:block!important}.hero{height:86vh}
+.hero-text{left:12px;right:12px;bottom:12px;max-width:none;padding:26px;background:rgba(255,255,255,0.64);backdrop-filter:blur(18px)}
 }
 </style></head><body>
 <nav>
@@ -41,7 +51,7 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9;border-bottom:1px solid 
 <div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div>
 <div class="icons">
 <button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button>
-<a href="kontak.html" class="icon-btn" title="Kontak"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><path d="M5 19c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></a>
+<a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><path d="M5 19c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></a>
 <a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a>
 </div>
 </div>
@@ -51,18 +61,23 @@ nav{position:sticky;top:0;z-index:99;background:#FFFCF9;border-bottom:1px solid 
 
 <div class="hero" id="heroBanner">
 <img class="desktop-only" id="bannerPC" src="https://via.placeholder.com/1400x900/F6EEE3/8C7A6B?text=ARINDA"><img class="mobile-only" id="bannerHP" src="https://via.placeholder.com/800x1200/F6EEE3/8C7A6B?text=ARINDA">
-<div class="hero-text" style="position:absolute;left:24px;bottom:24px;background:#fff;padding:28px;max-width:360px"><div style="font-size:9px;letter-spacing:5px;color:#8C7A6B" id="bannerTitle">NEW COLLECTION</div><h1 style="font-family:'Cormorant Garamond';font-size:42px;line-height:.95;margin:10px 0 12px;font-weight:400">Bahan Adem,<br>Dan Tidak Nerawang</h1><p style="font-size:12px;color:#8C7A6B;line-height:1.6;margin:0 0 22px">MENUTUP AURAT DENGAN BAHAN PREMIUM</p><a id="bannerLink" href="produk.html" class="btn">LIHAT KOLEKSI</a></div>
+<div class="hero-text">
+<div style="font-size:8px;letter-spacing:5px;color:#111;opacity:.6;font-weight:300" id="bannerTitle">JUST FOR YOU</div>
+<h1 style="font-family:'Bodoni Moda';font-size:44px;line-height:.95;margin:12px 0 14px;font-weight:300;letter-spacing:-0.5px">Bahan Adem,<br>Dan Tidak Nerawang</h1>
+<p style="font-size:11px;color:#111;opacity:.5;line-height:1.7;margin:0 0 26px;letter-spacing:1px;font-weight:300">MENUTUP AURAT DENGAN BAHAN PREMIUM</p>
+<a id="bannerLink" href="produk.html" class="btn">LIHAT KOLEKSI</a>
+</div>
 </div>
 
 <div class="section">
-<div style="display:flex;justify-content:space-between;align-items:end">
+<div style="display:flex;justify-content:space-between;align-items:center">
 <div class="sub" id="koleksiTitle">BEST SELLER COLLECTION</div>
-<a href="produk.html" style="font-size:10px;letter-spacing:2.5px;color:#111;text-decoration:none;border-bottom:1px solid #111;padding-bottom:3px">VIEW ALL</a>
+<a href="produk.html" style="font-size:9px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;padding-bottom:4px;font-weight:300">VIEW ALL</a>
 </div>
-<div class="colors" id="koleksi4Grid">Loading collection...</div>
+<div class="colors" id="koleksi4Grid">Loading...</div>
 </div>
 
-<footer style="margin-top:60px;border-top:1px solid #E9E6E1;padding:24px 16px;text-align:center"><div style="font-family:'Cormorant Garamond';letter-spacing:6px;font-size:14px">ARINDA</div><div style="font-size:8px;letter-spacing:5px;color:#8C7A6B;margin-top:4px">HIJAB PREMIUM — © 2026</div></footer>
+<footer style="margin-top:80px;border-top:1px solid #E9E6E1;padding:32px 16px;text-align:center"><div style="font-family:'Bodoni Moda';letter-spacing:8px;font-size:13px;font-weight:300">ARINDA</div><div style="font-size:7px;letter-spacing:5px;color:#8C7A6B;margin-top:6px;font-weight:300">HIJAB PREMIUM — © 2026</div></footer>
 
 <script>
 const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
@@ -71,40 +86,34 @@ function goSearch(e){e.preventDefault();const v=document.getElementById('q').val
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return []}}
 function updateCount(){document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+Number(b.qty||0),0);}
 async function load(){
-  try{
-    const {data:banners}=await supabaseClient.from('banners').select('*').eq('is_active',true).order('id',{ascending:false}).limit(1);
-    if(banners && banners[0]){
-      document.getElementById('bannerPC').src=banners[0].image_url;
-      document.getElementById('bannerHP').src=banners[0].image_mobile_url||banners[0].image_url;
-      if(banners[0].title) document.getElementById('bannerTitle').innerText=banners[0].title;
-      if(banners[0].link_url) document.getElementById('bannerLink').href=banners[0].link_url;
+  const {data:banners}=await supabaseClient.from('banners').select('*').eq('is_active',true).order('id',{ascending:false}).limit(1);
+  if(banners && banners[0]){
+    document.getElementById('bannerPC').src=banners[0].image_url;
+    document.getElementById('bannerHP').src=banners[0].image_mobile_url||banners[0].image_url;
+    if(banners[0].title) document.getElementById('bannerTitle').innerText=banners[0].title;
+    if(banners[0].link_url) document.getElementById('bannerLink').href=banners[0].link_url;
+  }
+  const {data:settings}=await supabaseClient.from('settings').select('*');
+  if(settings){
+    const get=k=>settings.find(s=>s.key===k)?.value;
+    if(get('store_name')){
+      const parts=get('store_name').split(' ');
+      document.getElementById('storeLogo').innerHTML=parts[0]+'<span>'+parts.slice(1).join(' ')+'</span>';
     }
-    const {data:settings}=await supabaseClient.from('settings').select('*');
-    if(settings){
-      const get=k=>settings.find(s=>s.key===k)?.value;
-      if(get('store_name')){
-        const parts=get('store_name').split(' ');
-        document.getElementById('storeLogo').innerHTML=parts[0]+'<span>'+parts.slice(1).join(' ')+'</span>';
-      }
-      if(get('home_koleksi_title')) document.getElementById('koleksiTitle').innerText=get('home_koleksi_title').toUpperCase().includes('BEST')?get('home_koleksi_title'):'BEST SELLER COLLECTION';
-      let raw=[]; try{if(get('home_koleksi_terlaris')) raw=JSON.parse(get('home_koleksi_terlaris')); else if(get('home_koleksi_4')) raw=JSON.parse(get('home_koleksi_4'));}catch(e){}
-      if(raw.length){
-        let html='';
-        if(typeof raw[0]==='object'){
-          html=raw.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.url}"><div class="k-info"><div class="k-name">${v.title||''}</div></div></div>`).join('');
-        }else{
-          const ids=raw.filter(v=>!String(v).startsWith('http')&&!String(v).startsWith('data:'));
-          const urls=raw.filter(v=>String(v).startsWith('http')||String(v).startsWith('data:'));
-          if(ids.length){
-            const {data:vars}=await supabaseClient.from('product_variants').select('*').in('id',ids);
-            if(vars){ const ordered=ids.map(id=>vars.find(x=>String(x.id)===String(id))).filter(Boolean); html+=ordered.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"><div class="k-info"><div class="k-name">${v.color_name}</div></div></div>`).join(''); }
-          }
-          if(urls.length){ html+=urls.map(u=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${u}"></div>`).join(''); }
+    let raw=[]; try{if(get('home_koleksi_terlaris')) raw=JSON.parse(get('home_koleksi_terlaris'));}catch(e){}
+    if(raw.length){
+      let html='';
+      if(typeof raw[0]==='object'){ html=raw.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.url}"></div>`).join('');}
+      else{
+        const ids=raw.filter(v=>!String(v).startsWith('http'));
+        if(ids.length){
+          const {data:vars}=await supabaseClient.from('product_variants').select('*').in('id',ids);
+          if(vars){ const ordered=ids.map(id=>vars.find(x=>String(x.id)===String(id))).filter(Boolean); html+=ordered.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"></div>`).join(''); }
         }
-        if(html) document.getElementById('koleksi4Grid').innerHTML=html;
       }
+      if(html) document.getElementById('koleksi4Grid').innerHTML=html;
     }
-  }catch(e){console.log(e)}
+  }
   updateCount();
 }
 load();
