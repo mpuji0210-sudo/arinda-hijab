@@ -1,7 +1,6 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARINDA ADMIN - 2 CARD FINAL</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><style>body{margin:0;background:#FFFCF9;font-family:sans-serif;padding:12px}.card{background:#fff;border:1px solid #EAE6E1;border-radius:14px;padding:14px;margin-bottom:14px}.input{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;margin:5px 0}.btn{background:#2B1B12;color:#fff;border:none;padding:10px;border-radius:8px;width:100%;cursor:pointer;font-weight:bold}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cat{display:inline-block;background:#f3ece6;padding:5px 10px;border-radius:20px;margin:3px;font-size:12px}.small{font-size:11px;color:#8C7A6B}.var-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#FFFCF9;border:1px dashed #EAE6E1;padding:8px;border-radius:8px;margin:6px 0;align-items:center}.preview-box{border:2px solid #2B1B12;border-radius:12px;overflow:hidden;margin-top:12px}img.prev{width:100%;border:1px solid #ddd;border-radius:8px;margin:6px 0}</style></head><body>
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h2 style="margin:0;font-size:16px">ARINDA ADMIN - 2 CARD FINAL</h2><button onclick="logout()" style="background:red;color:white;padding:8px 14px;border-radius:8px;border:none;font-weight:bold">LOGOUT</button></div>
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARINDA ADMIN - 2 CARD V5 FIX</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><style>body{margin:0;background:#FFFCF9;font-family:sans-serif;padding:12px}.card{background:#fff;border:1px solid #EAE6E1;border-radius:14px;padding:14px;margin-bottom:14px}.input{width:100%;padding:11px;border:1px solid #ddd;border-radius:8px;margin:5px 0;box-sizing:border-box;font-size:13px}.btn{background:#2B1B12;color:#fff;border:none;padding:11px;border-radius:8px;width:100%;cursor:pointer;font-weight:bold}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cat{display:inline-block;background:#f3ece6;padding:5px 10px;border-radius:20px;margin:3px;font-size:12px}.small{font-size:11px;color:#8C7A6B}.var-row{background:#FFFCF9;border:1px dashed #D6CFC8;padding:12px;border-radius:10px;margin:10px 0;position:relative}.var-top{display:flex;gap:8px;align-items:center}.var-top.input{flex:1}.btn-del{background:#B42318;color:#fff;border:none;min-width:36px;height:36px;border-radius:50%;cursor:pointer;font-weight:bold;font-size:16px}.preview-box{border:2px solid #2B1B12;border-radius:12px;overflow:hidden;margin-top:14px}img.prev{width:100%;border:1px solid #ddd;border-radius:8px;margin:6px 0}</style></head><body>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h2 style="margin:0;font-size:16px">ARINDA ADMIN - 2 CARD V5 FIX</h2><button onclick="logout()" style="background:red;color:white;padding:8px 14px;border-radius:8px;border:none;font-weight:bold">LOGOUT</button></div>
 
-<!-- CARD 1: PENGATURAN TOKO + BANNER GABUNG -->
 <div class="card"><h3>1. PENGATURAN TOKO + BANNER</h3>
 <label class="small">Nama Toko</label><input id="storeName" class="input" placeholder="ARINDA HIJAB PREMIUM">
 <label class="small">No WA (628xxx)</label><input id="waNumber" class="input" placeholder="6285178098354">
@@ -9,11 +8,10 @@
 <hr style="margin:14px 0;border:none;border-top:1px solid #eee">
 <label class="small">Banner Homepage (PC 1920x700, HP 1080x1350)</label><input type="file" id="filePC" accept="image/*" class="input"><img id="prevPC" class="prev" style="display:none"><input type="file" id="fileHP" accept="image/*" class="input"><img id="prevHP" class="prev" style="display:none"><input id="bTitle" class="input" placeholder="Teks banner"><input id="bLink" class="input" value="produk.html">
 <div id="bannerList" style="margin-top:8px"></div>
-<button class="btn" style="margin-top:10px;padding:13px" onclick="saveAllSettings()">SIMPAN PENGATURAN TOKO + BANNER SEKALIGUS</button><div id="setStatus" class="small" style="margin-top:6px"></div>
+<button class="btn" style="margin-top:10px;padding:13px" onclick="saveAllSettings()">SIMPAN PENGATURAN + BANNER</button><div id="setStatus" class="small"></div>
 </div>
 
-<!-- CARD 2: KATEGORI + PRODUK + VARIAN + PREVIEW + DAFTAR = SUPER GABUNGAN -->
-<div class="card"><h3>2. PRODUK SUPER LENGKAP (KATEGORI + PRODUK + VARIAN + PREVIEW)</h3>
+<div class="card"><h3>2. PRODUK SUPER LENGKAP</h3>
 <div style="background:#FFFCF9;border:1px solid #EAE6E1;border-radius:8px;padding:10px;margin-bottom:12px">
 <label class="small">Kategori Cepat</label><div style="display:flex;gap:6px"><input id="catName" class="input" placeholder="Paris, Voal, dll" style="flex:1"><button onclick="addCat()" class="btn" style="width:80px">Tambah</button></div><div id="catList" style="margin-top:6px"></div>
 </div>
@@ -23,20 +21,18 @@
 <label class="small">Harga</label><input id="pPrice" class="input" type="number" placeholder="80000" oninput="updatePreview()">
 <label class="small">Kategori</label><select id="pCat" class="input"><option value="">Pilih Kategori</option></select>
 
-<div style="margin-top:12px"><b style="font-size:12px">VARIAN WARNA - UPLOAD BANYAK SEKALIGUS (FIX CEPAT)</b><p class="small">Isi warna + foto model. Foto pertama jadi foto utama di produk.html. Minimal 1 warna.</p>
+<div style="margin-top:12px"><b style="font-size:12px">VARIAN WARNA - UPLOAD BANYAK SEKALIGUS</b><p class="small">Fix: tulisan gak kepotong lagi, ada tombol hapus X merah.</p>
 <div id="varInputs"></div>
-<button class="btn" style="background:#fff;color:#2B1B12;border:1px dashed #2B1B12" onclick="addVarRow()">+ Tambah Baris Warna</button>
+<button class="btn" style="background:#fff;color:#2B1B12;border:1px dashed #2B1B12;margin-top:6px" onclick="addVarRow()">+ Tambah Baris Warna</button>
 </div>
 
-<!-- LIVE PREVIEW - INI GABUNGAN NO 6 KE NO 5 -->
-<div class="preview-box"><div style="background:#2B1B12;color:#fff;padding:8px 12px;font-size:11px;letter-spacing:1px">🔍 LIVE PREVIEW - POPUP NANTI (FOTO KECIL KANAN MINI 54px - UDAH FIX)</div>
+<div class="preview-box"><div style="background:#2B1B12;color:#fff;padding:8px 12px;font-size:11px">🔍 LIVE PREVIEW - CUMA 1 (GAK DOUBLE LAGI) - MINI 54px</div>
 <div style="display:grid;grid-template-columns:1fr 62px;gap:8px;padding:8px;background:#F6EEE3;align-items:start"><div id="liveMain" style="background:#fff;aspect-ratio:1/1;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#999;font-size:11px">Preview foto</div><div id="liveThumbs" style="display:flex;flex-direction:column;gap:6px"></div></div>
 <div style="padding:10px"><div id="liveName" style="font-weight:700">Nama Produk</div><div id="livePrice" style="font-size:18px;font-weight:700">Rp0</div><div id="liveColors" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"></div></div>
 </div>
 
 <button class="btn" style="margin-top:12px;padding:14px;font-size:14px" onclick="saveProductGabungan()">SIMPAN PRODUK + SEMUA WARNA SEKALIGUS</button><div id="saveStatus" class="small"></div>
-
-<div style="margin-top:16px;border-top:2px solid #eee;padding-top:12px"><b style="font-size:12px">DAFTAR PRODUK (KLIK EDIT UNTUK UBAH)</b><div id="list" class="grid" style="margin-top:8px">Loading...</div></div>
+<div style="margin-top:16px;border-top:2px solid #eee;padding-top:12px"><b style="font-size:12px">DAFTAR PRODUK (KLIK EDIT)</b><div id="list" class="grid" style="margin-top:8px">Loading...</div></div>
 </div>
 
 <script>
@@ -47,30 +43,44 @@ if(localStorage.getItem('arinda_admin')!=='login'){location.href='login.html';}
 function logout(){localStorage.clear();location.href='login.html';}
 let tokoOriginId=localStorage.getItem('toko_origin_id')||"17523", tokoOriginLabel=localStorage.getItem('toko_origin_label')||"CENGKARENG BARAT";
 let pcBase='',hpBase='';
-
 async function init(){
  try{const {data}=await supabaseClient.from('settings').select('*'); if(data){const get=k=>data.find(s=>s.key===k)?.value; if(get('store_name')) storeName.value=get('store_name'); if(get('wa_number')) waNumber.value=get('wa_number'); if(get('toko_origin_id')){tokoOriginId=get('toko_origin_id'); tokoOriginLabel=get('toko_origin_label');}}}catch(e){}
  curOrigin.innerText=tokoOriginLabel+' - '+tokoOriginId; loadCats(); loadProducts(); loadBanners(); initVarRows();
 }
-function initVarRows(){varInputs.innerHTML=''; for(let i=0;i<4;i++) addVarRow();}
-function addVarRow(){const r=document.createElement('div'); r.className='var-row'; r.innerHTML=`<input class="input var-color" placeholder="WARNA: KREM" style="text-transform:uppercase" oninput="updatePreview()"><input type="file" class="input var-file" accept="image/*" onchange="updatePreview()">`; varInputs.appendChild(r);}
+function initVarRows(){varInputs.innerHTML=''; for(let i=0;i<3;i++) addVarRow();}
+function addVarRow(){
+ const r=document.createElement('div'); r.className='var-row';
+ r.innerHTML=`
+  <label class="small">Nama Warna (contoh: KREM, HITAM, MAROON, NAVY)</label>
+  <div class="var-top">
+    <input class="input var-color" placeholder="KREM / HITAM / MAROON / NAVY" style="text-transform:uppercase" oninput="updatePreview()">
+    <button class="btn-del" onclick="this.closest('.var-row').remove();updatePreview()" title="Hapus baris ini">×</button>
+  </div>
+  <label class="small" style="margin-top:6px;display:block">Foto Model Warna Ini</label>
+  <input type="file" class="input var-file" accept="image/*" onchange="updatePreview()">
+ `;
+ varInputs.appendChild(r);
+}
 function updatePreview(){
  liveName.innerText=pName.value||'Nama Produk'; livePrice.innerText='Rp'+Number(pPrice.value||0).toLocaleString('id-ID');
- const rows=[...document.querySelectorAll('.var-row')]; let tHtml='', bHtml='';
- rows.forEach((r,i)=>{const col=r.querySelector('.var-color').value||''; const f=r.querySelector('.var-file').files[0]; if(f&&col){const u=URL.createObjectURL(f); if(i==0) liveMain.innerHTML=`<img src="${u}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`; tHtml+=`<img src="${u}" style="width:54px;height:68px;object-fit:cover;border-radius:6px;border:1.5px solid #2B1B12">`; bHtml+=`<span style="padding:5px 10px;background:#2B1B12;color:#fff;font-size:10px;border-radius:4px">${col}</span>`;}});
+ const rows=[...document.querySelectorAll('.var-row')]; let tHtml='', bHtml=''; let first=true;
+ rows.forEach(r=>{
+  const col=r.querySelector('.var-color')?.value||''; const f=r.querySelector('.var-file')?.files[0];
+  if(f&&col){const u=URL.createObjectURL(f); if(first){liveMain.innerHTML=`<img src="${u}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`; first=false;} tHtml+=`<img src="${u}" style="width:54px;height:68px;object-fit:cover;border-radius:6px;border:1.5px solid #2B1B12">`; bHtml+=`<span style="padding:5px 10px;background:#2B1B12;color:#fff;font-size:10px;border-radius:4px">${col}</span>`;}
+ });
  liveThumbs.innerHTML=tHtml; liveColors.innerHTML=bHtml;
 }
 async function loadCats(){const {data}=await supabaseClient.from('categories').select('*'); window._cats=data||[]; catList.innerHTML=window._cats.map(c=>`<span class="cat">${c.name} <b onclick="delCat('${c.id}')" style="cursor:pointer">x</b></span>`).join(''); pCat.innerHTML='<option value="">Pilih Kategori</option>'+window._cats.map(c=>`<option value="${c.name}">${c.name}</option>`).join('');}
 async function addCat(){if(!catName.value) return; await supabaseClient.from('categories').insert({name:catName.value}); catName.value=''; loadCats();}
 async function delCat(id){if(!confirm('Hapus?'))return; await supabaseClient.from('categories').delete().eq('id',id); loadCats();}
 async function loadProducts(){const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false}); window._p=data||[]; list.innerHTML=window._p.map(p=>`<div style="border:1px solid #eee;border-radius:8px;overflow:hidden"><img src="${p.image_url}" style="width:100%;height:110px;object-fit:cover"><div style="padding:6px"><b style="font-size:11px">${p.name}</b><br>Rp${Number(p.price).toLocaleString('id-ID')}<br><button class="btn" style="padding:4px;margin-top:4px" onclick="editP('${p.id}')">EDIT</button><button class="btn" style="padding:4px;background:#b42318;margin-top:2px" onclick="delP('${p.id}')">HAPUS</button></div></div>`).join('');}
-function editP(id){const p=window._p.find(x=>String(x.id)===String(id)); editId.value=p.id; pName.value=p.name; pPrice.value=p.price; pCat.value=p.category||''; updatePreview(); window.scrollTo({top:300,behavior:'smooth'});}
+function editP(id){const p=window._p.find(x=>String(x.id)===String(id)); editId.value=p.id; pName.value=p.name; pPrice.value=p.price; pCat.value=p.category||''; updatePreview(); window.scrollTo({top:400,behavior:'smooth'});}
 async function delP(id){if(!confirm('Hapus produk & varian?'))return; await supabaseClient.from('products').delete().eq('id',id); loadProducts();}
 async function saveProductGabungan(){
  const name=pName.value.trim(), price=Number(pPrice.value), cat=pCat.value;
  if(!name||!price) return alert('Isi nama & harga!');
  const rows=[...document.querySelectorAll('.var-row')]; const variants=[];
- rows.forEach(r=>{const col=r.querySelector('.var-color').value.trim().toUpperCase(); const f=r.querySelector('.var-file').files[0]; if(col&&f) variants.push({color:col,file:f});});
+ rows.forEach(r=>{const col=r.querySelector('.var-color')?.value.trim().toUpperCase(); const f=r.querySelector('.var-file')?.files[0]; if(col&&f) variants.push({color:col,file:f});});
  if(variants.length==0) return alert('Minimal 1 warna + foto!');
  saveStatus.innerText='⏳ Uploading '+variants.length+' foto...';
  try{
@@ -80,7 +90,7 @@ async function saveProductGabungan(){
   if(prodId){await supabaseClient.from('products').update({name,price,image_url:mainUrl,category:cat}).eq('id',prodId); await supabaseClient.from('product_variants').delete().eq('product_id',prodId);}
   else {const {data,error}=await supabaseClient.from('products').insert({name,price,image_url:mainUrl,category:cat}).select().single(); if(error) throw error; prodId=data.id;}
   await supabaseClient.from('product_variants').insert(ups.map(u=>({product_id:prodId,color_name:u.color_name,image_url:u.image_url})));
-  saveStatus.innerText='✅ Berhasil '+ups.length+' warna!'; editId.value=''; pName.value=''; pPrice.value=''; initVarRows(); updatePreview(); loadProducts(); alert('Berhasil! Cek produk.html - foto kecil kanan udah mini 54px');
+  saveStatus.innerText='✅ Berhasil '+ups.length+' warna!'; editId.value=''; pName.value=''; pPrice.value=''; initVarRows(); updatePreview(); loadProducts();
  }catch(e){saveStatus.innerText='❌ '+e.message;}
 }
 async function searchOrigin(){const q=originSearch.value.trim(); if(!q) return; originList.innerHTML='Mencari...'; const r=await fetch('/api/search?q='+encodeURIComponent(q)); const j=await r.json(); originList.innerHTML=j.data.map(d=>`<div style="padding:8px;border-bottom:1px solid #eee;cursor:pointer" onclick="pilihOrigin('${d.id}','${d.label}')">${d.label}</div>`).join('');}
@@ -88,13 +98,12 @@ function pilihOrigin(id,label){tokoOriginId=id; tokoOriginLabel=label; curOrigin
 filePC.addEventListener('change',e=>{const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{pcBase=ev.target.result; prevPC.src=pcBase; prevPC.style.display='block';}; r.readAsDataURL(f);});
 fileHP.addEventListener('change',e=>{const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{hpBase=ev.target.result; prevHP.src=hpBase; prevHP.style.display='block';}; r.readAsDataURL(f);});
 async function saveAllSettings(){
- const name=storeName.value.trim(), wa=waNumber.value.trim();
- setStatus.innerText='⏳ Menyimpan pengaturan...';
+ const name=storeName.value.trim(), wa=waNumber.value.trim(); setStatus.innerText='⏳ Menyimpan...';
  try{
   const ups=[]; if(name) ups.push({key:'store_name',value:name}); if(wa) ups.push({key:'wa_number',value:wa}); ups.push({key:'toko_origin_id',value:tokoOriginId},{key:'toko_origin_label',value:tokoOriginLabel});
   await supabaseClient.from('settings').upsert(ups,{onConflict:'key'});
   if(pcBase){const pcBlob=await (await fetch(pcBase)).blob(); const pcName='pc_'+Date.now()+'.jpg'; await supabaseClient.storage.from('banners').upload(pcName,pcBlob); const pcUrl=supabaseClient.storage.from('banners').getPublicUrl(pcName).data.publicUrl; let hpUrl=pcUrl; if(hpBase){const hpBlob=await (await fetch(hpBase)).blob(); const hpName='hp_'+Date.now()+'.jpg'; await supabaseClient.storage.from('banners').upload(hpName,hpBlob); hpUrl=supabaseClient.storage.from('banners').getPublicUrl(hpName).data.publicUrl;} await supabaseClient.from('banners').update({is_active:false}).eq('is_active',true); await supabaseClient.from('banners').insert({title:bTitle.value||'Promo',image_url:pcUrl,image_mobile_url:hpUrl,link_url:bLink.value||'produk.html',is_active:true});}
-  setStatus.innerText='✅ Pengaturan + Banner tersimpan!'; loadBanners();
+  setStatus.innerText='✅ Tersimpan!'; loadBanners();
  }catch(e){setStatus.innerText='❌ '+e.message;}
 }
 async function loadBanners(){const {data}=await supabaseClient.from('banners').select('*').order('id',{ascending:false}); bannerList.innerHTML=(data||[]).map(b=>`<div style="border:1px solid #eee;border-radius:8px;display:flex;gap:8px;padding:6px;margin-top:4px"><img src="${b.image_url}" style="width:60px;height:36px;object-fit:cover"><div style="flex:1;font-size:10px"><b>${b.title||''}</b><br>${b.is_active?'✅ AKTIF':'Nonaktif'}</div><button class="btn" style="width:auto;padding:4px 8px;font-size:10px" onclick="aktifkanBanner('${b.id}')">Aktif</button><button class="btn" style="width:auto;padding:4px 8px;background:#b42318;font-size:10px" onclick="hapusBanner('${b.id}')">Hapus</button></div>`).join('');}
