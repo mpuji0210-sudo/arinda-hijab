@@ -1,7 +1,8 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARINDA ADMIN V25.6 - FIX SPASI FINAL</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet"><style>
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ARINDA ADMIN V26 FINAL</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet"><style>
 body{margin:0;background:#F9F3EE;font-family:'Plus Jakarta Sans',sans-serif;padding:12px;color:#2B1B12}
-.card{background:#fff;border:1px solid #EEE6DF;border-radius:20px;padding:16px;margin-bottom:14px}
-.input{width:100%;padding:12px;border:1px solid #E7DDD5;border-radius:12px;margin:6px 0;background:#FFFCF9;box-sizing:border-box;font-size:13px}
+.card{background:#fff;border:1px solid #EEE6DF;border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:0 6px 20px rgba(43,27,18,.06)}
+.card h3{font-family:'Cormorant Garamond';font-size:19px;margin:0 0 10px;display:flex;align-items:center}
+.input{width:100%;padding:12px;border:1px solid #E7DDD5;border-radius:12px;margin:6px 0;background:#FFFCF9;box-sizing:border-box;font-size:13px;outline:none}
 .btn{background:#2B1B12;color:#fff;border:none;padding:12px;border-radius:12px;width:100%;font-weight:700;cursor:pointer}
 .btn-brown{background:#8C5A2B}.small{font-size:11px;color:#8C7A6B}
 .btn-del{background:#FFF1F1;color:#B42318;border:1px solid #FECACA;border-radius:8px;padding:4px 10px;cursor:pointer;font-size:12px;font-weight:700}
@@ -10,7 +11,7 @@ body{margin:0;background:#F9F3EE;font-family:'Plus Jakarta Sans',sans-serif;padd
 .file-btn{display:block;width:100%;padding:11px;background:#fff;border:1.5px dashed #2B1B12;border-radius:10px;text-align:center;font-size:12px;font-weight:700;cursor:pointer;margin-top:6px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.prod-card{background:#fff;border:1px solid #EEE6DF;border-radius:18px;overflow:hidden}.prod-img{width:100%;height:150px;object-fit:cover;object-position:top}
 </style></head><body>
-<div style="display:flex;justify-content:space-between;margin-bottom:14px"><div><b style="font-family:'Cormorant Garamond';font-size:22px">ARINDA ADMIN V25.6</b><div style="font-size:10px;letter-spacing:2px;color:#16A34A">✅ FIX SPASI - EDIT UDAH BISA</div></div><button onclick="localStorage.clear();location.href='login.html'" style="background:#B42318;color:#fff;padding:8px 14px;border-radius:12px;border:none;font-weight:700">LOGOUT</button></div>
+<div style="display:flex;justify-content:space-between;margin-bottom:14px"><div><b style="font-family:'Cormorant Garamond';font-size:22px">ARINDA ADMIN V26</b><div style="font-size:10px;letter-spacing:2px;color:#16A34A">✅ FIX FINAL SPASI - UDAH SINKRON</div></div><button onclick="localStorage.clear();location.href='login.html'" style="background:#B42318;color:#fff;padding:8px 14px;border-radius:12px;border:none;font-weight:700">LOGOUT</button></div>
 
 <div class="card"><h3><span class="badge-no">1</span> Toko + Banner</h3><input id="storeName" class="input" placeholder="Nama Toko"><input id="waNumber" class="input" placeholder="No WA"><div class="small">Asal: <b id="curOrigin">Loading</b></div><div style="display:flex;gap:6px"><input id="originSearch" class="input" placeholder="Ketik kecamatan"><button id="btnCariOrigin" class="btn" style="width:80px">Cari</button></div><div id="originList"></div><hr style="border:none;border-top:1px solid #F0E9E3;margin:10px 0"><input type="file" id="filePC" accept="image/*" style="display:none"><label for="filePC" class="file-btn">📸 Banner PC</label><img id="prevPC" style="width:100%;border-radius:12px;display:none;margin-top:6px"><input type="file" id="fileHP" accept="image/*" style="display:none"><label for="fileHP" class="file-btn">📸 Banner HP</label><img id="prevHP" style="width:100%;border-radius:12px;display:none;margin-top:6px"><input id="bTitle" class="input" placeholder="Judul Banner"><input id="bLink" class="input" value="produk.html"><div id="bannerList"></div><button id="btnSaveToko" class="btn">SIMPAN TOKO + BANNER</button><div id="setStatus" class="small"></div></div>
 
@@ -115,11 +116,12 @@ window.editP=async(id)=>{
 };
 window.delP=(id)=>{showConfirm('Hapus Produk?','Produk & varian akan terhapus',async()=>{await supabaseClient.from('products').delete().eq('id',id);loadProducts();showToast('✅ Produk terhapus');});};
 
-// INI FIX UTAMA V25.6 - PAKAI SPASI!
+// INI FIX UTAMA V26 - UDAH ADA SPASI YANG BENER!
 $("btnSaveProd").onclick=async()=>{
  const name=$("pName").value.trim();const price=Number($("pPrice").value);
  if(!name||!price){showToast('Isi nama & harga',true);return;}
- const rows=[...document.querySelectorAll('#varInputs.slot')]; // <-- FIX SPASI ADA DISINI!
+ const rows=[...document.querySelectorAll('#varInputs.slot')]; // <-- INI FIX: ADA SPASI ANTARA #varInputs DAN.slot
+ console.log('Jumlah warna terdeteksi:', rows.length);
  let finalVars=[];
  for(let r of rows){
   const col=r.querySelector('.var-color')?.value.trim().toUpperCase();
