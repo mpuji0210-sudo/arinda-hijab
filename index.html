@@ -2,109 +2,75 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ARINDA HIJAB PREMIUM</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--esp:#2B1B12;--taupe:#8C7A6B;--champ:#EAE6E1;--bg:#FFFCF9}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden}
-nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.98);backdrop-filter:blur(12px);border-bottom:1px solid var(--champ)}
-.nav-in{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
-.logo{font-family:'Cormorant Garamond';font-weight:700;letter-spacing:4px;font-size:20px;line-height:1;flex-shrink:0}
-.logo span{display:block;font-family:'Plus Jakarta Sans';font-size:9px;letter-spacing:5px;color:var(--taupe);margin-top:3px;font-weight:500}
-.nav-right{display:flex;align-items:center;gap:24px;overflow-x:auto;scrollbar-width:none;flex:1;justify-content:flex-end}
-.nav-right::-webkit-scrollbar{display:none}
-.menu{display:flex;gap:18px;align-items:center}
-.menu a{font-size:10.5px;letter-spacing:2px;color:var(--taupe);text-decoration:none;padding-bottom:4px;border-bottom:1px solid transparent;white-space:nowrap}
-.menu a.active{color:var(--esp);border-color:var(--esp)}
-.icons{display:flex;gap:10px;align-items:center;flex-shrink:0;border-left:1px solid var(--champ);padding-left:14px;margin-left:4px}
-.icon-btn{background:none;border:none;cursor:pointer;padding:4px;position:relative}
-.icon-btn svg{width:20px;height:20px;stroke:var(--esp);fill:none;stroke-width:1.6}
-.badge{position:absolute;top:-4px;right:-5px;background:var(--esp);color:#fff;font-size:9px;min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-#searchBox{display:none;width:100%;max-width:1120px;margin:0 auto;padding:10px 20px;border-top:1px solid #F6EEE6}
-#searchBox input{width:100%;padding:12px 16px;border:1px solid var(--champ);border-radius:24px;font-size:13px;outline:none;background:#fff}
-.hero{position:relative;width:100%;height:70vh;min-height:420px;background:#F6EEE3;overflow:hidden}.hero img{width:100%;height:100%;object-fit:cover;display:block}
+nav{position:sticky;top:0;z-index:99;background:#FFFCF9;border-bottom:1px solid #EAE6E1}
+.nav-top{max-width:1120px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Cormorant Garamond';font-weight:600;letter-spacing:6px;font-size:20px;line-height:1}
+.logo span{display:block;font-family:'Plus Jakarta Sans';font-size:8px;letter-spacing:6px;color:var(--taupe);margin-top:4px;font-weight:400}
+.icons{display:flex;gap:18px;align-items:center}
+.icon-btn{background:none;border:none;cursor:pointer;position:relative;padding:0}
+.icon-btn svg{width:20px;height:20px;stroke:var(--esp);fill:none;stroke-width:1.3}
+.badge{position:absolute;top:-6px;right:-8px;background:var(--esp);color:#fff;font-size:8px;min-width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.nav-menu{border-top:1px solid #F6EEE6;background:#fff;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.nav-menu::-webkit-scrollbar{display:none}
+.menu{max-width:1120px;margin:0 auto;padding:0 20px;display:flex;gap:32px}
+.menu a{font-size:10px;letter-spacing:3px;color:var(--esp);text-decoration:none;padding:12px 0;opacity:.55;border-bottom:1px solid transparent;white-space:nowrap;transition:.2s}
+.menu a.active,.menu a:hover{opacity:1;border-bottom-color:var(--esp)}
+#searchBox{display:none;max-width:1120px;margin:0 auto;padding:12px 20px;border-top:1px solid #EEE6DF}
+#searchBox input{width:100%;padding:12px 0;border:none;border-bottom:1px solid var(--esp);background:transparent;font-size:13px;outline:none;border-radius:0}
+.hero{position:relative;width:100%;height:72vh;min-height:460px;background:#F6EEE3;overflow:hidden}.hero img{width:100%;height:100%;object-fit:cover;display:block}
 .desktop-only{display:block}.mobile-only{display:none}
-.btn{display:inline-block;background:var(--esp);color:#fff;padding:11px 20px;font-size:11px;letter-spacing:2px;text-decoration:none;border:none;cursor:pointer;border-radius:8px;font-weight:bold}
-.section{max-width:1120px;margin:0 auto;padding:16px 14px}.sub{font-size:10px;letter-spacing:2.5px;color:var(--taupe);margin:4px 0 12px}
-.colors{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-@media(min-width:700px){.colors{grid-template-columns:repeat(5,1fr)}}
-.k-card{border:1px solid var(--champ);background:#fff;border-radius:16px;overflow:hidden;cursor:pointer;transition:.2s}
-.k-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.btn{display:inline-block;background:var(--esp);color:#fff;padding:12px 22px;font-size:10px;letter-spacing:2px;text-decoration:none;border:none;cursor:pointer;font-weight:500}
+.section{max-width:1120px;margin:0 auto;padding:20px 14px}.sub{font-size:10px;letter-spacing:3px;color:var(--taupe);margin:4px 0 14px}
+.colors{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:700px){.colors{grid-template-columns:repeat(4,1fr)}}
+.k-card{background:#fff;overflow:hidden;cursor:pointer}
 .k-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block}
-.undertone-section{margin-top:22px;background:#fff;border:1px solid var(--champ);border-radius:20px;overflow:hidden}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.info-box{background:#fff;border:1px solid var(--champ);border-radius:10px;padding:14px}.info-box b{font-size:12px}.info-box p{font-size:11px;line-height:1.6;color:#5a4a40;margin:6px 0 0}
-.faq{border:1px solid #EAE6E1;background:#fff;margin-top:10px;border-radius:14px;overflow:hidden}.faq-item{border-bottom:1px solid #EAE6E1}.faq-item:last-child{border:none}.faq-q{width:100%;text-align:left;background:#fff;border:none;padding:14px 16px;font-size:13px;font-weight:600;display:flex;justify-content:space-between;align-items:center;cursor:pointer}.faq-a{max-height:0;overflow:hidden;transition:max-height.3s ease;background:#FFFCF9}.faq-item.active.faq-a{max-height:500px}.faq-a p{font-size:12px;line-height:1.7;color:#5a4a40;margin:0;padding:0 16px 14px}
+.undertone-section{margin-top:28px;background:#fff;border:1px solid #EEE6DF}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#EEE6DF;margin-top:12px;border:1px solid #EEE6DF}
+.info-box{background:#fff;padding:18px}.info-box b{font-size:11px;letter-spacing:1.5px}.info-box p{font-size:12px;line-height:1.6;color:#5a4a40;margin:8px 0 0}
 
-/* === LUXURY HP - LOGO KIRI, MENU+ICON 1 BARIS === */
+/* ZARA MOBILE - SUPER BERSIH */
 @media(max-width:800px){
-.nav-in{flex-direction:column;align-items:stretch;padding:0;gap:0}
-.logo{padding:14px 16px 8px;text-align:left;font-size:19px}
+.nav-top{padding:14px 16px}
+.logo{font-size:18px;letter-spacing:4px}
 .logo span{letter-spacing:4px}
-.nav-right{width:100%;justify-content:flex-start;gap:0;padding:8px 8px 10px;background:#fff;border-top:1px solid #F6EEE6;border-bottom:1px solid #EEE6DF;overflow-x:auto}
-.menu{gap:6px}
-.menu a{padding:8px 14px;border-radius:20px;border:1px solid #EEE6DF;background:#FFFCF9;font-size:9px;letter-spacing:1.2px}
-.menu a.active{background:#2B1B12;color:#fff;border-color:#2B1B12}
-.icons{border-left:none;padding-left:8px;margin-left:8px;gap:8px}
-#searchBox{padding:10px 14px}
-.desktop-only{display:none!important}.mobile-only{display:block!important}.colors{grid-template-columns:repeat(2,1fr)}.hero{height:75vh}.hero-text{left:14px;right:14px;bottom:14px;position:absolute;background:#fff;padding:20px;border:1px solid var(--champ)}.info-grid{grid-template-columns:1fr}
+.menu{padding:0 16px;gap:24px}
+.menu a{font-size:9px;letter-spacing:2.5px;padding:14px 0}
+.desktop-only{display:none!important}.mobile-only{display:block!important}
+.hero{height:80vh}.hero-text{left:16px;right:16px;bottom:16px;position:absolute;background:#fff;padding:22px;border:none}
+.info-grid{grid-template-columns:1fr}
 }
 </style></head><body>
 <nav>
-<div class="nav-in">
+<div class="nav-top">
 <div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div>
-<div class="nav-right">
-<div class="menu"><a class="active" href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a href="kontak.html">KONTAK</a></div>
 <div class="icons">
-<button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16L20 20" stroke-linecap="round"/></svg></button>
-<a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></a>
-<a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 10H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cCount">0</span></a>
+<button class="icon-btn" onclick="toggleSearch()" aria-label="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M16 16L20 20" stroke-linecap="round"/></svg></button>
+<a href="kontak.html" class="icon-btn" aria-label="contact"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></a>
+<a href="produk.html" class="icon-btn" aria-label="cart"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 10H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cCount">0</span></a>
 </div>
 </div>
-</div>
-<div id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" placeholder="Cari hijab... (krem, hitam, navy)"></form></div>
+<div class="nav-menu"><div class="menu"><a class="active" href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a href="kontak.html">KONTAK</a></div></div>
+<div id="searchBox"><form onsubmit="goSearch(event)"><input id="q" type="search" placeholder="Cari: krem, hitam, navy..."></form></div>
 </nav>
 
 <div class="hero" id="heroBanner">
 <img class="desktop-only" id="bannerPC" src="https://via.placeholder.com/1400x700/F6EEE3/8C7A6B?text=ARINDA+BANNER+PC"><img class="mobile-only" id="bannerHP" src="https://via.placeholder.com/800x1200/F6EEE3/8C7A6B?text=ARINDA+BANNER+HP">
-<div class="hero-text" style="position:absolute;left:20px;bottom:20px;background:#fff;padding:20px;border:1px solid var(--champ);max-width:320px"><div style="font-size:10px;letter-spacing:3px;color:#8C7A6B" id="bannerTitle">NEW COLLECTION - READY STOCK</div><h1 style="font-family:'Cormorant Garamond';font-size:36px;line-height:.95;margin:6px 0 8px">Bahan Adem,<br>Dan Tidak Nerawang</h1><p style="font-size:12px;color:#8C7A6B;line-height:1.5;margin:0 0 14px">MENUTUP AURAT DENGAN BAHAN PREMIUM</p><a id="bannerLink" href="produk.html" class="btn">LIHAT PRODUK →</a></div>
+<div class="hero-text"><div style="font-size:9px;letter-spacing:4px;color:#8C7A6B" id="bannerTitle">NEW COLLECTION</div><h1 style="font-family:'Cormorant Garamond';font-size:38px;line-height:.95;margin:8px 0;font-weight:400">Bahan Adem,<br>Dan Tidak Nerawang</h1><p style="font-size:12px;color:#8C7A6B;line-height:1.5;margin:0 0 18px">MENUTUP AURAT DENGAN BAHAN PREMIUM</p><a id="bannerLink" href="produk.html" class="btn">LIHAT KOLEKSI</a></div>
 </div>
 
 <div class="section">
 <div class="sub" id="koleksiTitle">KOLEKSI TERLARIS</div>
 <div class="colors" id="koleksi4Grid">Loading koleksi...</div>
-
-<div class="undertone-section" id="underSection">
-<div style="padding:18px">
-<div style="font-family:'Cormorant Garamond';font-size:24px;font-weight:700" id="underMainTitle">🎨 PANDUAN UNDERTONE</div>
-<div class="sub" style="margin-top:4px" id="underSub">Kalo masih bingung langsung consul ke admin ya </div>
-<div id="underGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px">Loading foto pergelangan...</div>
-<div style="font-size:13px;line-height:1.8;color:#5a4a40;margin-top:14px" id="underMainDesc">Lihat warna urat di pergelangan tangan kamu.</div>
-<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap" id="underChips"></div>
-<div style="font-size:11px;color:#8C7A6B;margin-top:10px" id="underListText"></div>
+<div class="undertone-section" id="underSection"><div style="padding:22px"><div style="font-family:'Cormorant Garamond';font-size:26px;font-weight:400" id="underMainTitle">CEK UNDERTONE KAMU</div><div class="sub" style="margin-top:6px" id="underSub">Pilih warna yang cocok dengan kulitmu</div><div id="underGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px">Loading...</div><div style="font-size:13px;line-height:1.8;color:#5a4a40;margin-top:16px" id="underMainDesc">Lihat warna urat di pergelangan tangan kamu.</div><div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap" id="underChips"></div><div style="font-size:11px;color:#8C7A6B;margin-top:12px" id="underListText"></div></div></div>
+<div style="margin-top:28px;background:#fff;border:1px solid #EEE6DF;padding:18px;"><div style="font-family:'Cormorant Garamond';font-size:22px">Cek Ongkir</div><div class="sub" style="margin-bottom:12px;">Asal: <b id="originInfo">Loading...</b></div><div style="display:flex;gap:8px;"><input id="destSearch" placeholder="Kecamatan pembeli" style="flex:1;padding:12px 0;border:none;border-bottom:1px solid #EAE6E1;font-size:13px;outline:none"><button onclick="searchDest()" class="btn" style="padding:12px 20px">CARI</button></div><div id="destList" style="margin:12px 0;max-height:140px;overflow-y:auto;border:1px solid #f0e9e3;display:none;"></div><div style="display:flex;gap:8px;margin-top:14px;"><select id="courierSelect" style="padding:10px;border:1px solid #EEE6DF;flex:1;font-size:12px;background:#fff"><option value="jne">JNE</option><option value="jnt">J&T</option><option value="sicepat">SiCepat</option><option value="anteraja">AnterAja</option><option value="pos">POS</option></select><button onclick="cekOngkir()" class="btn" style="flex:1">CEK ONGKIR</button></div><div id="ongkirResult" style="margin-top:12px;font-size:12px;"></div></div>
+<div style="margin-top:32px"><div style="font-family:'Cormorant Garamond';font-size:24px">Informasi</div><div class="sub">DETAIL PRODUK</div><div class="info-grid"><div class="info-box"><b>SPESIFIKASI</b><p>115x115cm, Voal Premium & Paris Premium, laser cut rapi.</p></div><div class="info-box"><b>BAHAN ADEM</b><p>Adem, ringan, tidak nerawang.</p></div><div class="info-box"><b>READY STOCK</b><p>Ready selama ada di etalase.</p></div><div class="info-box"><b>PREMIUM</b><p>Jahitan rapi, tidak licin, mudah dibentuk.</p></div></div></div>
+<div style="margin-top:32px"><div style="font-family:'Cormorant Garamond';font-size:24px">FAQ</div><div class="sub">TANYA JAWAB</div><div class="faq" id="faqList" style="border-top:1px solid #EEE6DF;margin-top:12px"></div></div>
 </div>
-</div>
-
-<div style="margin-top:22px;background:#fff;border:1px solid var(--champ);border-radius:12px;padding:14px;">
-<div style="font-family:'Cormorant Garamond';font-size:20px">🚚 Cek Ongkir Otomatis</div>
-<div class="sub" style="margin-bottom:10px;">Asal toko: <b id="originInfo">Loading...</b></div>
-<div style="display:flex;gap:6px;margin-top:8px;">
-<input id="destSearch" placeholder="Ketik kecamatan pembeli" style="flex:1;padding:10px;border:1px solid var(--champ);border-radius:8px;font-size:13px;">
-<button onclick="searchDest()" class="btn" style="width:auto;">Cari</button>
-</div>
-<div id="destList" style="margin:8px 0;max-height:140px;overflow-y:auto;border:1px solid #f0e9e3;border-radius:8px;display:none;"></div>
-<div style="display:flex;gap:6px;margin-top:10px;">
-<select id="courierSelect" style="padding:10px;border:1px solid var(--champ);border-radius:8px;flex:1;"><option value="jne">JNE</option><option value="jnt">J&T</option><option value="sicepat">SiCepat</option><option value="anteraja">AnterAja</option><option value="pos">POS</option></select>
-<button onclick="cekOngkir()" class="btn" style="flex:2;">CEK ONGKIR SEKARANG</button>
-</div>
-<div id="ongkirResult" style="margin-top:10px;font-size:12px;"></div>
-</div>
-
-<div style="margin-top:28px"><div style="font-family:'Cormorant Garamond';font-size:24px">Informasi Produk</div><div class="sub">KAMU HARUS TAU INI</div>
-<div class="info-grid"><div class="info-box"><b>📏 SPESIFIKASI</b><p>Ukuran 115x115cm, bahan Voal Premium & Paris Premium, finishing laser cut super rapi.</p></div><div class="info-box"><b>☁️ BAHAN ADEM</b><p>Adem, ringan, tidak nerawang.</p></div><div class="info-box"><b>📦 READY STOCK</b><p>Stock ready selama ada di etalase produk.</p></div><div class="info-box"><b>✨ PREMIUM</b><p>Jahitan rapi, bahan tidak licin, mudah dibentuk.</p></div></div></div>
-
-<div style="margin-top:28px"><div style="font-family:'Cormorant Garamond';font-size:24px">FAQ - Tanya Jawab</div><div class="sub">Kamu Harus Tau Ini</div><div class="faq" id="faqList"></div></div>
-</div>
-
 <script>
 const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
 function toggleSearch(){const b=document.getElementById('searchBox');b.style.display=b.style.display=='block'?'none':'block'; if(b.style.display=='block') document.getElementById('q').focus();}
@@ -115,59 +81,27 @@ async function load(){
   try{
     const {data}=await supabaseClient.from('settings').select('*');
     const {data:banners}=await supabaseClient.from('banners').select('*').eq('is_active',true).order('id',{ascending:false}).limit(1);
-    if(banners && banners[0]){
-      document.getElementById('bannerPC').src=banners[0].image_url;
-      document.getElementById('bannerHP').src=banners[0].image_mobile_url||banners[0].image_url;
-      if(banners[0].title) document.getElementById('bannerTitle').innerText=banners[0].title;
-      if(banners[0].link_url) document.getElementById('bannerLink').href=banners[0].link_url;
-    }
+    if(banners && banners[0]){document.getElementById('bannerPC').src=banners[0].image_url;document.getElementById('bannerHP').src=banners[0].image_mobile_url||banners[0].image_url;if(banners[0].title) document.getElementById('bannerTitle').innerText=banners[0].title;if(banners[0].link_url) document.getElementById('bannerLink').href=banners[0].link_url;}
     if(data){
       const get=k=>data.find(s=>s.key===k)?.value;
-      if(get('store_name')){
-        const sName=get('store_name');
-        const parts=sName.split(' ');
-        document.getElementById('storeLogo').innerHTML=parts[0]+'<span>'+parts.slice(1).join(' ')+'</span>';
-      }
+      if(get('store_name')){const sName=get('store_name');const parts=sName.split(' ');document.getElementById('storeLogo').innerHTML=parts[0]+'<span>'+parts.slice(1).join(' ')+'</span>';}
       const oid=get('toko_origin_id'); const olabel=get('toko_origin_label'); if(oid) tokoOriginId=oid;
       document.getElementById('originInfo').innerText=olabel?olabel+' ('+oid+')':'CENGKARENG BARAT - '+oid;
       if(get('home_koleksi_title')) document.getElementById('koleksiTitle').innerText=get('home_koleksi_title');
       let koleksiRaw=[]; try{if(get('home_koleksi_terlaris')) koleksiRaw=JSON.parse(get('home_koleksi_terlaris')); else if(get('home_koleksi_4')) koleksiRaw=JSON.parse(get('home_koleksi_4'));}catch(e){}
-      if(koleksiRaw.length>0){
-        let html='';
-        if(typeof koleksiRaw[0]==='object'){
-          html=koleksiRaw.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.url}"><div style="padding:9px;text-align:center"><div style="font-size:11px;font-weight:700">${v.title||'BESTSELLER'}</div>${v.desc?`<div style="font-size:10px;color:#8C7A6B">${v.desc}</div>`:''}</div></div>`).join('');
-        } else {
-          const ids=koleksiRaw.filter(v=>!String(v).startsWith('http')&&!String(v).startsWith('data:'));
-          const urls=koleksiRaw.filter(v=>String(v).startsWith('http')||String(v).startsWith('data:'));
-          if(ids.length>0){const {data:vars}=await supabaseClient.from('product_variants').select('*').in('id',ids); if(vars){const ordered=ids.map(id=>vars.find(v=>String(v.id)===String(id))).filter(Boolean); html+=ordered.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"><div style="padding:9px;font-size:11px;text-align:center;font-weight:700">${v.color_name}</div></div>`).join('');}}
-          if(urls.length>0){html+=urls.map(u=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${u}"><div style="padding:9px;font-size:11px;text-align:center;font-weight:700">BESTSELLER</div></div>`).join('');}
-        }
-        if(html) document.getElementById('koleksi4Grid').innerHTML=html;
-      }
-      if(get('home_undertone_title')) document.getElementById('underMainTitle').innerText='🎨 '+get('home_undertone_title');
+      if(koleksiRaw.length>0){let html='';if(typeof koleksiRaw[0]==='object'){html=koleksiRaw.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.url}"><div style="padding:10px 0"><div style="font-size:11px;letter-spacing:1px">${v.title||'BESTSELLER'}</div>${v.desc?`<div style="font-size:10px;color:#8C7A6B;margin-top:2px">${v.desc}</div>`:''}</div></div>`).join('');} else {const ids=koleksiRaw.filter(v=>!String(v).startsWith('http')&&!String(v).startsWith('data:'));const urls=koleksiRaw.filter(v=>String(v).startsWith('http')||String(v).startsWith('data:'));if(ids.length>0){const {data:vars}=await supabaseClient.from('product_variants').select('*').in('id',ids); if(vars){const ordered=ids.map(id=>vars.find(v=>String(v.id)===String(id))).filter(Boolean); html+=ordered.map(v=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${v.image_url}"><div style="padding:10px 0;font-size:11px">${v.color_name}</div></div>`).join('');}}if(urls.length>0){html+=urls.map(u=>`<div class="k-card" onclick="location.href='produk.html'"><img src="${u}"><div style="padding:10px 0;font-size:11px">BESTSELLER</div></div>`).join('');}}if(html) document.getElementById('koleksi4Grid').innerHTML=html;}
+      if(get('home_undertone_title')) document.getElementById('underMainTitle').innerText=get('home_undertone_title');
       if(get('home_undertone_desc')) document.getElementById('underMainDesc').innerText=get('home_undertone_desc');
       let underImgs=[]; try{if(get('home_undertone_images')) underImgs=JSON.parse(get('home_undertone_images')); else if(get('home_undertone_image')) underImgs=[get('home_undertone_image')];}catch(e){}
-      if(underImgs.length>0){
-        if(typeof underImgs[0]==='object'){
-          document.getElementById('underGrid').innerHTML=underImgs.map(u=>`<div style="border-radius:12px;overflow:hidden;border:1px solid #EEE6DF;background:#fff"><img src="${u.url}" style="width:100%;height:160px;object-fit:cover"><div style="padding:8px"><div style="font-size:11px;font-weight:700">${u.title||'Undertone'}</div>${u.desc?`<div style="font-size:10px;color:#8C7A6B;margin-top:2px;line-height:1.4">${u.desc}</div>`:''}</div></div>`).join('');
-        } else {
-          document.getElementById('underGrid').innerHTML=underImgs.map((u,i)=>`<div style="position:relative;border-radius:12px;overflow:hidden;border:1px solid #EEE6DF"><img src="${u}" style="width:100%;height:160px;object-fit:cover"><div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;padding:6px 8px;font-size:10px;text-align:center">${i==0?'COOL - Biru/Ungu':i==1?'WARM - Hijau':i==2?'NEUTRAL - Campur':'Undertone '+(i+1)}</div></div>`).join('');
-        }
-      }
-      if(get('home_undertone_list')){ const list=get('home_undertone_list'); document.getElementById('underListText').innerText=list; document.getElementById('underChips').innerHTML=list.split(',').map(s=>`<span style="padding:7px 14px;background:#2B1B12;color:#fff;border-radius:20px;font-size:11px">${s.trim()}</span>`).join(''); }
-      if(get('home_faq_list')){
-        try{
-          const faqs=JSON.parse(get('home_faq_list'));
-          if(faqs.length>0) document.getElementById('faqList').innerHTML=faqs.map(f=>`<div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('active')">${f.q} <span>⌄</span></button><div class="faq-a"><p>${f.a}</p></div></div>`).join('');
-        }catch(e){}
-      }
+      if(underImgs.length>0){if(typeof underImgs[0]==='object'){document.getElementById('underGrid').innerHTML=underImgs.map(u=>`<div style="background:#fff"><img src="${u.url}" style="width:100%;aspect-ratio:1;object-fit:cover"><div style="padding:10px 0"><div style="font-size:11px">${u.title||'Undertone'}</div>${u.desc?`<div style="font-size:10px;color:#8C7A6B;margin-top:4px;line-height:1.4">${u.desc}</div>`:''}</div></div>`).join('');} else {document.getElementById('underGrid').innerHTML=underImgs.map((u,i)=>`<div><img src="${u}" style="width:100%;aspect-ratio:1;object-fit:cover"><div style="font-size:10px;margin-top:8px;text-align:center;letter-spacing:1px">${i==0?'COOL':i==1?'WARM':'NEUTRAL'}</div></div>`).join('');}}
+      if(get('home_undertone_list')){ const list=get('home_undertone_list'); document.getElementById('underListText').innerText=list; document.getElementById('underChips').innerHTML=list.split(',').map(s=>`<span style="padding:6px 0;margin-right:14px;font-size:10px;letter-spacing:2px;border-bottom:1px solid #2B1B12">${s.trim()}</span>`).join(''); }
+      if(get('home_faq_list')){try{const faqs=JSON.parse(get('home_faq_list'));if(faqs.length>0) document.getElementById('faqList').innerHTML=faqs.map(f=>`<div style="border-bottom:1px solid #EEE6DF"><button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display=='block'?'none':'block'" style="width:100%;text-align:left;background:none;border:none;padding:18px 0;font-size:12px;letter-spacing:1px;display:flex;justify-content:space-between">${f.q}<span>+</span></button><div style="display:none;padding:0 0 18px;font-size:12px;line-height:1.7;color:#5a4a40">${f.a}</div></div>`).join('');}catch(e){}}
     }
-  }catch(e){console.log(e)}
-  updateCount();
+  }catch(e){console.log(e)} updateCount();
 }
 let selectedDestId=null;let tokoOriginId='17523';
-async function searchDest(){const q=document.getElementById('destSearch').value.trim();if(!q)return alert('Ketik kecamatan dulu');const list=document.getElementById('destList');list.style.display='block';list.innerHTML='⏳ Mencari...';try{const r=await fetch('/api/search?q='+encodeURIComponent(q));const j=await r.json();if(!j.data||j.data.length==0){list.innerHTML='<div style="padding:10px">Tidak ketemu</div>';return;}list.innerHTML=j.data.map(d=>`<div style="padding:10px;border-bottom:1px solid #eee;cursor:pointer;" onclick="pilihDest('${d.id}','${d.label.replace(/'/g,"")}')">${d.label} - <b>KLIK PILIH</b></div>`).join('');}catch(e){list.innerHTML='Error: '+e.message;}}
-function pilihDest(id,label){selectedDestId=id;document.getElementById('destSearch').value=label;document.getElementById('destList').innerHTML='<div style="padding:10px;background:#dcfce7;border-radius:8px;">✅ Tujuan: <b>'+label+'</b> ('+id+')</div>';}
-async function cekOngkir(){if(!selectedDestId)return alert('Pilih kecamatan dulu!');const courier=document.getElementById('courierSelect').value;const result=document.getElementById('ongkirResult');result.innerHTML='⏳ Mengecek ongkir...';try{const res=await fetch('/api/cost',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({origin:tokoOriginId,destination:selectedDestId,weight:1000,courier})});const data=await res.json();if(data.error){result.innerHTML='❌ '+data.error;return;}const arr=data.data||data;const list=Array.isArray(arr)?arr:(arr.costs||[]);if(list.length==0){result.innerHTML='Tidak ada layanan';return;}let html='<div style="font-weight:bold;margin-bottom:6px;">Ongkir '+courier.toUpperCase()+':</div>';list.forEach(c=>{html+=`<div style="padding:10px;border:1px solid #EAE6E1;margin:6px 0;border-radius:8px;display:flex;justify-content:space-between;"><div><b>${c.service||'REG'}</b><br><small>${c.etd||'-'} hari</small></div><b>Rp${Number(c.cost||0).toLocaleString('id-ID')}</b></div>`;});result.innerHTML=html;}catch(e){result.innerHTML='❌ Error: '+e.message;}}
+async function searchDest(){const q=document.getElementById('destSearch').value.trim();if(!q)return alert('Ketik kecamatan dulu');const list=document.getElementById('destList');list.style.display='block';list.innerHTML='Mencari...';try{const r=await fetch('/api/search?q='+encodeURIComponent(q));const j=await r.json();if(!j.data||j.data.length==0){list.innerHTML='<div style="padding:12px">Tidak ketemu</div>';return;}list.innerHTML=j.data.map(d=>`<div style="padding:12px;border-bottom:1px solid #eee;cursor:pointer;font-size:12px" onclick="pilihDest('${d.id}','${d.label.replace(/'/g,"")}')">${d.label}</div>`).join('');}catch(e){list.innerHTML='Error: '+e.message;}}
+function pilihDest(id,label){selectedDestId=id;document.getElementById('destSearch').value=label;document.getElementById('destList').innerHTML='<div style="padding:12px;background:#F6EEE3;font-size:12px">Tujuan: <b>'+label+'</b></div>';}
+async function cekOngkir(){if(!selectedDestId)return alert('Pilih kecamatan dulu!');const courier=document.getElementById('courierSelect').value;const result=document.getElementById('ongkirResult');result.innerHTML='Mengecek...';try{const res=await fetch('/api/cost',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({origin:tokoOriginId,destination:selectedDestId,weight:1000,courier})});const data=await res.json();if(data.error){result.innerHTML=data.error;return;}const arr=data.data||data;const list=Array.isArray(arr)?arr:(arr.costs||[]);if(list.length==0){result.innerHTML='Tidak ada layanan';return;}let html='<div style="margin:12px 0 8px;font-size:10px;letter-spacing:2px">PILIH LAYANAN</div>';list.forEach(c=>{html+=`<div style="padding:14px 0;border-bottom:1px solid #EEE6DF;display:flex;justify-content:space-between;font-size:12px"><div><b style="letter-spacing:1px">${c.service||'REG'}</b><br><span style="color:#8C7A6B;font-size:11px">${c.etd||'-'} hari</span></div><b>Rp${Number(c.cost||0).toLocaleString('id-ID')}</b></div>`;});result.innerHTML=html;}catch(e){result.innerHTML='Error: '+e.message;}}
 load();
 </script></body></html>
