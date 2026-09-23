@@ -116,7 +116,7 @@ async function init(){
 }
 async function loadMasterColors(){const {data}=await supa.from('master_colors').select('name,undertone').limit(100); masterColorsCache = data||[]; updateAutoUndertone();}
 function updateAutoUndertone(){
-  const rows=[...document.querySelectorAll('#varInputs.slot')];
+  const rows=[...document.querySelectorAll('#varInputs .slot')];
   let colors = rows.map(r=>r.querySelector('.var-color')?.value.trim().toUpperCase()).filter(Boolean);
   let underSet = new Set();
   colors.forEach(cName=>{
