@@ -57,7 +57,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,252,249,.92);backdro
 <div id="tab-faq" class="hidden"><div class="card"><h3>FAQ</h3><div id="faqWrap"></div><button class="btn-line" onclick="addFaq()">+ FAQ</button><button class="btn" onclick="saveFaq()">SIMPAN</button></div></div>
 
 <div id="tab-produk" class="hidden">
-<div class="card" style="border-color:var(--black)"><h3>PRODUK</h3>
+<div class="card" style="border-color:var(--black)"><h3>PRODUK + STOK VARIAN</h3>
 <input type="hidden" id="editId">
 <input id="pName" class="input" placeholder="NAMA PRODUK">
 <input id="pPrice" type="number" class="input" placeholder="HARGA">
@@ -67,7 +67,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,252,249,.92);backdro
 <div id="catList" style="margin-top:8px"></div>
 </div>
 <div id="varInputs" style="margin-top:12px"></div>
-<button class="btn-line" onclick="addVarRow()">+ WARNA</button>
+<button class="btn-line" onclick="addVarRow()">+ WARNA + STOK</button>
 <button class="btn" onclick="saveProd()">SIMPAN PRODUK</button><div id="saveStatus" style="font-size:9px;letter-spacing:2px;text-align:center;margin-top:8px;opacity:.5"></div>
 </div>
 <div class="card"><h3>DAFTAR (<span id="prodCount">0</span>)</h3><div id="list" class="grid">Loading</div></div>
@@ -88,12 +88,12 @@ async function init(){
  try{const {data}=await supa.from('settings').select('*');if(data){const g=k=>data.find(s=>s.key===k)?.value;if(g('store_name'))$('storeName').value=g('store_name');if(g('wa_number'))$('waNumber').value=g('wa_number');if(g('toko_origin_id')){tokoOriginId=g('toko_origin_id');tokoOriginLabel=g('toko_origin_label')||tokoOriginLabel;}if(g('home_koleksi_terlaris')){try{const p=JSON.parse(g('home_koleksi_terlaris'));if(p.length)koleksiSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}if(g('home_undertone_images')){try{const p=JSON.parse(g('home_undertone_images'));if(p.length)undertoneSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}if(g('home_faq_list')){try{faqSlots=JSON.parse(g('home_faq_list'))}catch(e){}}}}catch(e){}
  $('curOrigin').innerText=tokoOriginLabel+' - '+tokoOriginId;await loadCats();await loadProducts();await loadBanners();initVar();renderKoleksi();renderUnder();renderFaq();
 }
-// FIX 1: hilangin spasi
 function initVar(){ const el=$('varInputs'); if(!el) return; el.innerHTML=''; addVarRow(); }
-function addVarRow(c='',img=''){
+// UPDATE: tambah stok + toggle
+function addVarRow(c='',img='',stock=10,avail=true){
  const id='vf_'+Date.now()+'_'+Math.random().toString(36).slice(2);
  const d=document.createElement('div');d.className='slot';
- d.innerHTML=`<div style="display:flex;gap:6px"><input class="input var-color" placeholder="NAMA WARNA" value="${esc(c)}" style="flex:1;margin:0"><div class="x" onclick="this.parentElement.parentElement.remove()">×</div></div>
+ d.innerHTML=`<div style="display:flex;gap:6px;align-items:center"><input class="input var-color" placeholder="NAMA WARNA" value="${esc(c)}" style="flex:1;margin:0"><input class="input var-stock" type="number" placeholder="STOK" value="${stock}" style="width:70px;margin:0;text-align:center"><label style="font-size:8px;display:flex;align-items:center;gap:4px"><input type="checkbox" class="var-avail" ${avail?'checked':''}>READY</label><div class="x" onclick="this.parentElement.parentElement.remove()">×</div></div>
  ${img?`<img src="${img}" class="preview-img">`:''}
  <input type="file" class="var-file" accept="image/*" style="display:none" id="${id}" onchange="prevVar(this)">
  <label for="${id}" class="file-btn">FOTO WARNA</label>
@@ -115,18 +115,38 @@ $('underGaleri').addEventListener('change',async e=>{for(let f of e.target.files
 function renderFaq(){let h='';faqSlots.forEach((f,i)=>{h+=`<div class="slot"><div class="x" onclick="faqSlots.splice(${i},1);renderFaq()">×</div><input class="input" placeholder="Q" value="${esc(f.q)}" oninput="faqSlots[${i}].q=this.value"><textarea class="input" rows="2" placeholder="A" oninput="faqSlots[${i}].a=this.value">${esc(f.a)}</textarea></div>`});$('faqWrap').innerHTML=h;}
 window.addFaq=()=>{faqSlots.push({q:'',a:''});renderFaq();};
 async function loadProducts(){const {data}=await supa.from('products').select('*').order('id',{ascending:false});$('prodCount').innerText=(data||[]).length;$('list').innerHTML=(data||[]).map(p=>`<div class="prod-card"><img src="${p.image_url}"><div style="padding:8px"><div style="font-size:10px">${esc(p.name)}</div><div style="font-size:12px;font-family:'Cormorant Garamond'">Rp${Number(p.price).toLocaleString('id-ID')}</div><button class="btn-light" style="width:100%;margin-top:6px" onclick="editP('${p.id}')">EDIT</button><button class="btn-light" style="width:100%;margin-top:4px" onclick="delP('${p.id}')">HAPUS</button></div></div>`).join('');window._p=data||[];}
-window.editP=async(id)=>{const p=window._p.find(x=>String(x.id)===String(id));if(!p)return;$('editId').value=p.id;$('pName').value=p.name;$('pPrice').value=p.price;$('pCat').value=p.category||'';$('varInputs').innerHTML='';const {data:vars}=await supa.from('product_variants').select('*').eq('product_id',id);if(vars&&vars.length){vars.forEach(v=>addVarRow(v.color_name,v.image_url));}else initVar();openTab('produk',document.querySelectorAll('.tab')[4]);window.scrollTo({top:0,behavior:'smooth'});toast('EDIT MODE');};
+window.editP=async(id)=>{const p=window._p.find(x=>String(x.id)===String(id));if(!p)return;$('editId').value=p.id;$('pName').value=p.name;$('pPrice').value=p.price;$('pCat').value=p.category||'';$('varInputs').innerHTML='';const {data:vars}=await supa.from('product_variants').select('*').eq('product_id',id);if(vars&&vars.length){vars.forEach(v=>addVarRow(v.color_name,v.image_url, v.stock?? 10, v.is_available?? true));}else initVar();openTab('produk',document.querySelectorAll('.tab')[4]);window.scrollTo({top:0,behavior:'smooth'});toast('EDIT MODE');};
 window.delP=async(id)=>{if(!confirm('Hapus?'))return;await supa.from('products').delete().eq('id',id);loadProducts();toast('DIHAPUS');};
-// FIX 2: selector yang benar
 window.saveProd=async()=>{
  const name=$('pName').value.trim();const price=Number($('pPrice').value);if(!name||!price){toast('ISI NAMA & HARGA');return;}
- const rows=[...document.querySelectorAll('#varInputs .slot')];
+ const rows=[...document.querySelectorAll('#varInputs.slot')];
  if(!rows.length){toast('TAMBAH WARNA DULU');return;}
  $('saveStatus').innerText=rows.length+' WARNA';
  let finalVars=[];
- for(let r of rows){const col=r.querySelector('.var-color')?.value.trim().toUpperCase();if(!col)continue;const file=r.querySelector('.var-file')?.files[0];let oldUrl=r.querySelector('.var-old-url')?.value||r.querySelector('.preview-img')?.src||'';if(file){const fn='var_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';$('saveStatus').innerText='UPLOAD '+col;const {error}=await supa.storage.from('products').upload(fn,file,{upsert:true});if(error){toast(error.message);return;}finalVars.push({color_name:col,image_url:supa.storage.from('products').getPublicUrl(fn).data.publicUrl});}else if(oldUrl&&oldUrl.startsWith('http')){finalVars.push({color_name:col,image_url:oldUrl});}}
+ for(let r of rows){
+   const col=r.querySelector('.var-color')?.value.trim().toUpperCase();if(!col)continue;
+   const stockVal=Number(r.querySelector('.var-stock')?.value || 0);
+   const avail=r.querySelector('.var-avail')?.checked;
+   const file=r.querySelector('.var-file')?.files[0];
+   let oldUrl=r.querySelector('.var-old-url')?.value||r.querySelector('.preview-img')?.src||'';
+   if(file){
+     const fn='var_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';
+     $('saveStatus').innerText='UPLOAD '+col;
+     const {error}=await supa.storage.from('products').upload(fn,file,{upsert:true});
+     if(error){toast(error.message);return;}
+     finalVars.push({color_name:col,image_url:supa.storage.from('products').getPublicUrl(fn).data.publicUrl, stock:stockVal, is_available:avail});
+   }else if(oldUrl&&oldUrl.startsWith('http')){
+     finalVars.push({color_name:col,image_url:oldUrl, stock:stockVal, is_available:avail});
+   }
+ }
  if(!finalVars.length){toast('MINIMAL 1 FOTO');return;}
- try{let pid=$('editId').value;if(pid){await supa.from('products').update({name,price,image_url:finalVars[0].image_url,category:$('pCat').value||null}).eq('id',pid);await supa.from('product_variants').delete().eq('product_id',pid);}else{const {data,error}=await supa.from('products').insert({name,price,image_url:finalVars[0].image_url,category:$('pCat').value||null}).select().single();if(error)throw error;pid=data.id;}await supa.from('product_variants').insert(finalVars.map(v=>({product_id:pid,color_name:v.color_name,image_url:v.image_url})));$('saveStatus').innerText='OK '+finalVars.length+' WARNA';toast('TERSIMPAN');$('editId').value='';$('pName').value='';$('pPrice').value='';initVar();loadProducts();}catch(e){toast(e.message);}
+ try{
+   let pid=$('editId').value;
+   if(pid){await supa.from('products').update({name,price,image_url:finalVars[0].image_url,category:$('pCat').value||null}).eq('id',pid);await supa.from('product_variants').delete().eq('product_id',pid);}
+   else{const {data,error}=await supa.from('products').insert({name,price,image_url:finalVars[0].image_url,category:$('pCat').value||null}).select().single();if(error)throw error;pid=data.id;}
+   await supa.from('product_variants').insert(finalVars.map(v=>({product_id:pid,color_name:v.color_name,image_url:v.image_url, stock:v.stock, is_available:v.is_available})));
+   $('saveStatus').innerText='OK '+finalVars.length+' WARNA';toast('TERSIMPAN '+finalVars.length);$('editId').value='';$('pName').value='';$('pPrice').value='';initVar();loadProducts();
+ }catch(e){toast(e.message);}
 };
 async function cariOrigin(){const q=$('originSearch').value.trim();if(!q)return;$('originList').innerHTML='...';const r=await fetch('/api/search?q='+encodeURIComponent(q));const j=await r.json();$('originList').innerHTML=j.data.map(d=>`<div style="padding:10px;border-bottom:1px solid var(--line);cursor:pointer;font-size:11px" onclick="pilihOrigin('${d.id}','${d.label.replace(/'/g,"")}')">${d.label}</div>`).join('');}
 window.pilihOrigin=(id,label)=>{tokoOriginId=id;tokoOriginLabel=label;$('curOrigin').innerText=label+' - '+id;$('originList').innerHTML='';};
