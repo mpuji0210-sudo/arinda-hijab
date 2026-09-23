@@ -23,13 +23,13 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.92);backdrop-f
 .colors{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:16px}
 .k-card{background:#fff;border:1px solid var(--line);position:relative;cursor:pointer}.k-card img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;object-position:top}
 .hero-text{position:absolute;left:24px;bottom:24px;max-width:420px;z-index:2}
-.heart-btn{position:absolute;top:8px;right:8px;width:30px;height:30px;background:rgba(255,255,255,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);z-index:2}.heart-btn svg{width:14px;height:14px;stroke:#111;fill:none;stroke-width:1.2}.heart-btn.loved svg{fill:#111}
+.heart-btn{position:absolute;top:8px;right:8px;width:30px;height:30px;background:rgba(255,255,255,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);z-index:3}.heart-btn svg{width:14px;height:14px;stroke:#111;fill:none;stroke-width:1.2}.heart-btn.loved svg{fill:#111}
 .u-wrap{border:1px solid var(--line);background:#fff;display:flex;flex-wrap:wrap}
 .u-grid{display:grid;grid-template-columns:repeat(3,1fr);flex:1;min-width:240px}
 .u-item{position:relative;border-right:1px solid var(--line);cursor:pointer;background:#F6F1EB}.u-item img{width:100%;height:140px;object-fit:cover;display:block}
 .u-label{position:absolute;bottom:0;left:0;right:0;background:rgba(17,17,17,.55);color:#fff;font-size:7px;letter-spacing:2px;text-align:center;padding:6px}
-.fly-img{position:fixed;left:0;top:0;z-index:99999;width:56px;height:56px;object-fit:cover;border-radius:50%;pointer-events:none;box-shadow:0 12px 28px rgba(0,0,0,.25);border:2px solid #fff;will-change:transform,opacity;transition:transform.9s cubic-bezier(.2,.7,.3,1), opacity.9s}
-#cartToast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(100px);background:#111;color:#fff;padding:10px 16px;border-radius:30px;display:flex;gap:10px;align-items:center;transition:.4s;opacity:0;z-index:99}#cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.fly-img{position:fixed;left:0;top:0;z-index:99999;width:68px;height:68px;object-fit:cover;border-radius:50%;pointer-events:none;box-shadow:0 12px 28px rgba(0,0,0,.3);border:2px solid #fff;will-change:transform,opacity;transition:transform.9s cubic-bezier(.2,.7,.3,1), opacity.9s}
+#cartToast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(100px);background:#111;color:#fff;padding:10px 16px;border-radius:30px;display:flex;gap:10px;align-items:center;transition:.4s;opacity:0;z-index:100}#cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(min-width:700px){.colors{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:800px){.desktop-only{display:none!important}.mobile-only{display:block!important}.hero{height:58vh;min-height:520px}.hero img.mobile-only{object-position:50% 18%}.hero-text{left:16px;right:16px;bottom:18px}.hero-text h1{font-size:34px!important}}
 </style></head><body>
@@ -40,7 +40,6 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.92);backdrop-f
 </div></div><div class="nav-menu"><div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div></div>
 <div id="searchBox"><input id="q" type="search" placeholder="CARI BAHAN ATAU WARNA - PARIS, KREM, NAVY" oninput="autoSearch()" autocomplete="off"></div></nav>
 <div class="hero"><img class="desktop-only" id="bannerPC" alt="banner"><img class="mobile-only" id="bannerHP" alt="banner hp"><div class="hero-text"><div id="bannerTitle" style="font-size:9px;letter-spacing:5px;opacity:.5"></div><h1 style="font-family:'Cormorant Garamond';font-size:44px;line-height:.9;margin:10px 0 18px;font-weight:300;letter-spacing:-1px">ARINDA HIJAB,<br>PREMIUM<br></h1><a id="bannerLink" href="produk.html" class="btn">LIHAT KOLEKSI -></a></div></div>
-
 <div style="max-width:1240px;margin:0 auto;padding:20px 16px 0"><div class="u-wrap">
 <div style="flex:1;min-width:260px;padding:20px 18px"><div style="font-family:'Cormorant Garamond';font-size:18px;letter-spacing:3px">FIND YOUR UNDERTONE</div>
 <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
@@ -53,7 +52,6 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.92);backdrop-f
 <div style="margin-top:12px"><a href="kategori.html" style="font-size:8px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;padding-bottom:2px;opacity:.5">LIHAT SEMUA UNDERTONE →</a></div>
 </div>
 <div id="undertoneGrid" class="u-grid"></div></div></div>
-
 <div class="section"><div style="display:flex;justify-content:space-between;align-items:center"><div class="sub">BEST SELLER - FILTER WARNA</div><a href="produk.html" style="font-size:9px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;padding-bottom:4px">LIHAT PRODUK</a></div><div class="colors" id="koleksi4Grid"></div></div>
 <footer style="margin-top:32px;padding:36px 16px 28px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div><div style="font-size:7px;letter-spacing:5px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div><div style="margin-top:14px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA</div></footer>
 <div id="cartToast"><img id="toastImg" style="width:28px;height:28px;border-radius:50%;object-fit:cover"><span id="toastText" style="font-size:9px"></span></div>
@@ -67,31 +65,41 @@ function saveCart(c){localStorage.setItem('arinda_cart2',JSON.stringify(c));upda
 function updateCount(){const el=document.getElementById('cCount');if(el){el.innerText=getCart().reduce((a,b)=>a+Number(b.qty||0),0); el.classList.add('bump'); setTimeout(()=>el.classList.remove('bump'),300);}}
 function addCart(n,p,i){let c=getCart();let idx=c.findIndex(a=>a.warna==n);if(idx>-1)c[idx].qty++;else c.push({warna:n,qty:1,harga:Number(p),img:i});saveCart(c);}
 function showToast(t,i){const img=document.getElementById('toastImg');const txt=document.getElementById('toastText');if(img)img.src=i;if(txt)txt.innerText=t;const el=document.getElementById('cartToast');el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200);}
+
+// === FIX V52 - SAMA PERSIS KAYAK PRODUK.HTML YANG UDAH PAS ===
 function flyToCart(imgUrl, startEl){
+  if(!startEl) return;
   document.querySelectorAll('.fly-img').forEach(e=>e.remove());
-  const cartIcon=document.getElementById('cartIcon'); if(!cartIcon) return;
+  const cartIcon=document.getElementById('cartIcon');
+  if(!cartIcon) return;
   const cartRect=cartIcon.getBoundingClientRect();
-  const startRect = startEl? startEl.getBoundingClientRect() : {left: window.innerWidth/2, top: window.innerHeight/2, width: 56, height: 56};
-  const startX = startRect.left + startRect.width/2;
-  const startY = startRect.top + startRect.height/2;
+  const startRect=startEl.getBoundingClientRect();
+
   const fly=document.createElement('img');
-  fly.src=imgUrl; fly.className='fly-img';
-  fly.style.left='0px'; fly.style.top='0px';
-  fly.style.transform=`translate(${startX-28}px, ${startY-28}px) scale(1)`; fly.style.opacity='1';
+  fly.src=imgUrl;
+  fly.className='fly-img';
+  fly.style.left='0px';
+  fly.style.top='0px';
+  fly.style.transform=`translate(${startRect.left + startRect.width/2 - 34}px, ${startRect.top + startRect.height/2 - 34}px) scale(1)`;
+  fly.style.opacity='1';
   document.body.appendChild(fly);
   fly.getBoundingClientRect();
   requestAnimationFrame(()=>{
-    fly.style.transform=`translate(${cartRect.left + cartRect.width/2 - 12}px, ${cartRect.top + cartRect.height/2 - 12}px) scale(0.18)`;
-    fly.style.opacity='0.2';
+    requestAnimationFrame(()=>{
+      fly.style.transform=`translate(${cartRect.left}px, ${cartRect.top}px) scale(0.2)`;
+      fly.style.opacity='0';
+    });
   });
   setTimeout(()=>fly.remove(),950);
 }
 function quickAdd(title,img, el){
-  const startEl = el? el.closest('.k-card')?.querySelector('img') : null;
-  flyToCart(img, startEl);
+  const card = el? el.closest('.k-card') : null;
+  const imgEl = card? card.querySelector('img') : null;
+  if(imgEl) flyToCart(imgEl.src || img, imgEl);
   addCart(title,99000,img);
   showToast(title+' MASUK KERANJANG',img);
 }
+
 const underData={
   cool:{desc:'<b>COOL</b> — Kulit kemerahan, urat biru. Cocok: <b>NAVY, MAROON, GREY</b>', col:'COOL'},
   warm:{desc:'<b>WARM</b> — Kulit kuning, urat hijau. Cocok: <b>KREM, OLIVE, CARAMEL</b>', col:'WARM'},
