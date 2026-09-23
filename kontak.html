@@ -1,100 +1,63 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kontak - ARINDA HIJAB PREMIUM</title>
+<title>Kontak - ARINDA</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
-:root{--esp:#111;--taupe:#8C7A6B;--line:#E9E6E1;--bg:#FFFCF9}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--esp);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden}
-nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.nav-top{max-width:1240px;margin:0 auto;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Cormorant Garamond';font-weight:400;letter-spacing:8px;font-size:21px}
-.logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;color:var(--taupe);margin-top:5px}
-.icons{display:flex;gap:22px;align-items:center}.icon-btn{background:none;border:none;cursor:pointer;position:relative;padding:0}.icon-btn svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.1}
+:root{--black:#111;--line:#EDE8E1;--bg:#FFFCF9}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--black);font-family:'Inter',sans-serif;font-weight:300}
+nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-top{max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px}.logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px}
+.icons{display:flex;gap:20px;align-items:center}.icon-btn{background:none;border:none;cursor:pointer;position:relative}.icon-btn svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.1}
 .badge{position:absolute;top:-7px;right:-9px;background:#111;color:#fff;font-size:7px;min-width:13px;height:13px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.nav-menu{border-top:1px solid #F6F1EB;background:#fff;overflow-x:auto;scrollbar-width:none}.nav-menu::-webkit-scrollbar{display:none}
-.menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:40px}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:14px 0;opacity:.4;white-space:nowrap;border-bottom:1px solid transparent}.menu a.active{opacity:1;border-bottom-color:#111}
-.wrap{max-width:1240px;margin:0 auto;padding:32px 16px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.card{border:1px solid #F2EFEA;background:#fff;padding:20px}
-input,textarea,select{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;font-family:'Inter';font-size:12px;margin-top:8px;background:transparent;outline:none;letter-spacing:.5px;border-radius:0}
+.nav-menu{border-top:1px solid #F6F1EB;background:#fff;overflow-x:auto}.nav-menu::-webkit-scrollbar{display:none}
+.menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:36px}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:13px 0;opacity:.35;border-bottom:1px solid transparent;white-space:nowrap}.menu a.active{opacity:1;border-bottom-color:#111}
+.wrap{max-width:1240px;margin:0 auto;padding:28px 16px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.card{border:1px solid var(--line);background:#fff;padding:20px}
+input,textarea,select{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;font-family:'Inter';font-size:12px;margin-top:8px;background:transparent;outline:none}
 .btn{padding:14px;background:#111;color:#fff;text-align:center;font-size:9px;letter-spacing:3px;cursor:pointer;border:none;width:100%;margin-top:18px}
-.faq-item{border:1px solid #F2EFEA;background:#fff;margin-bottom:8px;cursor:pointer}
-.faq-q{padding:14px 16px;display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.8px}
-.faq-arrow{width:18px;height:18px;display:flex;align-items:center;justify-content:center;transition:.2s;opacity:.5}
-.faq-arrow svg{width:12px;height:12px;stroke:#111;fill:none;stroke-width:1.2}
+/* FIX FAQ */
+.faq-item{border:1px solid var(--line);background:#fff;margin-bottom:8px;cursor:pointer;transition:.2s}
+.faq-q{padding:14px 16px;display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.5px}
+.faq-arrow{transition:.3s;opacity:.4}.faq-arrow svg{width:12px;height:12px;stroke:#111;fill:none;stroke-width:1.2}
 .faq-item.open.faq-arrow{transform:rotate(180deg);opacity:1}
 .faq-a{display:none;padding:0 16px 14px;font-size:11px;line-height:1.8;opacity:.6}
 .faq-item.open.faq-a{display:block}
-.arinda-modal-bg{position:fixed;inset:0;background:rgba(17,17,17,.45);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:99999;padding:20px}
+.arinda-modal-bg{position:fixed;inset:0;background:rgba(17,17,17,.45);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:999;padding:20px}
 .arinda-modal-bg.show{display:flex}
-.arinda-modal{background:#FFFCF9;border:1px solid #F2EFEA;padding:24px;max-width:360px;width:100%;text-align:center}
-.arinda-modal h4{font-family:'Cormorant Garamond';font-size:22px;margin:0 0 8px;font-weight:400}
-.arinda-modal p{font-size:11px;opacity:.6;line-height:1.6;margin:0 0 20px}
-.arinda-modal-btn{background:#111;color:#fff;border:none;padding:13px 24px;width:100%;cursor:pointer;font-size:9px;letter-spacing:3px}
-@media(max-width:800px){.nav-top{padding:15px 16px}.logo{font-size:18px;letter-spacing:6px}.menu{padding:0 16px;gap:28px}.wrap{grid-template-columns:1fr;padding:20px 16px;gap:16px}}
+.arinda-modal{background:#FFFCF9;border:1px solid var(--line);padding:24px;max-width:360px;width:100%;text-align:center}
+@media(max-width:800px){.wrap{grid-template-columns:1fr;padding:20px 16px}}
 </style></head><body>
-<nav><div class="nav-top"><div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons"><a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a></div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a href="kontak.html" class="active">KONTAK</a></div></div></nav>
+<nav><div class="nav-top"><div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons"><a href="produk.html" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a></div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a class="active">KONTAK</a></div></div></nav>
 
 <div class="wrap">
 <div>
-<h1 style="font-family:'Cormorant Garamond';font-size:42px;line-height:.9;margin:0;font-weight:300;letter-spacing:-1px">Hubungi<br><i style="font-weight:300">Kami</i></h1>
-<p style="opacity:.5;font-size:11px;margin-top:12px;letter-spacing:1px;line-height:1.8">Konsultasi warna sesuai undertone, cek stok & ongkir.</p>
+<h1 style="font-family:'Cormorant Garamond';font-size:42px;line-height:.9;margin:0;font-weight:300">Hubungi<br><i>Kami</i></h1>
+<p style="opacity:.5;font-size:11px;margin-top:12px;line-height:1.8">Konsultasi warna sesuai undertone, cek stok & ongkir.</p>
 <div style="display:grid;gap:12px;margin-top:20px">
-<div class="card" style="font-size:11px;letter-spacing:1px">📍 <span id="originText">Jakarta - Kirim seluruh Indonesia</span><br><span style="font-size:9px;opacity:.5">COD & QRIS Ready</span></div>
-<div class="card" style="font-size:11px;letter-spacing:1px">💬 WhatsApp: <span id="waText">6285178098354</span><br><span style="font-size:9px;opacity:.5">Jam 08.00 - 21.00 WIB</span></div>
-<div class="card" style="font-size:11px;letter-spacing:1px">⭐ Rating 4.9/5 dari 1.200+ pembeli • <span id="koleksiInfo">Loading...</span></div>
+<div class="card" style="font-size:11px">📍 <span id="originText">Jakarta</span><br><span style="font-size:9px;opacity:.5">COD & QRIS Ready</span></div>
+<div class="card" style="font-size:11px">💬 WhatsApp: <span id="waText">-</span><br><span style="font-size:9px;opacity:.5">08.00 - 21.00 WIB</span></div>
 </div>
 
-<!-- FAQ PANAH BAWAH SIMPLE -->
 <div style="margin-top:24px">
-<div style="font-family:'Cormorant Garamond';font-size:18px;letter-spacing:2px;font-weight:400;margin-bottom:12px">FAQ</div>
-
-<div class="faq-item" onclick="this.classList.toggle('open')">
-  <div class="faq-q"><span>Bahannya adem & tidak nerawang?</span><span class="faq-arrow"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></div>
-  <div class="faq-a">Ya kak, Voal Premium 115x115, adem, tidak nerawang, tegak di dahi. Sudah di-test 1.200+ pembeli.</div>
-</div>
-
-<div class="faq-item" onclick="this.classList.toggle('open')">
-  <div class="faq-q"><span>Ukuran & cara pakai?</span><span class="faq-arrow"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></div>
-  <div class="faq-a">Ukuran 115x115 cm, bisa segi empat biasa atau pashmina. Tutorial ada di highlight IG & kartu dalam paket.</div>
-</div>
-
-<div class="faq-item" onclick="this.classList.toggle('open')">
-  <div class="faq-q"><span>Gimana cek undertone?</span><span class="faq-arrow"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></div>
-  <div class="faq-a">Lihat urat tangan: Biru/Ungu = COOL (Hitam, Navy, Maroon), Hijau = WARM (Krem, Olive), Campur = NEUTRAL (semua masuk).</div>
-</div>
-
-<div class="faq-item" onclick="this.classList.toggle('open')">
-  <div class="faq-q"><span>Pengiriman & ongkir?</span><span class="faq-arrow"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></div>
-  <div class="faq-a">Kirim dari Jakarta, cek ongkir otomatis di keranjang. Support JNE, J&T, SiCepat, POS. COD via WA admin.</div>
-</div>
-
-<div class="faq-item" onclick="this.classList.toggle('open')">
-  <div class="faq-q"><span>Bisa retur / tukar warna?</span><span class="faq-arrow"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></div>
-  <div class="faq-a">Bisa tukar warna jika masih ada stok & belum dipakai / dicuci. Hubungi WA maksimal 2x24 jam setelah terima paket.</div>
-</div>
-
+<div style="font-family:'Cormorant Garamond';font-size:18px;letter-spacing:2px;margin-bottom:12px">FAQ</div>
+<div id="faqList"><div style="font-size:10px;opacity:.4;padding:20px;text-align:center;letter-spacing:2px">MEMUAT FAQ...</div></div>
 </div>
 </div>
 
 <div class="card">
 <div style="font-size:9px;letter-spacing:4px">FORM PESAN</div>
-<label style="font-size:9px;letter-spacing:2px;margin-top:14px;display:block;opacity:.6">NAMA</label><input id="nama" placeholder="Nama kamu" onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('pesan').focus();}">
-<label style="font-size:9px;letter-spacing:2px;margin-top:14px;display:block;opacity:.6">WARNA YANG DIMINATI</label>
-<select id="warna"><option>Loading warna...</option></select>
-<label style="font-size:9px;letter-spacing:2px;margin-top:14px;display:block;opacity:.6">PESAN</label><textarea id="pesan" rows="4" placeholder="Mau tanya stok, ukuran, ongkir..." onkeydown="if(event.key==='Enter'&&event.ctrlKey){event.preventDefault();kirimWA();}"></textarea>
+<label style="font-size:9px;letter-spacing:2px;margin-top:14px;display:block;opacity:.6">NAMA</label><input id="nama" placeholder="Nama kamu">
+<label style="font-size:9px;letter-spacing:2px;margin-top:14px;display:block;opacity:.6">WARNA</label><select id="warna"><option>Loading...</option></select>
+<label style="font-size:9px;letter-spacing:2px;margin-top:14px;display:block;opacity:.6">PESAN</label><textarea id="pesan" rows="4" placeholder="Mau tanya stok, ukuran, ongkir..."></textarea>
 <button class="btn" onclick="kirimWA()">KIRIM KE WHATSAPP</button>
-<div style="font-size:8px;opacity:.4;text-align:center;margin-top:10px;letter-spacing:2px">Langsung terhubung ke admin <span id="storeName2">ARINDA</span> • Enter di Nama = ke Pesan</div>
+<div style="font-size:8px;opacity:.4;text-align:center;margin-top:10px;letter-spacing:2px">Langsung ke admin <span id="storeName2">ARINDA</span></div>
 </div>
 </div>
 
-<footer style="margin-top:32px;background:#FFFCF9;padding:48px 16px 36px;text-align:center;border-top:1px solid #F2EFEA">
-<div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div>
-<div style="font-size:7px;letter-spacing:5px;color:#8C7A6B;margin-top:6px">HIJAB PREMIUM</div>
-<div style="margin-top:18px;font-size:8px;letter-spacing:3px;opacity:.4">© 2026 ARINDA HIJAB PREMIUM</div>
-</footer>
-
-<div id="arindaModal" class="arinda-modal-bg" onclick="if(event.target===this)closeArindaModal()"><div class="arinda-modal"><h4 id="modalTitle">Hai Kak!</h4><p id="modalMsg">Isi nama dulu ya</p><button class="arinda-modal-btn" onclick="closeArindaModal()">OKE, SIAP!</button></div></div>
+<footer style="margin-top:32px;padding:36px 16px 28px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div><div style="margin-top:14px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA</div></footer>
+<div id="arindaModal" class="arinda-modal-bg" onclick="if(event.target===this)closeArindaModal()"><div class="arinda-modal"><h4 id="modalTitle" style="font-family:'Cormorant Garamond';font-weight:300;margin:0 0 8px">Hai Kak!</h4><p id="modalMsg" style="font-size:11px;opacity:.6">Isi nama dulu ya</p><button class="arinda-modal-btn" onclick="closeArindaModal()" style="background:#111;color:#fff;border:none;padding:13px 24px;width:100%;font-size:9px;letter-spacing:3px;cursor:pointer">OKE</button></div></div>
 
 <script>
 const supabaseClient=supabase.createClient("https://qjgevvizqeebtdqcbqmt.supabase.co","sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19");
@@ -103,31 +66,50 @@ function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'
 function updateCount(){const el=document.getElementById('cCount');if(el)el.innerText=getCart().reduce((a,b)=>a+(b.qty||0),0);}
 function showArindaModal(msg,title){document.getElementById('modalMsg').innerText=msg;if(title)document.getElementById('modalTitle').innerText=title;document.getElementById('arindaModal').classList.add('show');}
 function closeArindaModal(){document.getElementById('arindaModal').classList.remove('show');}
+function toggleFaq(el){el.classList.toggle('open');}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 async function loadSetting(){
   updateCount();
   try{
     const {data} = await supabaseClient.from('settings').select('*');
-    const {data:variants} = await supabaseClient.from('product_variants').select('color_name').limit(20);
+    const {data:variants} = await supabaseClient.from('product_variants').select('color_name').limit(30);
     if(data){
-      const get=k=>data.find(s=>s.key===k)?.value;
+      const get=k=>data.find(s=>s.key===k)?.value||'';
       const sName=get('store_name'); const sWa=get('wa_number'); const sOrigin=get('toko_origin_label');
-      if(sName){STORE_NAME=sName;const parts=sName.split(' ');document.getElementById('storeLogo').innerHTML=parts[0]+'<span>'+parts.slice(1).join(' ')+'</span>';document.getElementById('storeName2').innerText=sName;}
+      if(sName){STORE_NAME=sName;document.getElementById('storeLogo').innerHTML=sName.split(' ')[0]+'<span>'+sName.split(' ').slice(1).join(' ')+'</span>';document.getElementById('storeName2').innerText=sName;}
       if(sWa){WA_NUMBER=sWa;document.getElementById('waText').innerText=sWa;}
-      if(sOrigin){document.getElementById('originText').innerText=sOrigin+" - Kirim seluruh Indonesia";}
-      let warnaList=[]; try{const raw=get('home_koleksi_terlaris')?JSON.parse(get('home_koleksi_terlaris')):[]; if(raw.length>0&&typeof raw[0]==='object'){warnaList=raw.map(x=>x.title).filter(Boolean); document.getElementById('koleksiInfo').innerText=raw.length+' warna bestseller';}}catch(e){}
-      if(warnaList.length==0&&variants){warnaList=[...new Set(variants.map(v=>v.color_name))].slice(0,8);}
-      if(warnaList.length==0)warnaList=['HITAM','KREM','MAROON','NAVY'];
-      document.getElementById('warna').innerHTML=warnaList.map(w=>`<option value="${w}">${w}</option>`).join('')+`<option value="Lainnya - Tanya Admin">Lainnya</option>`;
+      if(sOrigin){document.getElementById('originText').innerText=sOrigin;}
+      // WARNA
+      let warnaList=[]; try{const raw=JSON.parse(get('home_koleksi_terlaris')||'[]'); if(raw.length)warnaList=raw.map(x=>x.title||x).filter(Boolean);}catch(e){}
+      if(!warnaList.length&&variants){warnaList=[...new Set(variants.map(v=>v.color_name))];}
+      if(!warnaList.length)warnaList=['HITAM','KREM','NAVY'];
+      document.getElementById('warna').innerHTML=warnaList.map(w=>`<option value="${esc(w)}">${esc(w)}</option>`).join('')+`<option value="Lainnya">Lainnya</option>`;
+      // FAQ - SINKRON ADMIN
+      let faqRaw=get('home_faq_list');
+      let faqData=[]; try{faqData=JSON.parse(faqRaw||'[]');}catch(e){}
+      const faqEl=document.getElementById('faqList');
+      if(faqData.length){
+        faqEl.innerHTML=faqData.map(f=>`
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q"><span>${esc(f.q)}</span><span class="faq-arrow"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></div>
+            <div class="faq-a">${esc(f.a)}</div>
+          </div>`).join('');
+      } else {
+        // fallback kalau admin belum isi
+        faqEl.innerHTML=`
+          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q"><span>Bahannya adem & tidak nerawang?</span><span class="faq-arrow"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></div><div class="faq-a">Ya, Voal Premium 115x115, adem & tidak nerawang.</div></div>
+          <div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q"><span>Pengiriman & ongkir?</span><span class="faq-arrow"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></div><div class="faq-a">Kirim dari Jakarta, cek ongkir otomatis di keranjang.</div></div>`;
+      }
     }
-  }catch(e){}
+  }catch(e){console.error(e)}
 }
 loadSetting();
 function kirimWA(){
  let n=document.getElementById('nama').value.trim();
- if(!n){showArindaModal(`Kak, isi nama dulu ya biar ${STORE_NAME} tau mau sapa siapa`,"Isi Nama Dulu Yuk"); return;}
+ if(!n){showArindaModal(`Isi nama dulu ya kak`,"Isi Nama"); return;}
  let w=document.getElementById('warna').value;
  let p=document.getElementById('pesan').value||'Mau tanya hijab';
- let msg=`Halo ${STORE_NAME}, saya ${n} \n\nWarna yang diminati: ${w}\nPesan: ${p}\n\nMohon infonya ya 🙏`;
+ let msg=`Halo ${STORE_NAME}, saya ${n}\n\nWarna: ${w}\nPesan: ${p}`;
  window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(msg),'_blank');
 }
 </script></body></html>
