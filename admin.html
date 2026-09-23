@@ -63,7 +63,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,252,249,.92);backdro
 <div id="tab-faq" class="hidden"><div class="card"><h3>FAQ</h3><div id="faqWrap"></div><button class="btn btn-line" onclick="addFaq()">+ TAMBAH FAQ</button><button class="btn" onclick="saveFaq()">SIMPAN FAQ</button><div id="faqStatus" class="small"></div></div></div>
 
 <div id="tab-produk" class="hidden">
-<div class="card" style="border-color:var(--black)"><h3>PRODUK + WARNA - LV</h3>
+<div class="card" style="border-color:var(--black)"><h3>PRODUK</h3>
 <input type="hidden" id="editId">
 <input id="pName" class="input" placeholder="NAMA PRODUK - ARINDA HIJAB PREMIUM">
 <input id="pPrice" type="number" class="input" placeholder="HARGA 99000">
@@ -94,7 +94,7 @@ async function init(){
  try{const {data}=await supa.from('settings').select('*');if(data){const g=k=>data.find(s=>s.key===k)?.value;if(g('store_name'))$('storeName').value=g('store_name');if(g('wa_number'))$('waNumber').value=g('wa_number');if(g('toko_origin_id')){tokoOriginId=g('toko_origin_id');tokoOriginLabel=g('toko_origin_label')||tokoOriginLabel;}if(g('home_koleksi_terlaris')){try{const p=JSON.parse(g('home_koleksi_terlaris'));if(p.length)koleksiSlots=p.map(x=>({url:x.url||x||'',title:x.title||'',desc:x.desc||''}))}catch(e){}}if(g('home_undertone_images')){try{const p=JSON.parse(g('home_undertone_images'));if(p.length)undertoneSlots=p.map(x=>({url:x.url||x||'',title:x.title||'',desc:x.desc||''}))}catch(e){}}if(g('home_undertone_title'))$('homeUnderTitle').value=g('home_undertone_title');if(g('home_undertone_desc'))$('homeUnderDesc').value=g('home_undertone_desc');if(g('home_undertone_list'))$('homeUnderList').value=g('home_undertone_list');if(g('home_faq_list')){try{faqSlots=JSON.parse(g('home_faq_list'))}catch(e){}}}}catch(e){}
  $('curOrigin').innerText=tokoOriginLabel+' - '+tokoOriginId;await loadCats();await loadProducts();await loadBanners();initVar();renderKoleksi();renderUnder();renderFaq();
 }
-function initVar(){ $('varInputs').innerHTML='';addVarRow(); }
+function initVar(){ $('varInputs ').innerHTML='';addVarRow(); }
 function addVarRow(c='',img=''){
  const id='vf_'+Date.now()+'_'+Math.random().toString(36).slice(2);
  const d=document.createElement('div');d.className='slot';
