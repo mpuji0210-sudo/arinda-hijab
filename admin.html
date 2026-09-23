@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADMIN - ARINDA V47</title>
+<title>ADMIN - ARINDA V48 FINAL</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -28,9 +28,9 @@ textarea.input{border:1px solid var(--line);padding:10px;background:var(--bg);re
 #toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(80px);background:var(--black);color:#fff;padding:10px 16px;font-size:8px;letter-spacing:3px;transition:.4s;opacity:0;z-index:99}#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 #confirmModal{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}#confirmModal.open{display:flex}
 .confirm-box{background:#fff;padding:24px;max-width:360px;width:100%;border:1px solid var(--line)}
-.under-badge{display:inline-block;padding:3px 8px;border:1px solid var(--black);font-size:8px;letter-spacing:2px;margin:2px}
+.under-badge{display:inline-block;padding:3px 8px;border:1px solid var(--black);font-size:8px;letter-spacing:2px;margin:2px;background:#111;color:#fff}
 </style></head><body>
-<header><div class="logo">ARINDA V47</div><button onclick="localStorage.clear();location.href='login.html'" style="background:none;border:1px solid var(--line);padding:6px 12px;font-size:8px;letter-spacing:2px;cursor:pointer">LOGOUT</button></header>
+<header><div class="logo">ARINDA V48</div><button onclick="localStorage.clear();location.href='login.html'" style="background:none;border:1px solid var(--line);padding:6px 12px;font-size:8px;letter-spacing:2px;cursor:pointer">LOGOUT</button></header>
 <div class="tabs"><div class="tab active" onclick="openTab('toko',this)">BANNER</div><div class="tab" onclick="openTab('koleksi',this)">BEST</div><div class="tab" onclick="openTab('undertone',this)">UNDERTONE</div><div class="tab" onclick="openTab('faq',this)">FAQ</div><div class="tab" onclick="openTab('produk',this)">PRODUK</div></div>
 <div class="wrap">
 <div id="tab-toko"><div class="card"><h3>BANNER</h3><input id="storeName" class="input" placeholder="NAMA TOKO"><input id="waNumber" class="input" placeholder="WA"><div style="font-size:9px;letter-spacing:2px;margin-top:12px;opacity:.5">ORIGIN: <span id="curOrigin">-</span></div><div style="display:flex;gap:8px"><input id="originSearch" class="input" placeholder="KECAMATAN"><button class="btn" style="width:80px;margin:0" onclick="cariOrigin()">CARI</button></div><div id="originList"></div><hr style="border:none;border-top:1px solid var(--line);margin:16px 0"><input type="file" id="filePC" accept="image/*" style="display:none"><label for="filePC" class="file-btn">BANNER PC</label><img id="prevPC" style="width:100%;height:180px;object-fit:cover;display:none;margin-top:8px;border:1px solid var(--line)"><input type="file" id="fileHP" accept="image/*" style="display:none"><label for="fileHP" class="file-btn" style="margin-top:12px">BANNER HP</label><img id="prevHP" style="width:100%;height:180px;object-fit:cover;display:none;margin-top:8px;border:1px solid var(--line)"><input id="bTitle" class="input" value="ELEGANCE IN EVERY LAYER"><input id="bLink" class="input" value="produk.html"><div id="bannerList" style="margin-top:12px"></div><button class="btn" onclick="saveToko()">SIMPAN</button></div></div>
@@ -43,30 +43,23 @@ textarea.input{border:1px solid var(--line);padding:10px;background:var(--bg);re
 <input id="pPrice" type="number" class="input" placeholder="HARGA ex: 45000">
 <select id="pCat" class="input"><option value="">PILIH BAHAN</option></select>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-<input id="pSize" class="input" placeholder="UKURAN ex: 110x110cm / 115x115cm" value="110x110cm">
-<input id="pFinish" class="input" placeholder="FINISHING ex: Laser Cut / Jahit Tepi" value="Laser Cut">
+<input id="pSize" class="input" placeholder="UKURAN ex: 110x110cm" value="110x110cm">
+<input id="pFinish" class="input" placeholder="FINISHING ex: Laser Cut" value="Laser Cut">
 </div>
-<input id="pMaterialDetail" class="input" placeholder="JENIS BAHAN DETAIL ex: Paris Premium Import - Lembut, Tidak Licin">
-<textarea id="pDesc" class="input" rows="4" placeholder="DESKRIPSI PRODUK - Contoh:
-- Bahan adem & tidak menerawang
-- Cocok untuk daily & formal
-- Mudah dibentuk, tegak di dahi
-- Ukuran pas menutup dada"></textarea>
-
-<div style="margin-top:10px;border:1px solid var(--line);padding:10px;background:var(--bg)"><div style="display:flex;gap:6px"><input id="catName" class="input" placeholder="BAHAN BARU ex: PARIS PREMIUM" style="margin:0"><button class="btn" style="width:70px;margin:0" onclick="addCat()">ADD</button></div><div id="catList" style="margin-top:8px"></div></div>
-
-<div style="margin-top:14px; background:#FFFCF9; border:1px solid #111; padding:12px;">
+<input id="pMaterialDetail" class="input" placeholder="JENIS BAHAN DETAIL ex: Paris Premium Import - Lembut">
+<textarea id="pDesc" class="input" rows="4" placeholder="DESKRIPSI PRODUK"></textarea>
+<div style="margin-top:10px;border:1px solid var(--line);padding:10px;background:var(--bg)"><div style="display:flex;gap:6px"><input id="catName" class="input" placeholder="BAHAN BARU" style="margin:0"><button class="btn" style="width:70px;margin:0" onclick="addCat()">ADD</button></div><div id="catList" style="margin-top:8px"></div></div>
+<div style="margin-top:14px; background:#111; color:#fff; padding:12px;">
 <div style="font-size:9px; letter-spacing:3px; margin-bottom:8px;">AUTO UNDERTONE (4 TIPE) - ABADI</div>
 <div id="autoUndertoneBox">Pilih warna dulu...</div>
 <input type="hidden" id="pUndertone">
-<div style="margin-top:8px; font-size:9px; opacity:.6;">Nambah warna baru ke-16? Tambah di sini:</div>
+<div style="margin-top:8px; font-size:9px; opacity:.6; color:#fff;">Nambah warna ke-16+? Tambah di sini:</div>
 <div style="display:flex; gap:6px; margin-top:4px;">
-<input id="newMasterColor" class="input" placeholder="WARNA BARU ex: TERRACOTTA" style="margin:0; font-size:10px;">
-<select id="newMasterUnder" class="input" style="margin:0; width:130px;"><option>COOL</option><option>WARM</option><option>NEUTRAL</option><option>OLIVE</option><option value="WARM,OLIVE">WARM+OLIVE</option></select>
-<button class="btn" style="width:50px;margin:0;" onclick="addMasterColorQuick()">+</button>
+<input id="newMasterColor" class="input" placeholder="WARNA BARU ex: TERRACOTTA" style="margin:0; font-size:10px; background:#fff;">
+<select id="newMasterUnder" class="input" style="margin:0; width:130px; background:#fff;"><option>COOL</option><option>WARM</option><option>NEUTRAL</option><option>OLIVE</option><option value="WARM,OLIVE">WARM+OLIVE</option></select>
+<button class="btn" style="width:50px;margin:0; background:#fff; color:#111;" onclick="addMasterColorQuick()">+</button>
 </div>
 </div>
-
 <div id="varInputs" style="margin-top:12px"></div>
 <button class="btn-line" onclick="addVarRow()">+ WARNA + STOK + FOTO</button>
 <button class="btn" onclick="saveProd()">SIMPAN PRODUK - ABADI</button><div id="saveStatus" style="font-size:9px;letter-spacing:2px;text-align:center;margin-top:8px;opacity:.7;color:#111"></div>
@@ -107,7 +100,7 @@ function updateAutoUndertone(){
   if(underSet.size===0) underSet.add('NEUTRAL');
   let arr = Array.from(underSet);
   $('pUndertone').value = arr.join(',');
-  $('autoUndertoneBox').innerHTML = arr.map(u=>`<span class="under-badge">${u}</span>`).join('') + `<div style="font-size:8px; margin-top:6px; opacity:.6;">Dari ${colors.length} warna: ${colors.join(', ')||'-'}</div>`;
+  $('autoUndertoneBox').innerHTML = arr.map(u=>`<span class="under-badge">${u}</span>`).join('') + `<div style="font-size:8px; margin-top:6px; opacity:.8;">Dari ${colors.length} warna: ${colors.join(', ')||'-'}</div>`;
   return arr;
 }
 window.addMasterColorQuick=async()=>{
@@ -188,7 +181,7 @@ window.saveProd=async()=>{
    else{const {data,error}=await supa.from('products').insert({name,price,image_url:finalVars[0].image_url,category,description,size_info,material_detail,finishing,undertone:undertoneArr, colors: finalVars.map(v=>v.color_name)}).select().single();if(error)throw error;pid=data.id;}
    const {error:varErr}=await supa.from('product_variants').insert(finalVars.map(v=>({product_id:pid,color_name:v.color_name,image_url:v.image_url, stock:v.stock, is_available:v.is_available})));
    if(varErr)throw varErr;
-   $('saveStatus').innerText='OK '+finalVars.length+' WARNA + '+undertoneArr.join(',')+' TERSIMPAN';toast('TERSIMPAN '+finalVars.length+' WARNA');$('editId').value='';$('pName').value='';$('pPrice').value='';initVar();loadProducts();
+   $('saveStatus').innerText='OK '+finalVars.length+' WARNA + '+undertoneArr.join(',')+' TERSIMPAN';toast('TERSIMPAN '+finalVars.length+' WARNA');$('editId').value='';$('pName').value='';$('pPrice').value='';$('pDesc').value='';initVar();loadProducts();
  }catch(e){toast('ERROR: '+e.message);$('saveStatus').innerText='ERROR: '+e.message;}
 };
 async function cariOrigin(){const q=$('originSearch').value.trim();if(!q)return;$('originList').innerHTML='...';const r=await fetch('/api/search?q='+encodeURIComponent(q));const j=await r.json();$('originList').innerHTML=j.data.map(d=>'<div style="padding:10px;border-bottom:1px solid var(--line);cursor:pointer;font-size:11px" onclick="pilihOrigin(\''+d.id+'\',\''+d.label.replace(/'/g,"")+'\')">'+d.label+'</div>').join('');}
