@@ -1,16 +1,19 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kategori</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>Kategori Undertone & Bahan - ARINDA Hijab Premium</title>
+<meta name="description" content="Temukan hijab sesuai undertone kamu: COOL, WARM, NEUTRAL, OLIVE. Filter bahan Paris Premium. ARINDA Hijab Premium 110x110cm.">
+<link rel="preconnect" href="https://qjgevvizqeebtdqcbqmt.supabase.co">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
 <style>
 :root{--black:#111;--line:#EDE8E1;--bg:#FFFCF9}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--black);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden}
 nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .nav-top{max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px}.logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px}
-.icons{display:flex;gap:20px;align-items:center}.icon-btn{background:none;border:none;cursor:pointer;position:relative}.icon-btn svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.1}
-.badge{position:absolute;top:-7px;right:-9px;background:#111;color:#fff;font-size:7px;min-width:13px;height:13px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.25s}.badge.bump{transform:scale(1.6)}
+.icons{display:flex;gap:20px;align-items:center}.icon-btn{background:none;border:none;cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center;width:36px;height:36px}.icon-btn svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.1}
+.badge{position:absolute;top:-2px;right:-2px;background:#111;color:#fff;font-size:7px;min-width:13px;height:13px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.25s}.badge.bump{transform:scale(1.6)}
 .nav-menu{border-top:1px solid #F6F1EB;background:#fff;overflow-x:auto}.nav-menu::-webkit-scrollbar{display:none}
 .menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:36px}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:13px 0;opacity:.35;border-bottom:1px solid transparent;white-space:nowrap}.menu a.active{opacity:1;border-bottom-color:#111}
 .section{max-width:1240px;margin:0 auto;padding:20px 16px 0}
@@ -22,70 +25,67 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.92);backdrop-f
 .dot{width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,.1);display:inline-block}
 </style></head><body>
 <nav><div class="nav-top"><div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons">
-<button class="icon-btn" onclick="location.href='produk.html'"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button>
-<a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><path d="M5 19c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></a>
-<a href="produk.html" class="icon-btn" id="cartIcon"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a>
-</div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a class="active">KATEGORI</a></div></div></nav>
+<button class="icon-btn" aria-label="Cari produk" onclick="location.href='produk.html'"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button>
+<a href="kontak.html" class="icon-btn" aria-label="Kontak"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="3"/><path d="M5 19c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></a>
+<a href="produk.html" class="icon-btn" id="cartIcon" aria-label="Keranjang"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a>
+</div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a class="active" aria-current="page">KATEGORI</a></div></div></nav>
 
 <div class="section">
 <div style="display:flex;justify-content:space-between;align-items:flex-end">
-<div><div style="font-family:'Cormorant Garamond';font-size:26px;font-weight:300;letter-spacing:2px">Find Your Undertone</div><div style="font-size:9px;letter-spacing:3px;opacity:.5;margin:4px 0 0" id="catSub">4 UNDERTONE • PILIH YANG COCOK</div></div>
+<div><h1 style="font-family:'Cormorant Garamond';font-size:26px;font-weight:300;letter-spacing:2px;margin:0">Find Your Undertone</h1><div style="font-size:9px;letter-spacing:3px;opacity:.5;margin:4px 0 0" id="catSub">4 UNDERTONE • PILIH YANG COCOK</div></div>
 <div style="font-size:9px;letter-spacing:3px;opacity:.35">ARINDA</div>
 </div>
 
 <div class="cat-grid" id="undertoneGrid">
-  <!-- COOL -->
-  <div class="undertone-card" style="background:#F3F0FF" onclick="location.href='produk.html?undertone=COOL'">
+  <div class="undertone-card" style="background:#F3F0FF" onclick="location.href='produk.html?undertone=COOL'" role="button" tabindex="0" aria-label="Filter undertone COOL">
     <div style="display:flex;justify-content:space-between"><span style="font-size:9px;letter-spacing:4px;font-weight:400">01 / COOL</span><span style="font-size:8px;letter-spacing:2px;opacity:.5">PINK • BLUE • BERRY</span></div>
     <div><h2>COOL</h2><div style="font-size:10px;letter-spacing:1px;opacity:.6;margin-top:6px;line-height:1.5">Urat nadi biru/ungu, kulit kemerahan.<br>Cocok warna dingin & bold biar cerah.</div>
     <div style="margin-top:14px;display:flex;gap:8px"><span class="dot" style="background:#C7B0D6"></span><span class="dot" style="background:#9FA8DA"></span><span class="dot" style="background:#B71C1C"></span><span class="dot" style="background:#F8BBD0"></span></div></div>
   </div>
-  <!-- WARM -->
-  <div class="undertone-card" style="background:#FFF8E1" onclick="location.href='produk.html?undertone=WARM'">
+  <div class="undertone-card" style="background:#FFF8E1" onclick="location.href='produk.html?undertone=WARM'" role="button" tabindex="0" aria-label="Filter undertone WARM">
     <div style="display:flex;justify-content:space-between"><span style="font-size:9px;letter-spacing:4px;font-weight:400">02 / WARM</span><span style="font-size:8px;letter-spacing:2px;opacity:.5">YELLOW • ORANGE • OLIVE</span></div>
     <div><h2>WARM</h2><div style="font-size:10px;letter-spacing:1px;opacity:.6;margin-top:6px;line-height:1.5">Urat nadi hijau, kulit kekuningan.<br>Cocok warna earthy & hangat.</div>
     <div style="margin-top:14px;display:flex;gap:8px"><span class="dot" style="background:#D7CCC8"></span><span class="dot" style="background:#FFCC80"></span><span class="dot" style="background:#8D6E63"></span><span class="dot" style="background:#FF8A65"></span></div></div>
   </div>
-  <!-- NEUTRAL -->
-  <div class="undertone-card" style="background:#F5F3F0" onclick="location.href='produk.html?undertone=NEUTRAL'">
+  <div class="undertone-card" style="background:#F5F3F0" onclick="location.href='produk.html?undertone=NEUTRAL'" role="button" tabindex="0" aria-label="Filter undertone NEUTRAL">
     <div style="display:flex;justify-content:space-between"><span style="font-size:9px;letter-spacing:4px;font-weight:400">03 / NEUTRAL</span><span style="font-size:8px;letter-spacing:2px;opacity:.5">BEIGE • MAUVE • DUSTY</span></div>
     <div><h2>NEUTRAL</h2><div style="font-size:10px;letter-spacing:1px;opacity:.6;margin-top:6px;line-height:1.5">Campuran cool & warm. Paling fleksibel.<br>Masuk semua warna soft.</div>
     <div style="margin-top:14px;display:flex;gap:8px"><span class="dot" style="background:#BCAAA4"></span><span class="dot" style="background:#D1C4E9"></span><span class="dot" style="background:#CE93D8"></span><span class="dot" style="background:#B0BEC5"></span></div></div>
   </div>
-  <!-- OLIVE -->
-  <div class="undertone-card" style="background:#EFEFE5" onclick="location.href='produk.html?undertone=OLIVE'">
+  <div class="undertone-card" style="background:#EFEFE5" onclick="location.href='produk.html?undertone=OLIVE'" role="button" tabindex="0" aria-label="Filter undertone OLIVE">
     <div style="display:flex;justify-content:space-between"><span style="font-size:9px;letter-spacing:4px;font-weight:400">04 / OLIVE</span><span style="font-size:8px;letter-spacing:2px;opacity:.5">SAGE • KHAKI • TERRACOTTA</span></div>
     <div><h2>OLIVE</h2><div style="font-size:10px;letter-spacing:1px;opacity:.6;margin-top:6px;line-height:1.5">Kulit sawo matang kehijauan.<br>Cocok warna muted & deep.</div>
-    <div style="margin-top:14px;display:flex;gap:8px"><span class="dot" style="background:#A5D6A7"></span><span class="dot" style="background:#9E9D24"></span><span class="dot" style="background:#795548"></span><span class="dot" style="background:#827717]"></span></div></div>
+    <div style="margin-top:14px;display:flex;gap:8px"><span class="dot" style="background:#A5D6A7"></span><span class="dot" style="background:#9E9D24"></span><span class="dot" style="background:#795548"></span><span class="dot" style="background:#827717"></span></div></div>
   </div>
 </div>
 
 <div style="margin-top:28px;border-top:1px solid var(--line);padding-top:18px">
   <div style="font-family:'Cormorant Garamond';font-size:18px;letter-spacing:2px">Kategori Bahan</div>
-  <div class="cat-grid" id="catGrid" style="margin-top:12px;grid-template-columns:repeat(2,1fr)"></div>
+  <div class="cat-grid" id="catGrid" style="margin-top:12px;grid-template-columns:repeat(2,1fr)"><div style="font-size:10px;opacity:.4">Memuat kategori...</div></div>
+</div>
 </div>
 
-</div>
-
-<footer style="margin-top:32px;padding:36px 16px 28px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div><div style="font-size:7px;letter-spacing:5px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div><div style="margin-top:14px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA</div></footer>
+<footer style="margin-top:32px;padding:36px 16px 28px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div><div style="font-size:7px;letter-spacing:5px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div><div style="margin-top:14px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA V57 SPEED</div></footer>
 <script>
-const supa = supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
+let supa;
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return []}}
 function updateCount(){const el=document.getElementById('cCount');if(el){el.innerText=getCart().reduce((a,b)=>a+(b.qty||0),0);}}
-async function load(){
+async function init(){
   updateCount();
+  await new Promise(r=>{ const check=()=>{ if(window.supabase){ supa=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19'); r(); } else setTimeout(check,50); }; check(); });
   try{
-    const {data: cats} = await supa.from('categories').select('*').order('name');
-    const {data: prods} = await supa.from('products').select('id,category');
-    if(cats && cats.length){
+    // SPEED: cuma ambil yang perlu, bukan select *
+    const {data: prods} = await supa.from('products').select('category').limit(100);
+    const cats = [...new Set((prods||[]).map(p=>(p.category||'').trim()).filter(Boolean))];
+    if(cats.length){
       document.getElementById('catGrid').innerHTML = cats.map(c=>{
-        const count = prods?.filter(p => (p.category||'').toLowerCase() === c.name.toLowerCase()).length || 0;
-        return `<div class="undertone-card" style="height:120px" onclick="location.href='produk.html?bahan=${encodeURIComponent(c.name.toUpperCase())}'"><div style="display:flex;justify-content:space-between"><span style="font-size:9px;letter-spacing:3px">${c.name.toUpperCase()}</span><span style="font-size:8px;background:#111;color:#fff;padding:2px 6px;border-radius:10px">${count}</span></div><div style="font-size:9px;opacity:.5;margin-top:8px;letter-spacing:2px">KLIK LIHAT PRODUK</div></div>`;
+        const count = prods?.filter(p => (p.category||'').toLowerCase() === c.toLowerCase()).length || 0;
+        return `<div class="undertone-card" style="height:120px" onclick="location.href='produk.html?bahan=${encodeURIComponent(c.toUpperCase())}'" role="button" tabindex="0" aria-label="Lihat kategori ${c}"><div style="display:flex;justify-content:space-between"><span style="font-size:9px;letter-spacing:3px">${c.toUpperCase()}</span><span style="font-size:8px;background:#111;color:#fff;padding:2px 6px;border-radius:10px">${count}</span></div><div style="font-size:9px;opacity:.5;margin-top:8px;letter-spacing:2px">KLIK LIHAT PRODUK</div></div>`;
       }).join('');
     } else {
       document.getElementById('catGrid').innerHTML='<div style="font-size:10px;opacity:.4">Belum ada kategori bahan</div>';
     }
-  }catch(e){}
+  }catch(e){ document.getElementById('catGrid').innerHTML='<div style="font-size:10px;opacity:.4">Gagal load kategori</div>'; }
 }
-load();
+init();
 </script></body></html>
