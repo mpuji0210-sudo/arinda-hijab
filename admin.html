@@ -1,10 +1,9 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADMIN - ARINDA (Private)</title>
+<title>ADMIN - ARINDA</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="preconnect" href="https://qjgevvizqeebtdqcbqmt.supabase.co">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
 <style>
 :root{--bg:#FFFCF9;--line:#EDE8E1;--black:#111}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--black);font-family:'Inter',sans-serif;font-weight:300}
@@ -27,70 +26,69 @@ textarea.input{border:1px solid var(--line);padding:10px;background:var(--bg);re
 .prod-card{border:1px solid var(--line);background:#fff;overflow:hidden}.prod-card img{width:100%;height:140px;object-fit:cover;object-position:top}
 .hidden{display:none}
 #toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(80px);background:var(--black);color:#fff;padding:10px 16px;font-size:8px;letter-spacing:3px;transition:.4s;opacity:0;z-index:99}#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-#confirmModal{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}#confirmModal.open{display:flex}
+#confirmModal{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}#confirmModal.open{display:flex}
 .confirm-box{background:#fff;padding:24px;max-width:360px;width:100%;border:1px solid var(--line)}
 .under-badge{display:inline-block;padding:3px 8px;border:1px solid var(--black);font-size:8px;letter-spacing:2px;margin:2px;background:#111;color:#fff}
 </style></head><body>
-<header><div class="logo">ARINDA V57.2 FIX</div><button onclick="localStorage.clear();location.href='login.html'" style="background:none;border:1px solid var(--line);padding:6px 12px;font-size:8px;letter-spacing:2px;cursor:pointer">LOGOUT</button></header>
+<header><div class="logo">ARINDA V57.3 STABLE</div><button onclick="localStorage.clear();location.href='login.html'" style="background:none;border:1px solid var(--line);padding:6px 12px;font-size:8px;letter-spacing:2px;cursor:pointer">LOGOUT</button></header>
 <div class="tabs"><div class="tab active" onclick="openTab('toko',this)">BANNER</div><div class="tab" onclick="openTab('koleksi',this)">BEST</div><div class="tab" onclick="openTab('undertone',this)">UNDERTONE</div><div class="tab" onclick="openTab('faq',this)">FAQ</div><div class="tab" onclick="openTab('produk',this)">PRODUK</div></div>
 <div class="wrap">
-<div id="tab-toko"><div class="card"><h3>BANNER & TOKO</h3><input id="storeName" class="input" placeholder="NAMA TOKO"><input id="waNumber" class="input" placeholder="WA"><div style="font-size:9px;margin-top:12px;opacity:.5">ORIGIN: <span id="curOrigin">-</span></div><div style="display:flex;gap:8px"><input id="originSearch" class="input" placeholder="KECAMATAN"><button class="btn" style="width:80px;margin:0" onclick="cariOrigin()">CARI</button></div><div id="originList"></div><hr style="border:none;border-top:1px solid var(--line);margin:16px 0"><input type="file" id="filePC" accept="image/*" style="display:none"><label for="filePC" class="file-btn">BANNER PC</label><img id="prevPC" style="width:100%;height:180px;object-fit:cover;display:none;margin-top:8px;border:1px solid var(--line)"><input type="file" id="fileHP" accept="image/*" style="display:none"><label for="fileHP" class="file-btn" style="margin-top:12px">BANNER HP</label><img id="prevHP" style="width:100%;height:180px;object-fit:cover;display:none;margin-top:8px;border:1px solid var(--line)"><input id="bTitle" class="input" value="ELEGANCE"><input id="bLink" class="input" value="produk.html"><div id="bannerList" style="margin-top:12px"></div><button class="btn" onclick="saveToko()">SIMPAN</button></div></div>
-<div id="tab-koleksi" class="hidden"><div class="card"><h3>BEST SELLER</h3><input type="file" id="koleksiGaleri" accept="image/*" multiple style="display:none"><label for="koleksiGaleri" class="file-btn">+ GALERI</label><div id="koleksi4Wrap"></div><button class="btn-line" onclick="addKoleksi()">+ SLOT</button><button class="btn" onclick="saveKoleksi()">SIMPAN</button></div></div>
-<div id="tab-undertone" class="hidden"><div class="card"><h3>UNDERTONE</h3><input type="file" id="underGaleri" accept="image/*" multiple style="display:none"><label for="underGaleri" class="file-btn">+ GALERI</label><div id="undertoneWrap"></div><button class="btn-line" onclick="addUndertone()">+ SLOT</button><button class="btn" onclick="saveUndertone()">SIMPAN</button></div></div>
+<div id="tab-toko"><div class="card"><h3>BANNER</h3><input id="storeName" class="input" placeholder="NAMA TOKO"><input id="waNumber" class="input" placeholder="WA"><div style="font-size:9px;letter-spacing:2px;margin-top:12px;opacity:.5">ORIGIN: <span id="curOrigin">-</span></div><div style="display:flex;gap:8px"><input id="originSearch" class="input" placeholder="KECAMATAN"><button class="btn" style="width:80px;margin:0" onclick="cariOrigin()">CARI</button></div><div id="originList"></div><hr style="border:none;border-top:1px solid var(--line);margin:16px 0"><input type="file" id="filePC" accept="image/*" style="display:none"><label for="filePC" class="file-btn">BANNER PC</label><img id="prevPC" style="width:100%;height:180px;object-fit:cover;display:none;margin-top:8px;border:1px solid var(--line)"><input type="file" id="fileHP" accept="image/*" style="display:none"><label for="fileHP" class="file-btn" style="margin-top:12px">BANNER HP</label><img id="prevHP" style="width:100%;height:180px;object-fit:cover;display:none;margin-top:8px;border:1px solid var(--line)"><input id="bTitle" class="input" value="ELEGANCE IN EVERY LAYER"><input id="bLink" class="input" value="produk.html"><div id="bannerList" style="margin-top:12px"></div><button class="btn" onclick="saveToko()">SIMPAN</button></div></div>
+<div id="tab-koleksi" class="hidden"><div class="card"><h3>BEST SELLER</h3><input type="file" id="koleksiGaleri" accept="image/*" multiple style="display:none"><label for="koleksiGaleri" class="file-btn">+ GALERI</label><div id="koleksi4Wrap" style="margin-top:10px"></div><button class="btn-line" onclick="addKoleksi()">+ SLOT</button><button class="btn" onclick="saveKoleksi()">SIMPAN</button></div></div>
+<div id="tab-undertone" class="hidden"><div class="card"><h3>UNDERTONE</h3><input type="file" id="underGaleri" accept="image/*" multiple style="display:none"><label for="underGaleri" class="file-btn">+ GALERI</label><div id="undertoneWrap" style="margin-top:10px"></div><button class="btn-line" onclick="addUndertone()">+ SLOT</button><button class="btn" onclick="saveUndertone()">SIMPAN</button></div></div>
 <div id="tab-faq" class="hidden"><div class="card"><h3>FAQ</h3><div id="faqWrap"></div><button class="btn-line" onclick="addFaq()">+ FAQ</button><button class="btn" onclick="saveFaq()">SIMPAN</button></div></div>
 <div id="tab-produk" class="hidden">
-<div class="card" style="border-color:#111"><h3>PRODUK - V57.2 FIX</h3>
-<input type="hidden" id="editId"><input id="pName" class="input" placeholder="NAMA PRODUK"><input id="pPrice" type="number" class="input" placeholder="HARGA"><select id="pCat" class="input"><option value="">PILIH BAHAN</option></select>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><input id="pSize" class="input" value="110x110cm"><input id="pFinish" class="input" value="Laser Cut"></div>
-<input id="pMaterialDetail" class="input" placeholder="DETAIL BAHAN"><textarea id="pDesc" class="input" rows="3" placeholder="DESKRIPSI"></textarea>
+<div class="card" style="border-color:var(--black)"><h3>PRODUK</h3>
+<input type="hidden" id="editId"><input id="pName" class="input" placeholder="NAMA PRODUK ex: Paris Premium Segiempat">
+<input id="pPrice" type="number" class="input" placeholder="HARGA ex: 45000">
+<select id="pCat" class="input"><option value="">PILIH BAHAN</option></select>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<input id="pSize" class="input" placeholder="UKURAN ex: 110x110cm" value="110x110cm">
+<input id="pFinish" class="input" placeholder="FINISHING ex: Laser Cut" value="Laser Cut">
+</div>
+<input id="pMaterialDetail" class="input" placeholder="JENIS BAHAN DETAIL">
+<textarea id="pDesc" class="input" rows="4" placeholder="DESKRIPSI PRODUK"></textarea>
 <div style="margin-top:10px;border:1px solid var(--line);padding:10px;background:var(--bg)"><div style="display:flex;gap:6px"><input id="catName" class="input" placeholder="BAHAN BARU" style="margin:0"><button class="btn" style="width:70px;margin:0" onclick="addCat()">ADD</button></div><div id="catList" style="margin-top:8px"></div></div>
-<div style="margin-top:14px;background:#111;color:#fff;padding:12px;"><div style="font-size:9px;letter-spacing:3px;margin-bottom:8px;">AUTO UNDERTONE</div><div id="autoUndertoneBox">Pilih warna dulu...</div><input type="hidden" id="pUndertone">
-<div style="display:flex;gap:6px;margin-top:8px;"><input id="newMasterColor" class="input" placeholder="WARNA BARU" style="margin:0;font-size:10px;background:#fff;"><select id="newMasterUnder" class="input" style="margin:0;width:130px;background:#fff;"><option>COOL</option><option>WARM</option><option>NEUTRAL</option><option>OLIVE</option><option value="WARM,OLIVE">WARM+OLIVE</option></select><button class="btn" style="width:50px;margin:0;background:#fff;color:#111;" onclick="addMasterColorQuick()">+</button></div></div>
+<div style="margin-top:14px; background:#111; color:#fff; padding:12px;">
+<div style="font-size:9px; letter-spacing:3px; margin-bottom:8px;">AUTO UNDERTONE</div>
+<div id="autoUndertoneBox">Pilih warna dulu...</div>
+<input type="hidden" id="pUndertone">
+<div style="display:flex; gap:6px; margin-top:4px;">
+<input id="newMasterColor" class="input" placeholder="WARNA BARU" style="margin:0; font-size:10px; background:#fff;">
+<select id="newMasterUnder" class="input" style="margin:0; width:130px; background:#fff;"><option>COOL</option><option>WARM</option><option>NEUTRAL</option><option>OLIVE</option><option value="WARM,OLIVE">WARM+OLIVE</option></select>
+<button class="btn" style="width:50px;margin:0; background:#fff; color:#111;" onclick="addMasterColorQuick()">+</button>
+</div>
+</div>
 <div id="varInputs" style="margin-top:12px"></div>
 <button class="btn-line" onclick="addVarRow()">+ WARNA + STOK + FOTO</button>
-<button class="btn" onclick="saveProd()">SIMPAN PRODUK KE TOKO</button><div id="saveStatus" style="font-size:9px;letter-spacing:2px;text-align:center;margin-top:8px;opacity:.7;color:#111;border:1px dashed #ccc;padding:6px">STATUS: READY</div>
+<button class="btn" onclick="saveProd()">SIMPAN PRODUK</button><div id="saveStatus" style="font-size:9px;letter-spacing:2px;text-align:center;margin-top:8px;opacity:.7;color:#111"></div>
 </div>
 <div class="card"><h3>DAFTAR (<span id="prodCount">0</span>)</h3><div id="list" class="grid">Loading</div></div>
 </div>
 </div>
 <div id="toast"></div>
-<div id="confirmModal"><div class="confirm-box"><div id="confirmTitle"></div><div id="confirmDesc"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px"><button onclick="closeConfirm()">BATAL</button><button id="confirmOk">YA</button></div></div></div>
+<div id="confirmModal"><div class="confirm-box"><div id="confirmTitle"></div><div id="confirmDesc"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px"><button onclick="closeConfirm()" style="padding:12px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-size:9px;letter-spacing:2px">BATAL</button><button id="confirmOk" style="padding:12px;background:#111;color:#fff;border:none;cursor:pointer;font-size:9px;letter-spacing:2px">YA, HAPUS</button></div></div></div>
 <script>
-let supa; if(localStorage.getItem('arinda_admin')!=='login'){location.href='login.html';}
+const supa=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
+if(localStorage.getItem('arinda_admin')!=='login'){location.href='login.html';}
 let tokoOriginId="17523",tokoOriginLabel="CENGKARENG BARAT";let pcBase='',hpBase='';
 let koleksiSlots=[{url:"",title:""}];let undertoneSlots=[{url:"",title:""}];let faqSlots=[{q:'Apakah menerawang?',a:'Tidak.'}];
-let masterColorsCache = []; const $=id=>document.getElementById(id);
+let masterColorsCache = [];
+const $=id=>document.getElementById(id);
 function openTab(n,el){document.querySelectorAll('[id^="tab-"]').forEach(c=>c.classList.add('hidden'));$('tab-'+n).classList.remove('hidden');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
-function toast(m){const t=$('toast');t.innerText=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000)}
-function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function getOptImg(url,w=200){ if(!url) return url; if(url.includes('supabase.co')) return url + (url.includes('?')?'&':'?') + `width=${w}&quality=60`; return url; }
-function compressImage(file, maxW=800){
-  return new Promise(res=>{
-    const img=new Image(); img.onload=()=>{
-      const canvas=document.createElement('canvas');
-      const scale=Math.min(1, maxW/img.width);
-      canvas.width=img.width*scale; canvas.height=img.height*scale;
-      canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
-      canvas.toBlob(b=>res(b), 'image/jpeg', 0.75);
-    }; img.onerror=()=>res(file);
-    img.src=URL.createObjectURL(file);
-  });
-}
+function toast(m){const t=$('toast');t.innerText=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500)}
 function fileToBase64(f){return new Promise(r=>{const rd=new FileReader();rd.onload=e=>r(e.target.result);rd.readAsDataURL(f);});}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 let confirmCb=null;function showConfirm(t,d,cb){$('confirmTitle').innerText=t;$('confirmDesc').innerText=d;$('confirmModal').classList.add('open');confirmCb=cb;}
 function closeConfirm(){$('confirmModal').classList.remove('open');confirmCb=null;}
 $('confirmOk').onclick=()=>{if(confirmCb)confirmCb();closeConfirm();};
-async function initSupa(){ return new Promise(r=>{ const check=()=>{ if(window.supabase){ supa=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19'); r(); } else setTimeout(check,50); }; check(); }); }
 async function init(){
- await initSupa();
- try{ const {data}=await supa.from('settings').select('key,value').limit(20); if(data){ const g=k=>data.find(s=>s.key===k)?.value; if(g('store_name')) $('storeName').value=g('store_name'); if(g('wa_number')) $('waNumber').value=g('wa_number'); if(g('toko_origin_id')){tokoOriginId=g('toko_origin_id');tokoOriginLabel=g('toko_origin_label')||tokoOriginLabel;} if(g('home_koleksi_terlaris')){try{const p=JSON.parse(g('home_koleksi_terlaris'));if(p.length)koleksiSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}} if(g('home_undertone_images')){try{const p=JSON.parse(g('home_undertone_images'));if(p.length)undertoneSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}} if(g('home_faq_list')){try{faqSlots=JSON.parse(g('home_faq_list'))}catch(e){}} } }catch(e){}
- $('curOrigin').innerText=tokoOriginLabel+' - '+tokoOriginId;
- await Promise.all([loadCats(), loadMasterColors(), loadProducts(), loadBanners()]);
- initVar(); renderKoleksi(); renderUnder(); renderFaq();
+ try{const {data}=await supa.from('settings').select('*');if(data){const g=k=>data.find(s=>s.key===k)?.value;if(g('store_name'))$('storeName').value=g('store_name');if(g('wa_number'))$('waNumber').value=g('wa_number');if(g('toko_origin_id')){tokoOriginId=g('toko_origin_id');tokoOriginLabel=g('toko_origin_label')||tokoOriginLabel;}if(g('home_koleksi_terlaris')){try{const p=JSON.parse(g('home_koleksi_terlaris'));if(p.length)koleksiSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}if(g('home_undertone_images')){try{const p=JSON.parse(g('home_undertone_images'));if(p.length)undertoneSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}if(g('home_faq_list')){try{faqSlots=JSON.parse(g('home_faq_list'))}catch(e){}}}}catch(e){}
+ $('curOrigin').innerText=tokoOriginLabel+' - '+tokoOriginId;await loadCats();await loadMasterColors();await loadProducts();await loadBanners();initVar();renderKoleksi();renderUnder();renderFaq();
 }
-async function loadMasterColors(){const {data}=await supa.from('master_colors').select('name,undertone').limit(100); masterColorsCache = data||[]; updateAutoUndertone();}
+async function loadMasterColors(){const {data}=await supa.from('master_colors').select('*'); masterColorsCache = data||[]; updateAutoUndertone();}
 function updateAutoUndertone(){
-  // FIX PENTING: ADA SPASI
+  // FIX: ADA SPASI #varInputs.slot
   const rows=[...document.querySelectorAll('#varInputs .slot')];
   let colors = rows.map(r=>r.querySelector('.var-color')?.value.trim().toUpperCase()).filter(Boolean);
   let underSet = new Set();
@@ -102,92 +100,85 @@ function updateAutoUndertone(){
   if(underSet.size===0) underSet.add('NEUTRAL');
   let arr = Array.from(underSet);
   $('pUndertone').value = arr.join(',');
-  $('autoUndertoneBox').innerHTML = arr.map(u=>`<span class="under-badge">${u}</span>`).join('') + `<div style="font-size:8px;margin-top:6px;opacity:.8;">Dari ${colors.length} warna: ${colors.join(', ')||'-'}</div>`;
+  $('autoUndertoneBox').innerHTML = arr.map(u=>`<span class="under-badge">${u}</span>`).join('') + `<div style="font-size:8px; margin-top:6px; opacity:.8;">Dari ${colors.length} warna: ${colors.join(', ')||'-'}</div>`;
   return arr;
 }
-window.addMasterColorQuick=async()=>{ let name=$('newMasterColor').value.trim().toUpperCase(); let u=$('newMasterUnder').value.split(',').map(s=>s.trim()); if(!name) return toast('ISI NAMA'); await supa.from('master_colors').upsert({name:name, undertone:u}, {onConflict:'name'}); $('newMasterColor').value=''; toast(name+' DITAMBAH'); await loadMasterColors(); };
+window.addMasterColorQuick=async()=>{
+  let name=$('newMasterColor').value.trim().toUpperCase(); let u=$('newMasterUnder').value.split(',').map(s=>s.trim());
+  if(!name) return toast('ISI NAMA WARNA');
+  await supa.from('master_colors').upsert({name:name, undertone:u}, {onConflict:'name'});
+  $('newMasterColor').value=''; toast(name+' DITAMBAH - '+u.join(',')); await loadMasterColors();
+};
 function initVar(){ const el=$('varInputs'); if(!el) return; el.innerHTML=''; addVarRow(); }
 function addVarRow(c,img,stock,avail){
  c=c||'';img=img||'';stock=stock!=null?stock:10;avail=avail!=null?avail:true;
  var id='vf_'+Date.now()+'_'+Math.random().toString(36).slice(2);
  var d=document.createElement('div');d.className='slot';
- var h='<div style="display:flex;gap:6px;align-items:center"><input class="input var-color" placeholder="NAMA WARNA" value="'+esc(c)+'" style="flex:1;margin:0" oninput="updateAutoUndertone()"><input class="input var-stock" type="number" value="'+stock+'" style="width:70px;margin:0;text-align:center"><label style="font-size:8px;display:flex;align-items:center;gap:4px"><input type="checkbox" class="var-avail" '+(avail?'checked':'')+'>READY</label><div class="x" onclick="this.parentElement.parentElement.remove();updateAutoUndertone()">x</div></div>';
- if(img){ h+='<img src="'+getOptImg(img,200)+'" class="preview-img">'; }
+ var h='<div style="display:flex;gap:6px;align-items:center"><input class="input var-color" placeholder="NAMA WARNA ex: SAGE" value="'+esc(c)+'" style="flex:1;margin:0" oninput="updateAutoUndertone()"><input class="input var-stock" type="number" value="'+stock+'" style="width:70px;margin:0;text-align:center"><label style="font-size:8px;display:flex;align-items:center;gap:4px"><input type="checkbox" class="var-avail" '+(avail?'checked':'')+'>READY</label><div class="x" onclick="this.parentElement.parentElement.remove();updateAutoUndertone()">x</div></div>';
+ if(img){ h+='<img src="'+img+'" class="preview-img">'; }
  h+='<input type="file" class="var-file" accept="image/*" style="display:none" id="'+id+'" onchange="prevVar(this)"><label for="'+id+'" class="file-btn">FOTO WARNA</label><input type="hidden" class="var-old-url" value="'+img+'">';
  d.innerHTML=h; $('varInputs').appendChild(d); updateAutoUndertone();
 }
 window.prevVar=(inp)=>{const f=inp.files[0];if(!f)return;const url=URL.createObjectURL(f);let img=inp.closest('.slot').querySelector('.preview-img');if(!img){img=document.createElement('img');img.className='preview-img';img.style.cssText='width:100%;height:160px;object-fit:cover;border:1px solid var(--line);margin-top:8px;object-position:top';inp.closest('.slot').insertBefore(img,inp);}img.src=url;};
-async function loadCats(){const {data}=await supa.from('categories').select('id,name').limit(50);if(!data)return;$('catList').innerHTML=data.map(c=>'<span style="display:inline-block;border:1px solid var(--line);background:var(--bg);padding:4px 10px;margin:3px;font-size:9px">'+esc(c.name)+' <b style="cursor:pointer" onclick="delCat(\''+c.id+'\')">x</b></span>').join('');$('pCat').innerHTML='<option value="">PILIH BAHAN</option>'+data.map(c=>'<option value="'+esc(c.name)+'">'+esc(c.name)+'</option>').join('');}
+async function loadCats(){const {data}=await supa.from('categories').select('*');if(!data)return;$('catList').innerHTML=data.map(c=>'<span style="display:inline-block;border:1px solid var(--line);background:var(--bg);padding:4px 10px;margin:3px;font-size:9px">'+esc(c.name)+' <b style="cursor:pointer" onclick="delCat(\''+c.id+'\')">x</b></span>').join('');$('pCat').innerHTML='<option value="">PILIH BAHAN</option>'+data.map(c=>'<option value="'+esc(c.name)+'">'+esc(c.name)+'</option>').join('');}
 window.addCat=async()=>{const v=$('catName').value.trim();if(!v)return;await supa.from('categories').insert({name:v});$('catName').value='';loadCats();};
-window.delCat=async(id)=>{showConfirm('HAPUS BAHAN?','',async()=>{await supa.from('categories').delete().eq('id',id);loadCats();toast('DIHAPUS');});};
-function renderKoleksi(){let h='';koleksiSlots.forEach((it,i)=>{h+='<div class="slot"><div class="x" onclick="koleksiSlots.splice('+i+',1);if(!koleksiSlots.length)koleksiSlots=[{url:\'\'}];renderKoleksi()">x</div>'+(it.url?'<img src="'+getOptImg(it.url,200)+'">':'')+'<input type="file" style="display:none" id="kf'+i+'" accept="image/*" onchange="changeKoleksi('+i+',this)"><label for="kf'+i+'" class="file-btn">FILE</label><input class="input" placeholder="JUDUL" value="'+esc(it.title)+'" oninput="koleksiSlots['+i+'].title=this.value"></div>'});$('koleksi4Wrap').innerHTML=h;}
-window.changeKoleksi=async(i,inp)=>{const f=inp.files[0];if(!f)return;const blob=await compressImage(f,600);koleksiSlots[i].url=await fileToBase64(blob);renderKoleksi();};
+window.delCat=async(id)=>{showConfirm('HAPUS BAHAN?','Filter bahan akan hilang',async()=>{await supa.from('categories').delete().eq('id',id);loadCats();toast('DIHAPUS');});};
+function renderKoleksi(){let h='';koleksiSlots.forEach((it,i)=>{h+='<div class="slot"><div class="x" onclick="koleksiSlots.splice('+i+',1);if(!koleksiSlots.length)koleksiSlots=[{url:\'\'}];renderKoleksi()">x</div>'+(it.url?'<img src="'+it.url+'">':'')+'<input type="file" style="display:none" id="kf'+i+'" accept="image/*" onchange="changeKoleksi('+i+',this)"><label for="kf'+i+'" class="file-btn">FILE</label><input class="input" placeholder="JUDUL" value="'+esc(it.title)+'" oninput="koleksiSlots['+i+'].title=this.value"></div>'});$('koleksi4Wrap').innerHTML=h;}
+window.changeKoleksi=async(i,inp)=>{const f=inp.files[0];if(!f)return;koleksiSlots[i].url=await fileToBase64(f);renderKoleksi();};
 window.addKoleksi=()=>{koleksiSlots.push({url:""});renderKoleksi();};
-$('koleksiGaleri').addEventListener('change',async e=>{for(let f of e.target.files){const b=await compressImage(f,600);koleksiSlots.push({url:await fileToBase64(b)});}renderKoleksi();});
-function renderUnder(){let h='';undertoneSlots.forEach((it,i)=>{h+='<div class="slot"><div class="x" onclick="undertoneSlots.splice('+i+',1);if(!undertoneSlots.length)undertoneSlots=[{url:\'\'}];renderUnder()">x</div>'+(it.url?'<img src="'+getOptImg(it.url,200)+'">':'')+'<input type="file" style="display:none" id="uf'+i+'" accept="image/*" onchange="changeUnder('+i+',this)"><label for="uf'+i+'" class="file-btn">FILE</label><input class="input" placeholder="LABEL" value="'+esc(it.title)+'" oninput="undertoneSlots['+i+'].title=this.value"></div>'});$('undertoneWrap').innerHTML=h;}
-window.changeUnder=async(i,inp)=>{const f=inp.files[0];if(!f)return;const b=await compressImage(f,400);undertoneSlots[i].url=await fileToBase64(b);renderUnder();};
+$('koleksiGaleri').addEventListener('change',async e=>{for(let f of e.target.files){koleksiSlots.push({url:await fileToBase64(f)});}renderKoleksi();});
+function renderUnder(){let h='';undertoneSlots.forEach((it,i)=>{h+='<div class="slot"><div class="x" onclick="undertoneSlots.splice('+i+',1);if(!undertoneSlots.length)undertoneSlots=[{url:\'\'}];renderUnder()">x</div>'+(it.url?'<img src="'+it.url+'">':'')+'<input type="file" style="display:none" id="uf'+i+'" accept="image/*" onchange="changeUnder('+i+',this)"><label for="uf'+i+'" class="file-btn">FILE</label><input class="input" placeholder="LABEL" value="'+esc(it.title)+'" oninput="undertoneSlots['+i+'].title=this.value"></div>'});$('undertoneWrap').innerHTML=h;}
+window.changeUnder=async(i,inp)=>{const f=inp.files[0];if(!f)return;undertoneSlots[i].url=await fileToBase64(f);renderUnder();};
 window.addUndertone=()=>{undertoneSlots.push({url:""});renderUnder();};
-$('underGaleri').addEventListener('change',async e=>{for(let f of e.target.files){const b=await compressImage(f,400);undertoneSlots.push({url:await fileToBase64(b)});}renderUnder();});
+$('underGaleri').addEventListener('change',async e=>{for(let f of e.target.files){undertoneSlots.push({url:await fileToBase64(f)});}renderUnder();});
 function renderFaq(){let h='';faqSlots.forEach((f,i)=>{h+='<div class="slot"><div class="x" onclick="faqSlots.splice('+i+',1);renderFaq()">x</div><input class="input" placeholder="Q" value="'+esc(f.q)+'" oninput="faqSlots['+i+'].q=this.value"><textarea class="input" rows="2" placeholder="A" oninput="faqSlots['+i+'].a=this.value">'+esc(f.a)+'</textarea></div>'});$('faqWrap').innerHTML=h;}
 window.addFaq=()=>{faqSlots.push({q:'',a:''});renderFaq();};
-async function loadProducts(){const {data}=await supa.from('products').select('id,name,price,image_url,undertone').order('id',{ascending:false}).limit(50);$('prodCount').innerText=(data||[]).length;$('list').innerHTML=(data||[]).map(p=>'<div class="prod-card"><img src="'+getOptImg(p.image_url,200)+'" loading="lazy"><div style="padding:8px"><div style="font-size:10px">'+esc(p.name)+'</div><div style="font-size:12px">Rp'+Number(p.price).toLocaleString('id-ID')+'</div><button class="btn-light" style="width:100%;margin-top:6px" onclick="editP(\''+p.id+'\')">EDIT</button><button class="btn-light" style="width:100%;margin-top:4px" onclick="delP(\''+p.id+'\')">HAPUS</button></div></div>').join('');window._p=data||[];}
-window.editP=async(id)=>{const p=window._p.find(x=>String(x.id)===String(id));if(!p)return;$('editId').value=p.id;$('pName').value=p.name;$('pPrice').value=p.price;const {data:vars}=await supa.from('product_variants').select('color_name,image_url,stock,is_available').eq('product_id',id).limit(20);$('varInputs').innerHTML='';if(vars&&vars.length){vars.forEach(v=>addVarRow(v.color_name,v.image_url, v.stock??10, v.is_available??true));}else initVar();openTab('produk',document.querySelectorAll('.tab')[4]);window.scrollTo({top:0,behavior:'smooth'});toast('EDIT MODE');};
-window.delP=async(id)=>{showConfirm('HAPUS?','',async()=>{await supa.from('products').delete().eq('id',id);loadProducts();toast('DIHAPUS');});};
+async function loadProducts(){const {data}=await supa.from('products').select('*').order('id',{ascending:false});$('prodCount').innerText=(data||[]).length;$('list').innerHTML=(data||[]).map(p=>'<div class="prod-card"><img src="'+p.image_url+'"><div style="padding:8px"><div style="font-size:10px">'+esc(p.name)+'</div><div style="font-size:12px">Rp'+Number(p.price).toLocaleString('id-ID')+'</div><div style="font-size:7px;opacity:.5;margin-top:4px">'+esc((p.undertone||[]).join(', '))+'</div><button class="btn-light" style="width:100%;margin-top:6px" onclick="editP(\''+p.id+'\')">EDIT</button><button class="btn-light" style="width:100%;margin-top:4px" onclick="delP(\''+p.id+'\')">HAPUS</button></div></div>').join('');window._p=data||[];}
+window.editP=async(id)=>{const p=window._p.find(x=>String(x.id)===String(id));if(!p)return;$('editId').value=p.id;$('pName').value=p.name;$('pPrice').value=p.price;$('pCat').value=p.category||'';$('pSize').value=p.size_info||'110x110cm';$('pFinish').value=p.finishing||'Laser Cut';$('pMaterialDetail').value=p.material_detail||'';$('pDesc').value=p.description||'';$('varInputs').innerHTML='';const {data:vars}=await supa.from('product_variants').select('*').eq('product_id',id);if(vars&&vars.length){vars.forEach(v=>addVarRow(v.color_name,v.image_url, v.stock??10, v.is_available??true));}else initVar();openTab('produk',document.querySelectorAll('.tab')[4]);window.scrollTo({top:0,behavior:'smooth'});toast('EDIT MODE - '+p.name);};
+window.delP=async(id)=>{showConfirm('HAPUS PRODUK?','Akan terhapus permanen',async()=>{await supa.from('products').delete().eq('id',id);loadProducts();toast('DIHAPUS');});};
 window.saveProd=async()=>{
- const name=$('pName').value.trim();const price=Number($('pPrice').value);
- if(!name||!price){toast('ISI NAMA & HARGA');$('saveStatus').innerText='NAMA/HARGA KOSONG';return;}
- const rows=[...document.querySelectorAll('#varInputs .slot')]; // FIX SPASI - INI KUNCI
- console.log('DEBUG ROWS:', rows.length);
- if(!rows.length){toast('TAMBAH WARNA DULU');$('saveStatus').innerText='0 WARNA TERDETEKSI - CEK SELECTOR';return;}
+ const name=$('pName').value.trim();const price=Number($('pPrice').value);if(!name||!price){toast('ISI NAMA & HARGA');return;}
+ // FIX PENTING ADA SPASI
+ const rows=[...document.querySelectorAll('#varInputs .slot')];
+ if(!rows.length){toast('TAMBAH WARNA DULU');return;}
  $('saveStatus').innerText='PROSES '+rows.length+' WARNA...';
  let finalVars=[];
  for(let r of rows){
-   const col=r.querySelector('.var-color')?.value.trim().toUpperCase();if(!col){toast('NAMA WARNA KOSONG');continue;}
-   const stockVal=Number(r.querySelector('.var-stock')?.value||0); const avail=r.querySelector('.var-avail')?.checked;
+   const col=r.querySelector('.var-color')?.value.trim().toUpperCase();if(!col)continue;
+   const stockVal=Number(r.querySelector('.var-stock')?.value||0);
+   const avail=r.querySelector('.var-avail')?.checked;
    const file=r.querySelector('.var-file')?.files[0];
    let oldUrl=r.querySelector('.var-old-url')?.value||'';
    if(file){
-     try{
-       const comp=await compressImage(file,800);
-       const fn='var_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';
-       $('saveStatus').innerText='UPLOAD '+col+'... '+Math.round(comp.size/1024)+'KB';
-       const {data,error}=await supa.storage.from('products').upload(fn,comp,{upsert:true, contentType:'image/jpeg'});
-       if(error) throw error;
-       const publicUrl = supa.storage.from('products').getPublicUrl(fn).data.publicUrl;
-       console.log('UPLOADED:', publicUrl);
-       finalVars.push({color_name:col,image_url:publicUrl, stock:stockVal, is_available:avail});
-     }catch(e){ console.error(e); toast('UPLOAD GAGAL '+col+': '+e.message); $('saveStatus').innerText='GAGAL UPLOAD: '+e.message + ' | Cek bucket products harus PUBLIC'; return; }
+     const fn='var_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';
+     $('saveStatus').innerText='UPLOAD '+col+'...';
+     const {error}=await supa.storage.from('products').upload(fn,file,{upsert:true});
+     if(error){toast('UPLOAD GAGAL: '+error.message);$('saveStatus').innerText='GAGAL: '+error.message;return;}
+     finalVars.push({color_name:col,image_url:supa.storage.from('products').getPublicUrl(fn).data.publicUrl, stock:stockVal, is_available:avail});
    }else if(oldUrl&&oldUrl.startsWith('http')){
      finalVars.push({color_name:col,image_url:oldUrl, stock:stockVal, is_available:avail});
    }
  }
- if(!finalVars.length){toast('MINIMAL 1 FOTO');$('saveStatus').innerText='FOTO KOSONG - Pilih foto dulu';return;}
+ if(!finalVars.length){toast('MINIMAL 1 FOTO');$('saveStatus').innerText='FOTO KOSONG';return;}
  try{
    let pid=$('editId').value; let undertoneArr = updateAutoUndertone();
-   $('saveStatus').innerText='SIMPAN DB '+undertoneArr.join(',')+'...';
-   if(pid){
-     const {error}=await supa.from('products').update({name,price,image_url:finalVars[0].image_url,category:$('pCat').value||null,description:$('pDesc').value.trim(),size_info:$('pSize').value.trim(),material_detail:$('pMaterialDetail').value.trim(),finishing:$('pFinish').value.trim(),undertone:undertoneArr, colors: finalVars.map(v=>v.color_name)}).eq('id',pid);
-     if(error) throw error;
-     await supa.from('product_variants').delete().eq('product_id',pid);
-   } else {
-     const {data,error}=await supa.from('products').insert({name,price,image_url:finalVars[0].image_url,category:$('pCat').value||null,description:$('pDesc').value.trim(),size_info:$('pSize').value.trim(),material_detail:$('pMaterialDetail').value.trim(),finishing:$('pFinish').value.trim(),undertone:undertoneArr, colors: finalVars.map(v=>v.color_name)}).select().single();
-     if(error) throw error; pid=data.id;
-   }
-   const {error:varErr}=await supa.from('product_variants').insert(finalVars.map(v=>({product_id:pid,color_name:v.color_name,image_url:v.image_url, stock:v.stock, is_available:v.is_available})));
-   if(varErr) throw varErr;
-   $('saveStatus').innerText='OK! '+finalVars.length+' WARNA TERSIMPAN KE TOKO';toast('TERSIMPAN '+finalVars.length+' WARNA KE TOKO!');$('editId').value='';$('pName').value='';$('pPrice').value='';$('pDesc').value='';initVar();loadProducts();
- }catch(e){ console.error(e); toast('ERROR DB: '+e.message); $('saveStatus').innerText='ERROR DB: '+e.message; }
+   $('saveStatus').innerText='SIMPAN DB...';
+   if(pid){await supa.from('products').update({name,price,image_url:finalVars[0].image_url,category:$('pCat').value||null,description:$('pDesc').value.trim(),size_info:$('pSize').value.trim(),material_detail:$('pMaterialDetail').value.trim(),finishing:$('pFinish').value.trim(),undertone:undertoneArr, colors: finalVars.map(v=>v.color_name)}).eq('id',pid);await supa.from('product_variants').delete().eq('product_id',pid);}
+   else{const {data,error}=await supa.from('products').insert({name,price,image_url:finalVars[0].image_url,category:$('pCat').value||null,description:$('pDesc').value.trim(),size_info:$('pSize').value.trim(),material_detail:$('pMaterialDetail').value.trim(),finishing:$('pFinish').value.trim(),undertone:undertoneArr, colors: finalVars.map(v=>v.color_name)}).select().single();if(error)throw error;pid=data.id;}
+   await supa.from('product_variants').insert(finalVars.map(v=>({product_id:pid,color_name:v.color_name,image_url:v.image_url, stock:v.stock, is_available:v.is_available})));
+   $('saveStatus').innerText='OK '+finalVars.length+' WARNA';toast('TERSIMPAN '+finalVars.length+' WARNA');$('editId').value='';$('pName').value='';$('pPrice').value='';$('pDesc').value='';initVar();loadProducts();
+ }catch(e){toast('ERROR: '+e.message);$('saveStatus').innerText='ERROR: '+e.message;}
 };
 async function cariOrigin(){const q=$('originSearch').value.trim();if(!q)return;$('originList').innerHTML='...';const r=await fetch('/api/search?q='+encodeURIComponent(q));const j=await r.json();$('originList').innerHTML=j.data.map(d=>'<div style="padding:10px;border-bottom:1px solid var(--line);cursor:pointer;font-size:11px" onclick="pilihOrigin(\''+d.id+'\',\''+d.label.replace(/'/g,"")+'\')">'+d.label+'</div>').join('');}
 window.pilihOrigin=(id,label)=>{tokoOriginId=id;tokoOriginLabel=label;$('curOrigin').innerText=label+' - '+id;$('originList').innerHTML='';};
-$('filePC').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;const b=await compressImage(f,1240);pcBase=await fileToBase64(b);$('prevPC').src=pcBase;$('prevPC').style.display='block';});
-$('fileHP').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;const b=await compressImage(f,800);hpBase=await fileToBase64(b);$('prevHP').src=hpBase;$('prevHP').style.display='block';});
-window.saveToko=async()=>{ const ups=[];if($('storeName').value)ups.push({key:'store_name',value:$('storeName').value});if($('waNumber').value)ups.push({key:'wa_number',value:$('waNumber').value});ups.push({key:'toko_origin_id',value:tokoOriginId},{key:'toko_origin_label',value:tokoOriginLabel}); await supa.from('settings').upsert(ups,{onConflict:'key'}); if(pcBase){ const pcBlob=await (await fetch(pcBase)).blob();const fn='pc_'+Date.now()+'.jpg';await supa.storage.from('banners').upload(fn,pcBlob);const pcUrl=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl; let hpUrl=pcUrl;if(hpBase){const hpBlob=await (await fetch(hpBase)).blob();const hfn='hp_'+Date.now()+'.jpg';await supa.storage.from('banners').upload(hfn,hpBlob);hpUrl=supa.storage.from('banners').getPublicUrl(hfn).data.publicUrl;} await supa.from('banners').update({is_active:false}).eq('is_active',true);await supa.from('banners').insert({title:$('bTitle').value||'BANNER',image_url:pcUrl,image_mobile_url:hpUrl,link_url:$('bLink').value||'produk.html',is_active:true);} toast('TERSIMPAN');loadBanners(); };
+$('filePC').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;pcBase=await fileToBase64(f);$('prevPC').src=pcBase;$('prevPC').style.display='block';});
+$('fileHP').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;hpBase=await fileToBase64(f);$('prevHP').src=hpBase;$('prevHP').style.display='block';});
+window.saveToko=async()=>{const ups=[];if($('storeName').value)ups.push({key:'store_name',value:$('storeName').value});if($('waNumber').value)ups.push({key:'wa_number',value:$('waNumber').value});ups.push({key:'toko_origin_id',value:tokoOriginId},{key:'toko_origin_label',value:tokoOriginLabel});await supa.from('settings').upsert(ups,{onConflict:'key'});if(pcBase){const pcBlob=await (await fetch(pcBase)).blob();const fn='pc_'+Date.now()+'.jpg';await supa.storage.from('banners').upload(fn,pcBlob);const pcUrl=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;let hpUrl=pcUrl;if(hpBase){const hpBlob=await (await fetch(hpBase)).blob();const hfn='hp_'+Date.now()+'.jpg';await supa.storage.from('banners').upload(hfn,hpBlob);hpUrl=supa.storage.from('banners').getPublicUrl(hfn).data.publicUrl;}await supa.from('banners').update({is_active:false}).eq('is_active',true);await supa.from('banners').insert({title:$('bTitle').value||'BANNER',image_url:pcUrl,image_mobile_url:hpUrl,link_url:$('bLink').value||'produk.html',is_active:true});}toast('TERSIMPAN');loadBanners();};
 window.saveKoleksi=async()=>{const list=koleksiSlots.filter(x=>x.url);let final=[];for(let v of list){let url=v.url;if(String(url).startsWith('data:')){const blob=await (await fetch(url)).blob();const fn='k_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';await supa.storage.from('banners').upload(fn,blob);url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}final.push({url,title:v.title||''});}await supa.from('settings').upsert({key:'home_koleksi_terlaris',value:JSON.stringify(final)},{onConflict:'key'});toast('KOLEKSI '+final.length);};
 window.saveUndertone=async()=>{const list=undertoneSlots.filter(x=>x.url);let final=[];for(let v of list){let url=v.url;if(String(url).startsWith('data:')){const blob=await (await fetch(url)).blob();const fn='u_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';await supa.storage.from('banners').upload(fn,blob);url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}final.push({url,title:v.title||''});}await supa.from('settings').upsert({key:'home_undertone_images',value:JSON.stringify(final)},{onConflict:'key'});toast('UNDERTONE '+final.length);};
 window.saveFaq=async()=>{const final=faqSlots.filter(x=>x.q&&x.a);await supa.from('settings').upsert({key:'home_faq_list',value:JSON.stringify(final)},{onConflict:'key'});toast('FAQ '+final.length);};
-async function loadBanners(){const {data}=await supa.from('banners').select('id,title,image_url,is_active').order('id',{ascending:false}).limit(10);$('bannerList').innerHTML=(data||[]).map(b=>'<div style="border:1px solid var(--line);display:flex;gap:8px;padding:8px;margin-top:6px;background:#fff"><img src="'+getOptImg(b.image_url,100)+'" style="width:56px;height:36px;object-fit:cover"><div style="flex:1;font-size:9px">'+esc(b.title)+'<br><span style="opacity:.5">'+(b.is_active?'AKTIF':'-')+'</span></div><button class="btn-light" style="width:auto" onclick="aktifB(\''+b.id+'\')">AKTIF</button><button class="btn-light" style="width:auto" onclick="hapusB(\''+b.id+'\')">HAPUS</button></div>').join('');}
+async function loadBanners(){const {data}=await supa.from('banners').select('*').order('id',{ascending:false});$('bannerList').innerHTML=(data||[]).map(b=>'<div style="border:1px solid var(--line);display:flex;gap:8px;padding:8px;margin-top:6px;background:#fff"><img src="'+b.image_url+'" style="width:56px;height:36px;object-fit:cover"><div style="flex:1;font-size:9px">'+esc(b.title)+'<br><span style="opacity:.5">'+(b.is_active?'AKTIF':'-')+'</span></div><button class="btn-light" style="width:auto" onclick="aktifB(\''+b.id+'\')">AKTIF</button><button class="btn-light" style="width:auto" onclick="hapusB(\''+b.id+'\')">HAPUS</button></div>').join('');}
 window.aktifB=async(id)=>{await supa.from('banners').update({is_active:false}).eq('is_active',true);await supa.from('banners').update({is_active:true}).eq('id',id);loadBanners();toast('AKTIF');};
-window.hapusB=async(id)=>{showConfirm('HAPUS?','',async()=>{await supa.from('banners').delete().eq('id',id);loadBanners();toast('HAPUS');});};
+window.hapusB=async(id)=>{showConfirm('HAPUS BANNER?','Tidak bisa dikembalikan',async()=>{await supa.from('banners').delete().eq('id',id);loadBanners();toast('HAPUS');});};
 init();
 </script></body></html>
