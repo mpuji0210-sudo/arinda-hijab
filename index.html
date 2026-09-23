@@ -10,63 +10,53 @@
 :root{--black:#111;--line:#EDE8E1;--bg:#FFFCF9}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--black);font-family:'Inter',sans-serif;font-weight:300}
 nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(17,17,17,0.06)}
-.nav-top{max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.nav-top{max-width:1240px;margin:0 auto;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px}.logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px}
-.icons{display:flex;gap:20px}.icon-btn{background:none;border:none;cursor:pointer;position:relative;width:36px;height:36px;display:flex;align-items:center;justify-content:center}.icon-btn svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.1}
+.icons{display:flex;gap:16px}.icon-btn{background:none;border:none;cursor:pointer;position:relative;width:36px;height:36px;display:flex;align-items:center;justify-content:center}.icon-btn svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.1}
 .badge{position:absolute;top:-2px;right:-2px;background:#111;color:#fff;font-size:7px;min-width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.nav-menu{border-top:1px solid rgba(17,17,17,0.06);overflow-x:auto}.menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:36px}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:13px 0;opacity:.45;border-bottom:1px solid transparent;white-space:nowrap}.menu a.active{opacity:1;border-bottom-color:#111}
-#searchBox{display:none;max-width:1240px;margin:0 auto;padding:12px 20px;border-top:1px solid #F6F1EB;background:#fff}#searchBox input{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;background:transparent;outline:none;font-size:12px}
-.hero{position:relative;width:100%;aspect-ratio:16/9;min-height:520px;max-height:680px;background:#E8DDD0;overflow:hidden}
+.nav-menu{border-top:1px solid rgba(17,17,17,0.06);overflow-x:auto}.menu{max-width:1240px;margin:0 auto;padding:0 16px;display:flex;gap:28px}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:12px 0;opacity:.45;white-space:nowrap}.menu a.active{opacity:1;border-bottom-color:#111}
+#searchBox{display:none;max-width:1240px;margin:0 auto;padding:10px 16px;border-top:1px solid #F6F1EB;background:#fff}#searchBox input{width:100%;padding:11px 0;border:none;border-bottom:1px solid #111;background:transparent;outline:none;font-size:12px}
+.hero{position:relative;width:100%;aspect-ratio:16/9;min-height:460px;max-height:600px;background:#E8DDD0;overflow:hidden}
 .hero img{width:100%;height:100%;object-fit:cover;object-position:50% 8%;display:block}
-.btn{background:#111;color:#fff;padding:14px 28px;font-size:9px;letter-spacing:3px;text-decoration:none;display:inline-block}
-.section{max-width:1240px;margin:0 auto;padding:24px 12px 0}
-.sub{font-size:9px;letter-spacing:5px}
-.colors{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:16px}
-.k-card{background:#fff;border:1px solid var(--line);position:relative;cursor:pointer;border-radius:8px;overflow:hidden}.k-card img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center top;display:block;background:#F8F4EF}
-.hero-text{position:absolute;left:24px;bottom:28px;max-width:420px;z-index:2}
-.heart-btn{position:absolute;top:8px;right:8px;width:30px;height:30px;background:rgba(255,255,255,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);z-index:3}.heart-btn svg{width:14px;height:14px;stroke:#111;fill:none;stroke-width:1.2}
-.u-wrap{border:1px solid var(--line);background:#fff;display:flex;flex-wrap:wrap;border-radius:8px;overflow:hidden}
-.u-grid{display:grid;grid-template-columns:repeat(3,1fr);flex:1;min-width:240px}
-.u-item{position:relative;border-right:1px solid var(--line);cursor:pointer;background:#F6F1EB}.u-item img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
-.u-label{position:absolute;bottom:0;left:0;right:0;background:rgba(17,17,17,.55);color:#fff;font-size:7px;letter-spacing:2px;text-align:center;padding:6px}
+.btn{background:#111;color:#fff;padding:13px 24px;font-size:9px;letter-spacing:3px;text-decoration:none;display:inline-block;border-radius:8px}
+.section{max-width:1240px;margin:0 auto;padding:18px 8px 0}
+.sub{font-size:8px;letter-spacing:4px}
+/* V65 KOTAK KECIL PAKSA - FIX BERANDA */
+.colors{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:6px!important;margin-top:10px}
+.k-card{background:#fff;border:1px solid var(--line);position:relative;cursor:pointer;border-radius:12px!important;overflow:hidden}
+.k-card img{width:100%!important;height:135px!important;aspect-ratio:1/1!important;object-fit:cover!important;object-position:center top!important;display:block!important;background:#F8F4EF!important}
+@media(min-width:700px){.k-card img{height:210px!important}.colors{grid-template-columns:repeat(4,1fr)!important}}
+.hero-text{position:absolute;left:16px;bottom:20px;max-width:360px;z-index:2}
+.heart-btn{position:absolute;top:6px;right:6px;width:24px;height:24px;background:rgba(255,255,255,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);z-index:3}.heart-btn svg{width:11px;height:11px;stroke:#111;fill:none;stroke-width:1.2}
+.u-wrap{border:1px solid var(--line);background:#fff;display:flex;flex-wrap:wrap;border-radius:12px;overflow:hidden}
+.u-grid{display:grid!important;grid-template-columns:repeat(4,1fr)!important;flex:1;min-width:240px}
+.u-item{position:relative;border-right:1px solid var(--line);cursor:pointer;background:#F6F1EB}.u-item img{width:100%!important;height:90px!important;object-fit:cover!important;display:block!important}
+.u-label{position:absolute;bottom:0;left:0;right:0;background:rgba(17,17,17,.55);color:#fff;font-size:6px;letter-spacing:2px;text-align:center;padding:5px}
 .fly-img{position:fixed;left:0;top:0;z-index:99999;width:56px;height:56px;object-fit:cover;border-radius:50%;pointer-events:none;box-shadow:0 12px 28px rgba(0,0,0,.25);border:2px solid #fff;transition:transform.9s,opacity.9s}
 #cartToast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(100px);background:#111;color:#fff;padding:10px 16px;border-radius:30px;display:flex;gap:10px;align-items:center;transition:.4s;opacity:0;z-index:100}#cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}
-@media(min-width:700px){.colors{grid-template-columns:repeat(4,1fr);gap:12px}}
-@media(max-width:800px){.hero{aspect-ratio:4/5;min-height:520px}.hero-text{left:16px;right:16px;bottom:20px}.hero-text h1{font-size:34px!important}}
+@media(max-width:800px){.hero{aspect-ratio:4/5;min-height:460px}.hero-text h1{font-size:32px!important}}
 </style>
 </head><body>
 <nav id="mainNav"><div class="nav-top"><div class="logo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons">
-<button class="icon-btn" aria-label="Cari" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button>
-<a href="kontak.html" class="icon-btn" aria-label="Kontak"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><path d="M5 19c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></a>
-<a href="produk.html" class="icon-btn" id="cartIcon" aria-label="Keranjang"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a>
+<button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button>
+<a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><path d="M5 19c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></a>
+<a href="produk.html" class="icon-btn" id="cartIcon"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a>
 </div></div><div class="nav-menu"><div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div></div>
-<div id="searchBox"><input id="q" type="search" placeholder="CARI BAHAN ATAU WARNA - PARIS, KREM, NAVY" oninput="autoSearch()" autocomplete="off"></div></nav>
-
-<div class="hero" id="heroWrap">
-<picture>
-<source id="bannerSourcePC" media="(min-width:801px)">
-<img id="bannerImg" alt="Banner ARINDA" width="1240" height="680" fetchpriority="high" decoding="async">
-</picture>
-<div class="hero-text"><div id="bannerTitle" style="font-size:9px;letter-spacing:5px;opacity:.5"></div><h1 style="font-family:'Cormorant Garamond';font-size:44px;line-height:.9;margin:10px 0 18px;font-weight:300;letter-spacing:-1px">ARINDA HIJAB,<br>PREMIUM<br></h1><a id="bannerLink" href="produk.html" class="btn">LIHAT KOLEKSI -></a></div></div>
-
-<div style="max-width:1240px;margin:0 auto;padding:20px 12px 0"><div class="u-wrap">
-<div style="flex:1;min-width:260px;padding:20px 18px"><div style="font-family:'Cormorant Garamond';font-size:18px;letter-spacing:3px">FIND YOUR UNDERTONE</div>
-<div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
-<button onclick="setUndertone('cool')" id="u-cool" style="font-size:9px;letter-spacing:2px;padding:10px 18px;border:1px solid #111;background:#111;color:#fff;cursor:pointer">COOL</button>
-<button onclick="setUndertone('warm')" id="u-warm" style="font-size:9px;letter-spacing:2px;padding:10px 18px;border:1px solid #111;background:#fff;color:#111;cursor:pointer">WARM</button>
-<button onclick="setUndertone('neutral')" id="u-neutral" style="font-size:9px;letter-spacing:2px;padding:10px 18px;border:1px solid #111;background:#fff;color:#111;cursor:pointer">NEUTRAL</button>
-<button onclick="setUndertone('olive')" id="u-olive" style="font-size:9px;letter-spacing:2px;padding:10px 18px;border:1px solid #111;background:#fff;color:#111;cursor:pointer">OLIVE</button>
+<div id="searchBox"><input id="q" type="search" placeholder="CARI BAHAN ATAU WARNA - PARIS, KREM, NAVY" oninput="autoSearch()"></div></nav>
+<div class="hero" id="heroWrap"><picture><source id="bannerSourcePC" media="(min-width:801px)"><img id="bannerImg" alt="Banner ARINDA" width="1240" height="600" fetchpriority="high" decoding="async"></picture><div class="hero-text"><div id="bannerTitle" style="font-size:9px;letter-spacing:5px;opacity:.5"></div><h1 style="font-family:'Cormorant Garamond';font-size:40px;line-height:.9;margin:10px 0 16px;font-weight:300">ARINDA HIJAB,<br>PREMIUM</h1><a id="bannerLink" href="produk.html" class="btn">LIHAT KOLEKSI -></a></div></div>
+<div style="max-width:1240px;margin:0 auto;padding:14px 8px 0"><div class="u-wrap">
+<div style="flex:1;min-width:260px;padding:16px 14px"><div style="font-family:'Cormorant Garamond';font-size:16px;letter-spacing:3px">FIND YOUR UNDERTONE</div>
+<div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap">
+<button onclick="setUndertone('cool')" id="u-cool" style="font-size:8px;letter-spacing:2px;padding:8px 14px;border:1px solid #111;background:#111;color:#fff;border-radius:20px;cursor:pointer">COOL</button>
+<button onclick="setUndertone('warm')" id="u-warm" style="font-size:8px;letter-spacing:2px;padding:8px 14px;border:1px solid #111;background:#fff;color:#111;border-radius:20px;cursor:pointer">WARM</button>
+<button onclick="setUndertone('neutral')" id="u-neutral" style="font-size:8px;letter-spacing:2px;padding:8px 14px;border:1px solid #111;background:#fff;color:#111;border-radius:20px;cursor:pointer">NEUTRAL</button>
+<button onclick="setUndertone('olive')" id="u-olive" style="font-size:8px;letter-spacing:2px;padding:8px 14px;border:1px solid #111;background:#fff;color:#111;border-radius:20px;cursor:pointer">OLIVE</button>
 </div>
-<div id="uResult" style="margin-top:12px;font-size:11px;opacity:.6;line-height:1.6">Pilih undertone mu - auto filter warna.</div>
-<div style="margin-top:12px"><a href="kategori.html" style="font-size:8px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;padding-bottom:2px;opacity:.5">LIHAT SEMUA UNDERTONE →</a></div>
-</div>
-<div id="undertoneGrid" class="u-grid"></div></div></div>
-
-<div class="section"><div style="display:flex;justify-content:space-between;align-items:center"><div class="sub">BEST SELLER - FILTER WARNA</div><a href="produk.html" style="font-size:9px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;padding-bottom:4px">LIHAT PRODUK</a></div><div class="colors" id="koleksi4Grid"></div></div>
-
-<footer style="margin-top:32px;padding:36px 16px 28px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div><div style="font-size:7px;letter-spacing:5px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div><div style="margin-top:14px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA V63 KOTAK 1:1 SPEED 94</div></footer>
-<div id="cartToast"><img id="toastImg" alt="Produk" style="width:28px;height:28px;border-radius:50%;object-fit:cover"><span id="toastText" style="font-size:9px"></span></div>
-
+<div id="uResult" style="margin-top:10px;font-size:10px;opacity:.6;line-height:1.5">Pilih undertone mu - auto filter warna.</div>
+</div><div id="undertoneGrid" class="u-grid"></div></div></div>
+<div class="section"><div style="display:flex;justify-content:space-between;align-items:center"><div class="sub">BEST SELLER - FILTER WARNA</div><a href="produk.html" style="font-size:8px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;padding-bottom:3px">LIHAT PRODUK</a></div><div class="colors" id="koleksi4Grid"></div></div>
+<footer style="margin-top:28px;padding:28px 16px 24px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div><div style="font-size:7px;letter-spacing:5px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div><div style="margin-top:12px;font-size:7px;letter-spacing:3px;opacity:.3">© 2026 ARINDA V65 KOTAK KECIL 135PX BERANDA</div></footer>
+<div id="cartToast"><img id="toastImg" style="width:26px;height:26px;border-radius:50%;object-fit:cover"><span id="toastText" style="font-size:8px"></span></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js" defer></script>
 <script>
 let supabaseClient; let _searchTimer=null;
@@ -77,13 +67,12 @@ function saveCart(c){localStorage.setItem('arinda_cart2',JSON.stringify(c));upda
 function updateCount(){const el=document.getElementById('cCount');if(el){el.innerText=getCart().reduce((a,b)=>a+Number(b.qty||0),0);}}
 function addCart(n,p,i){let c=getCart();let idx=c.findIndex(a=>a.warna==n);if(idx>-1)c[idx].qty++;else c.push({warna:n,qty:1,harga:Number(p),img:i});saveCart(c);}
 function showToast(t,i){const img=document.getElementById('toastImg');const txt=document.getElementById('toastText');if(img)img.src=i;if(txt)txt.innerText=t;const el=document.getElementById('cartToast');el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200);}
-window.addEventListener('scroll',()=>{const nav=document.getElementById('mainNav');if(window.scrollY>20){nav.classList.add('scrolled')}else{nav.classList.remove('scrolled')}});
-function getOptImg(url,w=400){
+function getOptImg(url,w=300){
   if(!url) return url;
   if(!url.includes('supabase.co/storage/v1/object/public/')) return url;
   try{
     const path=url.split('/object/public/')[1];
-    return `https://qjgevvizqeebtdqcbqmt.supabase.co/storage/v1/render/image/public/${path}?width=${w}&height=${w}&quality=70&format=webp&resize=cover`;
+    return `https://qjgevvizqeebtdqcbqmt.supabase.co/storage/v1/render/image/public/${path}?width=${w}&height=${w}&quality=65&format=webp&resize=cover`;
   }catch(e){return url;}
 }
 function flyToCart(imgUrl, startEl){
@@ -94,12 +83,12 @@ function flyToCart(imgUrl, startEl){
   if(!startRect || startRect.width===0){startRect={left:innerWidth/2,top:innerHeight/2,width:80,height:80};}
   const startX=startRect.left+startRect.width/2-28,startY=startRect.top+startRect.height/2-28;
   const endX=cartRect.left+cartRect.width/2-28,endY=cartRect.top+cartRect.height/2-28;
-  const fly=document.createElement('img');fly.src=getOptImg(imgUrl,100);fly.className='fly-img';fly.style.transform=`translate(${startX}px,${startY}px) scale(1)`;fly.style.opacity='1';document.body.appendChild(fly);fly.getBoundingClientRect();
+  const fly=document.createElement('img');fly.src=getOptImg(imgUrl,80);fly.className='fly-img';fly.style.transform=`translate(${startX}px,${startY}px) scale(1)`;fly.style.opacity='1';document.body.appendChild(fly);fly.getBoundingClientRect();
   requestAnimationFrame(()=>{requestAnimationFrame(()=>{fly.style.transform=`translate(${endX}px,${endY}px) scale(0.15)`;fly.style.opacity='0';});});setTimeout(()=>fly.remove(),950);
 }
-function quickAdd(title,img,el,idx){const imgEl=document.getElementById('img-best-'+idx)||(el?el.closest('.k-card')?.querySelector('img'):null);if(imgEl)flyToCart(imgEl.src||img,imgEl);addCart(title,99000,img);showToast(title+' MASUK KERANJANG',getOptImg(img,100));}
-const underData={cool:{desc:'<b>COOL</b> — Kulit kemerahan, urat biru. Cocok: <b>NAVY, MAROON, GREY</b>',col:'COOL'},warm:{desc:'<b>WARM</b> — Kulit kuning, urat hijau. Cocok: <b>KREM, OLIVE, CARAMEL</b>',col:'WARM'},neutral:{desc:'<b>NEUTRAL</b> — Campuran. Cocok: <b>MAUVE, DUSTY, BEIGE</b>',col:'NEUTRAL'},olive:{desc:'<b>OLIVE</b> — Sawo matang kehijauan. Cocok: <b>SAGE, KHAKI, TERRACOTTA</b>',col:'OLIVE'}};
-function setUndertone(t){document.querySelectorAll('[id^="u-"]').forEach(b=>{b.style.background='#fff';b.style.color='#111'});const cur=document.getElementById('u-'+t);if(cur){cur.style.background='#111';cur.style.color='#fff';}const d=underData[t];const res=document.getElementById('uResult');if(res){res.innerHTML=d.desc+` <br><a href="produk.html?undertone=${d.col}" style="font-size:9px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;margin-top:8px;display:inline-block">LIHAT ${d.col}</a>`;}}
+function quickAdd(title,img,el,idx){const imgEl=document.getElementById('img-best-'+idx)||(el?el.closest('.k-card')?.querySelector('img'):null);if(imgEl)flyToCart(imgEl.src||img,imgEl);addCart(title,99000,img);showToast(title+' MASUK KERANJANG',getOptImg(img,80));}
+const underData={cool:{desc:'<b>COOL</b> — Urat biru. Cocok: <b>NAVY, MAROON, GREY</b>',col:'COOL'},warm:{desc:'<b>WARM</b> — Urat hijau. Cocok: <b>KREM, OLIVE, CARAMEL</b>',col:'WARM'},neutral:{desc:'<b>NEUTRAL</b> — Campuran. Cocok: <b>MAUVE, DUSTY, BEIGE</b>',col:'NEUTRAL'},olive:{desc:'<b>OLIVE</b> — Sawo matang. Cocok: <b>SAGE, KHAKI, TERRACOTTA</b>',col:'OLIVE'}};
+function setUndertone(t){document.querySelectorAll('[id^="u-"]').forEach(b=>{b.style.background='#fff';b.style.color='#111'});const cur=document.getElementById('u-'+t);if(cur){cur.style.background='#111';cur.style.color='#fff';}const d=underData[t];const res=document.getElementById('uResult');if(res){res.innerHTML=d.desc+` <br><a href="produk.html?undertone=${d.col}" style="font-size:8px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;margin-top:6px;display:inline-block">LIHAT ${d.col}</a>`;}}
 async function init(){
   await new Promise(r=>{ const check=()=>{ if(window.supabase){ supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19'); r(); } else setTimeout(check,50); }; check(); });
   try{
@@ -108,8 +97,8 @@ async function init(){
       const img=document.getElementById('bannerImg');
       const srcPC=document.getElementById('bannerSourcePC');
       if(img){
-        img.src=getOptImg(banners[0].image_mobile_url||banners[0].image_url,800);
-        if(srcPC) srcPC.srcset=getOptImg(banners[0].image_url,1240);
+        img.src=getOptImg(banners[0].image_mobile_url||banners[0].image_url,600);
+        if(srcPC) srcPC.srcset=getOptImg(banners[0].image_url,800);
       }
       const bt=document.getElementById('bannerTitle'); if(bt) bt.innerText=banners[0].title||'';
       const bl=document.getElementById('bannerLink'); if(bl) bl.href=banners[0].link_url||'produk.html';
@@ -121,9 +110,9 @@ async function init(){
         const raw=JSON.parse(get('home_koleksi_terlaris')||'[]');
         if(raw.length){
           const grid=document.getElementById('koleksi4Grid');
-          if(grid) grid.innerHTML=raw.slice(0,8).map((v,i)=>{
+          if(grid) grid.innerHTML=raw.slice(0,9).map((v,i)=>{
             const url=typeof v==='string'?v:v.url; const title=(typeof v==='object'?v.title:'')||''; const safeTitle=title.replace(/'/g,"").toUpperCase()||'BEST'; const link=title?'produk.html?warna='+encodeURIComponent(safeTitle):'produk.html';
-            return `<div class="k-card"><img id="img-best-${i}" src="${getOptImg(url,400)}" loading="lazy" decoding="async" width="400" height="400" alt="${safeTitle}" onclick="location.href='${link}'"><div class="heart-btn" onclick="quickAdd('${safeTitle}','${url}', this, ${i})"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><div style="padding:10px;border-top:1px solid #F6F1EB;font-size:8px;letter-spacing:2px;opacity:.5" onclick="location.href='${link}'">${safeTitle}</div></div>`
+            return `<div class="k-card"><img id="img-best-${i}" src="${getOptImg(url,300)}" loading="lazy" decoding="async" width="300" height="300" alt="${safeTitle}" onclick="location.href='${link}'"><div class="heart-btn" onclick="quickAdd('${safeTitle}','${url}', this, ${i})"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><div style="padding:6px;border-top:1px solid #F6F1EB;font-size:7px;letter-spacing:2px;opacity:.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" onclick="location.href='${link}'">${safeTitle}</div></div>`
           }).join('');
         }
       }catch(e){}
@@ -133,9 +122,9 @@ async function init(){
           const uImgs=JSON.parse(rawU);
           const grid=document.getElementById('undertoneGrid');
           if(grid&&uImgs.length){
-            grid.innerHTML=uImgs.slice(0,6).map((it,i)=>{
+            grid.innerHTML=uImgs.slice(0,4).map((it,i)=>{
               const url=typeof it==='string'?it:it.url; const label=typeof it==='object'?(it.title||''):`FOTO ${i+1}`; const low=label.toLowerCase(); let ut='NEUTRAL'; if(low.includes('cool')) ut='COOL'; else if(low.includes('warm')) ut='WARM'; else if(low.includes('olive')) ut='OLIVE';
-              return `<div class="u-item" onclick="location.href='produk.html?undertone=${ut}'"><img src="${getOptImg(url,300)}" loading="lazy" decoding="async" width="300" height="300" alt="${label}"><div class="u-label">${label||ut}</div></div>`
+              return `<div class="u-item" onclick="location.href='produk.html?undertone=${ut}'"><img src="${getOptImg(url,200)}" loading="lazy" decoding="async" width="200" height="200" alt="${label}"><div class="u-label">${label||ut}</div></div>`
             }).join('');
           }
         }
