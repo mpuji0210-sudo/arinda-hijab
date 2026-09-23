@@ -151,7 +151,7 @@ window.editP=async(id)=>{const p=window._p.find(x=>String(x.id)===String(id));if
 window.delP=async(id)=>{if(!confirm('Hapus produk?'))return;await supa.from('products').delete().eq('id',id);loadProducts();toast('PRODUK DIHAPUS');};
 window.saveProd=async()=>{
  const name=$('pName').value.trim();const price=Number($('pPrice').value);if(!name||!price){toast('ISI NAMA & HARGA');return;}
- const rows=[...document.querySelectorAll('#varInputs.slot')];$('saveStatus').innerText=rows.length+' WARNA TERDETEKSI';
+ const rows=[...document.querySelectorAll('#varInputs .slot')];$('saveStatus').innerText=rows.length+' WARNA TERDETEKSI';
  let finalVars=[];
  for(let r of rows){const col=r.querySelector('.var-color')?.value.trim().toUpperCase();if(!col)continue;const file=r.querySelector('.var-file')?.files[0];let oldUrl=r.querySelector('.var-old-url')?.value||r.querySelector('.preview-img')?.src||'';if(file){const fn='var_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';$('saveStatus').innerText='UPLOAD '+col;const {error}=await supa.storage.from('products').upload(fn,file,{upsert:true});if(error){toast(error.message);return;}finalVars.push({color_name:col,image_url:supa.storage.from('products').getPublicUrl(fn).data.publicUrl});}else if(oldUrl.startsWith('http')){finalVars.push({color_name:col,image_url:oldUrl});}}
  if(!finalVars.length){toast('MINIMAL 1 WARNA + FOTO');return;}
