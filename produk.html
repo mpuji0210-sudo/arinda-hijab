@@ -1,11 +1,10 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PRODUK</title>
+<title>PRODUK - ARINDA V56 FIX</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root{--black:#111;--line:#EDE8E1;--bg:#FFFCF9}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--black);font-family:'Inter',sans-serif;font-weight:300}
-/* V55 FULL TRANSPARAN */
 nav{position:sticky;top:0;z-index:99;background:transparent;border-bottom:1px solid rgba(17,17,17,0.06);transition:.3s}
 nav.scrolled{background:rgba(255,252,249,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
 .nav-top{max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
@@ -18,7 +17,7 @@ nav.scrolled{background:rgba(255,252,249,.88);backdrop-filter:blur(18px);-webkit
 .search-wrap input{flex:1;padding:12px 0;border:none;border-bottom:1px solid #111;background:transparent;font-size:12px;outline:none;letter-spacing:1px}
 .section{max-width:1240px;margin:0 auto;padding:20px 16px 0}
 .filter-group{margin:14px 0}.filter-label{font-size:8px;letter-spacing:3px;opacity:.4;margin-bottom:8px}
-.filter{display:flex;gap:8px;flex-wrap:wrap}.filter button{padding:9px 18px;border:1px solid var(--line);background:#fff;font-size:9px;letter-spacing:2px;cursor:pointer}.filter button.active{background:#111;color:#fff;border-color:#111}
+.filter{display:flex;gap:8px;flex-wrap:wrap}.filter button{padding:9px 18px;border:1px solid var(--line);background:#fff;font-size:9px;letter-spacing:2px;cursor:pointer;transition:.2s}.filter button.active{background:#111;color:#fff;border-color:#111}
 .prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}@media(min-width:700px){.prod-grid{grid-template-columns:repeat(4,1fr)}}
 .prod-card{border:1px solid var(--line);background:#fff;cursor:pointer;position:relative;overflow:hidden}.prod-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block}
 .prod-card.out-of-stock{opacity:.55;pointer-events:none}.stock-badge{position:absolute;top:8px;left:8px;background:#111;color:#fff;font-size:7px;letter-spacing:2px;padding:5px 8px;z-index:2}
@@ -49,17 +48,17 @@ nav.scrolled{background:rgba(255,252,249,.88);backdrop-filter:blur(18px);-webkit
 <div class="filter-group" style="background:#111;padding:12px 12px 14px;margin-top:16px">
 <div class="filter-label" style="color:#fff;opacity:.7">FIND YOUR UNDERTONE</div>
 <div class="filter" id="filterUnder">
-<button class="active" onclick="filterUndertone('ALL',this)">ALL SKIN</button>
-<button onclick="filterUndertone('COOL',this)" style="background:#111;color:#fff;border-color:#444">COOL ❄️</button>
-<button onclick="filterUndertone('WARM',this)" style="background:#111;color:#fff;border-color:#444">WARM ☀️</button>
-<button onclick="filterUndertone('NEUTRAL',this)" style="background:#111;color:#fff;border-color:#444">NEUTRAL 🌸</button>
-<button onclick="filterUndertone('OLIVE',this)" style="background:#111;color:#fff;border-color:#444">OLIVE 🫒</button>
+<button class="active" data-under="ALL" onclick="filterUndertone('ALL',this)">ALL SKIN</button>
+<button data-under="COOL" onclick="filterUndertone('COOL',this)">COOL ❄️</button>
+<button data-under="WARM" onclick="filterUndertone('WARM',this)">WARM ☀️</button>
+<button data-under="NEUTRAL" onclick="filterUndertone('NEUTRAL',this)">NEUTRAL 🌸</button>
+<button data-under="OLIVE" onclick="filterUndertone('OLIVE',this)">OLIVE 🫒</button>
 </div>
 </div>
 <div class="filter-group"><div class="filter-label">FILTER BAHAN</div><div class="filter" id="filterBahan"><button class="active" onclick="filterBahan('ALL',this)">ALL BAHAN</button></div></div>
 <div class="filter-group"><div class="filter-label">FILTER WARNA</div><div class="filter" id="filterWarna"><button class="active" onclick="filterWarna('ALL',this)">ALL WARNA</button></div></div>
 <div id="list" class="prod-grid"></div></div>
-<footer style="margin-top:32px;padding:36px 16px 28px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div><div style="margin-top:14px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA HIJAB PREMIUM</div></footer>
+<footer style="margin-top:32px;padding:36px 16px 28px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div><div style="margin-top:14px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA V56</div></footer>
 <div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()"><div id="cartBox"><div style="display:flex;justify-content:space-between"><b style="font-family:'Cormorant Garamond';letter-spacing:2px">KERANJANG (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:22px;cursor:pointer">×</button></div><div id="cartList" style="margin-top:12px"></div><div style="margin-top:14px;padding:12px;background:var(--bg);border:1px solid var(--line)"><div style="font-size:9px;letter-spacing:2px">CEK ONGKIR - <span id="originInfo" style="opacity:.6"></span></div><div style="display:flex;gap:6px;margin-top:8px"><input id="destSearch" placeholder="KECAMATAN PEMBELI" style="flex:1;padding:10px;border:1px solid var(--line);font-size:11px"><button onclick="searchDest()" class="btn" style="width:auto;padding:10px 14px">CARI</button></div><div id="destList" style="margin:6px 0;max-height:120px;overflow:auto;display:none;border:1px solid var(--line);background:#fff"></div><div style="display:flex;gap:6px;margin-top:8px"><select id="courierSelect" style="padding:10px;border:1px solid var(--line);flex:1;font-size:11px"><option value="jne">JNE</option><option value="jnt">J&T</option><option value="sicepat">SiCepat</option><option value="pos">POS</option></select><button onclick="cekOngkir()" class="btn" style="flex:1">CEK</button></div><div id="ongkirResult" style="margin-top:8px;font-size:11px"></div></div><div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px"><div style="display:flex;justify-content:space-between;font-size:11px"><span>SUBTOTAL</span><span id="cartSubtotal">Rp0</span></div><div style="display:flex;justify-content:space-between;font-size:11px;margin-top:4px"><span>ONGKIR (<span id="ongkirLabel">BELUM CEK</span>)</span><span id="ongkirPrice">Rp0</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:14px;font-family:'Cormorant Garamond'"><span>TOTAL</span><span id="cartTotalPrice">Rp0</span></div><button onclick="checkoutWA()" class="btn" style="margin-top:12px;padding:14px">CHAT WA & PESAN</button><button onclick="askClearCart()" class="btn-light">KOSONGKAN</button></div></div></div>
 <div id="prodModal" onclick="if(event.target.id=='prodModal')closeProd()"><div class="p-box" id="pBox">Loading...</div></div>
 <div id="confirmModal"><div class="confirm-box"><div id="confirmTitle" style="font-family:'Cormorant Garamond';font-size:20px"></div><div id="confirmDesc" style="font-size:11px;opacity:.6;margin-top:6px"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px"><button onclick="closeConfirm()" style="padding:11px;border:1px solid var(--line);background:var(--bg);cursor:pointer">BATAL</button><button id="confirmOk" style="padding:11px;background:#111;color:#fff;border:none;cursor:pointer">YA</button></div></div></div>
@@ -101,82 +100,119 @@ function flyToCart(imgUrl, startEl){
   setTimeout(()=>fly.remove(),950);
 }
 function doSearch(){const q=document.getElementById('q').value.toLowerCase().trim();if(!q){applyFilters();return;}const filtered=allProducts.filter(p=>p.name.toLowerCase().includes(q)||(p.category||'').toLowerCase().includes(q)||(window._varMap[p.id]||[]).some(v=>v.color_name.toLowerCase().includes(q)));document.getElementById('prodCount').innerText=filtered.length+' PRODUK';render(filtered);}
-async function loadFilters(){
- try{
-  const {data:cats}=await supabaseClient.from('categories').select('name');
-  let bahanList=[...new Set((cats||[]).map(c=>c.name.toUpperCase()))];
-  if(!bahanList.length){ bahanList=[...new Set(allProducts.map(p=>(p.category||'').toUpperCase()).filter(Boolean))]; }
-  document.getElementById('filterBahan').innerHTML='<button class="active" onclick="filterBahan(\'ALL\',this)">ALL BAHAN</button>'+bahanList.slice(0,12).map(c=>`<button onclick="filterBahan('${c}',this)">${c}</button>`).join('');
-  const {data:vars}=await supabaseClient.from('product_variants').select('color_name');
-  let colors=[...new Set((vars||[]).map(v=>v.color_name.toUpperCase()))];
-  if(!colors.length)colors=['KREM','HITAM','NAVY','MAROON'];
-  const order=['KREM','HITAM','NAVY','MAROON']; colors.sort((a,b)=>{const ia=order.indexOf(a),ib=order.indexOf(b);if(ia!==-1&&ib!==-1)return ia-ib;if(ia!==-1)return-1;if(ib!==-1)return 1;return a.localeCompare(b);});
-  document.getElementById('filterWarna').innerHTML='<button class="active" onclick="filterWarna(\'ALL\',this)">ALL WARNA</button>'+colors.slice(0,12).map(c=>`<button onclick="filterWarna('${c}',this)">${c}</button>`).join('');
- }catch(e){}
-}
-function filterBahan(bahan,btn){activeBahan=bahan;document.querySelectorAll('#filterBahan button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');applyFilters();}
-function filterWarna(warna,btn){activeWarna=warna;document.querySelectorAll('#filterWarna button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');applyFilters();}
-// === V52 FIX CASE INSENSITIVE + DESKRIPSI ===
-function normalizeUndertoneToCode(raw){
+
+// === V56 FIX TOTAL ===
+function getUndertoneArray(p){
+  let raw = p.undertone;
   if(!raw) return [];
-  let arr = Array.isArray(raw)? raw : [raw];
+  if(Array.isArray(raw)) return raw.map(x=>String(x).toUpperCase().trim());
+  if(typeof raw === 'string'){
+    let s = raw.trim();
+    try{
+      const parsed = JSON.parse(s);
+      if(Array.isArray(parsed)) return parsed.map(x=>String(x).toUpperCase().trim());
+    }catch(e){}
+    // handle "{COOL,WARM}" or "[\"COOL\",\"WARM\"]" or "COOL,WARM"
+    s = s.replace(/[\[\]\{\}"]/g,'');
+    return s.split(',').map(x=>x.trim().toUpperCase()).filter(Boolean);
+  }
+  return [];
+}
+function normalizeUndertoneToCode(raw){
+  const arr = Array.isArray(raw)? raw : getUndertoneArray({undertone: raw});
   return arr.flatMap(s=>{
     const low = String(s).toLowerCase();
-    if(low.includes('cool') || low.includes('putih') || low.includes('kemerahan') || low.includes('pink') || low.includes('blue')) return ['COOL'];
-    if(low.includes('warm') || low.includes('kuning') || low.includes('langs') || low.includes('yellow') || low.includes('orange')) return ['WARM'];
-    if(low.includes('neutral') || low.includes('mauve') || low.includes('dusty') || low.includes('beige')) return ['NEUTRAL'];
-    if(low.includes('olive') || low.includes('sawo') || low.includes('matang') || low.includes('sage') || low.includes('khaki')) return ['OLIVE'];
+    if(low.includes('cool') || low.includes('putih') || low.includes('pink') || low.includes('blue')) return ['COOL'];
+    if(low.includes('warm') || low.includes('kuning') || low.includes('langs')) return ['WARM'];
+    if(low.includes('neutral') || low.includes('mauve') || low.includes('dusty')) return ['NEUTRAL'];
+    if(low.includes('olive') || low.includes('sawo') || low.includes('sage')) return ['OLIVE'];
     return [String(s).toUpperCase()];
   });
 }
+
+async function loadFilters(){
+  // FIX: hanya ambil bahan dari produk asli, bukan dari categories sampah
+  let bahanList=[...new Set(allProducts.map(p=>(p.category||'').toUpperCase()).filter(Boolean))];
+  document.getElementById('filterBahan').innerHTML='<button class="active" onclick="filterBahan(\'ALL\',this)">ALL BAHAN</button>'+bahanList.slice(0,12).map(c=>`<button onclick="filterBahan('${c}',this)">${c}</button>`).join('');
+  const allVars = Object.values(window._varMap).flat();
+  let colors=[...new Set(allVars.map(v=>v.color_name.toUpperCase()))];
+  if(!colors.length) colors=['KREM','HITAM','NAVY','MAROON'];
+  const order=['KREM','HITAM','NAVY','MAROON']; colors.sort((a,b)=>{const ia=order.indexOf(a),ib=order.indexOf(b);if(ia!==-1&&ib!==-1)return ia-ib;if(ia!==-1)return-1;if(ib!==-1)return 1;return a.localeCompare(b);});
+  document.getElementById('filterWarna').innerHTML='<button class="active" onclick="filterWarna(\'ALL\',this)">ALL WARNA</button>'+colors.slice(0,12).map(c=>`<button onclick="filterWarna('${c}',this)">${c}</button>`).join('');
+}
+
+function filterBahan(bahan,btn){activeBahan=bahan;document.querySelectorAll('#filterBahan button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');applyFilters();}
+function filterWarna(warna,btn){activeWarna=warna;document.querySelectorAll('#filterWarna button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');applyFilters();}
+
 function filterUndertone(u,btn){
-  activeUnder = (u||'ALL').toUpperCase();
-  document.querySelectorAll('#filterUnder button').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  else {
-    // kalau dari URL, aktifin tombol yang cocok
-    document.querySelectorAll('#filterUnder button').forEach(b=>{
-      if(b.textContent.toUpperCase().includes(activeUnder)) b.classList.add('active');
-      if(activeUnder==='ALL' && b.textContent.includes('ALL')) b.classList.add('active');
-    });
+  activeUnder = (u||'ALL').toUpperCase().trim();
+  const allBtns = document.querySelectorAll('#filterUnder button');
+  allBtns.forEach(b=>{
+    b.classList.remove('active');
+    b.style.background='#111';
+    b.style.color='#fff';
+    b.style.borderColor='#444';
+  });
+  let target = btn;
+  if(!target){
+    target = document.querySelector(`#filterUnder button[data-under="${activeUnder}"]`);
+    if(!target && activeUnder==='ALL') target = document.querySelector('#filterUnder button[data-under="ALL"]');
+  }
+  if(target){
+    target.classList.add('active');
+    target.style.background='#fff';
+    target.style.color='#111';
+    target.style.borderColor='#fff';
   }
   applyFilters();
 }
+
 function applyFilters(){
   let list=[...allProducts];
   if(activeBahan!=='ALL'){
     const bLow = activeBahan.toLowerCase();
-    list=list.filter(p=>(p.category||'').toLowerCase()===bLow);
+    list=list.filter(p=>(p.category||'').toLowerCase().includes(bLow));
   }
   if(activeWarna!=='ALL'){
     const wLow = activeWarna.toLowerCase();
     list=list.filter(p=>(window._varMap[p.id]||[]).some(v=>v.color_name.toLowerCase().includes(wLow)));
   }
   if(activeUnder!=='ALL'){
-    list=list.filter(p=> {
-      const codes = normalizeUndertoneToCode(p.undertone);
-      return codes.includes(activeUnder);
+    list=list.filter(p=>{
+      const codes = getUndertoneArray(p);
+      const norm = normalizeUndertoneToCode(codes);
+      return norm.includes(activeUnder) || codes.includes(activeUnder);
     });
   }
   document.getElementById('prodCount').innerText=list.length+' PRODUK';
   render(list);
 }
+
 function render(list){
- const el=document.getElementById('list'); if(!list||!list.length){el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 0;opacity:.4;font-size:11px">TIDAK ADA PRODUK - COBA GANTI FILTER UNDERTONE</div>';return;}
+ const el=document.getElementById('list');
+ if(!list||!list.length){
+   el.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:40px 0;">
+   <div style="font-size:11px;opacity:.6">TIDAK ADA PRODUK UNTUK ${activeUnder} + ${activeBahan} + ${activeWarna}</div>
+   <div style="font-size:9px;opacity:.3;margin-top:6px">Coba reset filter</div>
+   <button onclick="resetAll()" style="margin-top:12px;padding:10px 18px;border:1px solid #111;background:#111;color:#fff;font-size:9px;letter-spacing:2px">RESET ALL FILTER</button>
+   </div>`;return;
+ }
  el.innerHTML=list.map(p=>{
   const vars=window._varMap[p.id]||[];let img=p.image_url;let colName=vars[0]?.color_name||'';let allOut=vars.length>0 && vars.every(v=>isOut(v));
   if(activeWarna!=='ALL'){const m=vars.find(v=>v.color_name.toLowerCase()===activeWarna.toLowerCase())||vars.find(v=>v.color_name.toLowerCase().includes(activeWarna.toLowerCase()));if(m){img=m.image_url;colName=m.color_name; allOut=isOut(m);}}
-  const underDisplay = normalizeUndertoneToCode(p.undertone).join(' + ') || (Array.isArray(p.undertone)?p.undertone.join(' + '):p.undertone) || 'NEUTRAL';
+  const underDisplay = getUndertoneArray(p).join(' + ') || 'NEUTRAL';
   return `<div class="prod-card ${allOut?'out-of-stock':''}" onclick="${allOut?'':'openProd(\''+p.id+'\')'}">${allOut?'<div class="stock-badge">HABIS</div>':''}<div class="heart-btn" onclick="event.stopPropagation();${allOut?'':`quickAdd('${p.id}')`}"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}" src="${img}" loading="lazy"><div style="padding:10px;border-top:1px solid #F6F1EB"><div style="font-size:11px;font-family:'Cormorant Garamond'">${p.name}</div><div style="font-size:8px;letter-spacing:2px;opacity:.4;margin-top:2px">${underDisplay} • ${activeWarna!=='ALL'?activeWarna:colName}</div><div style="font-size:12px;font-family:'Cormorant Garamond';margin-top:6px">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
  }).join('');
 }
-function quickAdd(id){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return; const vars=window._varMap[id]||[];let v=vars[0];if(activeWarna!=='ALL'){const mf=vars.find(x=>x.color_name.toLowerCase()===activeWarna.toLowerCase())||vars.find(x=>x.color_name.toLowerCase().includes(activeWarna.toLowerCase()));if(mf)v=mf;} if(v && isOut(v)){ showCartToast('HABIS', v.image_url); return; } const name=v?p.name+' - '+v.color_name:p.name;const img=v?v.image_url:p.image_url;const color=v?v.color_name:'KREM'; const imgEl=document.getElementById('img-'+id); flyToCart(img, imgEl); const btnEl = imgEl?.parentElement?.querySelector('.heart-btn'); if(btnEl){btnEl.classList.add('loved');setTimeout(()=>btnEl.classList.remove('loved'),600);} addCart(name,p.price,img); showCartToast(color,img);}
+function resetAll(){activeBahan='ALL';activeWarna='ALL';activeUnder='ALL';document.querySelectorAll('.filter button').forEach(b=>b.classList.remove('active'));document.querySelectorAll('#filterBahan button, #filterWarna button').forEach((b,i)=>{if(i===0) b.classList.add('active');});filterUndertone('ALL',null);}
+
+function quickAdd(id){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return; const vars=window._varMap[id]||[];let v=vars[0];if(activeWarna!=='ALL'){const mf=vars.find(x=>x.color_name.toLowerCase()===activeWarna.toLowerCase())||vars.find(x=>x.color_name.toLowerCase().includes(activeWarna.toLowerCase()));if(mf)v=mf;} if(v && isOut(v)){ showCartToast('HABIS', v.image_url); return; } const img=v?v.image_url:p.image_url;const color=v?v.color_name:'KREM'; const imgEl=document.getElementById('img-'+id); flyToCart(img, imgEl); const btnEl = imgEl?.parentElement?.querySelector('.heart-btn'); if(btnEl){btnEl.classList.add('loved');setTimeout(()=>btnEl.classList.remove('loved'),600);} addCart(p.name+' - '+v.color_name,p.price,img); showCartToast(color,img);}
 async function openProd(id){
  document.getElementById('prodModal').classList.add('show'); document.getElementById('pBox').innerHTML='<div style="padding:20px">Loading...</div>';
  const {data:p}=await supabaseClient.from('products').select('*').eq('id',id).single(); const {data:vars}=await supabaseClient.from('product_variants').select('*').eq('product_id',id).order('id');
  curProd=p;curVariants=vars||[];if(!curVariants.length)curVariants=[{color_name:p.category||'KREM',image_url:p.image_url, stock:1}]; curColor=curVariants[0].color_name;curImg=curVariants[0].image_url;
  if(activeWarna!=='ALL'){const mf=curVariants.find(v=>v.color_name.toLowerCase()===activeWarna.toLowerCase())||curVariants.find(v=>v.color_name.toLowerCase().includes(activeWarna.toLowerCase()));if(mf){curColor=mf.color_name;curImg=mf.image_url;}}
- const sizeTxt = p.size_info||'110x110cm'; const matDetail = p.material_detail||p.category||'Paris Premium'; const finishTxt = p.finishing||'Laser Cut'; const underTxt = normalizeUndertoneToCode(p.undertone).join(' + ') || 'NEUTRAL'; const descTxt = p.description||'Bahan adem, tidak menerawang, mudah dibentuk dan tegak di dahi.';
+ const sizeTxt = p.size_info||'110x110cm'; const matDetail = p.material_detail||p.category||'Paris Premium'; const finishTxt = p.finishing||'Laser Cut'; const underTxt = getUndertoneArray(p).join(' + ') || 'NEUTRAL'; const descTxt = p.description||'Bahan adem, tidak menerawang, mudah dibentuk dan tegak di dahi.';
 document.getElementById('pBox').innerHTML=`<div class="p-gallery"><div class="p-main"><img id="bigImg" src="${curImg}"></div><div class="p-thumbs">${curVariants.map((v,i)=>`<img src="${v.image_url}" class="${v.image_url===curImg?'active':''} ${isOut(v)?'out':''}" onclick="pickColor('${v.color_name}','${v.image_url}',${i})">`).join('')}</div></div><div class="p-info"><div style="display:flex;justify-content:space-between"><div style="font-size:9px;letter-spacing:3px;opacity:.4">BESTSELLER • ${underTxt}</div><div style="cursor:pointer;font-size:22px" onclick="closeProd()">×</div></div><div style="font-family:'Cormorant Garamond';font-size:22px;margin-top:6px">${p.name}</div><div style="font-family:'Cormorant Garamond';font-size:32px;margin:6px 0">Rp${Number(p.price).toLocaleString('id-ID')}</div>
 <div class="detail-box"><div class="detail-row"><span>UKURAN</span><b>${sizeTxt}</b></div><div class="detail-row"><span>BAHAN DETAIL</span><b>${matDetail}</b></div><div class="detail-row"><span>FINISHING</span><b>${finishTxt}</b></div><div class="detail-row"><span>UNDERTONE</span><b>${underTxt}</b></div><div style="margin-top:10px;font-size:9px;letter-spacing:2px;opacity:.5">DESKRIPSI</div><div style="font-size:11px;line-height:18px;margin-top:6px;white-space:pre-line">${descTxt}</div></div>
 <div style="font-size:9px;letter-spacing:2px;margin:16px 0 8px">PILIH WARNA: <b id="selCol">${curColor}</b> <span id="stockInfo" style="margin-left:8px;opacity:.5"></span></div><div style="display:flex;gap:8px;flex-wrap:wrap">${curVariants.map((v,i)=>{const out=isOut(v);return `<button id="btn-${i}" ${out?'disabled':''} style="padding:10px 16px;border:1px solid ${v.image_url===curImg?'#111':'#F2EFEA'};background:${out?'#F2EFEA':(v.image_url===curImg?'#111':'#fff')};color:${out?'#999':(v.image_url===curImg?'#fff':'#000')};font-size:9px;letter-spacing:1px;cursor:${out?'not-allowed':'pointer'}" onclick="pickColor('${v.color_name}','${v.image_url}',${i})">${v.color_name} ${out?'- HABIS':''}</button>`}).join('')}</div><div style="display:flex;gap:8px;margin-top:18px"><button id="btnAddCart" class="btn" style="background:#fff;border:1px solid #111;color:#111" onclick="addToCartFromModal()">+ KERANJANG</button><button id="btnBuy" class="btn" onclick="buyFromModal()">BELI SEKARANG</button></div></div>`; updateStockUI(); }
@@ -197,7 +233,6 @@ function pilihDest(id,label){selectedDestId=id;document.getElementById('destSear
 async function cekOngkir(){if(!selectedDestId)return;document.getElementById('ongkirResult').innerHTML='MENGECEK...';try{const res=await fetch('/api/cost',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({origin:tokoOriginId,destination:selectedDestId,weight:1000,courier:document.getElementById('courierSelect').value})});const data=await res.json();const arr=data.data||data.costs||[];const list=Array.isArray(arr)?arr:(arr.costs||[]);let html='<div style="font-size:9px;letter-spacing:2px;margin-bottom:4px">PILIH LAYANAN:</div>';list.forEach(c=>{html+=`<div onclick="setOngkir(${c.cost||0},'${c.service||'REG'}','${c.etd||'-'}')" style="padding:10px;border:1px solid var(--line);margin:4px 0;display:flex;justify-content:space-between;cursor:pointer;background:#fff"><div><b style="font-size:11px">${c.service}</b><br><small style="font-size:10px;opacity:.5">${c.etd} hari</small></div><b style="font-size:11px">Rp${Number(c.cost).toLocaleString('id-ID')}</b></div>`;});document.getElementById('ongkirResult').innerHTML=html;}catch(e){document.getElementById('ongkirResult').innerHTML='ERROR '+e.message;}}
 function setOngkir(cost,service,etd){selectedOngkirCost=Number(cost);selectedService=service+' ('+etd+')';document.getElementById('ongkirLabel').innerText=selectedService;document.getElementById('ongkirResult').innerHTML='<div style="padding:10px;background:var(--bg)">'+service+' - Rp'+selectedOngkirCost.toLocaleString('id-ID')+'</div>';renderCart();}
 function checkoutWA(){const c=getCart();if(!c.length)return;let msg=`Halo ${STORE_NAME} %0A%0ASaya mau pesan:%0A`;c.forEach(it=>{msg+=`- ${it.warna} x${it.qty} = Rp${(it.harga*it.qty).toLocaleString('id-ID')}%0A`});const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);msg+=`%0ASubtotal: Rp${sub.toLocaleString('id-ID')}%0A`;if(selectedOngkirCost>0)msg+=`Ongkir (${selectedService}): Rp${selectedOngkirCost.toLocaleString('id-ID')}%0A`;msg+=`Total: Rp${(sub+selectedOngkirCost).toLocaleString('id-ID')}%0A`;window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');}
-// TRANSPARAN SCROLL
 window.addEventListener('scroll',()=>{const nav=document.getElementById('mainNav');if(window.scrollY>20)nav.classList.add('scrolled');else nav.classList.remove('scrolled');});
 async function load(){try{const {data}=await supabaseClient.from('settings').select('*');if(data){const wa=data.find(s=>s.key==='wa_number')?.value;const oid=data.find(s=>s.key==='toko_origin_id')?.value;const olabel=data.find(s=>s.key==='toko_origin_label')?.value;if(wa)WA_NUMBER=wa;if(oid){tokoOriginId=oid;const oi=document.getElementById('originInfo');if(oi)oi.innerText=olabel||oid;}}}catch(e){}try{const {data}=await supabaseClient.from('products').select('*').order('id',{ascending:false});const {data:vars}=await supabaseClient.from('product_variants').select('*');allProducts=data||[];window._varMap={};(vars||[]).forEach(v=>{if(!window._varMap[v.product_id])window._varMap[v.product_id]=[];window._varMap[v.product_id].push(v);});document.getElementById('prodCount').innerText=allProducts.length+' PRODUK';render(allProducts);await loadFilters();
   const params=new URLSearchParams(window.location.search); const u=params.get('undertone'); const q=params.get('q'); if(u){ setTimeout(()=>filterUndertone(u, null), 300); } if(q){ document.getElementById('q').value=q; setTimeout(()=>doSearch(),300); }
