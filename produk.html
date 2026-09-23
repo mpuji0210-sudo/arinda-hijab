@@ -46,10 +46,8 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.92);backdrop-f
 <a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><path d="M5 19c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></a>
 <button class="icon-btn" id="cartIcon" onclick="openCart()"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></button>
 </div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a class="active">PRODUK</a><a href="kategori.html">KATEGORI</a></div></div><div class="search-wrap"><input id="q" type="search" placeholder="CARI - KETIK BAHAN ATAU WARNA" oninput="doSearch()"></div></nav>
-
 <div class="section">
 <div style="display:flex;justify-content:space-between;align-items:flex-end"><div style="font-family:'Cormorant Garamond';font-size:26px;letter-spacing:2px;font-weight:300">PRODUK READY</div><div id="prodCount" style="font-size:9px;letter-spacing:3px;opacity:.4"></div></div>
-
 <div class="filter-group">
 <div class="filter-label">FILTER BAHAN</div>
 <div class="filter" id="filterBahan"><button class="active" onclick="filterBahan('ALL',this)">ALL BAHAN</button></div>
@@ -58,16 +56,12 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.92);backdrop-f
 <div class="filter-label">FILTER WARNA</div>
 <div class="filter" id="filterWarna"><button class="active" onclick="filterWarna('ALL',this)">ALL WARNA</button></div>
 </div>
-
 <div id="list" class="prod-grid"></div></div>
-
 <footer style="margin-top:32px;padding:36px 16px 28px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div><div style="margin-top:14px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA</div></footer>
-
 <div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()"><div id="cartBox"><div style="display:flex;justify-content:space-between"><b style="font-family:'Cormorant Garamond';letter-spacing:2px">KERANJANG (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:22px;cursor:pointer">×</button></div><div id="cartList" style="margin-top:12px"></div><div style="margin-top:14px;padding:12px;background:var(--bg);border:1px solid var(--line)"><div style="font-size:9px;letter-spacing:2px">CEK ONGKIR - <span id="originInfo" style="opacity:.6"></span></div><div style="display:flex;gap:6px;margin-top:8px"><input id="destSearch" placeholder="KECAMATAN PEMBELI" style="flex:1;padding:10px;border:1px solid var(--line);font-size:11px"><button onclick="searchDest()" class="btn" style="width:auto;padding:10px 14px">CARI</button></div><div id="destList" style="margin:6px 0;max-height:120px;overflow:auto;display:none;border:1px solid var(--line);background:#fff"></div><div style="display:flex;gap:6px;margin-top:8px"><select id="courierSelect" style="padding:10px;border:1px solid var(--line);flex:1;font-size:11px"><option value="jne">JNE</option><option value="jnt">J&T</option><option value="sicepat">SiCepat</option><option value="pos">POS</option></select><button onclick="cekOngkir()" class="btn" style="flex:1">CEK</button></div><div id="ongkirResult" style="margin-top:8px;font-size:11px"></div></div><div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px"><div style="display:flex;justify-content:space-between;font-size:11px"><span>SUBTOTAL</span><span id="cartSubtotal">Rp0</span></div><div style="display:flex;justify-content:space-between;font-size:11px;margin-top:4px"><span>ONGKIR (<span id="ongkirLabel">BELUM CEK</span>)</span><span id="ongkirPrice">Rp0</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:14px;font-family:'Cormorant Garamond'"><span>TOTAL</span><span id="cartTotalPrice">Rp0</span></div><button onclick="checkoutWA()" class="btn" style="margin-top:12px;padding:14px">CHAT WA & PESAN</button><button onclick="askClearCart()" class="btn-light">KOSONGKAN</button></div></div></div>
 <div id="prodModal" onclick="if(event.target.id=='prodModal')closeProd()"><div class="p-box" id="pBox">Loading...</div></div>
 <div id="confirmModal"><div class="confirm-box"><div id="confirmTitle" style="font-family:'Cormorant Garamond';font-size:20px"></div><div id="confirmDesc" style="font-size:11px;opacity:.6;margin-top:6px"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px"><button onclick="closeConfirm()" style="padding:11px;border:1px solid var(--line);background:var(--bg);cursor:pointer">BATAL</button><button id="confirmOk" style="padding:11px;background:#111;color:#fff;border:none;cursor:pointer">YA</button></div></div></div>
 <div id="cartToast"><img id="toastImg"><span id="toastText" style="font-size:9px"></span></div>
-
 <script>
 const supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
 let allProducts=[],WA_NUMBER="6285178098354",STORE_NAME="ARINDA",tokoOriginId="17523",tokoOriginLabel="CENGKARENG BARAT";
@@ -79,16 +73,30 @@ function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'
 function saveCart(c){localStorage.setItem('arinda_cart2',JSON.stringify(c));updateCount();renderCart();}
 function updateCount(){const el=document.getElementById('cCount');if(el){el.innerText=getCart().reduce((a,b)=>a+(b.qty||0),0); el.classList.add('bump'); setTimeout(()=>el.classList.remove('bump'),350);}}
 function isOut(v){ if(v.is_available===false) return true; if(v.stock!==undefined && v.stock!==null) return Number(v.stock)<=0; return false; }
+// === FIX MIRING V45 - LOCK KE #cartIcon ===
 function flyToCart(imgUrl, startEl){
   document.querySelectorAll('.fly-img').forEach(e=>e.remove());
   const cartIcon=document.getElementById('cartIcon'); if(!cartIcon) return;
   const cartRect=cartIcon.getBoundingClientRect();
-  let startX=window.innerWidth/2, startY=window.innerHeight/2;
-  if(startEl && startEl.getBoundingClientRect){ const r=startEl.getBoundingClientRect(); startX=r.left+r.width/2; startY=r.top+r.height*0.38; }
-  const fly=document.createElement('img'); fly.src=imgUrl; fly.className='fly-img';
+  let startRect = startEl? startEl.getBoundingClientRect() : null;
+  if(!startRect || (startRect.width===0 && startRect.height===0)){
+    const big = document.getElementById('bigImg');
+    startRect = big? big.getBoundingClientRect() : {left: window.innerWidth/2, top: window.innerHeight/2, width: 80, height: 80};
+  }
+  const startX = startRect.left + startRect.width/2;
+  const startY = startRect.top + startRect.height/2;
+  const fly=document.createElement('img');
+  fly.src=imgUrl;
+  fly.className='fly-img';
+  fly.style.left='0px'; fly.style.top='0px';
   fly.style.transform=`translate(${startX-28}px, ${startY-28}px) scale(1)`;
+  fly.style.opacity='1';
   document.body.appendChild(fly);
-  requestAnimationFrame(()=>{ fly.style.transform=`translate(${cartRect.left+4}px, ${cartRect.top+4}px) scale(0.18)`; fly.style.opacity='0.15'; });
+  fly.getBoundingClientRect();
+  requestAnimationFrame(()=>{
+    fly.style.transform=`translate(${cartRect.left + cartRect.width/2 - 12}px, ${cartRect.top + cartRect.height/2 - 12}px) scale(0.18)`;
+    fly.style.opacity='0.2';
+  });
   setTimeout(()=>fly.remove(),950);
 }
 function doSearch(){const q=document.getElementById('q').value.toLowerCase().trim();if(!q){applyFilters();return;}const filtered=allProducts.filter(p=>p.name.toLowerCase().includes(q)||(p.category||'').toLowerCase().includes(q)||(window._varMap[p.id]||[]).some(v=>v.color_name.toLowerCase().includes(q)));document.getElementById('prodCount').innerText=filtered.length+' PRODUK';render(filtered);}
@@ -120,16 +128,17 @@ function render(list){
  el.innerHTML=list.map(p=>{
   const vars=window._varMap[p.id]||[];let img=p.image_url;let colName=vars[0]?.color_name||'';let allOut=vars.length>0 && vars.every(v=>isOut(v));
   if(activeWarna!=='ALL'){const m=vars.find(v=>v.color_name.toUpperCase()===activeWarna)||vars.find(v=>v.color_name.toUpperCase().includes(activeWarna));if(m){img=m.image_url;colName=m.color_name; allOut=isOut(m);}}
-  return `<div class="prod-card ${allOut?'out-of-stock':''}" onclick="${allOut?'':'openProd(\''+p.id+'\')'}">${allOut?'<div class="stock-badge">HABIS</div>':''}<div class="heart-btn" onclick="event.stopPropagation();${allOut?'':`quickAdd('${p.id}',this)`}"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}" src="${img}" loading="lazy"><div style="padding:10px;border-top:1px solid #F6F1EB"><div style="font-size:11px;font-family:'Cormorant Garamond'">${p.name}</div><div style="font-size:8px;letter-spacing:2px;opacity:.4;margin-top:2px">${activeWarna!=='ALL'?activeWarna:colName} • ${p.category||''}</div><div style="font-size:12px;font-family:'Cormorant Garamond';margin-top:6px">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
+  return `<div class="prod-card ${allOut?'out-of-stock':''}" onclick="${allOut?'':'openProd(\''+p.id+'\')'}">${allOut?'<div class="stock-badge">HABIS</div>':''}<div class="heart-btn" onclick="event.stopPropagation();${allOut?'':`quickAdd('${p.id}')`}"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}" src="${img}" loading="lazy"><div style="padding:10px;border-top:1px solid #F6F1EB"><div style="font-size:11px;font-family:'Cormorant Garamond'">${p.name}</div><div style="font-size:8px;letter-spacing:2px;opacity:.4;margin-top:2px">${activeWarna!=='ALL'?activeWarna:colName} • ${p.category||''}</div><div style="font-size:12px;font-family:'Cormorant Garamond';margin-top:6px">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
  }).join('');
 }
-function quickAdd(id,btnEl){
+function quickAdd(id){
   const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;
   const vars=window._varMap[id]||[];let v=vars[0];if(activeWarna!=='ALL'){const mf=vars.find(x=>x.color_name.toUpperCase()===activeWarna)||vars.find(x=>x.color_name.toUpperCase().includes(activeWarna));if(mf)v=mf;}
   if(v && isOut(v)){ showCartToast('HABIS', v.image_url); return; }
   const name=v?p.name+' - '+v.color_name:p.name;const img=v?v.image_url:p.image_url;const color=v?v.color_name:'KREM';
   const imgEl=document.getElementById('img-'+id);
-  flyToCart(img, imgEl); if(btnEl){btnEl.classList.add('loved');setTimeout(()=>btnEl.classList.remove('loved'),600);}
+  flyToCart(img, imgEl);
+  const btnEl = imgEl?.parentElement?.querySelector('.heart-btn'); if(btnEl){btnEl.classList.add('loved');setTimeout(()=>btnEl.classList.remove('loved'),600);}
   addCart(name,p.price,img); showCartToast(color,img);
 }
 async function openProd(id){document.getElementById('prodModal').classList.add('show');document.getElementById('pBox').innerHTML='<div style="padding:20px">Loading...</div>';const {data:p}=await supabaseClient.from('products').select('*').eq('id',id).single();const {data:vars}=await supabaseClient.from('product_variants').select('*').eq('product_id',id).order('id');curProd=p;curVariants=vars||[];if(!curVariants.length)curVariants=[{color_name:p.category||'KREM',image_url:p.image_url, stock:1}];curColor=curVariants[0].color_name;curImg=curVariants[0].image_url;if(activeWarna!=='ALL'){const mf=curVariants.find(v=>v.color_name.toUpperCase()===activeWarna)||curVariants.find(v=>v.color_name.toUpperCase().includes(activeWarna));if(mf){curColor=mf.color_name;curImg=mf.image_url;}}
