@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PRODUK - ARINDA</title>
+<title>PRODUK - ARINDA V50 PAS</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -15,16 +15,12 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.92);backdrop-f
 .search-wrap{max-width:1240px;margin:0 auto;padding:12px 20px;display:flex;gap:10px;border-top:1px solid #F6F1EB;background:#fff}
 .search-wrap input{flex:1;padding:12px 0;border:none;border-bottom:1px solid #111;background:transparent;font-size:12px;outline:none;letter-spacing:1px}
 .section{max-width:1240px;margin:0 auto;padding:20px 16px 0}
-.filter-group{margin:14px 0}
-.filter-label{font-size:8px;letter-spacing:3px;opacity:.4;margin-bottom:8px}
+.filter-group{margin:14px 0}.filter-label{font-size:8px;letter-spacing:3px;opacity:.4;margin-bottom:8px}
 .filter{display:flex;gap:8px;flex-wrap:wrap}.filter button{padding:9px 18px;border:1px solid var(--line);background:#fff;font-size:9px;letter-spacing:2px;cursor:pointer}.filter button.active{background:#111;color:#fff;border-color:#111}
-.prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-@media(min-width:700px){.prod-grid{grid-template-columns:repeat(4,1fr)}}
+.prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}@media(min-width:700px){.prod-grid{grid-template-columns:repeat(4,1fr)}}
 .prod-card{border:1px solid var(--line);background:#fff;cursor:pointer;position:relative;overflow:hidden}.prod-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block}
-.prod-card.out-of-stock{opacity:.55;pointer-events:none}
-.stock-badge{position:absolute;top:8px;left:8px;background:#111;color:#fff;font-size:7px;letter-spacing:2px;padding:5px 8px;z-index:2}
+.prod-card.out-of-stock{opacity:.55;pointer-events:none}.stock-badge{position:absolute;top:8px;left:8px;background:#111;color:#fff;font-size:7px;letter-spacing:2px;padding:5px 8px;z-index:2}
 .heart-btn{position:absolute;top:8px;right:8px;width:30px;height:30px;background:rgba(255,255,255,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);z-index:2}.heart-btn svg{width:14px;height:14px;stroke:#111;fill:none;stroke-width:1.2}.heart-btn.loved svg{fill:#111}
-/* FIX ICON MELAYANG - RATA SEMPURNA */
 .fly-img{position:fixed;left:0;top:0;z-index:99999;width:56px;height:56px;object-fit:cover;object-position:center top;border-radius:50%;pointer-events:none;box-shadow:0 12px 28px rgba(0,0,0,.25);border:2px solid #fff;will-change:transform,opacity;transition:transform.9s cubic-bezier(.2,.7,.3,1), opacity.9s}
 #cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:flex-end}#cartModal.open{display:flex}
 #cartBox{background:#fff;width:100%;max-width:480px;margin:0 auto;max-height:85vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px}
@@ -32,17 +28,14 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.92);backdrop-f
 .btn-light{width:100%;padding:11px;background:#fff;border:1px solid var(--line);font-size:9px;letter-spacing:2px;cursor:pointer;margin-top:8px}
 #prodModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;align-items:center;justify-content:center;padding:10px}#prodModal.show{display:flex}
 .p-box{background:#fff;max-width:900px;width:100%;display:grid;grid-template-columns:1fr 380px;max-height:92vh;border:1px solid var(--line);overflow:hidden}
-.p-gallery{display:grid;grid-template-columns:1fr 62px;gap:8px;padding:8px;background:var(--bg)}
-.p-main{width:100%;aspect-ratio:4/5;overflow:hidden;background:var(--bg);display:flex;justify-content:center}.p-main img{width:100%;height:100%;object-fit:contain}
+.p-gallery{display:grid;grid-template-columns:1fr 62px;gap:8px;padding:8px;background:var(--bg)}.p-main{width:100%;aspect-ratio:4/5;overflow:hidden;background:var(--bg);display:flex;justify-content:center}.p-main img{width:100%;height:100%;object-fit:contain}
 .p-thumbs{display:flex;flex-direction:column;gap:6px}.p-thumbs img{width:54px;height:68px;object-fit:cover;opacity:.6;border:1px solid transparent;cursor:pointer}.p-thumbs img.active{opacity:1;border-color:#111}.p-thumbs img.out{opacity:.2;filter:grayscale(1)}
-.p-info{padding:16px;overflow:auto}
-@media(max-width:800px){.p-box{grid-template-columns:1fr;max-height:95vh;overflow:auto}}
+.p-info{padding:16px;overflow:auto}@media(max-width:800px){.p-box{grid-template-columns:1fr;max-height:95vh;overflow:auto}}
 #confirmModal{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}#confirmModal.open{display:flex}
 .confirm-box{background:#fff;padding:22px;max-width:340px;width:100%;text-align:center;border:1px solid var(--line)}
 #cartToast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#111;color:#fff;padding:10px 18px;border-radius:30px;display:flex;align-items:center;gap:12px;z-index:9999;transition:.5s;opacity:0}#cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}
 #cartToast img{width:32px;height:32px;border-radius:50%;object-fit:cover}
-.detail-box{margin-top:16px;border:1px solid var(--line);background:var(--bg);padding:12px}
-.detail-row{display:flex;justify-content:space-between;font-size:10px;padding:6px 0;border-bottom:1px dashed #F2EFEA}
+.detail-box{margin-top:16px;border:1px solid var(--line);background:var(--bg);padding:12px}.detail-row{display:flex;justify-content:space-between;font-size:10px;padding:6px 0;border-bottom:1px dashed #F2EFEA}
 </style></head><body>
 <nav><div class="nav-top"><div class="logo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons">
 <button class="icon-btn" onclick="document.getElementById('q').focus()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button>
@@ -70,31 +63,31 @@ function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'
 function saveCart(c){localStorage.setItem('arinda_cart2',JSON.stringify(c));updateCount();renderCart();}
 function updateCount(){const el=document.getElementById('cCount');if(el){el.innerText=getCart().reduce((a,b)=>a+(b.qty||0),0); el.classList.add('bump'); setTimeout(()=>el.classList.remove('bump'),350);}}
 function isOut(v){ if(v.is_available===false) return true; if(v.stock!==undefined && v.stock!==null) return Number(v.stock)<=0; return false; }
-// === FIX RATA SEMPURNA - MIRING HILANG ===
+// FIX FINAL V50 - PAS TENGAH KERANJANG
 function flyToCart(imgUrl, startEl){
   document.querySelectorAll('.fly-img').forEach(e=>e.remove());
   const cartIcon=document.getElementById('cartIcon'); if(!cartIcon) return;
   const cartRect=cartIcon.getBoundingClientRect();
   let startRect = startEl? startEl.getBoundingClientRect() : null;
-  if(!startRect || (startRect.width===0 && startRect.height===0)){
+  if(!startRect || startRect.width===0){
     const big = document.getElementById('bigImg');
     startRect = big? big.getBoundingClientRect() : {left: window.innerWidth/2, top: window.innerHeight/2, width: 80, height: 80};
   }
   const startX = startRect.left + startRect.width/2 - 28;
   const startY = startRect.top + startRect.height/2 - 28;
-  const endX = cartRect.left + cartRect.width/2 - 14;
-  const endY = cartRect.top + cartRect.height/2 - 14;
+  const endX = cartRect.left + cartRect.width/2 - 28;
+  const endY = cartRect.top + cartRect.height/2 - 28;
   const fly=document.createElement('img');
   fly.src=imgUrl; fly.className='fly-img';
   fly.style.transform=`translate(${startX}px, ${startY}px) scale(1)`;
   fly.style.opacity='1';
   document.body.appendChild(fly);
   fly.getBoundingClientRect();
-  requestAnimationFrame(()=>{
+  requestAnimationFrame(()=>{ requestAnimationFrame(()=>{
     fly.style.transform=`translate(${endX}px, ${endY}px) scale(0.15)`;
     fly.style.opacity='0';
-  });
-  setTimeout(()=>fly.remove(),900);
+  });});
+  setTimeout(()=>fly.remove(),950);
 }
 function doSearch(){const q=document.getElementById('q').value.toLowerCase().trim();if(!q){applyFilters();return;}const filtered=allProducts.filter(p=>p.name.toLowerCase().includes(q)||(p.category||'').toLowerCase().includes(q)||(window._varMap[p.id]||[]).some(v=>v.color_name.toLowerCase().includes(q)));document.getElementById('prodCount').innerText=filtered.length+' PRODUK';render(filtered);}
 async function loadFilters(){
@@ -112,55 +105,24 @@ async function loadFilters(){
 }
 function filterBahan(bahan,btn){activeBahan=bahan;document.querySelectorAll('#filterBahan button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');applyFilters();}
 function filterWarna(warna,btn){activeWarna=warna;document.querySelectorAll('#filterWarna button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');applyFilters();}
-function applyFilters(){
- let list=[...allProducts];
- if(activeBahan!=='ALL'){ list=list.filter(p=>(p.category||'').toUpperCase()===activeBahan); }
- if(activeWarna!=='ALL'){ list=list.filter(p=>(window._varMap[p.id]||[]).some(v=>v.color_name.toUpperCase()===activeWarna||v.color_name.toUpperCase().includes(activeWarna))); }
- document.getElementById('prodCount').innerText=list.length+' PRODUK';
- render(list);
-}
+function applyFilters(){let list=[...allProducts]; if(activeBahan!=='ALL'){ list=list.filter(p=>(p.category||'').toUpperCase()===activeBahan); } if(activeWarna!=='ALL'){ list=list.filter(p=>(window._varMap[p.id]||[]).some(v=>v.color_name.toUpperCase()===activeWarna||v.color_name.toUpperCase().includes(activeWarna))); } document.getElementById('prodCount').innerText=list.length+' PRODUK'; render(list);}
 function render(list){
- const el=document.getElementById('list');
- if(!list||!list.length){el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 0;opacity:.4;font-size:11px">TIDAK ADA PRODUK</div>';return;}
+ const el=document.getElementById('list'); if(!list||!list.length){el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 0;opacity:.4;font-size:11px">TIDAK ADA PRODUK</div>';return;}
  el.innerHTML=list.map(p=>{
   const vars=window._varMap[p.id]||[];let img=p.image_url;let colName=vars[0]?.color_name||'';let allOut=vars.length>0 && vars.every(v=>isOut(v));
   if(activeWarna!=='ALL'){const m=vars.find(v=>v.color_name.toUpperCase()===activeWarna)||vars.find(v=>v.color_name.toUpperCase().includes(activeWarna));if(m){img=m.image_url;colName=m.color_name; allOut=isOut(m);}}
   return `<div class="prod-card ${allOut?'out-of-stock':''}" onclick="${allOut?'':'openProd(\''+p.id+'\')'}">${allOut?'<div class="stock-badge">HABIS</div>':''}<div class="heart-btn" onclick="event.stopPropagation();${allOut?'':`quickAdd('${p.id}')`}"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}" src="${img}" loading="lazy"><div style="padding:10px;border-top:1px solid #F6F1EB"><div style="font-size:11px;font-family:'Cormorant Garamond'">${p.name}</div><div style="font-size:8px;letter-spacing:2px;opacity:.4;margin-top:2px">${activeWarna!=='ALL'?activeWarna:colName} • ${p.category||''}</div><div style="font-size:12px;font-family:'Cormorant Garamond';margin-top:6px">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
  }).join('');
 }
-function quickAdd(id){
-  const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;
-  const vars=window._varMap[id]||[];let v=vars[0];if(activeWarna!=='ALL'){const mf=vars.find(x=>x.color_name.toUpperCase()===activeWarna)||vars.find(x=>x.color_name.toUpperCase().includes(activeWarna));if(mf)v=mf;}
-  if(v && isOut(v)){ showCartToast('HABIS', v.image_url); return; }
-  const name=v?p.name+' - '+v.color_name:p.name;const img=v?v.image_url:p.image_url;const color=v?v.color_name:'KREM';
-  const imgEl=document.getElementById('img-'+id);
-  flyToCart(img, imgEl);
-  const btnEl = imgEl?.parentElement?.querySelector('.heart-btn'); if(btnEl){btnEl.classList.add('loved');setTimeout(()=>btnEl.classList.remove('loved'),600);}
-  addCart(name,p.price,img); showCartToast(color,img);
-}
+function quickAdd(id){const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return; const vars=window._varMap[id]||[];let v=vars[0];if(activeWarna!=='ALL'){const mf=vars.find(x=>x.color_name.toUpperCase()===activeWarna)||vars.find(x=>x.color_name.toUpperCase().includes(activeWarna));if(mf)v=mf;} if(v && isOut(v)){ showCartToast('HABIS', v.image_url); return; } const name=v?p.name+' - '+v.color_name:p.name;const img=v?v.image_url:p.image_url;const color=v?v.color_name:'KREM'; const imgEl=document.getElementById('img-'+id); flyToCart(img, imgEl); const btnEl = imgEl?.parentElement?.querySelector('.heart-btn'); if(btnEl){btnEl.classList.add('loved');setTimeout(()=>btnEl.classList.remove('loved'),600);} addCart(name,p.price,img); showCartToast(color,img);}
 async function openProd(id){
- document.getElementById('prodModal').classList.add('show');
- document.getElementById('pBox').innerHTML='<div style="padding:20px">Loading...</div>';
- const {data:p}=await supabaseClient.from('products').select('*').eq('id',id).single();
- const {data:vars}=await supabaseClient.from('product_variants').select('*').eq('product_id',id).order('id');
- curProd=p;curVariants=vars||[];if(!curVariants.length)curVariants=[{color_name:p.category||'KREM',image_url:p.image_url, stock:1}];
- curColor=curVariants[0].color_name;curImg=curVariants[0].image_url;
+ document.getElementById('prodModal').classList.add('show'); document.getElementById('pBox').innerHTML='<div style="padding:20px">Loading...</div>';
+ const {data:p}=await supabaseClient.from('products').select('*').eq('id',id).single(); const {data:vars}=await supabaseClient.from('product_variants').select('*').eq('product_id',id).order('id');
+ curProd=p;curVariants=vars||[];if(!curVariants.length)curVariants=[{color_name:p.category||'KREM',image_url:p.image_url, stock:1}]; curColor=curVariants[0].color_name;curImg=curVariants[0].image_url;
  if(activeWarna!=='ALL'){const mf=curVariants.find(v=>v.color_name.toUpperCase()===activeWarna)||curVariants.find(v=>v.color_name.toUpperCase().includes(activeWarna));if(mf){curColor=mf.color_name;curImg=mf.image_url;}}
- // V48 DATA
- const sizeTxt = p.size_info||'110x110cm';
- const matDetail = p.material_detail||p.category||'Paris Premium';
- const finishTxt = p.finishing||'Laser Cut';
- const underTxt = (p.undertone||[]).join(' + ')||'NEUTRAL';
- const descTxt = p.description||'Bahan adem, tidak menerawang, mudah dibentuk dan tegak di dahi.';
+ const sizeTxt = p.size_info||'110x110cm'; const matDetail = p.material_detail||p.category||'Paris Premium'; const finishTxt = p.finishing||'Laser Cut'; const underTxt = (p.undertone||[]).join(' + ')||'NEUTRAL'; const descTxt = p.description||'Bahan adem, tidak menerawang, mudah dibentuk dan tegak di dahi.';
 document.getElementById('pBox').innerHTML=`<div class="p-gallery"><div class="p-main"><img id="bigImg" src="${curImg}"></div><div class="p-thumbs">${curVariants.map((v,i)=>`<img src="${v.image_url}" class="${v.image_url===curImg?'active':''} ${isOut(v)?'out':''}" onclick="pickColor('${v.color_name}','${v.image_url}',${i})">`).join('')}</div></div><div class="p-info"><div style="display:flex;justify-content:space-between"><div style="font-size:9px;letter-spacing:3px;opacity:.4">BESTSELLER • ${underTxt}</div><div style="cursor:pointer;font-size:22px" onclick="closeProd()">×</div></div><div style="font-family:'Cormorant Garamond';font-size:22px;margin-top:6px">${p.name}</div><div style="font-family:'Cormorant Garamond';font-size:32px;margin:6px 0">Rp${Number(p.price).toLocaleString('id-ID')}</div>
-<div class="detail-box">
-<div class="detail-row"><span>UKURAN</span><b>${sizeTxt}</b></div>
-<div class="detail-row"><span>BAHAN DETAIL</span><b>${matDetail}</b></div>
-<div class="detail-row"><span>FINISHING</span><b>${finishTxt}</b></div>
-<div class="detail-row"><span>UNDERTONE</span><b>${underTxt}</b></div>
-<div style="margin-top:10px;font-size:9px;letter-spacing:2px;opacity:.5">DESKRIPSI</div>
-<div style="font-size:11px;line-height:18px;margin-top:6px;white-space:pre-line">${descTxt}</div>
-</div>
+<div class="detail-box"><div class="detail-row"><span>UKURAN</span><b>${sizeTxt}</b></div><div class="detail-row"><span>BAHAN DETAIL</span><b>${matDetail}</b></div><div class="detail-row"><span>FINISHING</span><b>${finishTxt}</b></div><div class="detail-row"><span>UNDERTONE</span><b>${underTxt}</b></div><div style="margin-top:10px;font-size:9px;letter-spacing:2px;opacity:.5">DESKRIPSI</div><div style="font-size:11px;line-height:18px;margin-top:6px;white-space:pre-line">${descTxt}</div></div>
 <div style="font-size:9px;letter-spacing:2px;margin:16px 0 8px">PILIH WARNA: <b id="selCol">${curColor}</b> <span id="stockInfo" style="margin-left:8px;opacity:.5"></span></div><div style="display:flex;gap:8px;flex-wrap:wrap">${curVariants.map((v,i)=>{const out=isOut(v);return `<button id="btn-${i}" ${out?'disabled':''} style="padding:10px 16px;border:1px solid ${v.image_url===curImg?'#111':'#F2EFEA'};background:${out?'#F2EFEA':(v.image_url===curImg?'#111':'#fff')};color:${out?'#999':(v.image_url===curImg?'#fff':'#000')};font-size:9px;letter-spacing:1px;cursor:${out?'not-allowed':'pointer'}" onclick="pickColor('${v.color_name}','${v.image_url}',${i})">${v.color_name} ${out?'- HABIS':''}</button>`}).join('')}</div><div style="display:flex;gap:8px;margin-top:18px"><button id="btnAddCart" class="btn" style="background:#fff;border:1px solid #111;color:#111" onclick="addToCartFromModal()">+ KERANJANG</button><button id="btnBuy" class="btn" onclick="buyFromModal()">BELI SEKARANG</button></div></div>`; updateStockUI(); }
 function pickColor(c,i,idx){curColor=c;curImg=i;document.getElementById('bigImg').src=i;document.getElementById('selCol').innerText=c;document.querySelectorAll('.p-thumbs img').forEach((el,j)=>el.classList.toggle('active',j==idx));curVariants.forEach((v,j)=>{const b=document.getElementById('btn-'+j);if(b){const a=v.image_url===i;b.style.background=isOut(v)?'#F2EFEA':(a?'#111':'#fff');b.style.color=isOut(v)?'#999':(a?'#fff':'#000');b.style.borderColor=a?'#111':'#F2EFEA';}}); updateStockUI();}
 function updateStockUI(){ const cur=curVariants.find(v=>v.image_url===curImg)||curVariants[0]; const out=cur?isOut(cur):false; const info=document.getElementById('stockInfo'); const b1=document.getElementById('btnAddCart'); const b2=document.getElementById('btnBuy'); if(info) info.innerText=out?'STOK HABIS':(cur.stock?cur.stock+' TERSISA':'READY'); if(b1) b1.disabled=out; if(b2) b2.disabled=out; if(b1) b1.innerText=out?'HABIS':'+ KERANJANG'; }
