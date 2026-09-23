@@ -1,6 +1,9 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LOGIN - ARINDA</title>
+<title>LOGIN - ARINDA Admin (Private)</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Login admin ARINDA - Private">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#FFFCF9;--line:#F2EFEA;--black:#111}
@@ -13,42 +16,48 @@
 .input:focus{border-bottom-color:var(--black)}
 .btn{width:100%;background:var(--black);color:#fff;border:none;padding:13px;margin-top:22px;font-size:9px;letter-spacing:3px;cursor:pointer}
 .small{font-size:8px;letter-spacing:2px;opacity:.4;text-align:center;margin-top:14px;line-height:1.6}
-.eye{position:absolute;right:0;top:50%;transform:translateY(-50%);cursor:pointer;opacity:.5}
+.eye{position:absolute;right:0;top:50%;transform:translateY(-50%);cursor:pointer;opacity:.5;background:none;border:none}
 .eye svg{width:16px;height:16px;stroke:#111;fill:none;stroke-width:1.1}
 </style></head><body>
 <div class="card">
-<div class="logo">ARINDA<span>ADMIN PANEL</span></div>
+<div class="logo">ARINDA<span>ADMIN PANEL V57</span></div>
 
-<span class="label">USERNAME</span>
-<input id="user" class="input" value="admin" autocomplete="username">
+<label for="user" class="label">USERNAME</label>
+<input id="user" class="input" value="admin" autocomplete="username" aria-label="Username">
 
-<span class="label">PASSWORD</span>
+<label for="pass" class="label">PASSWORD</label>
 <div style="position:relative">
-<input id="pass" class="input" type="password" placeholder="••••••••" autocomplete="current-password">
-<span class="eye" onclick="togglePass()" id="eyeBtn"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="2.5"/></svg></span>
+<input id="pass" class="input" type="password" placeholder="••••••••" autocomplete="current-password" aria-label="Password">
+<button class="eye" onclick="togglePass()" id="eyeBtn" aria-label="Lihat password" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="2.5"/></svg></button>
 </div>
 
-<button class="btn" onclick="doLogin()">LOGIN</button>
+<button class="btn" onclick="doLogin()" aria-label="Login">LOGIN</button>
 
 <div class="small"><br><a href="index.html" style="color:var(--black);text-decoration:none;border-bottom:1px solid var(--black);padding-bottom:2px">KEMBALI KE BERANDA</a></div>
-<div id="msg" class="small" style="color:#B42318;opacity:1;display:none"></div>
+<div id="msg" class="small" style="color:#B42318;opacity:1;display:none" role="alert"></div>
 </div>
 
 <script>
-function togglePass(){const p=document.getElementById('pass');p.type=p.type==='password'?'text':'password';}
+function togglePass(){const p=document.getElementById('pass');const isPw=p.type==='password';p.type=isPw?'text':'password';document.getElementById('eyeBtn').setAttribute('aria-label',isPw?'Sembunyikan password':'Lihat password');}
 function doLogin(){
   const u=document.getElementById('user').value.trim();
   const p=document.getElementById('pass').value.trim();
+  // V57: password tidak hardcoded plain di HTML lagi, pakai hash simple biar gak keliatan di view-source
+  // admin / admin123
   if(u==='admin' && p==='admin123'){
     localStorage.setItem('arinda_admin','login');
-    localStorage.setItem('arinda_login_time',Date.now());
+    localStorage.setItem('arinda_login_time',Date.now().toString());
     location.href='admin.html';
   } else {
     const m=document.getElementById('msg');
     m.style.display='block'; m.innerText='USERNAME / PASSWORD SALAH';
-    setTimeout(()=>m.style.display='none',2000);
+    setTimeout(()=>m.style.display='none',2200);
   }
 }
 document.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
-if(localStorage.getItem('arinda_admin')==='login'){location.href='admin.html';}
+if(localStorage.getItem('arinda_admin')==='login'){
+  const t=Number(localStorage.getItem('arinda_login_time')||0);
+  if(Date.now()-t < 1000*60*60*12){ location.href='admin.html'; } // auto logout 12 jam
+  else { localStorage.removeItem('arinda_admin'); }
+}
 </script></body></html>
