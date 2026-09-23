@@ -9,8 +9,8 @@
 nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .nav-top{max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px}.logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px}
-.icons{display:flex;gap:20px;align-items:center}.icon-btn{background:none;border:none;cursor:pointer;position:relative}.icon-btn svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.1}
-.badge{position:absolute;top:-7px;right:-9px;background:#111;color:#fff;font-size:7px;min-width:13px;height:13px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.25s}.badge.bump{transform:scale(1.6)}
+.icons{display:flex;gap:20px;align-items:center}.icon-btn{background:none;border:none;cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center;width:36px;height:36px}.icon-btn svg{width:18px;height:18px;stroke:#111;fill:none;stroke-width:1.1}
+.badge{position:absolute;top:-2px;right:-2px;background:#111;color:#fff;font-size:7px;min-width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.25s}.badge.bump{transform:scale(1.7)}
 .nav-menu{border-top:1px solid #F6F1EB;background:#fff;overflow-x:auto}.nav-menu::-webkit-scrollbar{display:none}
 .menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:36px}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:13px 0;opacity:.35;border-bottom:1px solid transparent;white-space:nowrap}.menu a.active{opacity:1;border-bottom-color:#111}
 #searchBox{display:none;max-width:1240px;margin:0 auto;padding:12px 20px;border-top:1px solid #F6F1EB;background:#fff}#searchBox input{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;background:transparent;outline:none;font-size:12px;letter-spacing:1px}
@@ -28,7 +28,7 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.92);backdrop-f
 .u-grid{display:grid;grid-template-columns:repeat(3,1fr);flex:1;min-width:240px}
 .u-item{position:relative;border-right:1px solid var(--line);cursor:pointer;background:#F6F1EB}.u-item img{width:100%;height:140px;object-fit:cover;display:block}
 .u-label{position:absolute;bottom:0;left:0;right:0;background:rgba(17,17,17,.55);color:#fff;font-size:7px;letter-spacing:2px;text-align:center;padding:6px}
-.fly-img{position:fixed;left:0;top:0;z-index:99999;width:68px;height:68px;object-fit:cover;border-radius:50%;pointer-events:none;box-shadow:0 12px 28px rgba(0,0,0,.3);border:2px solid #fff;will-change:transform,opacity;transition:transform.9s cubic-bezier(.2,.7,.3,1), opacity.9s}
+.fly-img{position:fixed;left:0;top:0;z-index:99999;width:56px;height:56px;object-fit:cover;object-position:center top;border-radius:50%;pointer-events:none;box-shadow:0 12px 28px rgba(0,0,0,.25);border:2px solid #fff;will-change:transform,opacity;transition:transform.9s cubic-bezier(.2,.7,.3,1), opacity.9s}
 #cartToast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(100px);background:#111;color:#fff;padding:10px 16px;border-radius:30px;display:flex;gap:10px;align-items:center;transition:.4s;opacity:0;z-index:100}#cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(min-width:700px){.colors{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:800px){.desktop-only{display:none!important}.mobile-only{display:block!important}.hero{height:58vh;min-height:520px}.hero img.mobile-only{object-position:50% 18%}.hero-text{left:16px;right:16px;bottom:18px}.hero-text h1{font-size:34px!important}}
@@ -66,35 +66,33 @@ function updateCount(){const el=document.getElementById('cCount');if(el){el.inne
 function addCart(n,p,i){let c=getCart();let idx=c.findIndex(a=>a.warna==n);if(idx>-1)c[idx].qty++;else c.push({warna:n,qty:1,harga:Number(p),img:i});saveCart(c);}
 function showToast(t,i){const img=document.getElementById('toastImg');const txt=document.getElementById('toastText');if(img)img.src=i;if(txt)txt.innerText=t;const el=document.getElementById('cartToast');el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200);}
 
-// === FIX V52 - SAMA PERSIS KAYAK PRODUK.HTML YANG UDAH PAS ===
+// === FINAL FIX V53 - COPAS PLEK DARI PRODUK.HTML V51 YANG UDAH PAS ===
 function flyToCart(imgUrl, startEl){
-  if(!startEl) return;
   document.querySelectorAll('.fly-img').forEach(e=>e.remove());
-  const cartIcon=document.getElementById('cartIcon');
-  if(!cartIcon) return;
+  const cartIcon=document.getElementById('cartIcon'); if(!cartIcon) return;
   const cartRect=cartIcon.getBoundingClientRect();
-  const startRect=startEl.getBoundingClientRect();
-
+  let startRect = startEl? startEl.getBoundingClientRect() : null;
+  if(!startRect || startRect.width===0){
+    startRect = {left: window.innerWidth/2, top: window.innerHeight/2, width: 80, height: 80};
+  }
+  const startX = startRect.left + startRect.width/2 - 28;
+  const startY = startRect.top + startRect.height/2 - 28;
+  const endX = cartRect.left + cartRect.width/2 - 28;
+  const endY = cartRect.top + cartRect.height/2 - 28;
   const fly=document.createElement('img');
-  fly.src=imgUrl;
-  fly.className='fly-img';
-  fly.style.left='0px';
-  fly.style.top='0px';
-  fly.style.transform=`translate(${startRect.left + startRect.width/2 - 34}px, ${startRect.top + startRect.height/2 - 34}px) scale(1)`;
+  fly.src=imgUrl; fly.className='fly-img';
+  fly.style.transform=`translate(${startX}px, ${startY}px) scale(1)`;
   fly.style.opacity='1';
   document.body.appendChild(fly);
   fly.getBoundingClientRect();
-  requestAnimationFrame(()=>{
-    requestAnimationFrame(()=>{
-      fly.style.transform=`translate(${cartRect.left}px, ${cartRect.top}px) scale(0.2)`;
-      fly.style.opacity='0';
-    });
-  });
+  requestAnimationFrame(()=>{ requestAnimationFrame(()=>{
+    fly.style.transform=`translate(${endX}px, ${endY}px) scale(0.15)`;
+    fly.style.opacity='0';
+  });});
   setTimeout(()=>fly.remove(),950);
 }
-function quickAdd(title,img, el){
-  const card = el? el.closest('.k-card') : null;
-  const imgEl = card? card.querySelector('img') : null;
+function quickAdd(title,img, el, idx){
+  const imgEl = document.getElementById('img-best-'+idx) || (el? el.closest('.k-card')?.querySelector('img') : null);
   if(imgEl) flyToCart(imgEl.src || img, imgEl);
   addCart(title,99000,img);
   showToast(title+' MASUK KERANJANG',img);
@@ -127,12 +125,12 @@ async function load(){
      const raw=JSON.parse(get('home_koleksi_terlaris')||'[]');
      if(raw.length){
        const grid=document.getElementById('koleksi4Grid');
-       if(grid)grid.innerHTML=raw.slice(0,8).map(v=>{
+       if(grid)grid.innerHTML=raw.slice(0,8).map((v,i)=>{
          const url=typeof v==='string'?v:v.url;
          const title=(typeof v==='object'?v.title:'')||'';
          const safeTitle=title.replace(/'/g,"").toUpperCase() || 'BEST';
          const link = title? 'produk.html?warna='+encodeURIComponent(safeTitle) : 'produk.html';
-         return `<div class="k-card"><img src="${url}" loading="lazy" onclick="location.href='${link}'"><div class="heart-btn" onclick="quickAdd('${safeTitle}','${url}', this)"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><div style="padding:10px;border-top:1px solid #F6F1EB;font-size:8px;letter-spacing:2px;opacity:.5" onclick="location.href='${link}'">${safeTitle||'BEST SELLER'}</div></div>`
+         return `<div class="k-card"><img id="img-best-${i}" src="${url}" loading="lazy" onclick="location.href='${link}'"><div class="heart-btn" onclick="quickAdd('${safeTitle}','${url}', this, ${i})"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><div style="padding:10px;border-top:1px solid #F6F1EB;font-size:8px;letter-spacing:2px;opacity:.5" onclick="location.href='${link}'">${safeTitle||'BEST SELLER'}</div></div>`
        }).join('');
      }
    }catch(e){}
