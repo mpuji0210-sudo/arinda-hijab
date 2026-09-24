@@ -101,11 +101,10 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.88);backdrop-f
 <main style="max-width:1280px;margin:0 auto;padding:16px">
 
 <!-- 1 SEARCH AJA - HAPUS YANG GARIS BAWAH -->
-<div style="margin-bottom:18px">
-  <div style="display:flex;gap:8px">
-    <input id="q" onkeyup="if(event.key==='Enter')doSearch()" placeholder="CARI WARNA - MIS: PUTIH, NAVY, BLUSH" style="flex:1;padding:14px 18px;border:1px solid #111;border-radius:30px;font-size:11px;letter-spacing:1px;outline:none;background:#fff;color:#111">
-    <button onclick="doSearch()" style="padding:14px 26px;background:#111;color:#fff;border-radius:30px;border:none;font-size:11px;letter-spacing:1px;font-weight:700;cursor:pointer">CARI</button>
-  </div>
+<div style="display:flex;gap:10px;align-items:center;margin:12px 0 18px">
+<input id="q" onkeyup="if(event.key==='Enter')doSearch()" placeholder="CARI WARNA - MIS: PUTIH, NAVY, BLUSH" style="flex:1;padding:14px 20px;border:1px solid #111;border-radius:30px;font-size:12px;letter-spacing:1px;outline:none">
+<button onclick="doSearch()" style="padding:14px 24px;background:#111;color:#fff;border-radius:30px;border:none;font-size:10px;font-weight:700">CARI</button>
+</div>
   <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px">
     <div style="font-size:10px;letter-spacing:2px;font-weight:700">PRODUK READY</div>
     <div id="prodCount" style="font-size:10px;opacity:.6">0 PRODUK</div>
