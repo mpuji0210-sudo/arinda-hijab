@@ -103,10 +103,49 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.88);backdrop-f
 <div class="filter-group" style="background:#111;padding:10px;border-radius:10px"><div class="filter-label" style="color:#fff;opacity:.7">FIND YOUR UNDERTONE</div><div class="filter" id="filterUnder"><button class="active" onclick="filterUndertone('ALL',this)">ALL SKIN</button><button onclick="filterUndertone('COOL',this)">COOL ❄️</button><button onclick="filterUndertone('WARM',this)">WARM ☀️</button><button onclick="filterUndertone('NEUTRAL',this)">NEUTRAL 🌸</button><button onclick="filterUndertone('OLIVE',this)">OLIVE 🫒</button></div></div>
 <div class="filter-group"><div class="filter-label">FILTER BAHAN</div><div class="filter" id="filterBahan"><button class="active" onclick="filterBahan('ALL',this)">ALL BAHAN</button></div></div>
 <div class="filter-group"><div class="filter-label">FILTER WARNA</div><div class="filter" id="filterWarna"><button class="active" onclick="filterWarna('ALL',this)">ALL WARNA</button></div></div>
-<div id="list" class="prod-grid"></div></main>
-<footer style="margin-top:32px;padding:36px 16px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px">ARINDA</div><div style="margin-top:14px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA V69.3 RAPI PER-BAGIAN + FIX FOTO BESAR KIRI</div></footer>
-<div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()"><div id="cartBox"><div style="display:flex;justify-content:space-between"><b>KERANJANG (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:22px">×</button></div><div id="cartList"></div><div style="margin-top:14px;padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:10px"><input id="destSearch" placeholder="KECAMATAN PEMBELI" style="flex:1;padding:10px;border:1px solid var(--line);font-size:11px;border-radius:6px"><button onclick="searchDest()" class="btn" style="width:auto">CARI</button><div id="destList" style="display:none"></div><div style="display:flex;gap:6px;margin-top:8px"><select id="courierSelect" style="flex:1;padding:10px;border-radius:6px"><option value="jne">JNE</option><option value="jnt">J&T</option><option value="sicepat">SiCepat</option><option value="pos">POS</option></select><button onclick="cekOngkir()" class="btn" style="flex:1">CEK</button></div><div id="ongkirResult"></div></div><div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px"><div style="display:flex;justify-content:space-between;font-size:11px"><span>SUBTOTAL</span><span id="cartSubtotal">Rp0</span></div><div style="display:flex;justify-content:space-between;font-size:11px"><span>ONGKIR (<span id="ongkirLabel">BELUM CEK</span>)</span><span id="ongkirPrice">Rp0</span></div><div style="display:flex;justify-content:space-between;margin-top:8px"><b>TOTAL</b><b id="cartTotalPrice">Rp0</b></div><button onclick="checkoutWA()" class="btn" style="margin-top:12px">CHAT WA & PESAN</button><button onclick="askClearCart()" class="btn-light">KOSONGKAN</button></div></div></div>
-<!-- BAGIAN 8: MODAL PRODUK - FIX FOTO BESAR KIRI KECIL KANAN -->
+<!-- BAGIAN 5: GRID PRODUK - TEMPAT FOTO HIJAB MUNCUL -->
+<div id="list" class="prod-grid"></div>
+</main>
+
+<!-- BAGIAN 6: FOOTER -->
+<footer style="margin-top:32px;padding:36px 16px;text-align:center;border-top:1px solid var(--line)">
+  <div style="font-family:'Cormorant Garamond';letter-spacing:8px">ARINDA</div>
+  <div style="margin-top:14px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA V69.3 RAPI PER-BAGIAN + FIX FOTO BESAR KIRI</div>
+</footer>
+
+<!-- BAGIAN 7: MODAL KERANJANG + CEK ONGKIR LENGKAP - INI YANG ILANG TADI -->
+<div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()">
+  <div id="cartBox">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <b>KERANJANG (<span id="cartTotalQty">0</span>)</b>
+      <button onclick="closeCart()" style="border:none;background:none;font-size:22px;cursor:pointer">×</button>
+    </div>
+    <div id="cartList" style="margin-top:12px"></div>
+    <div style="margin-top:14px;padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:10px">
+      <div style="font-size:8px;letter-spacing:2px;opacity:.4;margin-bottom:8px">CEK ONGKIR - PILIH KECAMATAN PEMBELI</div>
+      <div style="display:flex;gap:6px">
+        <input id="destSearch" placeholder="KETIK KECAMATAN - mis: Beji Depok" style="flex:1;padding:10px;border:1px solid var(--line);font-size:11px;border-radius:6px;outline:none">
+        <button onclick="searchDest()" class="btn" style="width:70px;padding:10px">CARI</button>
+      </div>
+      <div id="destList" style="display:none;margin-top:8px;max-height:150px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:6px"></div>
+      <div style="display:flex;gap:6px;margin-top:10px">
+        <select id="courierSelect" style="flex:1;padding:10px;border:1px solid var(--line);border-radius:6px;font-size:11px">
+          <option value="jne">JNE</option><option value="jnt">J&T</option><option value="sicepat">SiCepat</option><option value="pos">POS</option><option value="anteraja">AnterAja</option>
+        </select>
+        <button onclick="cekOngkir()" class="btn" style="flex:1">CEK ONGKIR</button>
+      </div>
+      <div id="ongkirResult" style="margin-top:8px"></div>
+    </div>
+    <div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px">
+      <div style="display:flex;justify-content:space-between;font-size:11px"><span>SUBTOTAL</span><span id="cartSubtotal">Rp0</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:4px"><span>ONGKIR (<span id="ongkirLabel">BELUM CEK</span>)</span><span id="ongkirPrice">Rp0</span></div>
+      <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:13px"><b>TOTAL BAYAR</b><b id="cartTotalPrice">Rp0</b></div>
+      <button onclick="checkoutWA()" class="btn" style="margin-top:14px;padding:14px">CHAT WA & PESAN SEKARANG</button>
+      <button onclick="askClearCart()" class="btn-light">KOSONGKAN KERANJANG</button>
+    </div>
+  </div>
+</div>
+  <!-- BAGIAN 8: MODAL PRODUK - FIX FOTO BESAR KIRI KECIL KANAN -->
 <div id="prodModal" onclick="if(event.target.id=='prodModal')closeProd()"><div class="p-box" id="pBox">Loading...</div></div>
 <div id="confirmModal"><div class="confirm-box"><div id="confirmTitle"></div><div id="confirmDesc"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px"><button onclick="closeConfirm()" style="padding:11px;border-radius:6px">BATAL</button><button id="confirmOk" style="padding:11px;background:#111;color:#fff;border-radius:6px">YA</button></div></div></div>
 <div id="cartToast"><img id="toastImg"><span id="toastText" style="font-size:9px"></span></div>
