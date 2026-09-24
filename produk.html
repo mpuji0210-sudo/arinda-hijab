@@ -29,7 +29,7 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.88);backdrop-f
 #prodModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;align-items:center;justify-content:center;padding:8px}#prodModal.show{display:flex}
 .p-box{background:#fff;max-width:960px;width:100%;display:grid;grid-template-columns:1.15fr 0.85fr;max-height:90vh;border:1px solid var(--line);overflow:hidden;border-radius:18px}
 .p-gallery{display:grid;grid-template-columns:1fr 66px;gap:8px;padding:8px;background:var(--bg);align-items:start;height:280px}
-.p-main{width:100%;height:264px;max-height:264px;overflow:hidden;display:flex;justify-content:center;background:#F8F4EF;border-radius:14px;position:relative}
+.p-main{width:100%;height:264px;max-height:264px;overflow:hidden;display:flex;justify-content:center;background:#F8F4EF;border-radius:14px}
 .p-main img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
 .p-thumbs{display:flex;flex-direction:column;gap:6px;overflow-y:auto;height:264px;max-height:264px}
 .p-thumbs img{width:60px;height:60px;min-height:60px;object-fit:cover;opacity:.55;border:2px solid transparent;cursor:pointer;border-radius:10px;background:#eee;flex-shrink:0}
@@ -45,7 +45,7 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.88);backdrop-f
 <nav><div class="nav-top"><div class="logo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons">
 <button type="button" class="icon-btn" id="cartIcon" onclick="openCart()"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></button>
 </div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a class="active">PRODUK</a><a href="kategori.html">KATEGORI</a></div></div>
-<div class="search-wrap"><input id="q" type="search" placeholder="CARI WARNA - MIS: BURGUNDY, PUTIH, NAVY" oninput="doSearch()" onkeydown="if(event.key==='Enter')doSearch()"><button onclick="doSearch()" style="background:#111;color:#fff;border:none;padding:10px 18px;border-radius:20px;font-size:9px;letter-spacing:2px">CARI</button></div>
+<div class="search-wrap"><input id="q" type="search" autocomplete="off" placeholder="CARI WARNA - MIS: BURGUNDY, PUTIH, NAVY" oninput="doSearch()" onkeydown="if(event.key==='Enter')doSearch()"><button onclick="doSearch()" style="background:#111;color:#fff;border:none;padding:10px 18px;border-radius:20px;font-size:9px;letter-spacing:2px">CARI</button></div>
 </nav>
 <main class="section"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><h1 style="font-family:'Cormorant Garamond';font-size:20px;letter-spacing:2px;font-weight:300;margin:0">PRODUK READY</h1><div id="prodCount" style="font-size:9px;letter-spacing:3px;opacity:.4">0 PRODUK</div></div><div id="list" class="prod-grid"></div></main>
 <div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()"><div id="cartBox"><div style="display:flex;justify-content:space-between"><b style="letter-spacing:2px;font-size:11px">KERANJANG (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:22px">×</button></div><div id="cartList" style="margin-top:12px"></div><div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px"><div style="display:flex;justify-content:space-between;font-size:11px"><span>SUBTOTAL</span><span id="cartSubtotal">Rp0</span></div><div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px"><span>ONGKIR <small id="ongkirLabel" style="opacity:.5"></small></span><span id="ongkirPriceCart">Rp0</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:14px"><b>TOTAL</b><b id="cartTotalPrice">Rp0</b></div><button onclick="checkoutWA()" class="btn" style="margin-top:12px">CHAT WA & PESAN</button><button onclick="clearCart()" class="btn-light">KOSONGKAN</button></div></div></div>
@@ -53,7 +53,7 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.88);backdrop-f
 <div id="cartToast"><img id="toastImg"><span id="toastText" style="font-size:9px"></span></div>
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
-let supabaseClient,allProducts=[],WA_NUMBER="6285178098354",tokoOriginId="17523",selectedDestId=null,selectedOngkirCost=0,selectedService='',curProd={},curColor='',curImg='',curVariants=[],activeUnder='ALL';
+let supabaseClient,allProducts=[],WA_NUMBER="6285178098354",tokoOriginId="17523",selectedDestId=null,selectedOngkirCost=0,selectedService='',curProd={},curColor='',curImg='',curVariants=[],activeUnder='ALL',lastSearchQuery='';
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return[]}}
 function saveCart(c){localStorage.setItem('arinda_cart2',JSON.stringify(c));updateCount();renderCart();}
 function updateCount(){const el=document.getElementById('cCount');if(!el)return;let t=getCart().reduce((a,b)=>a+(b.qty||0),0);el.innerText=t;el.style.display=t>0?'flex':'none';}
@@ -79,9 +79,10 @@ function flyToCart(imgUrl,startEl){
   });});
   setTimeout(()=>fly.remove(),900);
 }
-function doSearch(){const q=document.getElementById('q').value.toLowerCase().trim();applyFilters(q);}
+function doSearch(){const q=document.getElementById('q').value.toLowerCase().trim();lastSearchQuery=q;applyFilters(q);}
 function applyFilters(qOverride){
   let q=(qOverride!==undefined?qOverride:(document.getElementById('q').value||'')).toLowerCase().trim();
+  lastSearchQuery=q;
   let list=[...allProducts];
   if(!q && activeUnder!=='ALL'){
     const kata={COOL:['PUTIH','NAVY','ABU','LILAC'],WARM:['KREM','MILO','CARAMEL','OLIVE']}[activeUnder]||[];
@@ -89,37 +90,60 @@ function applyFilters(qOverride){
   }
   if(q){
     list=list.filter(p=>{
-      const nameMatch=p.name.toLowerCase().includes(q);
       const vars=window._varMap[p.id]||[];
-      const colorMatch=vars.some(v=>(v.color_name||'').toLowerCase().includes(q));
-      return nameMatch||colorMatch;
+      return p.name.toLowerCase().includes(q)||vars.some(v=>(v.color_name||'').toLowerCase().includes(q));
     });
   }
   document.getElementById('prodCount').innerText=list.length+' PRODUK';
   render(list);
 }
-function handleUrlSearch(){const p=new URLSearchParams(location.search);const q=(p.get('warna')||p.get('q')||'').toLowerCase();if(q){document.getElementById('q').value=q;setTimeout(()=>applyFilters(q),300);}else setTimeout(()=>applyFilters(''),300);}
+function handleUrlSearch(){const p=new URLSearchParams(location.search);const q=(p.get('warna')||p.get('q')||'').toLowerCase();if(q){document.getElementById('q').value=q;lastSearchQuery=q;setTimeout(()=>applyFilters(q),300);}else setTimeout(()=>applyFilters(''),300);}
 function render(list){
   const el=document.getElementById('list');
   if(!list.length){el.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:60px 0;opacity:.5">TIDAK ADA PRODUK UNTUK "${document.getElementById('q').value}"<br><button onclick="document.getElementById('q').value='';applyFilters('')" style="margin-top:10px;padding:8px 16px;border-radius:20px;border:1px solid #111;background:#fff;font-size:9px">LIHAT SEMUA</button></div>`;return;}
   el.innerHTML=list.map((p,i)=>{
-    const vars=window._varMap[p.id]||[];let img=p.image_url;let col=vars[0]?.color_name||p.name;if(vars.length){img=vars[0].image_url;col=vars[0].color_name;}
-    return `<div class="prod-card"><div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this,${i})"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}-${i}" src="${getOptImg(img,400)}" loading="lazy" onclick="openProd('${p.id}')"><div style="padding:8px;border-top:1px solid #F6F1EB" onclick="openProd('${p.id}')"><div style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${col}</div><div style="font-size:10px;margin-top:3px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
+    const vars=window._varMap[p.id]||[];
+    // FIX: LANGSUNG AMBIL VARIAN YANG DICARI, BUKAN VARS[0] AJA
+    let matchedVar = null;
+    if(lastSearchQuery){
+      matchedVar = vars.find(v=>(v.color_name||'').toLowerCase().includes(lastSearchQuery));
+    }
+    let v = matchedVar || vars[0];
+    let img = v? v.image_url : p.image_url;
+    let col = v? v.color_name : p.name;
+    return `<div class="prod-card"><div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this,${i},'${(col||'').replace(/'/g,'')}')"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}-${i}" src="${getOptImg(img,400)}" loading="lazy" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="padding:8px;border-top:1px solid #F6F1EB" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${col}</div><div style="font-size:10px;margin-top:3px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
   }).join('');
 }
-function quickAdd(id,btnEl,idx){const p=allProducts.find(x=>String(x.id)===String(id));const vars=window._varMap[id]||[];let v=vars[0]||{color_name:p.name,image_url:p.image_url};if(isOut(v))return;const imgEl=document.getElementById(`img-${id}-${idx}`) || btnEl?.closest('.prod-card')?.querySelector('img');if(imgEl) flyToCart(v.image_url, imgEl);addCart(p.name+' - '+v.color_name,p.price,v.image_url);showCartToast(v.color_name,v.image_url);}
-async function openProd(id){
+function quickAdd(id,btnEl,idx,colorName){
+  const p=allProducts.find(x=>String(x.id)===String(id));
+  const vars=window._varMap[id]||[];
+  let v = vars.find(x=>x.color_name===colorName) || vars.find(x=>(x.color_name||'').toLowerCase().includes(lastSearchQuery)) || vars[0] || {color_name:p.name,image_url:p.image_url};
+  if(isOut(v))return;
+  const imgEl=document.getElementById(`img-${id}-${idx}`) || btnEl?.closest('.prod-card')?.querySelector('img');
+  if(imgEl) flyToCart(v.image_url, imgEl);
+  addCart(p.name+' - '+v.color_name,p.price,v.image_url);showCartToast(v.color_name,v.image_url);
+}
+async function openProd(id,colorName){
   document.getElementById('prodModal').classList.add('show');
   document.getElementById('pBox').innerHTML='<div style="padding:40px;text-align:center">Loading...</div>';
   const {data:p}=await supabaseClient.from('products').select('*').eq('id',id).single();
   const {data:vars}=await supabaseClient.from('product_variants').select('*').eq('product_id',id).order('id');
   curProd=p;curVariants=vars||[];if(!curVariants.length)curVariants=[{color_name:'KREM',image_url:p.image_url,stock:1}];
-  curColor=curVariants[0].color_name;curImg=curVariants[0].image_url;
+  // FIX: KALO DARI PENCARIAN, LANGSUNG PILIH WARNA YANG DICARI
+  let initial = curVariants[0];
+  if(colorName){
+    const found = curVariants.find(v=>v.color_name.toLowerCase()===colorName.toLowerCase() || v.color_name.toLowerCase().includes(colorName.toLowerCase()));
+    if(found) initial = found;
+  }else if(lastSearchQuery){
+    const found = curVariants.find(v=>v.color_name.toLowerCase().includes(lastSearchQuery));
+    if(found) initial = found;
+  }
+  curColor=initial.color_name;curImg=initial.image_url;
   document.getElementById('pBox').innerHTML=`
-  <div class="p-gallery"><div class="p-main"><img id="bigImg" src="${getOptImg(curImg,600)}"></div><div class="p-thumbs">${curVariants.map((v,i)=>`<img src="${getOptImg(v.image_url,80)}" class="${i===0?'active':''}" onclick="pickColorByIdx(${i})">`).join('')}</div></div>
+  <div class="p-gallery"><div class="p-main"><img id="bigImg" src="${getOptImg(curImg,600)}"></div><div class="p-thumbs">${curVariants.map((v,i)=>`<img src="${getOptImg(v.image_url,80)}" class="${v.image_url===curImg?'active':''}" onclick="pickColorByIdx(${i})">`).join('')}</div></div>
   <div class="p-info"><div style="font-size:20px;font-family:'Cormorant Garamond'">${p.name}</div><div style="font-size:22px;margin-top:4px">Rp${Number(p.price).toLocaleString('id-ID')}</div>
   <div style="margin-top:10px;font-size:8px;letter-spacing:2px">PILIH WARNA: <b id="selCol">${curColor}</b></div>
-  <div class="variant-wrap">${curVariants.map((v,i)=>`<button id="btn-${i}" class="${i===0?'active':''}" onclick="pickColorByIdx(${i})">${v.color_name}</button>`).join('')}</div>
+  <div class="variant-wrap">${curVariants.map((v,i)=>`<button id="btn-${i}" class="${v.image_url===curImg?'active':''}" onclick="pickColorByIdx(${i})">${v.color_name}</button>`).join('')}</div>
   <div style="margin-top:14px;padding:12px;background:#FFFCF9;border:1px solid #EDE8E1;border-radius:12px"><div style="font-size:8px;letter-spacing:2px;opacity:.5;margin-bottom:8px;font-weight:700">CEK ONGKIR DULU SEBELUM BELI</div><div style="display:flex;gap:6px"><input id="destSearchProd" placeholder="Kecamatan - Beji Depok" style="flex:1;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:11px"><button onclick="searchDestProd()" style="padding:10px 14px;background:#111;color:#fff;border:none;border-radius:8px;font-size:9px">CARI</button></div><div id="destListProd" style="display:none;margin-top:8px;max-height:100px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:8px"></div><div style="display:flex;gap:6px;margin-top:8px"><select id="courierSelectProd" style="flex:1;padding:9px;border:1px solid var(--line);border-radius:8px;font-size:11px"><option value="jne">JNE</option><option value="jnt">J&T</option><option value="sicepat">SiCepat</option><option value="pos">POS</option></select><button onclick="cekOngkirProd()" style="flex:1;padding:9px;background:#fff;border:1px solid #111;border-radius:8px;font-size:9px">CEK ONGKIR</button></div><div id="ongkirResultProd" style="margin-top:8px"></div><div id="ongkirSelectedProd" style="margin-top:8px;font-size:10px;font-weight:600">${selectedService?'✓ '+selectedService+' - Rp'+selectedOngkirCost.toLocaleString('id-ID'):''}</div></div>
   <div style="display:flex;gap:8px;margin-top:14px"><button class="btn" style="background:#fff;color:#111;border:1px solid #111" onclick="addToCartFromModal()">+ KERANJANG</button><button class="btn" onclick="buyFromModal()">BELI</button></div></div>`;
 }
