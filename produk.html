@@ -1,6 +1,5 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PRODUK HIJAB PREMIUM - ARINDA | Paris Premium 110x110cm</title>
-<meta name="description" content="Koleksi hijab Paris Premium 110x110cm premium ARINDA">
+<title>PRODUK HIJAB PREMIUM - ARINDA</title>
 <link rel="preconnect" href="https://qjgevvizqeebtdqcbqmt.supabase.co" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" onload="this.rel='stylesheet'">
@@ -19,7 +18,7 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.88);backdrop-f
 .section{max-width:1240px;margin:0 auto;padding:20px 8px 0}
 .prod-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:6px!important}
 @media(min-width:700px){.prod-grid{grid-template-columns:repeat(4,1fr)!important;gap:10px!important}}
-.prod-card{border:1px solid var(--line);background:#fff;cursor:pointer;position:relative;overflow:hidden;border-radius:12px!important;content-visibility:auto;contain-intrinsic-size:150px 190px}
+.prod-card{border:1px solid var(--line);background:#fff;cursor:pointer;position:relative;overflow:hidden;border-radius:12px!important}
 .prod-card img{width:100%!important;height:135px!important;aspect-ratio:1/1!important;object-fit:cover!important;object-position:center top!important;display:block!important;background:#F8F4EF!important}
 @media(min-width:700px){.prod-card img{height:210px!important}}
 .heart-btn{position:absolute;top:6px;right:6px;width:24px;height:24px;background:rgba(255,255,255,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);z-index:2}.heart-btn svg{width:11px;height:11px;stroke:#111;fill:none;stroke-width:1.2}
@@ -28,95 +27,81 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.88);backdrop-f
 #cartBox{background:#fff;width:100%;max-width:480px;margin:0 auto;max-height:88vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px}
 .btn{width:100%;padding:13px;background:#111;color:#fff;border:none;font-size:9px;letter-spacing:3px;cursor:pointer;border-radius:8px}
 .btn-light{width:100%;padding:11px;background:#fff;border:1px solid var(--line);font-size:9px;letter-spacing:2px;cursor:pointer;margin-top:8px;border-radius:8px}
-#prodModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;align-items:center;justify-content:center;padding:10px}#prodModal.show{display:flex}
-/* FIX MODAL PENDEK - 4 FOTO KANAN */
+#prodModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;align-items:center;justify-content:center;padding:8px}#prodModal.show{display:flex}
 .p-box{background:#fff;max-width:960px;width:100%;display:grid;grid-template-columns:1.15fr 0.85fr;max-height:90vh;border:1px solid var(--line);overflow:hidden;border-radius:18px}
-.p-gallery{display:grid;grid-template-columns:1fr 66px;gap:8px;padding:8px;background:var(--bg);align-items:start}
-.p-main{width:100%;aspect-ratio:1/1;height:264px;max-height:264px;overflow:hidden;display:flex;justify-content:center;background:#F8F4EF;border-radius:14px}
-.p-main img{width:100%;height:100%;object-fit:cover;object-position:center top}
-.p-thumbs{display:flex;flex-direction:column;gap:6px;overflow-y:auto;height:264px;max-height:264px}
-.p-thumbs img{width:60px;height:60px;min-height:60px;object-fit:cover;opacity:.6;border:2px solid transparent;cursor:pointer;border-radius:10px;background:#eee;flex-shrink:0}
-.p-thumbs img.active{opacity:1;border-color:#111}
-.p-info{padding:12px 14px;overflow:auto;max-height:90vh}
-@media(max-width:800px){.p-box{grid-template-columns:1fr;max-height:92vh;overflow:auto}.p-gallery{grid-template-columns:1fr 64px}.p-main{height:280px;max-height:280px}.p-thumbs{height:280px;max-height:280px}.p-info{max-height:none}}
+.p-gallery{display:grid;grid-template-columns:1fr 66px;gap:8px;padding:8px;background:var(--bg);align-items:start;height:280px}
+.p-main{width:100%;height:264px;max-height:264px;overflow:hidden;display:flex;justify-content:center;background:#F8F4EF;border-radius:14px;position:relative}
+.p-main img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.p-thumbs{display:flex;flex-direction:column;gap:6px;overflow-y:auto;height:264px;max-height:264px;scrollbar-width:none}
+.p-thumbs::-webkit-scrollbar{display:none}
+.p-thumbs img{width:60px;height:60px;min-height:60px;object-fit:cover;opacity:.55;border:2px solid transparent;cursor:pointer;border-radius:10px;background:#eee;flex-shrink:0;transition:.2s}
+.p-thumbs img.active{opacity:1;border-color:#111;transform:scale(1.05)}
+.p-info{padding:12px 14px;overflow:auto;max-height:90vh;display:flex;flex-direction:column}
+.variant-wrap{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;max-height:110px;overflow-y:auto;align-content:flex-start}
+.variant-wrap button{padding:8px 12px;border:1px solid #eee;background:#fff;color:#111;border-radius:20px;font-size:7px;letter-spacing:1px;cursor:pointer;flex-shrink:0;white-space:nowrap}
+.variant-wrap button.active{background:#111;color:#fff;border-color:#111}
+@media(max-width:800px){.p-box{grid-template-columns:1fr;max-height:92vh;overflow:auto}.p-gallery{height:300px}.p-main{height:284px;max-height:284px}.p-thumbs{height:284px;max-height:284px}.p-info{max-height:none}}
 #cartToast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#111;color:#fff;padding:10px 18px;border-radius:30px;display:flex;align-items:center;gap:12px;z-index:9999;transition:.5s;opacity:0}#cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}
 #cartToast img{width:32px;height:32px;border-radius:50%;object-fit:cover}
 </style></head><body>
-<nav id="mainNav"><div class="nav-top"><div class="logo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons">
-<button class="icon-btn" onclick="document.getElementById('q').focus()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button>
+<nav><div class="nav-top"><div class="logo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons">
 <button type="button" class="icon-btn" id="cartIcon" onclick="openCart()"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></button>
-</div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a class="active">PRODUK</a><a href="kategori.html">KATEGORI</a></div></div><div class="search-wrap"><input id="q" type="search" autocomplete="off" placeholder="CARI - KETIK BAHAN ATAU WARNA" oninput="doSearch()"><button onclick="doSearch()" style="background:#111;color:#fff;border:none;padding:10px 18px;border-radius:20px;font-size:8px;letter-spacing:2px">CARI</button></div></nav>
+</div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a class="active">PRODUK</a><a href="kategori.html">KATEGORI</a></div></div><div class="search-wrap"><input id="q" type="search" placeholder="CARI WARNA - MIS: PUTIH, NAVY, BLUSH" oninput="doSearch()"><button onclick="doSearch()" style="background:#111;color:#fff;border:none;padding:10px 18px;border-radius:20px;font-size:8px;letter-spacing:2px">CARI</button></div></nav>
 
-<main class="section">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><h1 style="font-family:'Cormorant Garamond';font-size:20px;letter-spacing:2px;font-weight:300;margin:0">PRODUK READY</h1><div id="prodCount" style="font-size:9px;letter-spacing:3px;opacity:.4">0 PRODUK</div></div>
-<div id="list" class="prod-grid"></div>
-</main>
+<main class="section"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><h1 style="font-family:'Cormorant Garamond';font-size:20px;letter-spacing:2px;font-weight:300;margin:0">PRODUK READY</h1><div id="prodCount" style="font-size:9px;letter-spacing:3px;opacity:.4">0 PRODUK</div></div><div id="list" class="prod-grid"></div></main>
 
-<footer style="margin-top:32px;padding:36px 16px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px">ARINDA</div><div style="margin-top:14px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA V80 FONT + FLY + NO FILTER</div></footer>
-
-<!-- KERANJANG 1 KLIK - NO ONGKIR DISINI -->
 <div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()"><div id="cartBox"><div style="display:flex;justify-content:space-between"><b style="letter-spacing:2px;font-size:11px">KERANJANG (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:22px">×</button></div><div id="cartList" style="margin-top:12px"></div><div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px"><div style="display:flex;justify-content:space-between;font-size:11px"><span>SUBTOTAL</span><span id="cartSubtotal">Rp0</span></div><div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px"><span>ONGKIR <small id="ongkirLabel" style="opacity:.5"></small></span><span id="ongkirPriceCart">Rp0</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:14px"><b>TOTAL</b><b id="cartTotalPrice">Rp0</b></div><button onclick="checkoutWA()" class="btn" style="margin-top:12px">CHAT WA & PESAN</button><button onclick="clearCart()" class="btn-light">KOSONGKAN</button></div></div></div>
 
-<div id="prodModal" onclick="if(event.target.id=='prodModal')closeProd()"><div class="p-box" id="pBox">Loading...</div></div>
+<div id="prodModal" onclick="if(event.target.id=='prodModal')closeProd()"><div class="p-box" id="pBox"></div></div>
 <div id="cartToast"><img id="toastImg"><span id="toastText" style="font-size:9px"></span></div>
 
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 let supabaseClient,allProducts=[],WA_NUMBER="6285178098354",tokoOriginId="17523",selectedDestId=null,selectedOngkirCost=0,selectedService='',curProd={},curColor='',curImg='',curVariants=[],activeUnder='ALL';
-const COCOK_UNTUK={COOL:['PUTIH','WHITE','NAVY','BLUE','ABU','GREY','LILAC','PLUM','BURGUNDY','ROSE','PINK','CHARCOAL','HITAM','BLACK','DUSTY'],WARM:['KREM','CREAM','MILO','MUSTARD','CARAMEL','OLIVE','BROWN','COKSU','MAROON','PEACH','CORAL','BEIGE','MOCCA'],NEUTRAL:['HITAM','PUTIH','KREM','ABU','BEIGE','NUDE','IVORY','MOCCA'],OLIVE:['OLIVE','SAGE','ARMY','GREEN','KHAKI','MOSS','FOREST','EMERALD']};
+const COCOK_UNTUK={COOL:['PUTIH','WHITE','NAVY','BLUE','ABU','GREY','LILAC','PLUM','BURGUNDY','ROSE','PINK','CHARCOAL','HITAM','BLACK','DUSTY'],WARM:['KREM','CREAM','MILO','MUSTARD','CARAMEL','OLIVE','BROWN','COKSU','MAROON','PEACH','CORAL','BEIGE','MOCCA']};
 
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return[]}}
 function saveCart(c){localStorage.setItem('arinda_cart2',JSON.stringify(c));updateCount();renderCart();}
 function updateCount(){const el=document.getElementById('cCount');if(!el)return;let t=getCart().reduce((a,b)=>a+(b.qty||0),0);el.innerText=t;el.style.display=t>0?'flex':'none';}
-function clearCart(){if(!confirm('Kosongkan keranjang?'))return;saveCart([]);selectedOngkirCost=0;selectedService='';}
+function clearCart(){if(!confirm('Kosongkan?'))return;saveCart([]);selectedOngkirCost=0;selectedService='';}
 function isOut(v){if(v.is_available===false)return true;if(v.stock!=null)return Number(v.stock)<=0;return false;}
-function getOptImg(u,w=300){if(!u) return ''; if(u.includes('/storage/v1/object/public/')){const path=u.split('/storage/v1/object/public/')[1]; return `${SUPA_URL}/storage/v1/render/image/public/${path}?width=${w}&height=${w}&quality=65&format=webp&resize=cover`;}return u;}
+function getOptImg(u,w=300){if(!u) return ''; if(u.includes('/storage/v1/object/public/')){const p=u.split('/storage/v1/object/public/')[1]; return `${SUPA_URL}/storage/v1/render/image/public/${p}?width=${w}&height=${w}&quality=65&format=webp&resize=cover`;}return u;}
 function flyToCart(imgUrl,startEl){const cartIcon=document.getElementById('cartIcon');if(!cartIcon)return;const cartRect=cartIcon.getBoundingClientRect();let s=startEl?startEl.getBoundingClientRect():{left:innerWidth/2,top:innerHeight/2,width:80,height:80};const fly=document.createElement('img');fly.src=getOptImg(imgUrl,80);fly.className='fly-img';fly.style.transform=`translate(${s.left}px,${s.top}px) scale(1)`;document.body.appendChild(fly);requestAnimationFrame(()=>{fly.style.transform=`translate(${cartRect.left}px,${cartRect.top}px) scale(0.15)`;fly.style.opacity='0';});setTimeout(()=>fly.remove(),900);}
 function doSearch(){applyFilters(document.getElementById('q').value.toLowerCase().trim());}
 function applyFilters(qOverride){
   const q=(qOverride!==undefined?qOverride:(document.getElementById('q').value||'')).toLowerCase().trim();
   let list=[...allProducts];
-  if(activeUnder!=='ALL'){
-    const kata=COCOK_UNTUK[activeUnder]||[];
-    list=list.filter(p=>{const vars=window._varMap[p.id]||[];return vars.some(v=>kata.some(k=>(v.color_name||'').toUpperCase().includes(k)));});
-  }
+  if(activeUnder!=='ALL'){const kata=COCOK_UNTUK[activeUnder]||[];list=list.filter(p=>{const vars=window._varMap[p.id]||[];return vars.some(v=>kata.some(k=>(v.color_name||'').toUpperCase().includes(k)));});}
   if(q){list=list.filter(p=>p.name.toLowerCase().includes(q)||(window._varMap[p.id]||[]).some(v=>v.color_name.toLowerCase().includes(q)));}
-  document.getElementById('prodCount').innerText=list.length+' PRODUK';
-  render(list);
+  document.getElementById('prodCount').innerText=list.length+' PRODUK';render(list);
 }
 function handleUrlSearch(){const p=new URLSearchParams(location.search);const ut=(p.get('undertone')||'').toUpperCase();const q=(p.get('warna')||p.get('q')||'').toLowerCase();if(ut) activeUnder=ut;if(q) document.getElementById('q').value=q;setTimeout(()=>applyFilters(q),200);}
 function render(list){
-  const el=document.getElementById('list');
-  if(!list.length){el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;opacity:.5">TIDAK ADA PRODUK<br><button onclick="location.href=\'produk.html\'" style="margin-top:10px;padding:8px 16px;border-radius:20px;border:1px solid #111;background:#fff;font-size:9px">LIHAT SEMUA</button></div>';return;}
+  const el=document.getElementById('list');if(!list.length){el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;opacity:.5">TIDAK ADA PRODUK</div>';return;}
   el.innerHTML=list.map((p,i)=>{
     const vars=window._varMap[p.id]||[];let img=p.image_url;let col=vars[0]?.color_name||p.name;if(vars.length){img=vars[0].image_url;col=vars[0].color_name;}
-    const opt=getOptImg(img,400);
-    return `<div class="prod-card"><div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this,${i})"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}-${i}" src="${opt}" loading="lazy" onclick="openProd('${p.id}')"><div style="padding:8px;border-top:1px solid #F6F1EB" onclick="openProd('${p.id}')"><div style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${col}</div><div style="font-size:10px;margin-top:3px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
+    return `<div class="prod-card"><div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this,${i})"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}-${i}" src="${getOptImg(img,400)}" loading="lazy" onclick="openProd('${p.id}')"><div style="padding:8px;border-top:1px solid #F6F1EB" onclick="openProd('${p.id}')"><div style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${col}</div><div style="font-size:10px;margin-top:3px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
   }).join('');
 }
 function quickAdd(id,btnEl,idx){
-  const p=allProducts.find(x=>String(x.id)===String(id));
-  const vars=window._varMap[id]||[];
-  let v=vars[0]||{color_name:p.name,image_url:p.image_url};
-  if(isOut(v))return;
+  const p=allProducts.find(x=>String(x.id)===String(id));const vars=window._varMap[id]||[];let v=vars[0]||{color_name:p.name,image_url:p.image_url};if(isOut(v))return;
   const imgEl=document.getElementById(`img-${id}-${idx}`) || btnEl?.closest('.prod-card')?.querySelector('img');
   if(imgEl) flyToCart(v.image_url, imgEl);
-  addCart(p.name+' - '+v.color_name,p.price,v.image_url);
-  showCartToast(v.color_name,v.image_url);
+  addCart(p.name+' - '+v.color_name,p.price,v.image_url);showCartToast(v.color_name,v.image_url);
 }
 async function openProd(id){
   document.getElementById('prodModal').classList.add('show');
-  document.getElementById('pBox').innerHTML='<div style="padding:30px;text-align:center">Loading...</div>';
+  document.getElementById('pBox').innerHTML='<div style="padding:40px;text-align:center">Loading...</div>';
   const {data:p}=await supabaseClient.from('products').select('*').eq('id',id).single();
   const {data:vars}=await supabaseClient.from('product_variants').select('*').eq('product_id',id).order('id');
-  curProd=p;curVariants=vars||[];if(!curVariants.length)curVariants=[{color_name:p.category||'KREM',image_url:p.image_url,stock:1}];
+  curProd=p;curVariants=vars||[];if(!curVariants.length)curVariants=[{color_name:'KREM',image_url:p.image_url,stock:1}];
   curColor=curVariants[0].color_name;curImg=curVariants[0].image_url;
   document.getElementById('pBox').innerHTML=`
-  <div class="p-gallery"><div class="p-main"><img id="bigImg" src="${getOptImg(curImg,600)}"></div><div class="p-thumbs">${curVariants.map((v,i)=>`<img src="${getOptImg(v.image_url,80)}" class="${v.image_url===curImg?'active':''}" onclick="pickColor('${v.color_name}','${v.image_url}',${i})">`).join('')}</div></div>
+  <div class="p-gallery"><div class="p-main"><img id="bigImg" src="${getOptImg(curImg,600)}"></div><div class="p-thumbs" id="thumbList">${curVariants.map((v,i)=>`<img src="${getOptImg(v.image_url,80)}" class="${i===0?'active':''}" data-idx="${i}" onclick="pickColorByIdx(${i})">`).join('')}</div></div>
   <div class="p-info">
     <div style="font-size:20px;font-family:'Cormorant Garamond'">${p.name}</div><div style="font-size:22px;margin-top:4px">Rp${Number(p.price).toLocaleString('id-ID')}</div>
     <div style="margin-top:10px;font-size:8px;letter-spacing:2px">PILIH WARNA: <b id="selCol">${curColor}</b></div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;max-height:80px;overflow:auto">${curVariants.map((v,i)=>`<button id="btn-${i}" onclick="pickColor('${v.color_name}','${v.image_url}',${i})" style="padding:8px 12px;border:1px solid ${v.image_url===curImg?'#111':'#eee'};background:${v.image_url===curImg?'#111':'#fff'};color:${v.image_url===curImg?'#fff':'#111'};border-radius:20px;font-size:7px">${v.color_name} ${isOut(v)?'- HABIS':''}</button>`).join('')}</div>
+    <div class="variant-wrap" id="variantBtns">${curVariants.map((v,i)=>`<button id="btn-${i}" class="${i===0?'active':''}" onclick="pickColorByIdx(${i})">${v.color_name} ${isOut(v)?'- HABIS':''}</button>`).join('')}</div>
     <div style="margin-top:14px;padding:12px;background:#FFFCF9;border:1px solid #EDE8E1;border-radius:12px">
       <div style="font-size:8px;letter-spacing:2px;opacity:.5;margin-bottom:8px;font-weight:700">CEK ONGKIR DULU SEBELUM BELI</div>
       <div style="display:flex;gap:6px"><input id="destSearchProd" placeholder="Kecamatan - Beji Depok" style="flex:1;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:11px"><button onclick="searchDestProd()" style="padding:10px 14px;background:#111;color:#fff;border:none;border-radius:8px;font-size:9px">CARI</button></div>
@@ -124,10 +109,21 @@ async function openProd(id){
       <div style="display:flex;gap:6px;margin-top:8px"><select id="courierSelectProd" style="flex:1;padding:9px;border:1px solid var(--line);border-radius:8px;font-size:11px"><option value="jne">JNE</option><option value="jnt">J&T</option><option value="sicepat">SiCepat</option><option value="pos">POS</option></select><button onclick="cekOngkirProd()" style="flex:1;padding:9px;background:#fff;border:1px solid #111;border-radius:8px;font-size:9px">CEK ONGKIR</button></div>
       <div id="ongkirResultProd" style="margin-top:8px"></div><div id="ongkirSelectedProd" style="margin-top:8px;font-size:10px;font-weight:600">${selectedService?'✓ '+selectedService+' - Rp'+selectedOngkirCost.toLocaleString('id-ID'):''}</div>
     </div>
-    <div style="display:flex;gap:8px;margin-top:14px"><button class="btn" style="background:#fff;color:#111;border:1px solid #111" onclick="addToCartFromModal()">+ KERANJANG</button><button class="btn" onclick="buyFromModal()">BELI</button></div>
+    <div style="display:flex;gap:8px;margin-top:14px;position:sticky;bottom:0;background:#fff;padding-top:10px"><button class="btn" style="background:#fff;color:#111;border:1px solid #111" onclick="addToCartFromModal()">+ KERANJANG</button><button class="btn" onclick="buyFromModal()">BELI</button></div>
   </div>`;
 }
-function pickColor(c,i,idx){curColor=c;curImg=i;document.getElementById('bigImg').src=getOptImg(i,600);document.getElementById('selCol').innerText=c;document.querySelectorAll('.p-thumbs img').forEach((el,j)=>el.classList.toggle('active',j==idx));}
+function pickColorByIdx(idx){
+  const v=curVariants[idx];if(!v) return;
+  curColor=v.color_name;curImg=v.image_url;
+  // FOTO MUNCUL DARI SINI AJA - CUMA GANTI SRC BIGIMG, GAK RENDER ULANG MODAL
+  const big=document.getElementById('bigImg');if(big) big.src=getOptImg(v.image_url,600);
+  const sel=document.getElementById('selCol');if(sel) sel.innerText=v.color_name;
+  document.querySelectorAll('.p-thumbs img').forEach((el,j)=>el.classList.toggle('active',j===idx));
+  document.querySelectorAll('.variant-wrap button').forEach((b,j)=>b.classList.toggle('active',j===idx));
+  // SCROLL THUMB YANG AKTIF KE TENGAH TAPI GAK GESER HALAMAN
+  const activeThumb=document.querySelector(`.p-thumbs img[data-idx="${idx}"]`);
+  if(activeThumb) activeThumb.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
 function closeProd(){document.getElementById('prodModal').classList.remove('show');}
 function showCartToast(c,i){const t=document.getElementById('cartToast');document.getElementById('toastImg').src=getOptImg(i,80);document.getElementById('toastText').innerText=c+' MASUK KERANJANG';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 function addToCartFromModal(){const cur=curVariants.find(v=>v.image_url===curImg);if(cur&&isOut(cur))return;const big=document.getElementById('bigImg');if(big) flyToCart(curImg,big);addCart(curProd.name+' - '+curColor,curProd.price,curImg);showCartToast(curColor,curImg);}
@@ -143,5 +139,5 @@ async function cekOngkirProd(){if(!selectedDestId){document.getElementById('ongk
 function setOngkirProd(cost,service,etd){selectedOngkirCost=Number(cost);selectedService=service+' ('+etd+')';document.getElementById('ongkirSelectedProd').innerHTML=`✓ ${selectedService} - Rp${selectedOngkirCost.toLocaleString('id-ID')}`;document.getElementById('ongkirResultProd').innerHTML='';renderCart();}
 function checkoutWA(){const c=getCart();if(!c.length)return;let msg=`Halo ARINDA %0A`;c.forEach(it=>{msg+=`- ${it.warna} x${it.qty}%0A`});const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);msg+=`TOTAL Rp${(sub+selectedOngkirCost).toLocaleString('id-ID')}`;window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');}
 </script>
-<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js" onload="(async()=>{supabaseClient=supabase.createClient(SUPA_URL,SUPA_KEY);const {data:all}=await supabaseClient.from('products').select('id,name,price,image_url,category').order('id',{ascending:false}).limit(50);const {data:vars}=await supabaseClient.from('product_variants').select('product_id,color_name,image_url,stock,is_available').limit(300);allProducts=all||[];window._varMap={};(vars||[]).forEach(v=>{if(!window._varMap[v.product_id])window._varMap[v.product_id]=[];window._varMap[v.product_id].push(v);});document.getElementById('prodCount').innerText=allProducts.length+' PRODUK';updateCount();handleUrlSearch();})()"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js" onload="(async()=>{supabaseClient=supabase.createClient(SUPA_URL,SUPA_KEY);const {data:all}=await supabaseClient.from('products').select('id,name,price,image_url,category').order('id',{ascending:false}).limit(50);const {data:vars}=await supabaseClient.from('product_variants').select('product_id,color_name,image_url,stock,is_available').limit(300);allProducts=all||[];window._varMap={};(vars||[]).forEach(v=>{if(!window._varMap[v.product_id])window._varMap[v.product_id]=[];window._varMap[v.product_id].push(v);});updateCount();handleUrlSearch();})()"></script>
 </body></html>
