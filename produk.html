@@ -97,12 +97,33 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.88);backdrop-f
 <a href="kontak.html" class="icon-btn"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3"/><path d="M5 19c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></a>
 <button class="icon-btn" id="cartIcon" onclick="openCart()"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></button>
 </div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a class="active">PRODUK</a><a href="kategori.html">KATEGORI</a></div></div><div class="search-wrap"><input id="q" type="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" name="arinda-produk-671" placeholder="CARI - KETIK BAHAN ATAU WARNA" oninput="doSearch()"><button onclick="doSearch()" style="background:#111;color:#fff;border:none;padding:8px 14px;border-radius:20px;font-size:8px;letter-spacing:2px">CARI</button></div></nav>
-<!-- BAGIAN 4: FILTER SECTION -->
-<main class="section">
-<div style="display:flex;justify-content:space-between"><h1 style="font-family:'Cormorant Garamond';font-size:20px;letter-spacing:2px;font-weight:300;margin:0">PRODUK READY</h1><div id="prodCount" style="font-size:9px;letter-spacing:3px;opacity:.4"></div></div>
-<div class="filter-group" style="background:#111;padding:10px;border-radius:10px"><div class="filter-label" style="color:#fff;opacity:.7">FIND YOUR UNDERTONE</div><div class="filter" id="filterUnder"><button class="active" onclick="filterUndertone('ALL',this)">ALL SKIN</button><button onclick="filterUndertone('COOL',this)">COOL ❄️</button><button onclick="filterUndertone('WARM',this)">WARM ☀️</button><button onclick="filterUndertone('NEUTRAL',this)">NEUTRAL 🌸</button><button onclick="filterUndertone('OLIVE',this)">OLIVE 🫒</button></div></div>
-<div class="filter-group"><div class="filter-label">FILTER BAHAN</div><div class="filter" id="filterBahan"><button class="active" onclick="filterBahan('ALL',this)">ALL BAHAN</button></div></div>
-<div class="filter-group"><div class="filter-label">FILTER WARNA</div><div class="filter" id="filterWarna"><button class="active" onclick="filterWarna('ALL',this)">ALL WARNA</button></div></div>
+<!-- BAGIAN 4: FILTER SECTION - FIX UNDERTONE V69.4 -->
+<main style="max-width:1280px;margin:0 auto;padding:16px">
+<div style="margin-bottom:16px">
+  <div style="display:flex;gap:8px">
+    <input id="q" onkeyup="if(event.key==='Enter')doSearch()" placeholder="CARI - KETIK BAHAN ATAU WARNA" style="flex:1;padding:12px;border:1px solid var(--line);border-radius:8px;font-size:11px;letter-spacing:1px;outline:none">
+    <button onclick="doSearch()" class="btn" style="width:70px">CARI</button>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px">
+    <div style="font-size:10px;letter-spacing:2px;font-weight:700">PRODUK READY</div>
+    <div id="prodCount" style="font-size:10px;opacity:.5">0 PRODUK</div>
+  </div>
+</div>
+
+<!-- FILTER UNDERTONE - FIX LOGIC -->
+<div style="background:#111;color:#fff;padding:14px;border-radius:12px;margin-bottom:12px">
+  <div style="font-size:8px;letter-spacing:2px;opacity:.6;margin-bottom:8px">FIND YOUR UNDERTONE</div>
+  <div id="filterUnder" style="display:flex;gap:6px;flex-wrap:wrap">
+    <button class="active" onclick="filterUndertone('ALL',this)" style="padding:8px 14px;border-radius:20px;border:1px solid #333;background:#fff;color:#111;font-size:9px;letter-spacing:1px;cursor:pointer">ALL SKIN</button>
+    <button onclick="filterUndertone('COOL',this)" style="padding:8px 14px;border-radius:20px;border:1px solid #333;background:#222;color:#fff;font-size:9px;letter-spacing:1px;cursor:pointer">COOL ❄️</button>
+    <button onclick="filterUndertone('WARM',this)" style="padding:8px 14px;border-radius:20px;border:1px solid #333;background:#222;color:#fff;font-size:9px;letter-spacing:1px;cursor:pointer">WARM ☀️</button>
+    <button onclick="filterUndertone('NEUTRAL',this)" style="padding:8px 14px;border-radius:20px;border:1px solid #333;background:#222;color:#fff;font-size:9px;letter-spacing:1px;cursor:pointer">NEUTRAL 🌸</button>
+    <button onclick="filterUndertone('OLIVE',this)" style="padding:8px 14px;border-radius:20px;border:1px solid #333;background:#222;color:#fff;font-size:9px;letter-spacing:1px;cursor:pointer">OLIVE 🫒</button>
+  </div>
+</div>
+
+<div id="filterBahan" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"></div>
+<div id="filterWarna" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px"></div>
 <!-- BAGIAN 5: GRID PRODUK - TEMPAT FOTO HIJAB MUNCUL -->
 <div id="list" class="prod-grid"></div>
 </main>
