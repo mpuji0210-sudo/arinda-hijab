@@ -51,16 +51,25 @@ textarea.input{border:1px solid var(--line);padding:10px;background:var(--bg);re
 <input id="pMaterialDetail" class="input" placeholder="JENIS BAHAN DETAIL">
 <textarea id="pDesc" class="input" rows="4" placeholder="DESKRIPSI PRODUK"></textarea>
 <div style="margin-top:10px;border:1px solid var(--line);padding:10px;background:var(--bg)"><div style="display:flex;gap:6px"><input id="catName" class="input" placeholder="BAHAN BARU" style="margin:0"><button class="btn" style="width:70px;margin:0" onclick="addCat()">ADD</button></div><div id="catList" style="margin-top:8px"></div></div>
-<div style="margin-top:14px; background:#111; color:#fff; padding:12px;">
-<div style="font-size:9px; letter-spacing:3px; margin-bottom:8px;">AUTO UNDERTONE</div>
-<div id="autoUndertoneBox">Pilih warna dulu...</div>
+
+<!-- FIX CEKLIS UNDERTONE V85 -->
+<div style="margin-top:14px; background:#111; color:#fff; padding:12px; border-radius:10px;">
+<div style="font-size:9px; letter-spacing:3px; margin-bottom:8px;">AUTO UNDERTONE + CEKLIS MANUAL</div>
+<div id="autoUndertoneBox" style="min-height:24px">Pilih warna dulu...</div>
+<div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; background:#222; padding:10px; border-radius:8px; border:1px solid #333;">
+<label style="font-size:9px; display:flex; gap:5px; align-items:center; cursor:pointer; background:#fff; color:#111; padding:6px 10px; border-radius:20px;"><input type="checkbox" value="COOL" class="under-check" onchange="manualUndertone()"> COOL ❄️</label>
+<label style="font-size:9px; display:flex; gap:5px; align-items:center; cursor:pointer; background:#fff; color:#111; padding:6px 10px; border-radius:20px;"><input type="checkbox" value="WARM" class="under-check" onchange="manualUndertone()"> WARM ☀️</label>
+<label style="font-size:9px; display:flex; gap:5px; align-items:center; cursor:pointer; background:#fff; color:#111; padding:6px 10px; border-radius:20px;"><input type="checkbox" value="NEUTRAL" class="under-check" onchange="manualUndertone()"> NEUTRAL 🌸</label>
+<label style="font-size:9px; display:flex; gap:5px; align-items:center; cursor:pointer; background:#fff; color:#111; padding:6px 10px; border-radius:20px;"><input type="checkbox" value="OLIVE" class="under-check" onchange="manualUndertone()"> OLIVE 🫒</label>
+</div>
 <input type="hidden" id="pUndertone">
-<div style="display:flex; gap:6px; margin-top:4px;">
-<input id="newMasterColor" class="input" placeholder="WARNA BARU" style="margin:0; font-size:10px; background:#fff;">
-<select id="newMasterUnder" class="input" style="margin:0; width:130px; background:#fff;"><option>COOL</option><option>WARM</option><option>NEUTRAL</option><option>OLIVE</option><option value="WARM,OLIVE">WARM+OLIVE</option></select>
-<button class="btn" style="width:50px;margin:0; background:#fff; color:#111;" onclick="addMasterColorQuick()">+</button>
+<div style="display:flex; gap:6px; margin-top:10px;">
+<input id="newMasterColor" class="input" placeholder="WARNA BARU" style="margin:0; font-size:10px; background:#fff; padding:10px; border-radius:6px;">
+<select id="newMasterUnder" class="input" style="margin:0; width:140px; background:#fff; padding:10px; border-radius:6px;"><option>COOL</option><option>WARM</option><option>NEUTRAL</option><option>OLIVE</option><option value="WARM,OLIVE">WARM+OLIVE</option></select>
+<button class="btn" style="width:50px;margin:0; background:#fff; color:#111; border-radius:6px;" onclick="addMasterColorQuick()">+</button>
 </div>
 </div>
+
 <div id="varInputs" style="margin-top:12px"></div>
 <button class="btn-line" onclick="addVarRow()">+ WARNA + STOK + FOTO</button>
 <button class="btn" id="btnProd" onclick="saveProd()">SIMPAN PRODUK</button><div id="saveStatus" class="save-status"></div>
@@ -97,19 +106,33 @@ async function init(){
 }
 async function loadMasterColors(){const {data}=await supa.from('master_colors').select('*'); masterColorsCache = data||[]; updateAutoUndertone();}
 function updateAutoUndertone(){
-  const rows=[...document.querySelectorAll('#varInputs .slot')];
+  const rows=[...document.querySelectorAll('#varInputs.slot')];
   let colors = rows.map(r=>r.querySelector('.var-color')?.value.trim().toUpperCase()).filter(Boolean);
   let underSet = new Set();
   colors.forEach(cName=>{
     let found = masterColorsCache.find(m=>m.name.toUpperCase()===cName);
     if(found) found.undertone.forEach(u=>underSet.add(u));
-    else { if(['HITAM','BLACK','NAVY'].includes(cName)) underSet.add('COOL'); if(['MILO','MAROON'].includes(cName)) underSet.add('WARM'); if(['CREAM','KREAM','WHITE'].includes(cName)) underSet.add('NEUTRAL'); if(['SAGE','OLIVE'].includes(cName)) underSet.add('OLIVE'); }
+    else {
+      if(['HITAM','BLACK','NAVY','BLUE','PUTIH','WHITE','ABU','GREY','LILAC','PLUM','BURGUNDY','CHARCOAL'].includes(cName)) underSet.add('COOL');
+      if(['MILO','MAROON','MUSTARD','CARAMEL','OLIVE','BROWN','COKSU','PEACH','BEIGE','MOCCA'].includes(cName)) underSet.add('WARM');
+      if(['CREAM','KREAM','WHITE','KREM','HITAM','BEIGE','NUDE','PUTIH'].includes(cName)) underSet.add('NEUTRAL');
+      if(['SAGE','OLIVE','ARMY','KHAKI','GREEN','MOSS'].includes(cName)) underSet.add('OLIVE');
+    }
   });
   if(underSet.size===0) underSet.add('NEUTRAL');
   let arr = Array.from(underSet);
+  document.querySelectorAll('.under-check').forEach(chk=>{
+    chk.checked = arr.includes(chk.value);
+  });
   $('pUndertone').value = arr.join(',');
   $('autoUndertoneBox').innerHTML = arr.map(u=>`<span class="under-badge">${u}</span>`).join('') + `<div style="font-size:8px; margin-top:6px; opacity:.8;">Dari ${colors.length} warna: ${colors.join(', ')||'-'}</div>`;
   return arr;
+}
+function manualUndertone(){
+  let checked = [...document.querySelectorAll('.under-check:checked')].map(c=>c.value);
+  if(checked.length===0) checked=['NEUTRAL'];
+  $('pUndertone').value = checked.join(',');
+  $('autoUndertoneBox').innerHTML = checked.map(u=>`<span class="under-badge">${u}</span>`).join('') + `<div style="font-size:8px; margin-top:6px; opacity:.8;">MANUAL OVERRIDE - ${checked.join(', ')}</div>`;
 }
 window.addMasterColorQuick=async()=>{
   let name=$('newMasterColor').value.trim().toUpperCase(); let u=$('newMasterUnder').value.split(',').map(s=>s.trim());
@@ -142,7 +165,16 @@ $('underGaleri').addEventListener('change',async e=>{for(let f of e.target.files
 function renderFaq(){let h='';faqSlots.forEach((f,i)=>{h+='<div class="slot"><div class="x" onclick="faqSlots.splice('+i+',1);renderFaq()">x</div><input class="input" placeholder="Q" value="'+esc(f.q)+'" oninput="faqSlots['+i+'].q=this.value"><textarea class="input" rows="2" placeholder="A" oninput="faqSlots['+i+'].a=this.value">'+esc(f.a)+'</textarea></div>'});$('faqWrap').innerHTML=h;}
 window.addFaq=()=>{faqSlots.push({q:'',a:''});renderFaq();};
 async function loadProducts(){const {data}=await supa.from('products').select('*').order('id',{ascending:false});$('prodCount').innerText=(data||[]).length;$('list').innerHTML=(data||[]).map(p=>'<div class="prod-card"><img src="'+p.image_url+'"><div style="padding:8px"><div style="font-size:10px">'+esc(p.name)+'</div><div style="font-size:12px">Rp'+Number(p.price).toLocaleString('id-ID')+'</div><div style="font-size:7px;opacity:.5;margin-top:4px">'+esc((p.undertone||[]).join(', '))+'</div><button class="btn-light" style="width:100%;margin-top:6px" onclick="editP(\''+p.id+'\')">EDIT</button><button class="btn-light" style="width:100%;margin-top:4px" onclick="delP(\''+p.id+'\')">HAPUS</button></div></div>').join('');window._p=data||[];}
-window.editP=async(id)=>{const p=window._p.find(x=>String(x.id)===String(id));if(!p)return;$('editId').value=p.id;$('pName').value=p.name;$('pPrice').value=p.price;$('pCat').value=p.category||'';$('pSize').value=p.size_info||'110x110cm';$('pFinish').value=p.finishing||'Laser Cut';$('pMaterialDetail').value=p.material_detail||'';$('pDesc').value=p.description||'';$('varInputs').innerHTML='';const {data:vars}=await supa.from('product_variants').select('*').eq('product_id',id);if(vars&&vars.length){vars.forEach(v=>addVarRow(v.color_name,v.image_url, v.stock??10, v.is_available??true));}else initVar();openTab('produk',document.querySelectorAll('.tab')[4]);window.scrollTo({top:0,behavior:'smooth'});toast('EDIT MODE - '+p.name);};
+window.editP=async(id)=>{const p=window._p.find(x=>String(x.id)===String(id));if(!p)return;$('editId').value=p.id;$('pName').value=p.name;$('pPrice').value=p.price;$('pCat').value=p.category||'';$('pSize').value=p.size_info||'110x110cm';$('pFinish').value=p.finishing||'Laser Cut';$('pMaterialDetail').value=p.material_detail||'';$('pDesc').value=p.description||'';$('varInputs').innerHTML='';const {data:vars}=await supa.from('product_variants').select('*').eq('product_id',id);if(vars&&vars.length){vars.forEach(v=>addVarRow(v.color_name,v.image_url, v.stock??10, v.is_available??true));}else initVar();
+// EDIT - SET CEKLIS DARI DB
+setTimeout(()=>{
+  const under = Array.isArray(p.undertone)? p.undertone : (typeof p.undertone==='string'? JSON.parse(p.undertone||'[]') : []);
+  document.querySelectorAll('.under-check').forEach(chk=>{
+    chk.checked = under.includes(chk.value);
+  });
+  if(under.length) {$('pUndertone').value = under.join(','); $('autoUndertoneBox').innerHTML = under.map(u=>`<span class="under-badge">${u}</span>`).join('')+`<div style="font-size:8px;margin-top:6px;opacity:.8;">DARI DB: ${under.join(', ')}</div>`;}
+},300);
+openTab('produk',document.querySelectorAll('.tab')[4]);window.scrollTo({top:0,behavior:'smooth'});toast('EDIT MODE - '+p.name);};
 window.delP=async(id)=>{showConfirm('HAPUS PRODUK?','Akan terhapus permanen',async()=>{await supa.from('products').delete().eq('id',id);loadProducts();toast('DIHAPUS');});};
 window.saveProd=async()=>{
  const btn=$('btnProd');
@@ -172,12 +204,14 @@ window.saveProd=async()=>{
  }
  if(!finalVars.length){toast('MINIMAL 1 FOTO');$('saveStatus').innerText='FOTO KOSONG';btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
  try{
-   let pid=$('editId').value; let undertoneArr = updateAutoUndertone();
+   let pid=$('editId').value;
+   let undertoneArr = [...document.querySelectorAll('.under-check:checked')].map(c=>c.value);
+   if(undertoneArr.length===0) undertoneArr = updateAutoUndertone();
    $('saveStatus').innerText='SIMPAN DB...';
    if(pid){await supa.from('products').update({name,price,image_url:finalVars[0].image_url,category:$('pCat').value||null,description:$('pDesc').value.trim(),size_info:$('pSize').value.trim(),material_detail:$('pMaterialDetail').value.trim(),finishing:$('pFinish').value.trim(),undertone:undertoneArr, colors: finalVars.map(v=>v.color_name)}).eq('id',pid);await supa.from('product_variants').delete().eq('product_id',pid);}
    else{const {data,error}=await supa.from('products').insert({name,price,image_url:finalVars[0].image_url,category:$('pCat').value||null,description:$('pDesc').value.trim(),size_info:$('pSize').value.trim(),material_detail:$('pMaterialDetail').value.trim(),finishing:$('pFinish').value.trim(),undertone:undertoneArr, colors: finalVars.map(v=>v.color_name)}).select().single();if(error)throw error;pid=data.id;}
    await supa.from('product_variants').insert(finalVars.map(v=>({product_id:pid,color_name:v.color_name,image_url:v.image_url, stock:v.stock, is_available:v.is_available})));
-   $('saveStatus').innerText='OK '+finalVars.length+' WARNA';toast('TERSIMPAN '+finalVars.length+' WARNA');$('editId').value='';$('pName').value='';$('pPrice').value='';$('pDesc').value='';initVar();loadProducts();
+   $('saveStatus').innerText='OK '+finalVars.length+' WARNA - '+undertoneArr.join(',');toast('TERSIMPAN '+finalVars.length+' WARNA - '+undertoneArr.join(','));$('editId').value='';$('pName').value='';$('pPrice').value='';$('pDesc').value='';document.querySelectorAll('.under-check').forEach(c=>c.checked=false);initVar();loadProducts();
  }catch(e){toast('ERROR: '+e.message);$('saveStatus').innerText='ERROR: '+e.message;} finally {btn.disabled=false; btn.innerText='SIMPAN PRODUK';}
 };
 async function cariOrigin(){const q=$('originSearch').value.trim();if(!q)return;$('originList').innerHTML='...';const r=await fetch('/api/search?q='+encodeURIComponent(q));const j=await r.json();$('originList').innerHTML=j.data.map(d=>'<div style="padding:10px;border-bottom:1px solid var(--line);cursor:pointer;font-size:11px" onclick="pilihOrigin(\''+d.id+'\',\''+d.label.replace(/'/g,"")+'\')">'+d.label+'</div>').join('');}
