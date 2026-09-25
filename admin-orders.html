@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Orders - Arinda Hijab</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gray-50 min-h-screen p-4">
+<div class="max-w-6xl mx-auto">
+  <h1 class="text-2xl font-bold text-pink-600 mb-4">Admin Pesanan Arinda Hijab</h1>
+  <div class="flex gap-2 mb-4">
+    <input id="search" oninput="loadOrders()" placeholder="Cari nama / kota..." class="border rounded-lg px-3 py-2 flex-1">
+    <button onclick="loadOrders()" class="bg-pink-600 text-white px-4 py-2 rounded-lg">Refresh</button>
+  </div>
+  <div class="bg-white rounded-xl shadow overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead class="bg-pink-50 text-left">
+        <tr>
+          <th class="p-3">Tanggal</th>
+          <th class="p-3">Customer</th>
+          <th class="p-3">Alamat</th>
+          <th class="p-3">Kota</th>
+          <th class="p-3">Total</th>
+          <th class="p-3">Status</th>
+          <th class="p-3">Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"><tr><td colspan="7" class="p-6 text-center">Loading...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://qjgevvizqeebtdqcbqmt.supabase.co";
+const SUPABASE_ANON = "sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+async function loadOrders(){
+  const q = document.getElementById('search').value.toLowerCase();
+  const { data, error } = await supabaseClient.from('orders').select('*').order('created_at', {ascending:false}).limit(100);
+  if(error){ document.getElementById('tbody').innerHTML = `<tr><td colspan=7 class="p-4 text-red-500">${error.message}</td></tr>`; return; }
+  let filtered = data.filter(o => (o.customer_name||'').toLowerCase().includes(q) || (o.kota_tujuan||'').toLowerCase().includes(q));
+  document.getElementById('tbody').innerHTML = filtered.map(o => `
+    <tr class="border-t hover:bg-pink-50/50">
+      <td class="p-3">${new Date(o.created_at||Date.now()).toLocaleString('id-ID')}</td>
+      <td class="p-3 font-medium">${o.customer_name||'-'}</td>
+      <td class="p-3 max-w-[200px] truncate">${o.alamat||'-'}</td>
+      <td class="p-3">${o.kota_tujuan||o.kota||'-'}</td>
+      <td class="p-3 font-bold">Rp${(o.total||o.total_price||0).toLocaleString('id-ID')}</td>
+      <td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${o.status=='MENUNGGU PEMBAYARAN'?'bg-yellow-100 text-yellow-700':'bg-green-100 text-green-700'}">${o.status||'pending'}</span></td>
+      <td class="p-3 flex gap-1">
+        <button onclick="updateStatus('${o.id}','DIPROSES')" class="bg-blue-500 text-white px-2 py-1 rounded text-xs">Proses</button>
+        <button onclick="updateStatus('${o.id}','SELESAI')" class="bg-green-500 text-white px-2 py-1 rounded text-xs">Selesai</button>
+        <button onclick="hapus('${o.id}')" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Hapus</button>
+      </td>
+    </tr>
+  `).join('') || `<tr><td colspan=7 class="p-6 text-center">Belum ada pesanan</td></tr>`;
+}
+
+async function updateStatus(id, status){
+  await supabaseClient.from('orders').update({status}).eq('id', id);
+  loadOrders();
+}
+async function hapus(id){
+  if(!confirm('Hapus pesanan ini?')) return;
+  await supabaseClient.from('orders').delete().eq('id', id);
+  loadOrders();
+}
+loadOrders();
+</script>
+</body>
+</html>
