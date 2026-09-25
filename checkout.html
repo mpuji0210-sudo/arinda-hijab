@@ -1,28 +1,23 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Checkout - ARINDA HIJAB</title>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Checkout - ARINDA</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-[#FAFAFA]">
-<div class="max-w-[460px] mx-auto bg-white border border-[#E9E9E9] m-3 p-5">
+<div class="max-w-[460px] mx-auto bg-white border p-5 m-3">
   <div style="font-family:serif;letter-spacing:7px;font-size:20px">ARINDA</div>
-  <div style="font-size:8px;letter-spacing:4px;opacity:.4">LANGKAH 1 - CHECKOUT KE BAYAR</div>
+  <div style="font-size:8px;letter-spacing:4px;opacity:.4">LANGKAH 1 - ALAMAT</div>
 
-  <div id="ringkasan" class="bg-[#FAFAFA] border p-3 my-4 text-[11px] leading-6">Loading...</div>
+  <div id="ringkasan" class="bg-[#FAFAFA] border p-3 my-4 text-[11px]"></div>
 
-  <input id="customer_name" placeholder="NAMA LENGKAP" class="w-full border border-black p-3 mb-3 text-[11px] outline-none">
-  <input id="kota_tujuan" placeholder="KOTA TUJUAN (Papua / Surabaya)" class="w-full border border-black p-3 mb-3 text-[11px] outline-none">
-  <textarea id="alamat" placeholder="ALAMAT LENGKAP" rows="3" class="w-full border border-black p-3 mb-3 text-[11px] outline-none"></textarea>
+  <input id="nama" placeholder="Nama Lengkap" style="width:100%;border:1px solid #000;padding:14px;margin-bottom:10px">
+  <input id="wa" placeholder="No WA" style="width:100%;border:1px solid #000;padding:14px;margin-bottom:10px">
+  <input id="kota" placeholder="Kota / Kecamatan" style="width:100%;border:1px solid #000;padding:14px;margin-bottom:10px">
+  <textarea id="alamat" placeholder="Alamat Lengkap" style="width:100%;border:1px solid #000;padding:14px;margin-bottom:10px"></textarea>
 
-  <div class="flex justify-between text-[12px]"><span>SUBTOTAL</span><b id="subEl">Rp0</b></div>
-  <div class="flex justify-between text-[12px] mt-1"><span>ONGKIR <small id="layananEl" class="opacity-50"></small></span><span id="ongkirEl">Rp0</span></div>
-  <div class="flex justify-between text-[15px] font-bold mt-2 pt-2 border-t border-black"><span>TOTAL</span><span id="totalEl">Rp0</span></div>
-
-  <button id="btn" onclick="lanjutBayar()" class="w-full bg-black text-white py-4 mt-5 text-[10px] tracking-[3px]">LANJUT KE PEMBAYARAN</button>
-  <div style="text-align:center;font-size:8px;opacity:.3;margin-top:8px">WA Arinda: 085178098354</div>
+  <button id="btnBayar" onclick="prosesCheckout()" class="w-full bg-black text-white py-4 text-[10px] tracking-[3px]">LANJUT KE PEMBAYARAN</button>
+  <div id="status" style="font-size:10px;margin-top:10px;text-align:center"></div>
 </div>
 
 <script>
@@ -30,50 +25,63 @@ const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 
-let cart = JSON.parse(localStorage.getItem('arinda_cart2')||'[]');
-let ongkir = parseInt(localStorage.getItem('arinda_ongkir_cost')||'0');
-let layanan = localStorage.getItem('arinda_ongkir_service')||'REG';
-let lastCity = localStorage.getItem('arinda_last_city')||'';
-let subtotal = 0; cart.forEach(i=>subtotal+= (i.harga*(i.qty||1)) );
+const cart = JSON.parse(localStorage.getItem('arinda_cart2')||'[]');
+const ongkir = Number(localStorage.getItem('selectedOngkirCost')||0);
+const kotaOngkir = localStorage.getItem('selectedOngkirCity')||'';
+let subtotal=0; cart.forEach(i=>subtotal+=i.harga*i.qty);
+let total=subtotal+ongkir;
 
-document.getElementById('ringkasan').innerHTML = cart.length? cart.map(i=>`• ${i.warna} x${i.qty||1} = Rp${(i.harga*(i.qty||1)).toLocaleString('id-ID')}`).join('<br>') : 'Keranjang kosong - buka produk.html dulu kak';
-document.getElementById('subEl').innerText='Rp'+subtotal.toLocaleString('id-ID');
-document.getElementById('ongkirEl').innerText='Rp'+ongkir.toLocaleString('id-ID');
-document.getElementById('totalEl').innerText='Rp'+(subtotal+ongkir).toLocaleString('id-ID');
-document.getElementById('layananEl').innerText=layanan? '('+layanan+')' : '';
-document.getElementById('kota_tujuan').value=lastCity;
+document.getElementById('ringkasan').innerHTML=
+  cart.map(i=>`• ${i.warna} x${i.qty} = Rp${(i.harga*i.qty).toLocaleString('id-ID')}`).join('<br>')+
+  `<br><br>Subtotal: Rp${subtotal.toLocaleString('id-ID')}<br>Ongkir ${kotaOngkir}: Rp${ongkir.toLocaleString('id-ID')}<br><b>TOTAL: Rp${total.toLocaleString('id-ID')}</b>`;
 
-async function lanjutBayar(){
-  const nama=document.getElementById('customer_name').value.trim();
-  const kota=document.getElementById('kota_tujuan').value.trim();
+async function prosesCheckout(){
+  const nama=document.getElementById('nama').value.trim();
+  const wa=document.getElementById('wa').value.trim();
+  const kota=document.getElementById('kota').value.trim();
   const alamat=document.getElementById('alamat').value.trim();
-  const btn=document.getElementById('btn');
-  if(!nama||!kota||!alamat){alert('Isi Nama, Kota Tujuan, Alamat dulu kak');return;}
-  if(!cart.length){alert('Keranjang kosong kak');return;}
+  if(!nama||!wa||!kota||!alamat){alert('Lengkapi semua!');return;}
 
-  btn.innerText='MENYIMPAN KE ADMIN...'; btn.disabled=true;
-  const total=subtotal+ongkir;
+  document.getElementById('btnBayar').innerText='MENYIMPAN PESANAN...';
+  document.getElementById('btnBayar').disabled=true;
 
-  // Simpan ke Supabase biar admin-orders.html gak --- lagi
-  const {data,error} = await supa.from('orders').insert([{
+  const orderData={
     customer_name:nama,
-    alamat:alamat,
-    kota_tujuan:kota,
+    wa:wa,
     kota:kota,
+    alamat:alamat,
     total:total,
     total_price:total,
-    harga_total:total,
+    kota_tujuan:kotaOngkir||kota,
     ongkir:ongkir,
-    status:'MENUNGGU PEMBAYARAN',
-    items:cart
-  }]).select();
+    items:cart,
+    status:'MENUNGGU_BAYAR',
+    created_at:new Date().toISOString()
+  };
 
-  if(data && data[0]) localStorage.setItem('arinda_last_order_id', data[0].id);
-  localStorage.setItem('arinda_last_order', JSON.stringify({nama,kota,alamat,total,cart}));
+  try{
+    const {data, error} = await supa.from('orders').insert([orderData]).select();
+    if(error) throw error;
 
-  // LOMPAT KE HALAMAN BAYAR
-  window.location.href = `bayar.html?total=${total}&nama=${encodeURIComponent(nama)}&kota=${encodeURIComponent(kota)}`;
+    const newId=data[0].id;
+    localStorage.setItem('arinda_last_order_id', newId);
+    localStorage.setItem('arinda_last_order', JSON.stringify({nama,kota,alamat,total,cart,kota_tujuan:kotaOngkir}));
+    document.getElementById('status').innerText='Berhasil! Mengalihkan ke pembayaran...';
+
+    // Lempar ke bayar.html dengan ID beneran
+    setTimeout(()=>{
+      window.location.href=`bayar.html?total=${total}&nama=${encodeURIComponent(nama)}&kota=${encodeURIComponent(kota)}`;
+    },800);
+
+  }catch(e){
+    console.log(e);
+    // Kalau gagal lagi, tetap lanjut tapi kasih tau
+    document.getElementById('status').innerText='Gagal simpan ke pusat: '+e.message+' - Tetap lanjut...';
+    const tempId='temp-'+Date.now();
+    localStorage.setItem('arinda_last_order_id', tempId);
+    localStorage.setItem('arinda_last_order', JSON.stringify({nama,kota,alamat,total,cart}));
+    setTimeout(()=>{window.location.href=`bayar.html?total=${total}&nama=${encodeURIComponent(nama)}&kota=${encodeURIComponent(kota)}`},1000);
+  }
 }
 </script>
-</body>
-</html>
+</body></html>
