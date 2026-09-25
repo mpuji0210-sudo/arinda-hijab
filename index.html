@@ -59,7 +59,7 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.88);backdrop-f
 
 <div class="section"><div style="display:flex;justify-content:space-between;align-items:center"><div class="sub">BEST SELLER</div><a href="produk.html" style="font-size:8px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;padding-bottom:3px">LIHAT PRODUK</a></div><div class="colors" id="koleksi4Grid"></div></div>
 
-<footer style="margin-top:28px;padding:28px 16px 24px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div><div style="font-size:7px;letter-spacing:5px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div><div style="margin-top:12px;font-size:7px;letter-spacing:3px;opacity:.3">© 2026 ARINDA V77 FIX 1 KLIK</div></footer>
+<footer style="margin-top:28px;padding:28px 16px 24px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div><div style="font-size:7px;letter-spacing:5px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div><div style="margin-top:12px;font-size:7px;letter-spacing:3px;opacity:.3">© 2026 ARINDA V78 BEST LABEL FIX</div></footer>
 
 <div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()"><div id="cartBox">
 <div style="display:flex;justify-content:space-between;align-items:center"><b style="letter-spacing:2px;font-size:11px">KERANJANG (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:22px">×</button></div>
@@ -148,10 +148,10 @@ async function init(){
             const url=typeof v==='string'?v:v.url;
             const rawTitle=(typeof v==='object'?v.title:'')||'';
             const upperTitle = rawTitle.replace(/'/g,"").toUpperCase();
-            const cleanColor = upperTitle.split('-')[0].replace(/BEST SELLER/g,'').trim() || 'BEST';
+            const cleanColor = upperTitle.split('-')[0].replace(/BEST SELLER/g,'').replace(/HIJAM/g,'').replace(/HIJAB/g,'').replace(/BEST/g,'').trim() || upperTitle.split('-')[0].trim() || 'BEST';
             const displayTitle = upperTitle || 'BEST';
             const link='produk.html?warna='+encodeURIComponent(cleanColor.toLowerCase());
-            return `<div class="k-card"><img id="img-best-${i}" src="${getOptImg(url,300)}" loading="lazy" decoding="async" width="300" height="300" alt="${displayTitle}" onclick="location.href='${link}'"><div class="heart-btn" onclick="quickAdd('${cleanColor}','${url}', this, ${i})"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><div style="padding:6px;border-top:1px solid #F6F1EB;font-size:7px;letter-spacing:2px;opacity:.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" onclick="location.href='${link}'">${displayTitle}</div></div>`
+            return `<div class="k-card"><img id="img-best-${i}" src="${getOptImg(url,300)}" loading="lazy" decoding="async" width="300" height="300" alt="${displayTitle}" onclick="location.href='${link}'"><div class="heart-btn" onclick="quickAdd('${cleanColor}','${url}', this, ${i})"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><div style="padding:8px 8px 7px;border-top:1px solid #F6F1EB" onclick="location.href='${link}'"><div style="font-size:10px;letter-spacing:0.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${cleanColor}</div><div style="font-size:7px;letter-spacing:2px;opacity:.4;margin-top:3px">BEST SELLER</div></div></div>`
           }).join('');
         }
       }catch(e){}
