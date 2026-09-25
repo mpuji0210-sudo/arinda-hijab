@@ -1,83 +1,118 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bayar - Arinda Hijab</title>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pembayaran - ARINDA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
-body{font-family:sans-serif;background:#f7f7f7;margin:0;padding:15px}
-.box{max-width:450px;margin:0 auto;background:white;border-radius:15px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.1)}
-h2{text-align:center;margin:0 0 15px}
-.rek{background:#f0f8ff;border:2px dashed #007bff;padding:15px;border-radius:10px;text-align:center;margin:15px 0}
-.rek b{font-size:18px;display:block;color:#007bff}
-.btn{width:100%;padding:14px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;margin-top:10px}
-.btn-copy{background:#e3f2fd;color:#007bff}
-.btn-lunas{background:#111;color:white;font-size:16px}
-.detail{font-size:14px;line-height:1.6}
-.detail b{display:inline-block;width:70px}
+body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+.font-serif{font-family:'Cormorant Garamond',serif}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#000;color:#fff;padding:10px 18px;font-size:10px;letter-spacing:2px;transition:.4s;opacity:0;z-index:9999}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+#lunasModal{display:none;position:fixed;inset:0;background:rgba(20,15,10,0.55);backdrop-filter:blur(12px);z-index:9999;align-items:center;justify-content:center;padding:20px}
+#lunasModal.show{display:flex}
+@keyframes lvSlide{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
 </style>
 </head>
 <body>
-<div class="box">
-<h2>💳 Selesaikan Pembayaran</h2>
-<div class="detail" id="detailPesanan">
-Memuat pesanan...
+
+<!-- HEADER SAMA KAYAK PRODUK & CHECKOUT -->
+<nav style="position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9">
+  <div style="max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px">ARINDA</div>
+      <span style="display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM</span>
+    </div>
+  </div>
+</nav>
+
+<div style="max-width:480px;margin:0 auto;padding:24px 16px 40px">
+
+  <!-- JUDUL CLEAN -->
+  <div style="font-family:'Cormorant Garamond';font-size:26px;letter-spacing:1px;font-weight:300">Selesaikan Pembayaran</div>
+  <div style="font-size:9px;letter-spacing:3px;opacity:.4;margin-top:6px;margin-bottom:20px">LANGKAH 2 - TRANSFER</div>
+
+  <!-- RINGKASAN PESANAN -->
+  <div style="border:1px solid #E9E9E9;padding:16px;background:#fff">
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:11px;line-height:1.6">
+      <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Nama</span><b id="bNama"></b></div>
+      <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Kota</span><b id="bKota"></b></div>
+      <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Alamat</span><b id="bAlamat" style="max-width:60%;text-align:right"></b></div>
+      <div style="border-top:1px solid #F2F2F2;margin-top:8px;padding-top:8px">
+        <div style="opacity:.5;margin-bottom:4px">Produk</div>
+        <div id="bProduk" style="font-size:11px"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:8px;font-weight:700;font-size:14px;border-top:1px solid #E9E9E9;padding-top:10px">
+        <span>TOTAL</span><span id="bTotal"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- REKENING CLEAN BUKAN GARIS BIRU -->
+  <div style="margin-top:16px;border:1px solid #000;padding:16px;background:#FAFAFA;text-align:center">
+    <div style="font-size:9px;letter-spacing:3px;opacity:.5">TRANSFER KE REKENING</div>
+    <div style="margin-top:8px;font-size:18px;font-weight:700;letter-spacing:.5px">BCA 8740376161</div>
+    <div style="margin-top:2px;font-size:11px;letter-spacing:1px">a.n MUHAMMAD PUJIANTO</div>
+    <div style="margin-top:14px;border-top:1px solid #E9E9E9;padding-top:12px">
+      <div style="font-size:9px;letter-spacing:2px;opacity:.4">TOTAL TRANSFER SESUAI PESANAN</div>
+      <div id="bTotal2" style="margin-top:4px;font-size:22px;font-weight:700"></div>
+    </div>
+  </div>
+
+  <button onclick="salinRek()" style="width:100%;margin-top:12px;height:48px;background:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer">SALIN NO REKENING</button>
+  <button onclick="openLunas()" style="width:100%;margin-top:8px;height:52px;background:#000;color:#fff;border:none;font-size:10px;letter-spacing:3px;cursor:pointer">SAYA SUDAH TRANSFER - KONFIRMASI LUNAS</button>
+  <div style="text-align:center;font-size:9px;letter-spacing:1px;opacity:.35;margin-top:10px;line-height:1.5">Setelah transfer, klik konfirmasi. Pesanan akan masuk ke Admin.</div>
+
 </div>
 
-<div class="rek">
-<small>TRANSFER KE REKENING:</small>
-<b>BCA 8740376161</b>
-<b>a.n MUHAMMAD PUJIANTO</b>
-<p style="font-size:13px;margin:10px 0 0">Total Transfer Sesuai Pesanan</p>
-<h3 id="totalTransfer" style="margin:5px 0;color:red">Rp55.000</h3>
-</div>
+<!-- FOOTER SAMA -->
+<footer style="margin-top:32px;padding:48px 16px 40px;text-align:center;border-top:1px solid #E9E9E9;background:#FFFFFF">
+  <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:18px">ARINDA</div>
+  <div style="font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div>
+  <div style="margin-top:18px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA HIJAB PREMIUM</div>
+</footer>
 
-<button class="btn btn-copy" onclick="salinRek()">📋 SALIN NO REKENING</button>
-<button class="btn btn-lunas" onclick="konfirmasiLunas()">SAYA SUDAH TRANSFER - KONFIRMASI LUNAS ✅</button>
-<p style="text-align:center;font-size:12px;color:gray;margin-top:15px">Setelah transfer, klik konfirmasi. Pesanan akan masuk ke Admin.</p>
+<div id="toast">NO REKENING DISALIN</div>
+
+<!-- MODAL LUNAS ELEGAN SAMA KAYAK PRODUK -->
+<div id="lunasModal" onclick="if(event.target.id==='lunasModal')closeLunas()">
+  <div style="background:#FFFEFB;width:100%;max-width:380px;border-radius:28px;border:1px solid #E8E0D0;padding:28px 24px;box-shadow:0 30px 80px rgba(0,0,0,0.25);animation:lvSlide .35s cubic-bezier(0.16,1,0.3,1)">
+    <div style="width:46px;height:46px;border-radius:50%;background:#F9F6F1;border:1px solid #E8E0D0;display:flex;align-items:center;justify-content:center;font-size:20px">✓</div>
+    <div style="font-family:'Cormorant Garamond';font-size:23px;margin-top:16px;color:#1a1a1a">Konfirmasi Pembayaran?</div>
+    <div style="font-size:12px;line-height:1.7;color:#1a1a1a;opacity:.6;margin-top:12px">Pastikan kakak sudah transfer sesuai total <b id="mTotal" style="opacity:1"></b> ke BCA 8740376161.<br><br>Setelah konfirmasi, admin akan cek dan proses pesanan.</div>
+    <div style="display:flex;gap:8px;margin-top:22px">
+      <button onclick="closeLunas()" style="flex:1;height:48px;background:#fff;border:1px solid #000;border-radius:16px;font-size:9px;letter-spacing:2px">BATAL</button>
+      <button onclick="konfirmLunas()" id="btnLunas" style="flex:1;height:48px;background:#000;color:#fff;border:1px solid #000;border-radius:16px;font-size:9px;letter-spacing:2px">YA, SUDAH TRANSFER</button>
+    </div>
+  </div>
 </div>
 
 <script>
-// Ambil data dari checkout
-const nama = localStorage.getItem('checkout_nama') || 'Puji';
-const kota = localStorage.getItem('checkout_kota') || 'Si';
-const alamat = localStorage.getItem('checkout_alamat') || 'Sa';
-const produk = localStorage.getItem('checkout_produk') || 'Segi empat Paris premium - OLIVE GREEN';
-const total = localStorage.getItem('checkout_total') || 'Rp55.000';
+const params=new URLSearchParams(location.search);
+const total=Number(params.get('total')||localStorage.getItem('selectedOngkirCost')||0);
+const nama=params.get('nama')||localStorage.getItem('checkout_nama')||'';
+const kota=params.get('kota')||'';
+const cart=JSON.parse(localStorage.getItem('arinda_cart2')||'[]');
+const alamat=localStorage.getItem('checkout_alamat')||params.get('alamat')||'';
 
-document.getElementById('detailPesanan').innerHTML = `
-<b>Nama:</b> ${nama}<br>
-<b>Kota:</b> ${kota}<br>
-<b>Alamat:</b> ${alamat}<br>
-<b>Produk:</b> ${produk}<br>
-<b>Total:</b> ${total}
-`;
-document.getElementById('totalTransfer').innerText = total;
+function formatRp(n){return 'Rp'+Number(n).toLocaleString('id-ID')}
+
+document.getElementById('bNama').innerText=nama;
+document.getElementById('bKota').innerText=kota;
+document.getElementById('bAlamat').innerText=alamat||'-';
+document.getElementById('bProduk').innerText=cart.map(i=>`${i.warna} x${i.qty}`).join(', ')||'-';
+document.getElementById('bTotal').innerText=formatRp(total);
+document.getElementById('bTotal2').innerText=formatRp(total);
+document.getElementById('mTotal').innerText=formatRp(total);
 
 function salinRek(){
   navigator.clipboard.writeText('8740376161');
-  alert('No rekening BCA 8740376161 disalin! a.n MUHAMMAD PUJIANTO');
+  const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);
 }
-
-function konfirmasiLunas(){
-  let orders = JSON.parse(localStorage.getItem('arinda_orders') || '[]');
-  orders.unshift({
-    nama: nama,
-    kota: kota,
-    alamat: alamat,
-    produk: produk,
-    total: total,
-    rekening: 'BCA 8740376161 a.n MUHAMMAD PUJIANTO',
-    waktu: new Date().toLocaleString('id-ID')
-  });
-  localStorage.setItem('arinda_orders', JSON.stringify(orders));
-  
-  // Hapus cart
-  localStorage.removeItem('cart');
-  
-  alert('✅ Terima kasih! Pesanan kamu sudah masuk ke Admin. Cek di /ad');
-  window.location.href = '/';
+function openLunas(){document.getElementById('lunasModal').classList.add('show');}
+function closeLunas(){document.getElementById('lunasModal').classList.remove('show');}
+function konfirmLunas(){
+  document.getElementById('btnLunas').innerText='MENGIRIM...';
+  const pesan=`Halo Admin ARINDA, saya sudah transfer%0A%0ANama: ${nama}%0AKota: ${kota}%0ATotal: ${formatRp(total)}%0AProduk: ${cart.map(i=>i.warna+' x'+i.qty).join(', ')}%0A%0AMohon dicek ya kak 🙏`;
+  setTimeout(()=>{window.location.href=`https://wa.me/6285178098354?text=${pesan}`;},600);
 }
 </script>
-</body>
-</html>
+</body></html>
