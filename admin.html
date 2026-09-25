@@ -103,7 +103,7 @@ function getUndertoneForColor(cName){
   return ['NEUTRAL'];
 }
 function aggregateUndertone(){
-  const rows=[...document.querySelectorAll('#varInputs.slot')];
+  const rows=[...document.querySelectorAll('#varInputs .slot')];
   let all = new Set();
   rows.forEach(r=>{
     let checks=[...r.querySelectorAll('.under-check:checked')].map(c=>c.value);
@@ -172,7 +172,7 @@ window.delP=async(id)=>{showConfirm('HAPUS PRODUK?','Akan terhapus permanen',asy
 window.saveProd=async()=>{
  const btn=$('btnProd');if(btn.disabled) return;btn.disabled=true; btn.innerText='MENYIMPAN...';
  const name=$('pName').value.trim();const price=Number($('pPrice').value);if(!name||!price){toast('ISI NAMA & HARGA');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
- const rows=[...document.querySelectorAll('#varInputs.slot')];if(!rows.length){toast('TAMBAH WARNA DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
+ const rows=[...document.querySelectorAll('#varInputs .slot')];if(!rows.length){toast('TAMBAH WARNA DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
  $('saveStatus').innerText='PROSES '+rows.length+' WARNA...';
  let finalVars=[];
  for(let idx=0; idx<rows.length; idx++){
