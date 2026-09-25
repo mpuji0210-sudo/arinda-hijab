@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADMIN V86 PER-WARNA UNDERTONE</title>
+<title>ADMIN V87 + JENIS PRODUK</title>
 <meta name="robots" content="noindex, nofollow">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
@@ -45,14 +45,17 @@ textarea.input{border:1px solid var(--line);padding:10px;background:var(--bg);re
 <div class="card" style="border-color:var(--black)"><h3>PRODUK</h3>
 <input type="hidden" id="editId"><input id="pName" class="input" placeholder="NAMA PRODUK ex: Paris Premium Segiempat">
 <input id="pPrice" type="number" class="input" placeholder="HARGA ex: 45000">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<select id="pJenis" class="input"><option value="">PILIH JENIS PRODUK</option><option value="SEGI EMPAT">SEGI EMPAT</option><option value="SEGI EMPAT PARIS">SEGI EMPAT PARIS PREMIUM</option><option value="PASHMINA">PASHMINA</option><option value="PASHMINA SHAWL">PASHMINA SHAWL</option></select>
 <select id="pCat" class="input"><option value="">PILIH BAHAN</option></select>
+</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
 <input id="pSize" class="input" placeholder="UKURAN ex: 110x110cm" value="110x110cm">
 <input id="pFinish" class="input" placeholder="FINISHING ex: Laser Cut" value="Laser Cut">
 </div>
 <input id="pMaterialDetail" class="input" placeholder="JENIS BAHAN DETAIL">
 <textarea id="pDesc" class="input" rows="4" placeholder="DESKRIPSI PRODUK"></textarea>
-<div style="margin-top:10px;border:1px solid var(--line);padding:10px;background:var(--bg)"><div style="display:flex;gap:6px"><input id="catName" class="input" placeholder="BAHAN BARU" style="margin:0"><button class="btn" style="width:70px;margin:0" onclick="addCat()">ADD</button></div><div id="catList" style="margin-top:8px"></div></div>
+<div style="margin-top:10px;border:1px solid var(--line);padding:10px;background:var(--bg)"><div style="display:flex;gap:6px"><input id="catName" class="input" placeholder="BAHAN BARU ex: VOAL PREMIUM" style="margin:0"><button class="btn" style="width:70px;margin:0" onclick="addCat()">ADD</button></div><div id="catList" style="margin-top:8px"></div></div>
 <div style="margin-top:14px; background:#111; color:#fff; padding:12px; border-radius:10px;">
 <div style="font-size:9px; letter-spacing:3px; margin-bottom:8px;">MASTER WARNA -> AUTO UNDERTONE</div>
 <div id="autoUndertoneBox" style="min-height:20px; font-size:8px; opacity:.8;">Isi warna di bawah, undertone auto masuk per foto</div>
@@ -153,10 +156,10 @@ window.addUndertone=()=>{undertoneSlots.push({url:""});renderUnder();};
 $('underGaleri').addEventListener('change',async e=>{for(let f of e.target.files){undertoneSlots.push({url:await fileToBase64(f)});}renderUnder();});
 function renderFaq(){let h='';faqSlots.forEach((f,i)=>{h+='<div class="slot"><div class="x" onclick="faqSlots.splice('+i+',1);renderFaq()">x</div><input class="input" placeholder="Q" value="'+esc(f.q)+'" oninput="faqSlots['+i+'].q=this.value"><textarea class="input" rows="2" placeholder="A" oninput="faqSlots['+i+'].a=this.value">'+esc(f.a)+'</textarea></div>'});$('faqWrap').innerHTML=h;}
 window.addFaq=()=>{faqSlots.push({q:'',a:''});renderFaq();};
-async function loadProducts(){const {data}=await supa.from('products').select('*').order('id',{ascending:false});$('prodCount').innerText=(data||[]).length;$('list').innerHTML=(data||[]).map(p=>'<div class="prod-card"><img src="'+p.image_url+'"><div style="padding:8px"><div style="font-size:10px">'+esc(p.name)+'</div><div style="font-size:12px">Rp'+Number(p.price).toLocaleString('id-ID')+'</div><div style="font-size:7px;opacity:.5;margin-top:4px">'+esc((p.undertone||[]).join(', '))+'</div><button class="btn-light" style="width:100%;margin-top:6px" onclick="editP(\''+p.id+'\')">EDIT</button><button class="btn-light" style="width:100%;margin-top:4px" onclick="delP(\''+p.id+'\')">HAPUS</button></div></div>').join('');window._p=data||[];}
+async function loadProducts(){const {data}=await supa.from('products').select('*').order('id',{ascending:false});$('prodCount').innerText=(data||[]).length;$('list').innerHTML=(data||[]).map(p=>'<div class="prod-card"><img src="'+p.image_url+'"><div style="padding:8px"><div style="font-size:10px">'+esc(p.name)+'</div><div style="font-size:8px;opacity:.6">'+esc((p.product_type||p.kategori_produk||'')+' | '+(p.category||''))+'</div><div style="font-size:12px">Rp'+Number(p.price).toLocaleString('id-ID')+'</div><div style="font-size:7px;opacity:.5;margin-top:4px">'+esc((p.undertone||[]).join(', '))+'</div><button class="btn-light" style="width:100%;margin-top:6px" onclick="editP(\''+p.id+'\')">EDIT</button><button class="btn-light" style="width:100%;margin-top:4px" onclick="delP(\''+p.id+'\')">HAPUS</button></div></div>').join('');window._p=data||[];}
 window.editP=async(id)=>{
   const p=window._p.find(x=>String(x.id)===String(id));if(!p)return;
-  $('editId').value=p.id;$('pName').value=p.name;$('pPrice').value=p.price;$('pCat').value=p.category||'';$('pSize').value=p.size_info||'110x110cm';$('pFinish').value=p.finishing||'Laser Cut';$('pMaterialDetail').value=p.material_detail||'';$('pDesc').value=p.description||'';$('varInputs').innerHTML='';
+  $('editId').value=p.id;$('pName').value=p.name;$('pPrice').value=p.price;$('pCat').value=p.category||'';$('pJenis').value=p.product_type||p.kategori_produk||'';$('pSize').value=p.size_info||'110x110cm';$('pFinish').value=p.finishing||'Laser Cut';$('pMaterialDetail').value=p.material_detail||'';$('pDesc').value=p.description||'';$('varInputs').innerHTML='';
   const {data:vars}=await supa.from('product_variants').select('*').eq('product_id',id);
   if(vars&&vars.length){
     vars.forEach(v=>{
@@ -171,6 +174,9 @@ window.delP=async(id)=>{showConfirm('HAPUS PRODUK?','Akan terhapus permanen',asy
 window.saveProd=async()=>{
  const btn=$('btnProd');if(btn.disabled) return;btn.disabled=true; btn.innerText='MENYIMPAN...';
  const name=$('pName').value.trim();const price=Number($('pPrice').value);if(!name||!price){toast('ISI NAMA & HARGA');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
+ const jenisVal=$('pJenis').value; const bahanVal=$('pCat').value;
+ if(!jenisVal){toast('PILIH JENIS PRODUK DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
+ if(!bahanVal){toast('PILIH BAHAN DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
  const rows=[...document.querySelectorAll('#varInputs .slot')];if(!rows.length){toast('TAMBAH WARNA DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
  $('saveStatus').innerText='PROSES '+rows.length+' WARNA...';
  let finalVars=[];
@@ -199,12 +205,13 @@ window.saveProd=async()=>{
    let allUnder = new Set(); finalVars.forEach(v=>v.undertone.forEach(u=>allUnder.add(u)));
    let productUndertone = Array.from(allUnder);
    if(productUndertone.length===0) productUndertone=['NEUTRAL'];
-   $('saveStatus').innerText='SIMPAN DB... PROD:'+productUndertone.join(',');
+   $('saveStatus').innerText='SIMPAN DB... '+jenisVal+' | '+bahanVal;
+   let payload = {name,price,image_url:finalVars[0].image_url,category:bahanVal,product_type:jenisVal,kategori_produk:jenisVal,description:$('pDesc').value.trim(),size_info:$('pSize').value.trim(),material_detail:$('pMaterialDetail').value.trim(),finishing:$('pFinish').value.trim(),undertone:productUndertone, colors: finalVars.map(v=>v.color_name)};
    if(pid){
-     await supa.from('products').update({name,price,image_url:finalVars[0].image_url,category:$('pCat').value||null,description:$('pDesc').value.trim(),size_info:$('pSize').value.trim(),material_detail:$('pMaterialDetail').value.trim(),finishing:$('pFinish').value.trim(),undertone:productUndertone, colors: finalVars.map(v=>v.color_name)}).eq('id',pid);
+     await supa.from('products').update(payload).eq('id',pid);
      await supa.from('product_variants').delete().eq('product_id',pid);
    } else {
-     const {data,error}=await supa.from('products').insert({name,price,image_url:finalVars[0].image_url,category:$('pCat').value||null,description:$('pDesc').value.trim(),size_info:$('pSize').value.trim(),material_detail:$('pMaterialDetail').value.trim(),finishing:$('pFinish').value.trim(),undertone:productUndertone, colors: finalVars.map(v=>v.color_name)}).select().single();
+     const {data,error}=await supa.from('products').insert(payload).select().single();
      if(error) throw error; pid=data.id;
    }
    try{
@@ -212,7 +219,7 @@ window.saveProd=async()=>{
    }catch(e){
      await supa.from('product_variants').insert(finalVars.map(v=>({product_id:pid,color_name:v.color_name,image_url:v.image_url, stock:v.stock, is_available:v.is_available})));
    }
-   $('saveStatus').innerText='OK '+finalVars.length+' WARNA - '+productUndertone.join(',');toast('TERSIMPAN '+finalVars.length+' WARNA - '+productUndertone.join(','));$('editId').value='';$('pName').value='';$('pPrice').value='';$('pDesc').value='';initVar();loadProducts();
+   $('saveStatus').innerText='OK '+finalVars.length+' WARNA - '+jenisVal+' | '+bahanVal;toast('TERSIMPAN '+jenisVal+' | '+bahanVal);$('editId').value='';$('pName').value='';$('pPrice').value='';$('pDesc').value='';initVar();loadProducts();
  }catch(e){toast('ERROR: '+e.message);$('saveStatus').innerText='ERROR: '+e.message;} finally {btn.disabled=false; btn.innerText='SIMPAN PRODUK';}
 };
 async function cariOrigin(){const q=$('originSearch').value.trim();if(!q)return;$('originList').innerHTML='...';const r=await fetch('/api/search?q='+encodeURIComponent(q));const j=await r.json();$('originList').innerHTML=j.data.map(d=>'<div style="padding:10px;border-bottom:1px solid var(--line);cursor:pointer;font-size:11px" onclick="pilihOrigin(\''+d.id+'\',\''+d.label.replace(/'/g,"")+'\')">'+d.label+'</div>').join('');}
