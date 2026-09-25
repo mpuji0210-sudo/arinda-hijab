@@ -55,7 +55,6 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.88);backdrop-f
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 let supabaseClient,allProducts=[],WA_NUMBER="6285178098354",tokoOriginId="17523",selectedDestId=null,selectedOngkirCost=0,selectedService='',curProd={},curColor='',curImg='',curVariants=[],activeUnder='ALL',lastSearchQuery='',curUnder=[];
-
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return[]}}
 function saveCart(c){localStorage.setItem('arinda_cart2',JSON.stringify(c));updateCount();renderCart();}
 function updateCount(){const el=document.getElementById('cCount');if(!el)return;let t=getCart().reduce((a,b)=>a+(b.qty||0),0);el.innerText=t;el.style.display=t>0?'flex':'none';}
@@ -81,25 +80,20 @@ function flyToCart(imgUrl,startEl){
   });});
   setTimeout(()=>fly.remove(),900);
 }
-
 function cleanSearchQuery(q){
   if(!q) return '';
-  // FIX BEST SELLER: "hitam - best seller" -> "hitam"
   return q.toLowerCase().replace(/- best seller/g,'').replace(/best seller/g,'').trim();
 }
 function doSearch(){let q=cleanSearchQuery(document.getElementById('q').value);lastSearchQuery=q;applyFilters(q);}
-
 function normalizeUnder(arr){
   if(!arr) return [];
   let a = Array.isArray(arr)?arr:[arr];
   try{ if(typeof arr==='string' && arr.startsWith('[')) a=JSON.parse(arr); }catch(e){}
   return a.map(x=>String(x).toUpperCase());
 }
-
 function getMatchedVariant(productId, q, under){
   const vars = window._varMap[productId]||[];
   if(!vars.length) return null;
-  // 1. Prioritas Undertone
   if(under && under!=='ALL'){
     const found = vars.find(v=>{
       const u = normalizeUnder(v.undertone||[]);
@@ -107,28 +101,23 @@ function getMatchedVariant(productId, q, under){
     });
     if(found) return found;
   }
-  // 2. Prioritas Warna Search
   if(q){
     const found = vars.find(v=>(v.color_name||'').toLowerCase().includes(q.toLowerCase()));
     if(found) return found;
   }
   return vars[0];
 }
-
 function applyFilters(qOverride){
   let q = (qOverride!==undefined?qOverride:cleanSearchQuery(document.getElementById('q').value||'')).toLowerCase().trim();
   q = cleanSearchQuery(q);
   lastSearchQuery=q;
   let list=[...allProducts];
-
-  // Filter Warna
   if(q){
     list=list.filter(p=>{
       const vars=window._varMap[p.id]||[];
       return p.name.toLowerCase().includes(q) || vars.some(v=>(v.color_name||'').toLowerCase().includes(q));
     });
   }
-  // Filter Undertone - FIX UTAMA: cek per varian, bukan kata kunci
   if(activeUnder!=='ALL'){
     list=list.filter(p=>{
       const vars=window._varMap[p.id]||[];
@@ -141,24 +130,20 @@ function applyFilters(qOverride){
   document.getElementById('prodCount').innerText=list.length+' PRODUK';
   render(list);
 }
-
 function handleUrlSearch(){
   const p=new URLSearchParams(location.search);
   let qRaw = p.get('warna')||p.get('q')||'';
   let uRaw = p.get('undertone')||'';
-  // bersihin best seller tag
   let q = cleanSearchQuery(qRaw);
   if(uRaw){ activeUnder=uRaw.toUpperCase(); }
   if(q){ document.getElementById('q').value=q; lastSearchQuery=q; }
   setTimeout(()=>applyFilters(q),400);
 }
-
 function underBadgeHtml(arr){
   if(!arr||!arr.length) return '';
   let a = normalizeUnder(arr);
   return a.map(u=>`<span class="under-badge">${u}</span>`).join('');
 }
-
 function render(list){
   const el=document.getElementById('list');
   if(!list.length){el.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:60px 0;opacity:.5">TIDAK ADA PRODUK UNTUK "${document.getElementById('q').value}"<br><button onclick="document.getElementById('q').value='';activeUnder='ALL';applyFilters('')" style="margin-top:10px;padding:8px 16px;border-radius:20px;border:1px solid #111;background:#fff;font-size:9px">LIHAT SEMUA</button></div>`;return;}
@@ -170,7 +155,6 @@ function render(list){
     return `<div class="prod-card"><div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this,${i},'${(col||'').replace(/'/g,'')}')"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}-${i}" src="${getOptImg(img,400)}" loading="lazy" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="padding:8px;border-top:1px solid #F6F1EB" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${col}</div><div style="font-size:8px;margin-top:2px">${underBadgeHtml(under)}</div><div style="font-size:10px;margin-top:3px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
   }).join('');
 }
-
 function quickAdd(id,btnEl,idx,colorName){
   const p=allProducts.find(x=>String(x.id)===String(id));
   const vars=window._varMap[id]||[];
@@ -180,7 +164,6 @@ function quickAdd(id,btnEl,idx,colorName){
   if(imgEl) flyToCart(v.image_url, imgEl);
   addCart(p.name+' - '+v.color_name,p.price,v.image_url);showCartToast(v.color_name,v.image_url);
 }
-
 async function openProd(id,colorName){
   document.getElementById('prodModal').classList.add('show');
   document.getElementById('pBox').innerHTML='<div style="padding:40px;text-align:center">Loading...</div>';
@@ -204,7 +187,6 @@ async function openProd(id,colorName){
   <div style="margin-top:14px;padding:12px;background:#FFFCF9;border:1px solid #EDE8E1;border-radius:12px"><div style="font-size:8px;letter-spacing:2px;opacity:.5;margin-bottom:8px;font-weight:700">CEK ONGKIR DULU SEBELUM BELI</div><div style="display:flex;gap:6px"><input id="destSearchProd" placeholder="Kecamatan - Beji Depok" style="flex:1;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:11px"><button onclick="searchDestProd()" style="padding:10px 14px;background:#111;color:#fff;border:none;border-radius:8px;font-size:9px">CARI</button></div><div id="destListProd" style="display:none;margin-top:8px;max-height:100px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:8px"></div><div style="display:flex;gap:6px;margin-top:8px"><select id="courierSelectProd" style="flex:1;padding:9px;border:1px solid var(--line);border-radius:8px;font-size:11px"><option value="jne">JNE</option><option value="jnt">J&T</option><option value="sicepat">SiCepat</option><option value="pos">POS</option></select><button onclick="cekOngkirProd()" style="flex:1;padding:9px;background:#fff;border:1px solid #111;border-radius:8px;font-size:9px">CEK ONGKIR</button></div><div id="ongkirResultProd" style="margin-top:8px"></div><div id="ongkirSelectedProd" style="margin-top:8px;font-size:10px;font-weight:600">${selectedService?'✓ '+selectedService+' - Rp'+selectedOngkirCost.toLocaleString('id-ID'):''}</div></div>
   <div style="display:flex;gap:8px;margin-top:14px"><button class="btn" style="background:#fff;color:#111;border:1px solid #111" onclick="addToCartFromModal()">+ KERANJANG</button><button class="btn" onclick="buyFromModal()">BELI</button></div></div>`;
 }
-
 function pickColorByIdx(idx){
   const v=curVariants[idx];if(!v) return;
   curColor=v.color_name;curImg=v.image_url;curUnder=v.undertone||curProd.undertone||['NEUTRAL'];
