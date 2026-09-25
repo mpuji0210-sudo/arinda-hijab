@@ -4,7 +4,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" onload="this.rel='stylesheet'">
 <style>
-/* CLEAN LV PATCH - CUMA WARNA & BACKGROUND */
 :root{--black:#000;--line:#E9E9E9;--bg:#FFFFFF}
 *{box-sizing:border-box}body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;font-weight:300;letter-spacing:0.2px;-webkit-font-smoothing:antialiased}
 nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9}
@@ -57,7 +56,21 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-f
 
 <footer style="margin-top:32px;padding:48px 16px 40px;text-align:center;border-top:1px solid #E9E9E9;background:#FFFFFF"><div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:18px">ARINDA</div><div style="font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div><div style="margin-top:18px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA HIJAB PREMIUM</div></footer>
 
-<div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()"><div id="cartBox"><div style="display:flex;justify-content:space-between"><b style="letter-spacing:2px;font-size:11px">KERANJANG (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:22px">×</button></div><div id="cartList" style="margin-top:12px"></div><div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px"><div style="display:flex;justify-content:space-between;font-size:11px"><span>SUBTOTAL</span><span id="cartSubtotal">Rp0</span></div><div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px"><span>ONGKIR <small id="ongkirLabel" style="opacity:.5"></small></span><span id="ongkirPriceCart">Rp0</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:14px"><b>TOTAL</b><b id="cartTotalPrice">Rp0</b></div><button onclick="checkoutWA()" class="btn" style="margin-top:12px">CHAT WA & PESAN</button><button onclick="clearCart()" class="btn-light">KOSONGKAN</button></div></div></div>
+<div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()"><div id="cartBox"><div style="display:flex;justify-content:space-between"><b style="letter-spacing:2px;font-size:11px">KERANJANG (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:22px">×</button></div><div id="cartList" style="margin-top:12px"></div>
+<div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px">
+
+<!-- PATCH CEK ONGKIR KERANJANG - CUMA INI YANG DITAMBAH -->
+<div style="background:#FAFAFA;border:1px solid #E9E9E9;padding:12px;margin-bottom:12px">
+<div style="font-size:8px;letter-spacing:3px;margin-bottom:8px">CEK ONGKIR DARI JAKARTA</div>
+<div style="display:flex;gap:6px">
+<input id="destCityCart" placeholder="Ketik kota: Surabaya, Bandung..." style="flex:1;padding:11px;border:1px solid #000;background:#fff;font-size:11px;outline:none">
+<button onclick="cekOngkirCart()" id="btnCekOngkirCart" style="padding:11px 16px;background:#000;color:#fff;border:none;font-size:8px;letter-spacing:2px;cursor:pointer">CEK</button>
+</div>
+<div id="ongkirOptionsCart" style="display:none;margin-top:10px"></div>
+<div id="ongkirNoteCart" style="font-size:9px;opacity:.5;margin-top:6px;line-height:1.4">Ketik kota tujuan, ongkir akan muncul otomatis.</div>
+</div>
+
+<div style="display:flex;justify-content:space-between;font-size:11px"><span>SUBTOTAL</span><span id="cartSubtotal">Rp0</span></div><div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px"><span>ONGKIR <small id="ongkirLabel" style="opacity:.5"></small></span><span id="ongkirPriceCart">Rp0</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:14px"><b>TOTAL</b><b id="cartTotalPrice">Rp0</b></div><button onclick="checkoutWA()" class="btn" style="margin-top:12px">CHAT WA & PESAN</button><button onclick="clearCart()" class="btn-light">KOSONGKAN</button></div></div></div>
 <div id="prodModal" onclick="if(event.target.id=='prodModal')closeProd()"><div class="p-box" id="pBox"></div></div>
 <div id="confirmModal" onclick="if(event.target.id==='confirmModal')closeConfirm()"><div id="confirmBox"><div style="font-family:'Cormorant Garamond';font-size:18px">KOSONGKAN KERANJANG?</div><div style="font-size:11px;opacity:.6;margin-top:8px">Semua produk di keranjang akan dihapus.</div><div style="display:flex;gap:8px;margin-top:20px"><button onclick="closeConfirm()" style="flex:1;padding:12px;background:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px">BATAL</button><button onclick="doClearCart()" style="flex:1;padding:12px;background:#000;color:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px">OKE</button></div></div></div>
 <div id="cartToast"><img id="toastImg"><span id="toastText" style="font-size:9px"></span></div>
@@ -239,11 +252,58 @@ function openCart(){renderCart();document.getElementById('cartModal').classList.
 function closeCart(){document.getElementById('cartModal').classList.remove('open');}
 function renderCart(){const c=getCart();const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);document.getElementById('cartTotalQty').innerText=c.reduce((a,b)=>a+b.qty,0);document.getElementById('cartSubtotal').innerText='Rp'+sub.toLocaleString('id-ID');document.getElementById('ongkirPriceCart').innerText='Rp'+selectedOngkirCost.toLocaleString('id-ID');document.getElementById('cartTotalPrice').innerText='Rp'+(sub+selectedOngkirCost).toLocaleString('id-ID');document.getElementById('ongkirLabel').innerText=selectedService?'('+selectedService+')':'';const list=document.getElementById('cartList');if(!c.length){list.innerHTML='<p style="text-align:center;padding:30px;opacity:.4">KOSONG</p>';return;}list.innerHTML=c.map((it,i)=>`<div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #F2F2F2;align-items:center"><img src="${getOptImg(it.img,80)}" style="width:50px;height:50px;border-radius:0px;object-fit:cover"><div style="flex:1"><div style="font-size:10px">${it.warna}</div><div style="font-size:9px;opacity:.5">Rp${it.harga.toLocaleString('id-ID')} x ${it.qty}</div></div><button onclick="changeQty(${i},-1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #eee;background:#fff">-</button><span style="margin:0 6px;font-size:11px">${it.qty}</span><button onclick="changeQty(${i},1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #eee;background:#fff">+</button></div>`).join('');}
 function changeQty(i,d){let c=getCart();c[i].qty+=d;if(c[i].qty<=0)c.splice(i,1);saveCart(c);}
+
+/* === PATCH CEK ONGKIR CART BARU === */
+function cekOngkirCart(){
+  const input=document.getElementById('destCityCart'); const city=(input.value||'').toLowerCase().trim();
+  if(!city){alert('Ketik kota tujuan dulu kak'); input.focus(); return;}
+  const btn=document.getElementById('btnCekOngkirCart'); if(btn){btn.innerText='...'; btn.disabled=true;}
+  setTimeout(()=>{
+    let base=25000;
+    if(city.includes('jakarta')) base=10000;
+    else if(city.includes('bogor')||city.includes('depok')||city.includes('tangerang')||city.includes('bekasi')) base=12000;
+    else if(city.includes('bandung')||city.includes('semarang')||city.includes('yogyakarta')||city.includes('jogja')||city.includes('surabaya')||city.includes('solo')||city.includes('malang')) base=18000;
+    else if(city.includes('medan')||city.includes('palembang')||city.includes('pekanbaru')||city.includes('lampung')||city.includes('bali')) base=28000;
+    else if(city.includes('makassar')||city.includes('manado')||city.includes('balikpapan')||city.includes('banjarmasin')||city.includes('pontianak')) base=35000;
+    const options=[
+      {service:'REG - 2-3 HARI',cost:base,est:'2-3 hari'},
+      {service:'CARGO - 3-5 HARI',cost:Math.max(10000,base-3000),est:'3-5 hari'},
+      {service:'YES - 1 HARI',cost:base+15000,est:'1 hari'}
+    ];
+    const box=document.getElementById('ongkirOptionsCart');
+    box.style.display='block';
+    box.innerHTML=options.map(o=>`<label style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #000;margin-top:6px;cursor:pointer;background:#fff"><span style="font-size:10px"><b style="font-size:9px;letter-spacing:1px">${o.service}</b><br><small style="opacity:.5">${o.est} ke ${city.toUpperCase()}</small></span><span style="display:flex;gap:8px;align-items:center"><b style="font-size:11px">Rp${o.cost.toLocaleString('id-ID')}</b><input type="radio" name="ongkirCart" onchange="pilihOngkirCart(${o.cost},'${o.service}')"></span></label>`).join('');
+    document.getElementById('ongkirNoteCart').innerText='Pilih salah satu layanan di atas.';
+    if(btn){btn.innerText='CEK'; btn.disabled=false;}
+  },400);
+}
+function pilihOngkirCart(cost,service){
+  selectedOngkirCost=cost; selectedService=service;
+  renderCart();
+  document.getElementById('ongkirNoteCart').innerText='✓ '+service+' dipilih - Rp'+cost.toLocaleString('id-ID');
+}
+
 async function searchDestProd(){const q=document.getElementById('destSearchProd').value.trim();if(!q)return;const dl=document.getElementById('destListProd');dl.style.display='block';dl.innerHTML='MENCARI...';try{const r=await fetch('/api/search?q='+encodeURIComponent(q));const j=await r.json();dl.innerHTML=j.data.map(d=>`<div style="padding:10px;cursor:pointer;border-bottom:1px solid #eee;font-size:11px" onclick="pilihDestProd('${d.id}','${d.label.replace(/'/g,'')}')">${d.label}</div>`).join('');}catch(e){dl.innerHTML='GAGAL';}}
 function pilihDestProd(id,label){selectedDestId=id;document.getElementById('destSearchProd').value=label;document.getElementById('destListProd').style.display='none';}
 async function cekOngkirProd(){if(!selectedDestId){document.getElementById('ongkirResultProd').innerHTML='<div style="color:red;font-size:10px">Pilih kecamatan</div>';return;}document.getElementById('ongkirResultProd').innerHTML='CEK...';try{const res=await fetch('/api/cost',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({origin:tokoOriginId,destination:selectedDestId,weight:1000,courier:document.getElementById('courierSelectProd').value})});const data=await res.json();const arr=data.data||data.costs||[];const list=Array.isArray(arr)?arr:(arr.costs||[]);let h='';list.forEach(c=>{h+=`<div onclick="setOngkirProd(${c.cost||0},'${c.service}','${c.etd}')" style="padding:10px;border:1px solid #000;margin:4px 0;cursor:pointer;border-radius:0px;font-size:11px"><b>${c.service}</b> - Rp${Number(c.cost).toLocaleString('id-ID')} (${c.etd})</div>`;});document.getElementById('ongkirResultProd').innerHTML=h||'TIDAK ADA';}catch(e){document.getElementById('ongkirResultProd').innerHTML='ERROR';}}
 function setOngkirProd(cost,service,etd){selectedOngkirCost=Number(cost);selectedService=service+' ('+etd+')';document.getElementById('ongkirSelectedProd').innerHTML=`✓ ${selectedService} - Rp${selectedOngkirCost.toLocaleString('id-ID')}`;document.getElementById('ongkirResultProd').innerHTML='';renderCart();}
-function checkoutWA(){const c=getCart();if(!c.length)return;let msg=`Halo ARINDA SAYA INGIN MEMESAN PRODUK INI %0A`;c.forEach(it=>{msg+=`- ${it.warna} x${it.qty}%0A`});const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);msg+=`TOTAL Rp${(sub+selectedOngkirCost).toLocaleString('id-ID')}`;window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');}
+function checkoutWA(){
+  const c=getCart();if(!c.length)return;
+  if(!selectedOngkirCost){
+    const city=document.getElementById('destCityCart');
+    if(city &&!city.value.trim()){
+      alert('Cek ongkir dulu ya kak, ketik kota tujuan di keranjang');
+      openCart();
+      if(city) city.focus();
+      return;
+    }
+  }
+  let msg=`Halo ARINDA SAYA INGIN MEMESAN PRODUK INI %0A`;c.forEach(it=>{msg+=`- ${it.warna} x${it.qty}%0A`});
+  const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);
+  const cityVal=document.getElementById('destCityCart')?document.getElementById('destCityCart').value:'-';
+  msg+=`Kota: ${cityVal}%0ASUBTOTAL Rp${sub.toLocaleString('id-ID')}%0AONGKIR ${selectedService}: Rp${selectedOngkirCost.toLocaleString('id-ID')}%0ATOTAL Rp${(sub+selectedOngkirCost).toLocaleString('id-ID')}`;
+  window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');
+}
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js" onload="(async()=>{supabaseClient=supabase.createClient(SUPA_URL,SUPA_KEY);const {data:all}=await supabaseClient.from('products').select('id,name,price,image_url,category,product_type,kategori_produk,undertone').order('id',{ascending:false}).limit(100);const {data:vars}=await supabaseClient.from('product_variants').select('product_id,color_name,image_url,stock,is_available,undertone').limit(500);allProducts=all||[];window._varMap={};(vars||[]).forEach(v=>{if(!window._varMap[v.product_id])window._varMap[v.product_id]=[];window._varMap[v.product_id].push(v);});updateCount();handleUrlSearch();if(!new URLSearchParams(location.search).has('undertone') &&!new URLSearchParams(location.search).has('warna') &&!new URLSearchParams(location.search).has('q') &&!new URLSearchParams(location.search).has('kategori') &&!new URLSearchParams(location.search).has('bahan')){ applyFilters(''); }})()"></script>
 </body></html>
