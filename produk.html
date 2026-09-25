@@ -22,9 +22,9 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-f
 .prod-card img{width:100%!important;height:200px!important;object-fit:cover!important;object-position:center top!important;display:block!important;background:#FFFFFF!important}
 @media(min-width:700px){.prod-card img{height:230px!important}}
 .heart-btn{position:absolute;top:6px;right:6px;width:24px;height:24px;background:rgba(255,255,255,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #E9E9E9;z-index:2}.heart-btn svg{width:11px;height:11px;stroke:#000;fill:none;stroke-width:1.2}
-.fly-img{position:fixed;left:0;top:0;z-index:99999;width:64px;height:64px;object-fit:cover;border-radius:50%;pointer-events:none;box-shadow:0 16px 32px rgba(0,0,0,.28);border:2px solid #fff;transition:all 1.25s cubic-bezier(.2,.8,.25,1);will-change:left,top,transform,opacity}
-
-/* === MODAL FIX CLEAN LV - CUMA INI YANG DIRUBAH === */
+.fly-img{position:fixed;left:0;top:0;z-index:99999;width:70px;height:70px;object-fit:cover;border-radius:50%;pointer-events:none;box-shadow:0 18px 36px rgba(0,0,0,.32);border:3px solid #fff;transition:all 1.4s cubic-bezier(.3,.1,.2,1);will-change:left,top,transform,opacity}
+@keyframes cartBoom{0%{transform:scale(1)}30%{transform:scale(1.35)}60%{transform:scale(0.92)}100%{transform:scale(1)}}
+.cart-boom{animation:cartBoom.45s cubic-bezier(.34,1.56,.64,1)!important}
 #cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:flex-end}#cartModal.open{display:flex}
 #cartBox{background:#FFFFFF;width:100%;max-width:480px;margin:0 auto;max-height:88vh;overflow:auto;border:1px solid #E9E9E9;border-bottom:none;border-radius:0px;padding:20px 16px}
 .btn{width:100%;padding:14px;background:#000;color:#fff;border:none;font-size:9px;letter-spacing:3px;cursor:pointer;border-radius:0px}
@@ -76,22 +76,28 @@ function flyToCart(imgUrl,startEl){
   const cartIcon=document.getElementById('cartIcon');if(!cartIcon)return;
   const cartRect=cartIcon.getBoundingClientRect();
   const targetX = cartRect.left + cartRect.width/2 - 14;
-  const targetY = cartRect.top + cartRect.height/2 - 14;
-  let rect = startEl? startEl.getBoundingClientRect() : {left:innerWidth/2-32,top:innerHeight/2-32,width:64,height:64};
-  if(rect.width===0) rect={left:innerWidth/2-32,top:innerHeight/2-32,width:64,height:64};
+  const targetY = cartRect.top + cartRect.height/2 - 12;
+  let rect = startEl? startEl.getBoundingClientRect() : {left:innerWidth/2-35,top:innerHeight/2-35,width:70,height:70};
+  if(rect.width===0) rect={left:innerWidth/2-35,top:innerHeight/2-35,width:70,height:70};
   const fly=document.createElement('img');
-  fly.src=getOptImg(imgUrl,100);
+  fly.src=getOptImg(imgUrl,120);
   fly.className='fly-img';
-  fly.style.left=(rect.left + rect.width/2 - 32)+'px';
-  fly.style.top=(rect.top + rect.height/2 - 32)+'px';
-  fly.style.transform='scale(1)';fly.style.opacity='1';
+  fly.style.left=(rect.left + rect.width/2 - 35)+'px';
+  fly.style.top=(rect.top + rect.height/2 - 35)+'px';
+  fly.style.transform='scale(1) rotate(0deg)';fly.style.opacity='1';
   document.body.appendChild(fly);
   requestAnimationFrame(()=>{requestAnimationFrame(()=>{
     fly.style.left=targetX+'px';
     fly.style.top=targetY+'px';
-    fly.style.transform='scale(0.18)';fly.style.opacity='0.2';
+    fly.style.transform='scale(0.15) rotate(180deg)';fly.style.opacity='0.15';
   });});
-  setTimeout(()=>fly.remove(),1300);
+  setTimeout(()=>{
+    fly.remove();
+    cartIcon.classList.remove('cart-boom');
+    void cartIcon.offsetWidth;
+    cartIcon.classList.add('cart-boom');
+    setTimeout(()=>cartIcon.classList.remove('cart-boom'),600);
+  },1350);
 }
 function cleanSearchQuery(q){if(!q) return '';return q.toLowerCase().replace(/- best seller/g,'').replace(/best seller/g,'').trim();}
 function doSearch(){let q=cleanSearchQuery(document.getElementById('q').value);lastSearchQuery=q;applyFilters(q);}
