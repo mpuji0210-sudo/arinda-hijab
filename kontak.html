@@ -34,7 +34,7 @@ input,textarea,select{width:100%;padding:12px 0;border:none;border-bottom:1px so
 #toast.err{background:#B91C1C}
 @media(max-width:800px){.wrap{grid-template-columns:1fr}}
 </style></head><body>
-<nav><div class="nav-top"><div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons"><a href="produk.html" class="icon-btn" aria-label="Keranjang"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a></div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a class="active" aria-current="page">KONTAK</a></div></div></nav>
+<nav><div class="nav-top"><div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons"></div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a class="active" aria-current="page">KONTAK</a></div></div></nav>
 
 <div class="wrap">
 <div>
@@ -75,7 +75,7 @@ function showToast(msg,isErr){
   setTimeout(()=>t.classList.remove('show'),3000);
 }
 async function init(){
-  document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+(b.qty||0),0);
+  const cc=document.getElementById('cCount'); if(cc) cc.innerText=getCart().reduce((a,b)=>a+(b.qty||0),0);
   await new Promise(r=>{ const check=()=>{ if(window.supabase){ supa=supabase.createClient("https://qjgevvizqeebtdqcbqmt.supabase.co","sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19"); r(); } else setTimeout(check,50); }; check(); });
   try{
     const {data} = await supa.from('settings').select('key,value').in('key',['store_name','wa_number','toko_origin_label','home_koleksi_terlaris','home_faq_list']).limit(10);
