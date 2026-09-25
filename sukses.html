@@ -1,0 +1,27 @@
+<!DOCTYPE html><html lang="id"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pesanan Diterima - ARINDA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&family=Inter:wght@300&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#fff;color:#000;font-family:'Inter',sans-serif;font-weight:300;display:flex;min-height:100vh;align-items:center;justify-content:center;padding:20px}
+.box{border:1px solid #E9E9E9;max-width:420px;width:100%;padding:28px;text-align:center}
+h2{font-family:'Cormorant Garamond';font-weight:400;letter-spacing:2px}
+.btn{display:block;background:#000;color:#fff;padding:14px;text-decoration:none;font-size:10px;letter-spacing:3px;margin-top:12px}
+.small{font-size:11px;opacity:.6;line-height:1.6;margin-top:12px}
+</style>
+</head><body>
+<div class="box">
+<div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:18px">ARINDA</div>
+<h2>Pesanan Diterima 🤍</h2>
+<div id="kode" style="margin-top:8px;font-weight:bold;font-size:14px;letter-spacing:2px"></div>
+<div class="small">Pesanan kakak sudah otomatis masuk ke sistem ARINDA. Simpan kode pesanan ya kak.</div>
+<a id="waBtn" class="btn" target="_blank">CHAT ADMIN VIA WA</a>
+<a href="index.html" class="btn" style="background:#fff;color:#000;border:1px solid #000">KEMBALI BELANJA</a>
+</div>
+<script>
+const p=new URLSearchParams(location.search); const code=p.get('code')||localStorage.getItem('arinda_last_order')||'ARINDA-XXXX';
+document.getElementById('kode').innerText=code;
+const waAdmin='6281234567890';
+const msg=encodeURIComponent('Halo ARINDA, saya order '+code);
+document.getElementById('waBtn').href='https://wa.me/'+waAdmin+'?text='+msg;
+</script>
+</body></html>
