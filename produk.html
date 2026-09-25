@@ -54,7 +54,7 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.88);backdrop-f
 <div id="cartToast"><img id="toastImg"><span id="toastText" style="font-size:9px"></span></div>
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
-let supabaseClient,allProducts=[],WA_NUMBER="6285178098354",tokoOriginId="17523",selectedDestId=null,selectedOngkirCost=0,selectedService='',curProd={},curColor='',curImg='',curVariants=[],activeUnder='ALL',lastSearchQuery='',curUnder=[];
+let supabaseClient,allProducts=[],WA_NUMBER="6285178098354",tokoOriginId="17523",selectedDestId=null,selectedOngkirCost=0,selectedService='',curProd={},curColor='',curImg='',curVariants=[],activeUnder='ALL',lastSearchQuery='',curUnder=[],activeKategori='ALL',activeBahan='ALL';
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return[]}}
 function saveCart(c){localStorage.setItem('arinda_cart2',JSON.stringify(c));updateCount();renderCart();}
 function updateCount(){const el=document.getElementById('cCount');if(!el)return;let t=getCart().reduce((a,b)=>a+(b.qty||0),0);el.innerText=t;el.style.display=t>0?'flex':'none';}
@@ -80,10 +80,7 @@ function flyToCart(imgUrl,startEl){
   });});
   setTimeout(()=>fly.remove(),900);
 }
-function cleanSearchQuery(q){
-  if(!q) return '';
-  return q.toLowerCase().replace(/- best seller/g,'').replace(/best seller/g,'').trim();
-}
+function cleanSearchQuery(q){if(!q) return '';return q.toLowerCase().replace(/- best seller/g,'').replace(/best seller/g,'').trim();}
 function doSearch(){let q=cleanSearchQuery(document.getElementById('q').value);lastSearchQuery=q;applyFilters(q);}
 function normalizeUnder(arr){
   if(!arr) return [];
@@ -95,31 +92,34 @@ function getMatchedVariant(productId, q, under){
   const vars = window._varMap[productId]||[];
   if(!vars.length) return null;
   if(under && under!=='ALL'){
-    const found = vars.find(v=>{
-      const u = normalizeUnder(v.undertone||[]);
-      return u.includes(under.toUpperCase()) || u.join(',').includes(under.toUpperCase());
-    });
+    const found = vars.find(v=>{const u = normalizeUnder(v.undertone||[]);return u.includes(under.toUpperCase()) || u.join(',').includes(under.toUpperCase());});
     if(found) return found;
   }
-  if(q){
-    const found = vars.find(v=>(v.color_name||'').toLowerCase().includes(q.toLowerCase()));
-    if(found) return found;
-  }
+  if(q){const found = vars.find(v=>(v.color_name||'').toLowerCase().includes(q.toLowerCase()));if(found) return found;}
   return vars[0];
 }
-// ==== FIX FINAL: 2 MODE ====
 function applyFilters(qOverride){
   let q = (qOverride!==undefined?qOverride:cleanSearchQuery(document.getElementById('q').value||'')).toLowerCase().trim();
-  q = cleanSearchQuery(q);
-  lastSearchQuery=q;
-  const isDefaultView = (activeUnder==='ALL' &&!q);
+  q = cleanSearchQuery(q); lastSearchQuery=q;
+  let base = allProducts.filter(p=>{
+    let cat=(p.category||'').toUpperCase();
+    let okK = activeKategori==='ALL' || cat.includes(activeKategori);
+    let okB = activeBahan==='ALL' || cat.includes(activeBahan);
+    if(activeKategori.includes('VUAL') && (cat.includes('VUAL')||cat.includes('PARIS'))) okK=true;
+    if(activeBahan.includes('VUAL') && (cat.includes('VUAL')||cat.includes('PARIS'))) okB=true;
+    return okK && okB;
+  });
+  const isDefaultView = (activeUnder==='ALL' &&!q && activeKategori==='ALL' && activeBahan==='ALL');
   if(isDefaultView){
-    document.getElementById('prodCount').innerText=allProducts.length+' PRODUK';
-    renderProducts(allProducts);
-    return;
+    document.getElementById('prodCount').innerText=base.length+' PRODUK';
+    renderProducts(base); return;
+  }
+  if(activeUnder==='ALL' &&!q){
+    document.getElementById('prodCount').innerText=base.length+' PRODUK';
+    renderProducts(base); return;
   }
   let flat=[];
-  allProducts.forEach(p=>{
+  base.forEach(p=>{
     const vars = window._varMap[p.id]||[];
     vars.forEach(v=>{
       const u = normalizeUnder(v.undertone||p.undertone||[]);
@@ -135,8 +135,12 @@ function handleUrlSearch(){
   const p=new URLSearchParams(location.search);
   let qRaw = p.get('warna')||p.get('q')||'';
   let uRaw = p.get('undertone')||'';
+  let kRaw = p.get('kategori')||p.get('category')||'';
+  let bRaw = p.get('bahan')||'';
   let q = cleanSearchQuery(qRaw);
-  if(uRaw){ activeUnder=uRaw.toUpperCase(); }
+  if(uRaw) activeUnder=uRaw.toUpperCase();
+  if(kRaw) activeKategori=kRaw.toUpperCase();
+  if(bRaw) activeBahan=bRaw.toUpperCase();
   if(q){ document.getElementById('q').value=q; lastSearchQuery=q; }
   setTimeout(()=>applyFilters(q),400);
 }
@@ -162,10 +166,7 @@ function renderVariants(list){
     return `<div class="prod-card"><div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this,${i},'${(col||'').replace(/'/g,'')}')"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}-${i}" src="${getOptImg(img,400)}" loading="lazy" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="padding:8px;border-top:1px solid #F6F1EB" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${col}</div><div style="font-size:8px;margin-top:2px">${underBadgeHtml(under)}</div><div style="font-size:10px;margin-top:3px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
   }).join('');
 }
-function render(list){
-  if(list.length && list[0].p && list[0].v){ renderVariants(list); } else { renderProducts(list); }
-}
-// ==== END FIX ====
+function render(list){if(list.length && list[0].p && list[0].v){ renderVariants(list); } else { renderProducts(list); }}
 function quickAdd(id,btnEl,idx,colorName){
   const p=allProducts.find(x=>String(x.id)===String(id));
   const vars=window._varMap[id]||[];
@@ -223,5 +224,5 @@ async function cekOngkirProd(){if(!selectedDestId){document.getElementById('ongk
 function setOngkirProd(cost,service,etd){selectedOngkirCost=Number(cost);selectedService=service+' ('+etd+')';document.getElementById('ongkirSelectedProd').innerHTML=`✓ ${selectedService} - Rp${selectedOngkirCost.toLocaleString('id-ID')}`;document.getElementById('ongkirResultProd').innerHTML='';renderCart();}
 function checkoutWA(){const c=getCart();if(!c.length)return;let msg=`Halo ARINDA %0A`;c.forEach(it=>{msg+=`- ${it.warna} x${it.qty}%0A`});const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);msg+=`TOTAL Rp${(sub+selectedOngkirCost).toLocaleString('id-ID')}`;window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');}
 </script>
-<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js" onload="(async()=>{supabaseClient=supabase.createClient(SUPA_URL,SUPA_KEY);const {data:all}=await supabaseClient.from('products').select('id,name,price,image_url,category,undertone').order('id',{ascending:false}).limit(50);const {data:vars}=await supabaseClient.from('product_variants').select('product_id,color_name,image_url,stock,is_available,undertone').limit(400);allProducts=all||[];window._varMap={};(vars||[]).forEach(v=>{if(!window._varMap[v.product_id])window._varMap[v.product_id]=[];window._varMap[v.product_id].push(v);});updateCount();handleUrlSearch();if(!new URLSearchParams(location.search).has('undertone') &&!new URLSearchParams(location.search).has('warna') &&!new URLSearchParams(location.search).has('q')){ applyFilters(''); }})()"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js" onload="(async()=>{supabaseClient=supabase.createClient(SUPA_URL,SUPA_KEY);const {data:all}=await supabaseClient.from('products').select('id,name,price,image_url,category,undertone').order('id',{ascending:false}).limit(50);const {data:vars}=await supabaseClient.from('product_variants').select('product_id,color_name,image_url,stock,is_available,undertone').limit(400);allProducts=all||[];window._varMap={};(vars||[]).forEach(v=>{if(!window._varMap[v.product_id])window._varMap[v.product_id]=[];window._varMap[v.product_id].push(v);});updateCount();handleUrlSearch();if(!new URLSearchParams(location.search).has('undertone') &&!new URLSearchParams(location.search).has('warna') &&!new URLSearchParams(location.search).has('q') &&!new URLSearchParams(location.search).has('kategori') &&!new URLSearchParams(location.search).has('bahan')){ applyFilters(''); }})()"></script>
 </body></html>
