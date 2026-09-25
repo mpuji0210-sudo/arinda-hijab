@@ -1,36 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Pesanan - Arinda Hijab</title>
 <style>
-body{font-family:sans-serif;background:#f5f5f5;padding:20px}
-.login-box{max-width:350px;margin:100px auto;background:white;padding:30px;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,0.1);text-align:center}
-input{width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
-button{width:100%;padding:12px;background:#111;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:bold}
-#adminContent{display:none}
-.order-card{background:white;padding:15px;border-radius:10px;margin-bottom:15px}
+*{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{margin:0;background:#f8f7f6;min-height:100vh}
+.header{background:white;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.05);position:sticky;top:0;z-index:10}
+.header h1{font-size:20px;margin:0;font-weight:800}
+.header span{color:#ff6b6b}
+.btn-logout{background:#ff3b3b;color:white;border:none;padding:8px 16px;border-radius:20px;font-weight:bold;cursor:pointer}
+.container{max-width:500px;margin:20px auto;padding:0 15px}
+.order-card{background:white;border-radius:16px;padding:16px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,0.04);cursor:pointer;transition:0.2s}
+.order-card:active{transform:scale(0.98)}
+.order-info b{font-size:15px}
+.order-info p{margin:4px 0 0;color:#888;font-size:12px}
+.badge{background:#e8f5e9;color:#2e7d32;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold}
+.empty{text-align:center;margin-top:80px;color:#aaa}
+.empty p{font-size:14px}
+
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:white;width:100%;max-width:340px;padding:30px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.08);text-align:center}
+.login-box input{width:100%;padding:13px;border:1.5px solid #eee;border-radius:12px;margin:12px 0}
+.login-box button{width:100%;padding:13px;background:#111;color:white;border:none;border-radius:12px;font-weight:bold;cursor:pointer}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:flex-end;justify-content:center;z-index:100}
+.modal-bg.show{display:flex}
+.modal{background:white;width:100%;max-width:500px;border-radius:25px 25px 0 0;padding:25px;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal h3{margin:0 0 15px;font-size:18px}
+.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px}
+.detail-row span:first-child{color:#888}
+.detail-row span:last-child{font-weight:600;text-align:right;max-width:60%}
+.btn-group{display:flex;gap:10px;margin-top:20px}
+.btn-hapus{flex:1;background:#fff1f1;color:#ff3b3b;border:1.5px solid #ff3b3b;padding:13px;border-radius:12px;font-weight:bold;cursor:pointer}
+.btn-kirim{flex:1;background:#111;color:white;border:none;padding:13px;border-radius:12px;font-weight:bold;cursor:pointer}
+.btn-close{width:100%;background:#f5f5f5;border:none;padding:12px;border-radius:12px;margin-top:10px;cursor:pointer}
+.rek-box{background:#f0f8ff;border:1px dashed #4a90e2;padding:12px;border-radius:12px;text-align:center;margin:15px 0}
 </style>
 </head>
 <body>
 
-<div id="loginBox" class="login-box">
+<div id="loginView" class="login-wrap">
+<div class="login-box">
 <h2>🔒 Admin Pesanan</h2>
-<p>Masukkan password untuk lihat pesanan</p>
-<input type="password" id="pass" placeholder="Password">
+<p style="color:#888;font-size:13px">BCA 8740376161 a.n MUHAMMAD PUJIANTO</p>
+<input type="password" id="pass" placeholder="Password admin order">
 <button onclick="checkPass()">Masuk</button>
-<p id="err" style="color:red;display:none">Password salah!</p>
+<p id="err" style="color:red;font-size:13px;display:none;margin-top:10px">Password salah!</p>
+</div>
 </div>
 
-<div id="adminContent">
-<h1>Pesanan Masuk - BCA 8740376161</h1>
-<button onclick="logout()" style="width:auto;padding:8px 15px;background:red;margin-bottom:20px">Logout</button>
-<div id="orders"><p>Belum ada pesanan</p></div>
+<div id="adminView" style="display:none">
+<div class="header">
+<h1>Pesanan Masuk - <span>BCA 8740376161</span></h1>
+<button class="btn-logout" onclick="logout()">Logout</button>
+</div>
+<div class="container">
+<div id="orders"></div>
+</div>
+</div>
+
+<!-- MODAL DETAIL -->
+<div id="modal" class="modal-bg" onclick="if(event.target==this)closeModal()">
+<div class="modal">
+<h3>📦 Detail Pesanan</h3>
+<div id="modalContent"></div>
+<div class="rek-box">
+<b>BCA 8740376161</b><br><small>a.n MUHAMMAD PUJIANTO</small>
+</div>
+<div class="btn-group">
+<button class="btn-hapus" onclick="hapusPesanan()">🗑️ Hapus (Udah JNE)</button>
+<button class="btn-kirim" onclick="closeModal()">Tutup</button>
+</div>
+<button class="btn-close" onclick="closeModal()">Kembali</button>
+</div>
 </div>
 
 <script>
-const PASSWORD = "arinda123"; // GANTI PASSWORD DISINI KAK
+const PASSWORD = "arinda123";
+let selectedIndex = null;
 
 function checkPass(){
   if(document.getElementById('pass').value === PASSWORD){
@@ -41,21 +93,56 @@ function checkPass(){
   }
 }
 function showAdmin(){
-  document.getElementById('loginBox').style.display='none';
-  document.getElementById('adminContent').style.display='block';
+  document.getElementById('loginView').style.display='none';
+  document.getElementById('adminView').style.display='block';
   loadOrders();
 }
-function logout(){
-  localStorage.removeItem('ad_login');
-  location.reload();
-}
+function logout(){ localStorage.removeItem('ad_login'); location.reload(); }
+
 function loadOrders(){
   const data = JSON.parse(localStorage.getItem('arinda_orders') || '[]');
   const el = document.getElementById('orders');
-  if(data.length === 0){
-    el.innerHTML = '<p>Belum ada pesanan</p>';
-  } else {
-    el.innerHTML = data.map(o=>`<div class="order-card"><b>${o.nama}</b> - ${o.total}</div>`).join('');
+  if(data.length===0){
+    el.innerHTML = `<div class="empty"><h3>Belum ada pesanan</h3><p>Pesanan yang sudah transfer BCA 8740376161<br>akan muncul di sini</p></div>`;
+    return;
+  }
+  el.innerHTML = data.map((o,i)=>`
+    <div class="order-card" onclick="openModal(${i})">
+      <div class="order-info">
+        <b>${o.nama}</b>
+        <p>${o.waktu} • ${o.kota || ''}</p>
+      </div>
+      <div style="text-align:right">
+        <div style="font-weight:bold">${o.total}</div>
+        <span class="badge">BARU</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openModal(i){
+  selectedIndex = i;
+  const data = JSON.parse(localStorage.getItem('arinda_orders') || '[]');
+  const o = data[i];
+  document.getElementById('modalContent').innerHTML = `
+    <div class="detail-row"><span>Nama</span><span>${o.nama}</span></div>
+    <div class="detail-row"><span>Kota</span><span>${o.kota||'-'}</span></div>
+    <div class="detail-row"><span>Alamat</span><span>${o.alamat||'-'}</span></div>
+    <div class="detail-row"><span>Produk</span><span>${o.produk||'-'}</span></div>
+    <div class="detail-row"><span>Total Transfer</span><span style="color:red">${o.total}</span></div>
+    <div class="detail-row"><span>Waktu</span><span>${o.waktu}</span></div>
+  `;
+  document.getElementById('modal').classList.add('show');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('show'); }
+function hapusPesanan(){
+  if(selectedIndex===null) return;
+  if(confirm('Yakin pesanan ini sudah dikirim JNE dan mau dihapus?')){
+    let data = JSON.parse(localStorage.getItem('arinda_orders') || '[]');
+    data.splice(selectedIndex,1);
+    localStorage.setItem('arinda_orders', JSON.stringify(data));
+    closeModal();
+    loadOrders();
   }
 }
 if(localStorage.getItem('ad_login')==='true'){ showAdmin(); }
