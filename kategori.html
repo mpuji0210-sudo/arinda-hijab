@@ -1,22 +1,84 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KATEGORI - ARINDA</title><style>:root{--line:#EDE8E1;--bg:#FFFCF9}*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,sans-serif}.nav{max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between}.menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:36px;border-top:1px solid rgba(0,0,0,.06)}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:13px 0;opacity:.35}.menu a.active{opacity:1;border-bottom:1px solid #111}.section{max-width:1240px;margin:0 auto;padding:20px 16px}.k-title{font-size:22px;letter-spacing:3px;margin:28px 0 14px}.k-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.k-card{background:#fff;border:1px solid var(--line);padding:18px;border-radius:12px;cursor:pointer;position:relative;min-height:120px}.k-count{position:absolute;top:14px;right:14px;background:#111;color:#fff;font-size:9px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center}</style></head><body>
-<div class="nav"><b>ARINDA HIJAB PREMIUM</b><span>KATEGORI</span></div>
-<div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a class="active">KATEGORI</a></div>
-<main class="section"><div class="k-title">Kategori Jenis Produk</div><div class="k-grid" id="gridJenis"></div><div class="k-title">Kategori Bahan</div><div class="k-grid" id="gridBahan"></div></main>
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KATEGORI - ARINDA HIJAB PREMIUM</title>
+<link rel="preconnect" href="https://qjgevvizqeebtdqcbqmt.supabase.co" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--black:#111;--line:#EDE8E1;--bg:#FFFCF9}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--black);font-family:'Inter',sans-serif;font-weight:300}
+nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(17,17,17,0.06)}
+.nav-top{max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px}.logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px}
+.nav-menu{border-top:1px solid rgba(17,17,17,0.06);overflow-x:auto}.menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:36px}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:13px 0;opacity:.35;white-space:nowrap}.menu a.active{opacity:1;border-bottom:1px solid #111}
+.section{max-width:1240px;margin:0 auto;padding:24px 20px 80px}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;margin:36px 0 14px}
+.sec-head h2{font-family:'Cormorant Garamond';font-size:20px;letter-spacing:3px;font-weight:300;margin:0}
+.sec-head span{font-size:9px;letter-spacing:3px;opacity:.4}
+.k-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:700px){.k-grid{grid-template-columns:repeat(3,1fr);gap:12px}}
+.k-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 16px;cursor:pointer;position:relative;transition:.2s}
+.k-card:hover{border-color:#111;transform:translateY(-2px)}
+.k-card b{display:block;font-size:11px;letter-spacing:2px;font-weight:400;line-height:1.4}
+.k-card small{display:block;margin-top:6px;font-size:8px;letter-spacing:2px;opacity:.45}
+.k-count{position:absolute;top:12px;right:12px;background:#111;color:#fff;font-size:8px;min-width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0 6px}
+.k-icon{width:36px;height:36px;border-radius:50%;background:#FFFCF9;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:14px}
+</style></head><body>
+<nav><div class="nav-top"><div class="logo">ARINDA<span>HIJAB PREMIUM</span></div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a class="active">KATEGORI</a></div></div></nav>
+
+<main class="section">
+  <div class="sec-head"><h2>JENIS PRODUK</h2><span id="countJenis">0 KATEGORI</span></div>
+  <div class="k-grid" id="gridJenis"></div>
+
+  <div class="sec-head"><h2>JENIS BAHAN</h2><span id="countBahan">0 BAHAN</span></div>
+  <div class="k-grid" id="gridBahan"></div>
+</main>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
 <script>
-const supa=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
-async function load(){
-  const {data}=await supa.from('products').select('category').limit(100);
-  let jenis={},bahan={};
-  (data||[]).forEach(p=>{let c=(p.category||'PARIS').toUpperCase(); jenis[c]=(jenis[c]||0)+1;
-    if(c.includes('CERUTY')) bahan['CERUTY BABYDOLL']=(bahan['CERUTY BABYDOLL']||0)+1;
-    else if(c.includes('VUAL')||c.includes('PARIS')) bahan['VUAL ULTRA FINE / PARIS ULTRA FINE']=(bahan['VUAL ULTRA FINE / PARIS ULTRA FINE']||0)+1;
-    else if(c.includes('VOAL')) bahan['VOAL PREMIUM']=(bahan['VOAL PREMIUM']||0)+1;
-    else bahan[c]=(bahan[c]||0)+1;
+const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
+const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
+const supa = supabase.createClient(SUPA_URL,SUPA_KEY);
+
+async function loadKategori(){
+  const {data:products} = await supa.from('products').select('id,name,category').limit(100);
+  let jenisMap={}, bahanMap={};
+
+  (products||[]).forEach(p=>{
+    let name = (p.name||'').toUpperCase();
+    let cat = (p.category||'').toUpperCase();
+
+    // ==== JENIS PRODUK - sinkron dari nama & nanti dari kolom kategori_produk ====
+    // Kalau nanti kakak tambah kolom kategori_produk di admin, tinggal ganti name jadi p.kategori_produk
+    let jenis = 'SEGI EMPAT';
+    if(name.includes('PASHMINA') || cat.includes('PASHMINA')) jenis='PASHMINA';
+    else if(name.includes('SEGI EMPAT') || cat.includes('SEGI')) jenis='SEGI EMPAT';
+    else if(name.includes('HIJAB PARIS') || cat.includes('PARIS')) jenis='SEGI EMPAT PARIS';
+    jenisMap[jenis]=(jenisMap[jenis]||0)+1;
+
+    // ==== JENIS BAHAN - sinkron dari category (admin) ====
+    let bahan='VOAL PREMIUM';
+    if(cat.includes('CERUTY') || name.includes('CERUTY')) bahan='CERUTY BABYDOLL';
+    else if(cat.includes('VUAL') || cat.includes('PARIS') || name.includes('VUAL')) bahan='VUAL ULTRA FINE / PARIS ULTRA FINE';
+    else if(cat.includes('VOAL') || name.includes('VOAL')) bahan='VOAL PREMIUM';
+    bahanMap[bahan]=(bahanMap[bahan]||0)+1;
   });
-  if(Object.keys(bahan).length<=1) bahan={'CERUTY BABYDOLL':1,'VUAL ULTRA FINE / PARIS ULTRA FINE':1,'VOAL PREMIUM':1};
-  if(Object.keys(jenis).length<=1) jenis={'HIJAB PARIS PREMIUM 110x110':2,'PASHMINA CERUTY BABYDOLL':1,'VOAL PREMIUM':1};
-  document.getElementById('gridJenis').innerHTML=Object.entries(jenis).map(([k,v])=>`<div class="k-card" onclick="location.href='produk.html?kategori=${encodeURIComponent(k)}'"><b>${k}</b><span class="k-count">${v}</span><div style="margin-top:20px;font-size:8px;opacity:.4">KLIK LIHAT PRODUK</div></div>`).join('');
-  document.getElementById('gridBahan').innerHTML=Object.entries(bahan).map(([k,v])=>`<div class="k-card" onclick="location.href='produk.html?bahan=${encodeURIComponent(k)}'"><b>${k}</b><span class="k-count">${v}</span><div style="margin-top:20px;font-size:8px;opacity:.4">KLIK LIHAT PRODUK</div></div>`).join('');
-}load();
-</script></body></html>
+
+  // fallback biar gak kosong pas awal
+  if(Object.keys(jenisMap).length===0) jenisMap={'SEGI EMPAT':1,'PASHMINA':1};
+  if(Object.keys(bahanMap).length===0) bahanMap={'CERUTY BABYDOLL':1,'VOAL PREMIUM':1,'VUAL ULTRA FINE / PARIS ULTRA FINE':1};
+
+  document.getElementById('countJenis').innerText=Object.keys(jenisMap).length+' KATEGORI';
+  document.getElementById('countBahan').innerText=Object.keys(bahanMap).length+' BAHAN';
+
+  document.getElementById('gridJenis').innerHTML=Object.entries(jenisMap).map(([k,v])=>{
+    let icon = k.includes('PASHMINA')? '🧣' : '◫';
+    return `<div class="k-card" onclick="location.href='produk.html?kategori=${encodeURIComponent(k)}'"><div class="k-icon">${icon}</div><b>${k}</b><small>${v} PRODUK READY</small><span class="k-count">${v}</span></div>`
+  }).join('');
+
+  document.getElementById('gridBahan').innerHTML=Object.entries(bahanMap).map(([k,v])=>{
+    return `<div class="k-card" onclick="location.href='produk.html?bahan=${encodeURIComponent(k)}'"><div class="k-icon">✦</div><b>${k}</b><small>BAHAN ${v} PRODUK</small><span class="k-count">${v}</span></div>`
+  }).join('');
+}
+loadKategori();
+</script>
+</body></html>
