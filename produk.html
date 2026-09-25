@@ -107,28 +107,34 @@ function getMatchedVariant(productId, q, under){
   }
   return vars[0];
 }
+// ==== HANYA INI YANG DIRUBAH: JADI PER-VARIAN BUKAN PER-PRODUK ====
 function applyFilters(qOverride){
   let q = (qOverride!==undefined?qOverride:cleanSearchQuery(document.getElementById('q').value||'')).toLowerCase().trim();
   q = cleanSearchQuery(q);
   lastSearchQuery=q;
-  let list=[...allProducts];
-  if(q){
-    list=list.filter(p=>{
-      const vars=window._varMap[p.id]||[];
-      return p.name.toLowerCase().includes(q) || vars.some(v=>(v.color_name||'').toLowerCase().includes(q));
+  let flat=[];
+  allProducts.forEach(p=>{
+    const vars = window._varMap[p.id]||[];
+    if(!vars.length){
+      const u = normalizeUnder(p.undertone||[]);
+      const matchUnder = activeUnder==='ALL' || u.includes(activeUnder);
+      const matchQ =!q || p.name.toLowerCase().includes(q);
+      if(matchUnder && matchQ){
+        flat.push({p, v:{color_name:p.name,image_url:p.image_url,undertone:p.undertone,stock:1,is_available:true}});
+      }
+      return;
+    }
+    vars.forEach(v=>{
+      const u = normalizeUnder(v.undertone||p.undertone||[]);
+      const matchUnder = activeUnder==='ALL' || u.includes(activeUnder);
+      const matchQ =!q || (v.color_name||'').toLowerCase().includes(q) || p.name.toLowerCase().includes(q);
+      if(matchUnder && matchQ){
+        flat.push({p, v});
+      }
     });
-  }
-  if(activeUnder!=='ALL'){
-    list=list.filter(p=>{
-      const vars=window._varMap[p.id]||[];
-      return vars.some(v=>{
-        const u = normalizeUnder(v.undertone||p.undertone||[]);
-        return u.includes(activeUnder);
-      });
-    });
-  }
-  document.getElementById('prodCount').innerText=list.length+' PRODUK';
-  render(list);
+  });
+  document.getElementById('prodCount').innerText=flat.length+' WARNA';
+  render(flat);
 }
 function handleUrlSearch(){
   const p=new URLSearchParams(location.search);
@@ -146,15 +152,17 @@ function underBadgeHtml(arr){
 }
 function render(list){
   const el=document.getElementById('list');
-  if(!list.length){el.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:60px 0;opacity:.5">TIDAK ADA PRODUK UNTUK "${document.getElementById('q').value}"<br><button onclick="document.getElementById('q').value='';activeUnder='ALL';applyFilters('')" style="margin-top:10px;padding:8px 16px;border-radius:20px;border:1px solid #111;background:#fff;font-size:9px">LIHAT SEMUA</button></div>`;return;}
-  el.innerHTML=list.map((p,i)=>{
-    const matched = getMatchedVariant(p.id, lastSearchQuery, activeUnder);
+  if(!list.length){el.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:60px 0;opacity:.5">TIDAK ADA WARNA UNTUK "${document.getElementById('q').value||activeUnder}"<br><button onclick="document.getElementById('q').value='';activeUnder='ALL';applyFilters('')" style="margin-top:10px;padding:8px 16px;border-radius:20px;border:1px solid #111;background:#fff;font-size:9px">LIHAT SEMUA</button></div>`;return;}
+  el.innerHTML=list.map((item,i)=>{
+    const p=item.p;
+    const matched=item.v;
     let img = matched? matched.image_url : p.image_url;
     let col = matched? matched.color_name : p.name;
     let under = matched? (matched.undertone||p.undertone||[]) : (p.undertone||[]);
     return `<div class="prod-card"><div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this,${i},'${(col||'').replace(/'/g,'')}')"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}-${i}" src="${getOptImg(img,400)}" loading="lazy" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="padding:8px;border-top:1px solid #F6F1EB" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${col}</div><div style="font-size:8px;margin-top:2px">${underBadgeHtml(under)}</div><div style="font-size:10px;margin-top:3px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
   }).join('');
 }
+// ==== END RUBAHAN ====
 function quickAdd(id,btnEl,idx,colorName){
   const p=allProducts.find(x=>String(x.id)===String(id));
   const vars=window._varMap[id]||[];
