@@ -127,7 +127,6 @@ function flyToCart(imgUrl, startEl){
 function quickAdd(title,img,el,idx){const imgEl=document.getElementById('img-best-'+idx)||(el?el.closest('.k-card')?.querySelector('img'):null);if(imgEl)flyToCart(imgEl.src||img,imgEl);addCart(title,99000,img);showToast(title+' MASUK KERANJANG',getOptImg(img,80));}
 const underData={cool:{desc:'<b>COOL</b> — Ciri khas visual:Pembuluh darah cenderung berwarna biru atau keunguan,dengan rona kulit dasar kemerahan atau merah muda(pinkish/rosy). Warna Yang Cocok: <b>Warna Soft&Pastel:Dusty pink,soft mauve,baby blue,lilac. Warna Netral:Putih bersih,abu-abu,charcoal. Warna Bold&jewel tones:Navy,emerald green,ruby red,deep plum.</b>',col:'COOL'},warm:{desc:'<b>WARM</b> — Ciri Khas Visual:Pembuluh darah terlihat kehijauan,dengan rona kulit dasar keemasasan,kekuningan,atau peach. Warna Yang Cocok: <b>Eart Tones:Cokelat karamel,teracota,mustard,olive green,brick red. Netral Hangat:Cream,beige,taupe,cokelat susu. Cerah Berunsur Hangat:peach coaral,dusty orange.</b>',col:'WARM'},neutral:{desc:'<b>NEUTRAL</b> — Ciri Khas Visual:Perpaduan pembuluh darah biru/kehijauan,dengan rona kulit yang menyatu antara hangat dan dingin. Warna Yang Cocok: <b>Warna Netral&Earty:Tape,beige,dusty pink,mauve cokelat susu,cream. Warna Soft&muted:Sage green,dusty blue,soft lavender. Warna Bold&Jawel tones:Navy,emerald green,maroon,plum</b>',col:'NEUTRAL'},olive:{desc:'<b>OLIVE</b> — Ciri Khas Visual:Pembuluh darah biasanya berwarna hijau tua/keabu-abuan dengan rona kulit dasar bernuansa kehijauan(grenish/ashy atau muted golden. Warna Yang Cocok: <b>Warna Warm&Earty:terracotta,merah bata,mocca latte,camel,mustard,warm bronze. Warna Jewel Tones:Emerald green,forest green,burgundy,wine,plum,navy blue. Warna netral&soft:Cream,off-white,ivory,sage green,olive,taupe,dusty mauve</b>',col:'OLIVE'}};
 function setUndertone(t){document.querySelectorAll('[id^="u-"]').forEach(b=>{b.style.background='#fff';b.style.color='#111'});const cur=document.getElementById('u-'+t);if(cur){cur.style.background='#111';cur.style.color='#fff';}const d=underData[t];const res=document.getElementById('uResult');if(res){res.innerHTML=d.desc+` <br><a href="produk.html?undertone=${d.col}" style="font-size:8px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;margin-top:6px;display:inline-block">LIHAT ${d.col} →</a>`;}}
-
 async function init(){
   await new Promise(r=>{ const check=()=>{ if(window.supabase){ supabaseClient=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19'); r(); } else setTimeout(check,50); }; check(); });
   try{
@@ -148,7 +147,6 @@ async function init(){
           if(grid) grid.innerHTML=raw.slice(0,9).map((v,i)=>{
             const url=typeof v==='string'?v:v.url;
             const rawTitle=(typeof v==='object'?v.title:'')||'';
-            // FIX 2: BERSIHIN " - BEST SELLER" BIAR GAK JADI 0 PRODUK
             const upperTitle = rawTitle.replace(/'/g,"").toUpperCase();
             const cleanColor = upperTitle.split('-')[0].replace(/BEST SELLER/g,'').trim() || 'BEST';
             const displayTitle = upperTitle || 'BEST';
