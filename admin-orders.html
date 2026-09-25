@@ -5,15 +5,16 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
-.font-serif{font-family:'Cormorant Garamond',serif}
 .card{border:1px solid #E9E9E9;background:#fff}
 .btn-black{height:44px;background:#000;color:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
 .btn-white{height:44px;background:#fff;color:#000;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
+#delModal{display:none;position:fixed;inset:0;background:rgba(20,15,10,0.55);backdrop-filter:blur(12px);z-index:9999;align-items:center;justify-content:center;padding:20px}
+#delModal.show{display:flex}
+@keyframes lvSlide{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
 </style>
 </head>
 <body>
 
-<!-- HEADER SAMA KAYAK PRODUK -->
 <nav style="position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9">
   <div style="max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
     <div>
@@ -25,7 +26,6 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
 </nav>
 
 <div style="max-width:800px;margin:0 auto;padding:24px 16px 60px">
-  
   <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px">
     <div>
       <div style="font-family:'Cormorant Garamond';font-size:26px;font-weight:300;letter-spacing:1px">Pesanan Masuk</div>
@@ -33,39 +33,41 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
     </div>
     <div id="count" style="font-size:9px;letter-spacing:2px;opacity:.4">0 PESANAN</div>
   </div>
-
-  <div id="list" style="display:flex;flex-direction:column;gap:12px">
-    <div style="text-align:center;padding:80px 20px;border:1px solid #E9E9E9">
-      <div style="font-size:12px;opacity:.4;letter-spacing:1px">Memuat pesanan...</div>
-    </div>
-  </div>
-
+  <div id="list" style="display:flex;flex-direction:column;gap:12px"></div>
 </div>
 
-<!-- FOOTER SAMA -->
 <footer style="margin-top:32px;padding:48px 16px 40px;text-align:center;border-top:1px solid #E9E9E9;background:#FFFFFF">
   <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:18px">ARINDA</div>
   <div style="font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div>
   <div style="margin-top:18px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA HIJAB PREMIUM</div>
 </footer>
 
+<!-- MODAL HAPUS ELEGAN - GANTI CONFIRM JELEK -->
+<div id="delModal" onclick="if(event.target.id==='delModal')closeDel()">
+  <div style="background:#FFFEFB;width:100%;max-width:380px;border-radius:28px;border:1px solid #E8E0D0;padding:28px 24px;box-shadow:0 30px 80px rgba(0,0,0,0.25);animation:lvSlide .35s cubic-bezier(0.16,1,0.3,1)">
+    <div style="width:46px;height:46px;border-radius:50%;background:#F9F6F1;border:1px solid #E8E0D0;display:flex;align-items:center;justify-content:center;font-size:20px">🗑️</div>
+    <div style="font-family:'Cormorant Garamond';font-size:23px;margin-top:16px;color:#1a1a1a">Hapus pesanan ini?</div>
+    <div style="font-size:12px;line-height:1.7;color:#1a1a1a;opacity:.6;margin-top:12px">Pesanan akan dihapus permanen dari database. Pastikan sudah di-WA dan selesai ya kak.</div>
+    <div style="display:flex;gap:8px;margin-top:22px">
+      <button onclick="closeDel()" style="flex:1;height:48px;background:#fff;border:1px solid #000;border-radius:16px;font-size:9px;letter-spacing:2px;cursor:pointer">BATAL</button>
+      <button onclick="confirmDel()" id="btnDel" style="flex:1;height:48px;background:#000;color:#fff;border:1px solid #000;border-radius:16px;font-size:9px;letter-spacing:2px;cursor:pointer">YA, HAPUS</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
+let delId=null;
 
 async function loadOrders(){
-  const {data, error} = await supa.from('orders').select('*').order('created_at',{ascending:false});
+  const {data} = await supa.from('orders').select('*').order('created_at',{ascending:false});
   const list=document.getElementById('list');
   const count=document.getElementById('count');
-  
   if(!data || data.length===0){
     count.innerText='0 PESANAN';
-    list.innerHTML=`<div style="text-align:center;padding:100px 20px;border:1px solid #E9E9E9;background:#FAFAFA">
-      <div style="font-family:'Cormorant Garamond';font-size:20px;letter-spacing:1px">Belum ada pesanan</div>
-      <div style="font-size:11px;opacity:.4;margin-top:10px;line-height:1.6">Pesanan yang sudah transfer BCA 8740376161<br>akan muncul di sini</div>
-    </div>`;
-    return;
+    list.innerHTML=`<div style="text-align:center;padding:100px 20px;border:1px solid #E9E9E9;background:#FAFAFA"><div style="font-family:'Cormorant Garamond';font-size:20px">Belum ada pesanan</div><div style="font-size:11px;opacity:.4;margin-top:10px">Pesanan BCA 8740376161 akan muncul di sini</div></div>`; return;
   }
   count.innerText=data.length+' PESANAN';
   list.innerHTML=data.map(o=>{
@@ -73,37 +75,35 @@ async function loadOrders(){
     const itemText = Array.isArray(items) ? items.map(i=>`${i.warna||i.name} x${i.qty||1}`).join(', ') : (o.produk||'-');
     return `<div class="card" style="padding:16px">
       <div style="display:flex;justify-content:space-between;align-items:flex-start">
-        <div>
-          <div style="font-size:13px;font-weight:600">${o.customer_name||o.nama||'-'} - ${o.kota||o.kota_tujuan||'-'}</div>
-          <div style="font-size:10px;opacity:.5;margin-top:4px">${new Date(o.created_at).toLocaleString('id-ID')} • WA: ${o.wa||o.no_wa||'-'}</div>
-        </div>
+        <div><div style="font-size:13px;font-weight:600">${o.customer_name||'-'} - ${o.kota||'-'}</div><div style="font-size:10px;opacity:.5;margin-top:4px">${new Date(o.created_at).toLocaleString('id-ID')} • WA: ${o.wa||'-'}</div></div>
         <div style="font-size:10px;padding:4px 8px;border:1px solid #000;background:#000;color:#fff;letter-spacing:1px">${o.status||'BARU'}</div>
       </div>
       <div style="margin-top:12px;font-size:11px;line-height:1.6;border-top:1px solid #F2F2F2;padding-top:10px">
         <div><span style="opacity:.5">Alamat:</span> ${o.alamat||'-'}</div>
         <div style="margin-top:6px"><span style="opacity:.5">Produk:</span> ${itemText}</div>
-        <div style="margin-top:10px;display:flex;justify-content:space-between;font-weight:700;font-size:13px"><span>TOTAL</span><span>Rp${Number(o.total||o.total_price||0).toLocaleString('id-ID')}</span></div>
+        <div style="margin-top:10px;display:flex;justify-content:space-between;font-weight:700;font-size:13px"><span>TOTAL</span><span>Rp${Number(o.total||0).toLocaleString('id-ID')}</span></div>
       </div>
       <div style="display:flex;gap:8px;margin-top:12px">
         <button onclick="waCustomer('${o.wa||''}','${o.customer_name||''}')" class="btn-white" style="flex:1">CHAT WA</button>
-        <button onclick="hapusOrder('${o.id}')" class="btn-black" style="flex:1">SELESAI / HAPUS</button>
+        <button onclick="openDel('${o.id}')" class="btn-black" style="flex:1">SELESAI / HAPUS</button>
       </div>
     </div>`;
   }).join('');
 }
-
+function openDel(id){delId=id;document.getElementById('delModal').classList.add('show');}
+function closeDel(){delId=null;document.getElementById('delModal').classList.remove('show');}
+async function confirmDel(){
+  if(!delId) return;
+  document.getElementById('btnDel').innerText='MENGHAPUS...';
+  await supa.from('orders').delete().eq('id',delId);
+  closeDel(); loadOrders();
+}
 function waCustomer(wa,nama){
-  if(!wa){alert('No WA kosong');return}
+  if(!wa){return}
   let n=wa.replace(/[^0-9]/g,''); if(n.startsWith('0')) n='62'+n.slice(1);
   window.open(`https://wa.me/${n}?text=Halo ${nama}, pesanan ARINDA sudah kami terima ya kak`,'_blank');
 }
-async function hapusOrder(id){
-  if(!confirm('Hapus pesanan ini?')) return;
-  await supa.from('orders').delete().eq('id',id);
-  loadOrders();
-}
 function logout(){localStorage.removeItem('admin_login'); window.location.href='login.html';}
-
 loadOrders();
 </script>
 </body></html>
