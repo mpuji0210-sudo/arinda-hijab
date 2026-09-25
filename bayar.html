@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bayar - ARINDA</title></head>
+<body style="text-align:center;padding:60px 20px;font-family:sans-serif">
+<h2>LANGKAH 1 BERHASIL ✅</h2>
+<p id="info"></p>
+<p style="opacity:.5;font-size:12px;margin-top:30px">Nanti di Langkah 2 halaman ini kita isi<br>Rekening BCA + QRIS + Tombol WA LUNAS otomatis</p>
+<script>
+const p=new URLSearchParams(location.search);
+document.getElementById('info').innerHTML=`Nama: ${p.get('nama')||''}<br>Total: Rp${Number(p.get('total')||0).toLocaleString('id-ID')}`;
+</script>
+</body></html>
