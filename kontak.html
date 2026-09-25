@@ -17,15 +17,20 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.92);backdrop-f
 .nav-menu{border-top:1px solid #F6F1EB;background:#fff;overflow-x:auto}.nav-menu::-webkit-scrollbar{display:none}
 .menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:36px}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:13px 0;opacity:.35;border-bottom:1px solid transparent;white-space:nowrap}.menu a.active{opacity:1;border-bottom-color:#111}
 .wrap{max-width:1240px;margin:0 auto;padding:28px 16px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.card{border:1px solid var(--line);background:#fff;padding:20px}
-input,textarea,select{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;font-size:12px;margin-top:8px;background:transparent;outline:none}
-.btn{padding:14px;background:#111;color:#fff;text-align:center;font-size:9px;letter-spacing:3px;cursor:pointer;border:none;width:100%;margin-top:18px}
-.faq-item{border:1px solid var(--line);background:#fff;margin-bottom:8px;cursor:pointer}
+.card{border:1px solid var(--line);background:#fff;padding:20px;border-radius:14px}
+input,textarea,select{width:100%;padding:12px 0;border:none;border-bottom:1px solid #111;font-size:12px;margin-top:8px;background:transparent;outline:none;transition:.2s}
+.input-error input,.input-error textarea,.input-error select{border-bottom-color:#B91C1C!important}
+.err-msg{font-size:10px;color:#B91C1C;margin-top:8px;display:none;letter-spacing:.5px}
+.btn{padding:14px;background:#111;color:#fff;text-align:center;font-size:9px;letter-spacing:3px;cursor:pointer;border:none;width:100%;margin-top:18px;border-radius:8px}
+.faq-item{border:1px solid var(--line);background:#fff;margin-bottom:8px;cursor:pointer;border-radius:10px;overflow:hidden}
 .faq-q{padding:14px 16px;display:flex;justify-content:space-between;align-items:center;font-size:11px}
 .faq-arrow{transition:.3s;opacity:.5;display:flex}.faq-arrow svg{width:12px;height:12px;stroke:#111;fill:none;stroke-width:1.2}
 .faq-item.open.faq-arrow{transform:rotate(180deg);opacity:1}
 .faq-a{display:none;padding:0 16px 14px;font-size:11px;line-height:1.8;opacity:.6}
 .faq-item.open.faq-a{display:block}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#111;color:#fff;padding:12px 22px;border-radius:30px;font-size:10px;letter-spacing:1px;z-index:9999;transition:.45s;opacity:0;pointer-events:none}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+#toast.err{background:#B91C1C}
 @media(max-width:800px){.wrap{grid-template-columns:1fr}}
 </style></head><body>
 <nav><div class="nav-top"><div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons"><a href="produk.html" class="icon-btn" aria-label="Keranjang"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount">0</span></a></div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a class="active" aria-current="page">KONTAK</a></div></div></nav>
@@ -44,25 +49,40 @@ input,textarea,select{width:100%;padding:12px 0;border:none;border-bottom:1px so
 </div>
 <div class="card">
 <div style="font-size:9px;letter-spacing:4px">FORM PESAN</div>
+<div id="g-nama">
 <label for="nama" style="font-size:9px;letter-spacing:2px;margin-top:14px;display:block;opacity:.6">NAMA</label><input id="nama" placeholder="Nama kamu" autocomplete="name" aria-label="Nama">
+<div class="err-msg" id="e-nama">Isi nama dulu ya kak 😊</div>
+</div>
 <label for="warna" style="font-size:9px;letter-spacing:2px;margin-top:14px;display:block;opacity:.6">WARNA</label><select id="warna" aria-label="Pilih warna"><option>Loading warna...</option></select>
+<div id="g-pesan">
 <label for="pesan" style="font-size:9px;letter-spacing:2px;margin-top:14px;display:block;opacity:.6">PESAN</label><textarea id="pesan" rows="4" placeholder="Tanya stok, undertone, ongkir..." aria-label="Pesan"></textarea>
+<div class="err-msg" id="e-pesan">Tulis pesan nya dulu kak</div>
+</div>
 <button class="btn" onclick="kirimWA()" aria-label="Kirim ke WhatsApp">KIRIM KE WHATSAPP</button>
 </div>
 </div>
 
 <footer style="margin-top:32px;padding:36px 16px 28px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div><div style="margin-top:14px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA HIJAB PREMIUM</div></footer>
+
+<div id="toast"></div>
+
 <script>
 let supa; let WA_NUMBER="6285178098354"; let STORE_NAME="ARINDA";
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return []}}
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function toggleFaq(el){ el.classList.toggle('open'); }
+function showToast(msg,isErr){
+  const t=document.getElementById('toast');
+  t.innerText=msg;
+  t.className=isErr?'err show':'show';
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
 async function init(){
   document.getElementById('cCount').innerText=getCart().reduce((a,b)=>a+(b.qty||0),0);
   await new Promise(r=>{ const check=()=>{ if(window.supabase){ supa=supabase.createClient("https://qjgevvizqeebtdqcbqmt.supabase.co","sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19"); r(); } else setTimeout(check,50); }; check(); });
   try{
     const {data} = await supa.from('settings').select('key,value').in('key',['store_name','wa_number','toko_origin_label','home_koleksi_terlaris','home_faq_list']).limit(10);
-    const {data:vars} = await supa.from('product_variants').select('color_name').limit(20);
+    const {data:vars} = await supa.from('product_variants').select('color_name').limit(100);
     const get=k=>data?.find(s=>s.key===k)?.value||'';
     const sName=get('store_name'); const sWa=get('wa_number'); const sOrigin=get('toko_origin_label');
     if(sName){STORE_NAME=sName; document.getElementById('storeLogo').innerHTML=sName.split(' ')[0]+'<span>'+sName.split(' ').slice(1).join(' ')+'</span>';}
@@ -70,7 +90,8 @@ async function init(){
     if(sOrigin){document.getElementById('originText').innerText=sOrigin;}
     let warnaList=[]; try{const raw=JSON.parse(get('home_koleksi_terlaris')||'[]'); warnaList=raw.map(x=>x.title||x).filter(Boolean);}catch(e){}
     if(!warnaList.length && vars) warnaList=[...new Set(vars.map(v=>v.color_name))];
-    if(warnaList.length) document.getElementById('warna').innerHTML=warnaList.slice(0,20).map(w=>`<option>${esc(w)}</option>`).join('');
+    if(warnaList.length) document.getElementById('warna').innerHTML='<option value="">Pilih warna (opsional)</option>'+warnaList.slice(0,30).map(w=>`<option>${esc(w)}</option>`).join('');
+    else document.getElementById('warna').innerHTML='<option value="">Pilih warna (opsional)</option>';
     let faqData=[]; try{faqData=JSON.parse(get('home_faq_list')||'[]');}catch(e){}
     const faqEl=document.getElementById('faqList');
     if(faqData.length){
@@ -78,13 +99,40 @@ async function init(){
     } else {
       faqEl.innerHTML=`<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q"><span>Bahannya adem & tidak nerawang?</span><span class="faq-arrow"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></div><div class="faq-a">Ya, Paris Premium 110x110 adem & tidak nerawang.</div></div><div class="faq-item" onclick="toggleFaq(this)"><div class="faq-q"><span>Pengiriman dari mana?</span><span class="faq-arrow"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span></div><div class="faq-a">Kirim dari Jakarta, cek ongkir otomatis di keranjang.</div></div>`;
     }
+    const p=new URLSearchParams(location.search);
+    const preW=p.get('warna')||p.get('q');
+    if(preW) document.getElementById('pesan').value='Halo kak, saya mau tanya stok warna '+preW+' ready gak?';
   }catch(e){console.error(e)}
 }
 function kirimWA(){
-  const n=document.getElementById('nama').value.trim(); if(!n){alert('Isi nama dulu Bosquee');return;}
-  const w=document.getElementById('warna').value; const p=document.getElementById('pesan').value;
-  const msg=`Halo ${STORE_NAME}, saya ${n}\nWarna: ${w}\nPesan: ${p}`;
-  window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(msg),'_blank');
+  const nEl=document.getElementById('nama');
+  const pEl=document.getElementById('pesan');
+  const n=nEl.value.trim();
+  const w=document.getElementById('warna').value;
+  const p=pEl.value.trim();
+  let ok=true;
+  document.getElementById('g-nama').classList.remove('input-error');
+  document.getElementById('g-pesan').classList.remove('input-error');
+  document.getElementById('e-nama').style.display='none';
+  document.getElementById('e-pesan').style.display='none';
+
+  if(!n){
+    document.getElementById('g-nama').classList.add('input-error');
+    document.getElementById('e-nama').style.display='block';
+    showToast('Isi nama dulu ya kak 😊',true);
+    ok=false;
+  }
+  if(!p){
+    document.getElementById('g-pesan').classList.add('input-error');
+    document.getElementById('e-pesan').style.display='block';
+    if(ok) showToast('Tulis pesannya dulu kak 🙏',true);
+    ok=false;
+  }
+  if(!ok) return;
+
+  const msg=`Halo ${STORE_NAME} 😊%0A%0ANama: ${n}%0AWarna: ${w||'-'}%0APesan: ${p}%0A%0AMohon dibantu kak 🙏`;
+  window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');
+  showToast('Membuka WhatsApp...');
 }
 init();
 </script></body></html>
