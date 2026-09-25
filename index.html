@@ -6,7 +6,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" onload="this.rel='stylesheet'">
 <style>
-/* CLEAN LV PATCH - CUMA INI YANG DIRUBAH */
 :root{--black:#000;--line:#E9E9E9;--bg:#FFFFFF}
 *{box-sizing:border-box}body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;font-weight:300;letter-spacing:0.2px;-webkit-font-smoothing:antialiased}
 nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9}
@@ -70,6 +69,18 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-f
 <div style="display:flex;justify-content:space-between;align-items:center"><b style="letter-spacing:2px;font-size:11px">KERANJANG (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:22px">×</button></div>
 <div id="cartList" style="margin-top:12px"></div>
 <div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px">
+
+<!-- PATCH CEK ONGKIR - CUMA INI YANG DITAMBAH -->
+<div style="background:#FAFAFA;border:1px solid #E9E9E9;padding:12px;margin-bottom:12px">
+<div style="font-size:8px;letter-spacing:3px;margin-bottom:8px">CEK ONGKIR DARI JAKARTA</div>
+<div style="display:flex;gap:6px">
+<input id="destCity" placeholder="Ketik kota: Surabaya, Bandung..." style="flex:1;padding:11px;border:1px solid #000;background:#fff;font-size:11px;outline:none">
+<button onclick="cekOngkir()" id="btnCekOngkir" style="padding:11px 16px;background:#000;color:#fff;border:none;font-size:8px;letter-spacing:2px;cursor:pointer">CEK</button>
+</div>
+<div id="ongkirOptions" style="display:none;margin-top:10px"></div>
+<div id="ongkirNote" style="font-size:9px;opacity:.5;margin-top:6px;line-height:1.4">Ketik kota tujuan, ongkir akan muncul otomatis.</div>
+</div>
+
 <div style="display:flex;justify-content:space-between;font-size:11px"><span>SUBTOTAL</span><span id="cartSubtotal">Rp0</span></div>
 <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px"><span>ONGKIR <small id="ongkirLabel" style="opacity:.5"></small></span><span id="ongkirPriceCart">Rp0</span></div>
 <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:14px"><b>TOTAL BAYAR</b><b id="cartTotalPrice">Rp0</b></div>
@@ -117,7 +128,47 @@ function renderCart(){
   list.innerHTML=c.map((it,i)=>`<div style="display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #F2EFEA;align-items:center"><img src="${it.img}" style="width:52px;height:52px;border-radius:10px;object-fit:cover"><div style="flex:1"><div style="font-size:10px">${it.warna}</div><div style="font-size:9px;opacity:.5">Rp${it.harga.toLocaleString('id-ID')} x ${it.qty}</div></div><button onclick="changeQty(${i},-1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#fff">-</button><span style="margin:0 6px;font-size:11px">${it.qty}</span><button onclick="changeQty(${i},1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#fff">+</button></div>`).join('');
 }
 function changeQty(i,d){let c=getCart();c[i].qty+=d;if(c[i].qty<=0)c.splice(i,1);saveCart(c);}
-function checkoutWA(){const c=getCart();if(!c.length){alert('Keranjang kosong');return;}let msg=`Halo ARINDA %0ASaya mau pesan:%0A`;c.forEach(it=>{msg+=`- ${it.warna} x${it.qty} = Rp${(it.harga*it.qty).toLocaleString('id-ID')}%0A`});const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);msg+=`%0ASUBTOTAL Rp${sub.toLocaleString('id-ID')}%0AONGKIR ${selectedService}: Rp${selectedOngkirCost.toLocaleString('id-ID')}%0A*TOTAL Rp${(sub+selectedOngkirCost).toLocaleString('id-ID')}*`;window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');}
+
+/* === LOGIC CEK ONGKIR BARU === */
+function cekOngkir(){
+  const input=document.getElementById('destCity'); const city=(input.value||'').toLowerCase().trim();
+  if(!city){alert('Ketik kota tujuan dulu kak'); input.focus(); return;}
+  const btn=document.getElementById('btnCekOngkir'); if(btn){btn.innerText='...'; btn.disabled=true;}
+  setTimeout(()=>{
+    let base=25000;
+    if(city.includes('jakarta')) base=10000;
+    else if(city.includes('bogor')||city.includes('depok')||city.includes('tangerang')||city.includes('bekasi')) base=12000;
+    else if(city.includes('bandung')||city.includes('semarang')||city.includes('yogyakarta')||city.includes('jogja')||city.includes('surabaya')||city.includes('solo')||city.includes('malang')) base=18000;
+    else if(city.includes('medan')||city.includes('palembang')||city.includes('pekanbaru')||city.includes('lampung')||city.includes('bali')||city.includes('denpasar')) base=28000;
+    else if(city.includes('makassar')||city.includes('manado')||city.includes('balikpapan')||city.includes('banjarmasin')||city.includes('pontianak')||city.includes('jayapura')||city.includes('ambon')) base=35000;
+
+    const options=[
+      {service:'REG - 2-3 HARI',cost:base,est:'2-3 hari'},
+      {service:'CARGO - 3-5 HARI',cost:Math.max(10000,base-3000),est:'3-5 hari'},
+      {service:'YES - 1 HARI',cost:base+15000,est:'1 hari'}
+    ];
+    const box=document.getElementById('ongkirOptions');
+    box.style.display='block';
+    box.innerHTML=options.map(o=>`<label style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #000;margin-top:6px;cursor:pointer;background:#fff"><span style="font-size:10px"><b style="font-size:9px;letter-spacing:1px">${o.service}</b><br><small style="opacity:.5">${o.est} ke ${city.toUpperCase()}</small></span><span style="display:flex;gap:8px;align-items:center"><b style="font-size:11px">Rp${o.cost.toLocaleString('id-ID')}</b><input type="radio" name="ongkirOpt" onchange="pilihOngkir(${o.cost},'${o.service}')"></span></label>`).join('');
+    document.getElementById('ongkirNote').innerText='Pilih salah satu layanan di atas, ongkir akan langsung ditambahkan.';
+    if(btn){btn.innerText='CEK'; btn.disabled=false;}
+  },400);
+}
+function pilihOngkir(cost,service){
+  selectedOngkirCost=cost; selectedService=service;
+  renderCart();
+  document.getElementById('ongkirNote').innerText='✓ Ongkir '+service+' dipilih - Rp'+cost.toLocaleString('id-ID');
+}
+
+function checkoutWA(){
+  const c=getCart();if(!c.length){alert('Keranjang kosong');return;}
+  if(!selectedOngkirCost){ const city=document.getElementById('destCity'); if(city&&!city.value.trim()){alert('Cek ongkir dulu ya kak, ketik kota tujuan'); openCart(); if(city) city.focus(); return; } if(!confirm('Ongkir belum dipilih, lanjut tanpa ongkir?')) return; }
+  let msg=`Halo ARINDA %0ASaya mau pesan:%0A`;c.forEach(it=>{msg+=`- ${it.warna} x${it.qty} = Rp${(it.harga*it.qty).toLocaleString('id-ID')}%0A`});
+  const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);
+  const cityVal=document.getElementById('destCity')?document.getElementById('destCity').value:'-';
+  msg+=`%0AKota Tujuan: ${cityVal}%0ASUBTOTAL Rp${sub.toLocaleString('id-ID')}%0AONGKIR ${selectedService||'-'}: Rp${selectedOngkirCost.toLocaleString('id-ID')}%0A*TOTAL Rp${(sub+selectedOngkirCost).toLocaleString('id-ID')}*`;
+  window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');
+}
 function addCart(n,p,i){let c=getCart();let idx=c.findIndex(a=>a.warna==n);if(idx>-1)c[idx].qty++;else c.push({warna:n,qty:1,harga:Number(p),img:i});saveCart(c);}
 function showToast(t,i){const img=document.getElementById('toastImg');const txt=document.getElementById('toastText');if(img)img.src=i;if(txt)txt.innerText=t;const el=document.getElementById('cartToast');el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200);}
 function getOptImg(url,w=300){if(!url) return url; if(!url.includes('supabase.co/storage/v1/object/public/')) return url; try{const path=url.split('/object/public/')[1]; return `https://qjgevvizqeebtdqcbqmt.supabase.co/storage/v1/render/image/public/${path}?width=${w}&height=${w}&quality=75&format=webp&resize=contain`;}catch(e){return url;}}
