@@ -1,151 +1,109 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Pesanan - Arinda Hijab</title>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Order - ARINDA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-body{margin:0;background:#f8f7f6;min-height:100vh}
-.header{background:white;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.05);position:sticky;top:0;z-index:10}
-.header h1{font-size:20px;margin:0;font-weight:800}
-.header span{color:#ff6b6b}
-.btn-logout{background:#ff3b3b;color:white;border:none;padding:8px 16px;border-radius:20px;font-weight:bold;cursor:pointer}
-.container{max-width:500px;margin:20px auto;padding:0 15px}
-.order-card{background:white;border-radius:16px;padding:16px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,0.04);cursor:pointer;transition:0.2s}
-.order-card:active{transform:scale(0.98)}
-.order-info b{font-size:15px}
-.order-info p{margin:4px 0 0;color:#888;font-size:12px}
-.badge{background:#e8f5e9;color:#2e7d32;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold}
-.empty{text-align:center;margin-top:80px;color:#aaa}
-.empty p{font-size:14px}
-
-/* LOGIN */
-.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.login-box{background:white;width:100%;max-width:340px;padding:30px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.08);text-align:center}
-.login-box input{width:100%;padding:13px;border:1.5px solid #eee;border-radius:12px;margin:12px 0}
-.login-box button{width:100%;padding:13px;background:#111;color:white;border:none;border-radius:12px;font-weight:bold;cursor:pointer}
-
-/* MODAL */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:flex-end;justify-content:center;z-index:100}
-.modal-bg.show{display:flex}
-.modal{background:white;width:100%;max-width:500px;border-radius:25px 25px 0 0;padding:25px;animation:slideUp 0.3s ease}
-@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.modal h3{margin:0 0 15px;font-size:18px}
-.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px}
-.detail-row span:first-child{color:#888}
-.detail-row span:last-child{font-weight:600;text-align:right;max-width:60%}
-.btn-group{display:flex;gap:10px;margin-top:20px}
-.btn-hapus{flex:1;background:#fff1f1;color:#ff3b3b;border:1.5px solid #ff3b3b;padding:13px;border-radius:12px;font-weight:bold;cursor:pointer}
-.btn-kirim{flex:1;background:#111;color:white;border:none;padding:13px;border-radius:12px;font-weight:bold;cursor:pointer}
-.btn-close{width:100%;background:#f5f5f5;border:none;padding:12px;border-radius:12px;margin-top:10px;cursor:pointer}
-.rek-box{background:#f0f8ff;border:1px dashed #4a90e2;padding:12px;border-radius:12px;text-align:center;margin:15px 0}
+body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+.font-serif{font-family:'Cormorant Garamond',serif}
+.card{border:1px solid #E9E9E9;background:#fff}
+.btn-black{height:44px;background:#000;color:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
+.btn-white{height:44px;background:#fff;color:#000;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
 </style>
 </head>
 <body>
 
-<div id="loginView" class="login-wrap">
-<div class="login-box">
-<h2>🔒 Admin Pesanan</h2>
-<p style="color:#888;font-size:13px">BCA 8740376161 a.n MUHAMMAD PUJIANTO</p>
-<input type="password" id="pass" placeholder="Password admin order">
-<button onclick="checkPass()">Masuk</button>
-<p id="err" style="color:red;font-size:13px;display:none;margin-top:10px">Password salah!</p>
-</div>
+<!-- HEADER SAMA KAYAK PRODUK -->
+<nav style="position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9">
+  <div style="max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px">ARINDA</div>
+      <span style="display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM</span>
+    </div>
+    <button onclick="logout()" style="padding:10px 18px;background:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer">LOGOUT</button>
+  </div>
+</nav>
+
+<div style="max-width:800px;margin:0 auto;padding:24px 16px 60px">
+  
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px">
+    <div>
+      <div style="font-family:'Cormorant Garamond';font-size:26px;font-weight:300;letter-spacing:1px">Pesanan Masuk</div>
+      <div style="font-size:9px;letter-spacing:3px;opacity:.4;margin-top:4px">BCA 8740376161 - ARINDA ADMIN</div>
+    </div>
+    <div id="count" style="font-size:9px;letter-spacing:2px;opacity:.4">0 PESANAN</div>
+  </div>
+
+  <div id="list" style="display:flex;flex-direction:column;gap:12px">
+    <div style="text-align:center;padding:80px 20px;border:1px solid #E9E9E9">
+      <div style="font-size:12px;opacity:.4;letter-spacing:1px">Memuat pesanan...</div>
+    </div>
+  </div>
+
 </div>
 
-<div id="adminView" style="display:none">
-<div class="header">
-<h1>Pesanan Masuk - <span>BCA 8740376161</span></h1>
-<button class="btn-logout" onclick="logout()">Logout</button>
-</div>
-<div class="container">
-<div id="orders"></div>
-</div>
-</div>
-
-<!-- MODAL DETAIL -->
-<div id="modal" class="modal-bg" onclick="if(event.target==this)closeModal()">
-<div class="modal">
-<h3>📦 Detail Pesanan</h3>
-<div id="modalContent"></div>
-<div class="rek-box">
-<b>BCA 8740376161</b><br><small>a.n MUHAMMAD PUJIANTO</small>
-</div>
-<div class="btn-group">
-<button class="btn-hapus" onclick="hapusPesanan()">🗑️ Hapus (Udah JNE)</button>
-<button class="btn-kirim" onclick="closeModal()">Tutup</button>
-</div>
-<button class="btn-close" onclick="closeModal()">Kembali</button>
-</div>
-</div>
+<!-- FOOTER SAMA -->
+<footer style="margin-top:32px;padding:48px 16px 40px;text-align:center;border-top:1px solid #E9E9E9;background:#FFFFFF">
+  <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:18px">ARINDA</div>
+  <div style="font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div>
+  <div style="margin-top:18px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA HIJAB PREMIUM</div>
+</footer>
 
 <script>
-const PASSWORD = "arinda123";
-let selectedIndex = null;
+const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
+const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
+const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 
-function checkPass(){
-  if(document.getElementById('pass').value === PASSWORD){
-    localStorage.setItem('ad_login','true');
-    showAdmin();
-  } else {
-    document.getElementById('err').style.display='block';
-  }
-}
-function showAdmin(){
-  document.getElementById('loginView').style.display='none';
-  document.getElementById('adminView').style.display='block';
-  loadOrders();
-}
-function logout(){ localStorage.removeItem('ad_login'); location.reload(); }
-
-function loadOrders(){
-  const data = JSON.parse(localStorage.getItem('arinda_orders') || '[]');
-  const el = document.getElementById('orders');
-  if(data.length===0){
-    el.innerHTML = `<div class="empty"><h3>Belum ada pesanan</h3><p>Pesanan yang sudah transfer BCA 8740376161<br>akan muncul di sini</p></div>`;
+async function loadOrders(){
+  const {data, error} = await supa.from('orders').select('*').order('created_at',{ascending:false});
+  const list=document.getElementById('list');
+  const count=document.getElementById('count');
+  
+  if(!data || data.length===0){
+    count.innerText='0 PESANAN';
+    list.innerHTML=`<div style="text-align:center;padding:100px 20px;border:1px solid #E9E9E9;background:#FAFAFA">
+      <div style="font-family:'Cormorant Garamond';font-size:20px;letter-spacing:1px">Belum ada pesanan</div>
+      <div style="font-size:11px;opacity:.4;margin-top:10px;line-height:1.6">Pesanan yang sudah transfer BCA 8740376161<br>akan muncul di sini</div>
+    </div>`;
     return;
   }
-  el.innerHTML = data.map((o,i)=>`
-    <div class="order-card" onclick="openModal(${i})">
-      <div class="order-info">
-        <b>${o.nama}</b>
-        <p>${o.waktu} • ${o.kota || ''}</p>
+  count.innerText=data.length+' PESANAN';
+  list.innerHTML=data.map(o=>{
+    const items = o.items ? (typeof o.items==='string'? JSON.parse(o.items): o.items) : [];
+    const itemText = Array.isArray(items) ? items.map(i=>`${i.warna||i.name} x${i.qty||1}`).join(', ') : (o.produk||'-');
+    return `<div class="card" style="padding:16px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:600">${o.customer_name||o.nama||'-'} - ${o.kota||o.kota_tujuan||'-'}</div>
+          <div style="font-size:10px;opacity:.5;margin-top:4px">${new Date(o.created_at).toLocaleString('id-ID')} • WA: ${o.wa||o.no_wa||'-'}</div>
+        </div>
+        <div style="font-size:10px;padding:4px 8px;border:1px solid #000;background:#000;color:#fff;letter-spacing:1px">${o.status||'BARU'}</div>
       </div>
-      <div style="text-align:right">
-        <div style="font-weight:bold">${o.total}</div>
-        <span class="badge">BARU</span>
+      <div style="margin-top:12px;font-size:11px;line-height:1.6;border-top:1px solid #F2F2F2;padding-top:10px">
+        <div><span style="opacity:.5">Alamat:</span> ${o.alamat||'-'}</div>
+        <div style="margin-top:6px"><span style="opacity:.5">Produk:</span> ${itemText}</div>
+        <div style="margin-top:10px;display:flex;justify-content:space-between;font-weight:700;font-size:13px"><span>TOTAL</span><span>Rp${Number(o.total||o.total_price||0).toLocaleString('id-ID')}</span></div>
       </div>
-    </div>
-  `).join('');
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button onclick="waCustomer('${o.wa||''}','${o.customer_name||''}')" class="btn-white" style="flex:1">CHAT WA</button>
+        <button onclick="hapusOrder('${o.id}')" class="btn-black" style="flex:1">SELESAI / HAPUS</button>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-function openModal(i){
-  selectedIndex = i;
-  const data = JSON.parse(localStorage.getItem('arinda_orders') || '[]');
-  const o = data[i];
-  document.getElementById('modalContent').innerHTML = `
-    <div class="detail-row"><span>Nama</span><span>${o.nama}</span></div>
-    <div class="detail-row"><span>Kota</span><span>${o.kota||'-'}</span></div>
-    <div class="detail-row"><span>Alamat</span><span>${o.alamat||'-'}</span></div>
-    <div class="detail-row"><span>Produk</span><span>${o.produk||'-'}</span></div>
-    <div class="detail-row"><span>Total Transfer</span><span style="color:red">${o.total}</span></div>
-    <div class="detail-row"><span>Waktu</span><span>${o.waktu}</span></div>
-  `;
-  document.getElementById('modal').classList.add('show');
+function waCustomer(wa,nama){
+  if(!wa){alert('No WA kosong');return}
+  let n=wa.replace(/[^0-9]/g,''); if(n.startsWith('0')) n='62'+n.slice(1);
+  window.open(`https://wa.me/${n}?text=Halo ${nama}, pesanan ARINDA sudah kami terima ya kak`,'_blank');
 }
-function closeModal(){ document.getElementById('modal').classList.remove('show'); }
-function hapusPesanan(){
-  if(selectedIndex===null) return;
-  if(confirm('Yakin pesanan ini sudah dikirim JNE dan mau dihapus?')){
-    let data = JSON.parse(localStorage.getItem('arinda_orders') || '[]');
-    data.splice(selectedIndex,1);
-    localStorage.setItem('arinda_orders', JSON.stringify(data));
-    closeModal();
-    loadOrders();
-  }
+async function hapusOrder(id){
+  if(!confirm('Hapus pesanan ini?')) return;
+  await supa.from('orders').delete().eq('id',id);
+  loadOrders();
 }
-if(localStorage.getItem('ad_login')==='true'){ showAdmin(); }
+function logout(){localStorage.removeItem('admin_login'); window.location.href='login.html';}
+
+loadOrders();
 </script>
-</body>
-</html>
+</body></html>
