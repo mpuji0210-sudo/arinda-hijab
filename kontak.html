@@ -7,7 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
 <style>
-/* CLEAN LV PATCH */
 :root{--black:#000;--line:#E9E9E9;--bg:#FFFFFF}
 *{box-sizing:border-box}body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;font-weight:300;letter-spacing:0.2px;-webkit-font-smoothing:antialiased}
 nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9}
@@ -35,7 +34,6 @@ input,textarea,select{width:100%;padding:12px 0;border:none;border-bottom:1px so
 @media(max-width:800px){.wrap{grid-template-columns:1fr}}
 </style></head><body>
 <nav><div class="nav-top"><div class="logo" id="storeLogo">ARINDA<span>HIJAB PREMIUM</span></div><div class="icons"></div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a class="active" aria-current="page">KONTAK</a></div></div></nav>
-
 <div class="wrap">
 <div>
 <h1 style="font-family:'Cormorant Garamond';font-size:42px;line-height:.9;margin:0;font-weight:300">Hubungi<br><i>Kami</i></h1>
@@ -58,11 +56,8 @@ input,textarea,select{width:100%;padding:12px 0;border:none;border-bottom:1px so
 <button class="btn" onclick="kirimWA()" aria-label="Kirim ke WhatsApp">KIRIM KE WHATSAPP</button>
 </div>
 </div>
-
 <footer style="margin-top:32px;padding:48px 16px 40px;text-align:center;border-top:1px solid #E9E9E9;background:#FFFFFF"><div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:18px">ARINDA</div><div style="font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div><div style="margin-top:18px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA HIJAB PREMIUM</div></footer>
-
 <div id="toast"></div>
-
 <script>
 let supa; let WA_NUMBER="6285178098354"; let STORE_NAME="ARINDA";
 function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return []}}
@@ -110,21 +105,9 @@ function kirimWA(){
   document.getElementById('g-pesan').classList.remove('input-error');
   document.getElementById('e-nama').style.display='none';
   document.getElementById('e-pesan').style.display='none';
-
-  if(!n){
-    document.getElementById('g-nama').classList.add('input-error');
-    document.getElementById('e-nama').style.display='block';
-    showToast('Isi nama dulu ya kak 😊',true);
-    ok=false;
-  }
-  if(!p){
-    document.getElementById('g-pesan').classList.add('input-error');
-    document.getElementById('e-pesan').style.display='block';
-    if(ok) showToast('Tulis pesannya dulu kak 🙏',true);
-    ok=false;
-  }
+  if(!n){document.getElementById('g-nama').classList.add('input-error');document.getElementById('e-nama').style.display='block';showToast('Isi nama dulu ya kak 😊',true);ok=false;}
+  if(!p){document.getElementById('g-pesan').classList.add('input-error');document.getElementById('e-pesan').style.display='block';if(ok) showToast('Tulis pesannya dulu kak 🙏',true);ok=false;}
   if(!ok) return;
-
   const msg=`Halo ${STORE_NAME} 😊%0A%0ANama: ${n}%0AWarna: ${w||'-'}%0APesan: ${p}%0A%0AMohon dibantu kak 🙏`;
   window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');
   showToast('Membuka WhatsApp...');
