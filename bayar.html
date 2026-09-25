@@ -1,12 +1,86 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bayar - ARINDA</title></head>
-<body style="text-align:center;padding:60px 20px;font-family:sans-serif">
-<h2>LANGKAH 1 BERHASIL ✅</h2>
-<p id="info"></p>
-<p style="opacity:.5;font-size:12px;margin-top:30px">Nanti di Langkah 2 halaman ini kita isi<br>Rekening BCA + QRIS + Tombol WA LUNAS otomatis</p>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BAYAR - ARINDA</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-[#FAFAFA]">
+<div class="max-w-[460px] mx-auto bg-white border border-[#E9E9E9] m-3 p-5">
+  <div style="font-family:serif;letter-spacing:7px;font-size:20px">ARINDA</div>
+  <div style="font-size:8px;letter-spacing:4px;opacity:.4">LANGKAH 2 - PEMBAYARAN</div>
+
+  <div id="info" class="bg-[#FAFAFA] border p-3 my-4 text-[11px] leading-6"></div>
+
+  <div class="border border-black p-4 my-4">
+    <div style="font-size:10px;letter-spacing:3px;font-weight:bold">TRANSFER BANK</div>
+    <div style="font-size:12px;margin-top:10px;line-height:20px">
+      Bank BCA<br>
+      No. Rek: <b id="norek">8740376161</b> <button onclick="copyRek()" style="font-size:8px;border:1px solid #000;padding:2px 6px;margin-left:6px">SALIN</button><br>
+      A/N: MUHAMMAD PUJIANTO<br>
+      Total Transfer: <b id="totalBayar" style="font-size:16px">Rp0</b>
+    </div>
+  </div>
+
+  <div class="border border-black p-4">
+    <div style="font-size:10px;letter-spacing:3px;font-weight:bold">QRIS</div>
+    <div style="text-align:center;padding:15px">
+      <img src="https://via.placeholder.com/250x250?text=QRIS+ARINDA" id="qrisImg" style="width:220px;margin:0 auto;border:1px solid #eee">
+      <div style="font-size:8px;opacity:.5;margin-top:8px">Scan QRIS di atas - Ganti src dengan QRIS asli kakak di baris 25</div>
+    </div>
+  </div>
+
+  <button onclick="sudahBayar()" id="btnLunas" class="w-full bg-black text-white py-4 mt-5 text-[10px] tracking-[3px]">SAYA SUDAH BAYAR - KONFIRMASI WA</button>
+  <div style="text-align:center;font-size:8px;opacity:.4;margin-top:10px">Order akan otomatis jadi LUNAS di admin setelah klik tombol ini</div>
+</div>
+
 <script>
-const p=new URLSearchParams(location.search);
-document.getElementById('info').innerHTML=`Nama: ${p.get('nama')||''}<br>Total: Rp${Number(p.get('total')||0).toLocaleString('id-ID')}`;
+const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
+const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
+const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
+const WA_NUMBER="6285178098354";
+
+const params=new URLSearchParams(location.search);
+const total=Number(params.get('total')||localStorage.getItem('arinda_last_order')?JSON.parse(localStorage.getItem('arinda_last_order')).total:0);
+const orderId=localStorage.getItem('arinda_last_order_id');
+const lastOrder=JSON.parse(localStorage.getItem('arinda_last_order')||'{}');
+const cart=JSON.parse(localStorage.getItem('arinda_cart2')||'[]');
+
+document.getElementById('totalBayar').innerText='Rp'+total.toLocaleString('id-ID');
+document.getElementById('info').innerHTML=
+  `Nama: ${params.get('nama')||lastOrder.nama||''}<br>`+
+  `Kota: ${params.get('kota')||lastOrder.kota||''}<br>`+
+  `Order ID: ${orderId||'-'}<br><br>`+
+  cart.map(i=>`• ${i.warna} x${i.qty} = Rp${(i.harga*i.qty).toLocaleString('id-ID')}`).join('<br>')+
+  `<br><br><b>TOTAL: Rp${total.toLocaleString('id-ID')}</b>`;
+
+function copyRek(){
+  const rek=document.getElementById('norek').innerText;
+  navigator.clipboard.writeText(rek); alert('No Rek disalin: '+rek);
+}
+
+async function sudahBayar(){
+  const btn=document.getElementById('btnLunas');
+  btn.innerText='MEMPROSES LUNAS...'; btn.disabled=true;
+
+  // 1. Update Supabase jadi LUNAS
+  if(orderId){
+    await supa.from('orders').update({status:'LUNAS', paid_at:new Date().toISOString()}).eq('id',orderId);
+  }
+
+  // 2. Bikin pesan WA otomatis LUNAS
+  let pesan=`Halo ARINDA HIJAB%0ASAYA SUDAH BAYAR LUNAS ✅%0A%0A`+
+  `Order ID: ${orderId||''}%0A`+
+  `Nama: ${lastOrder.nama||params.get('nama')||''}%0A`+
+  `Kota: ${lastOrder.kota||params.get('kota')||''}%0A`+
+  `Alamat: ${lastOrder.alamat||''}%0A%0A`+
+  `DETAIL:%0A${cart.map(i=>`- ${i.warna} x${i.qty} = Rp${(i.harga*i.qty).toLocaleString('id-ID')}`).join('%0A')}%0A%0A`+
+  `TOTAL TRANSFER: Rp${total.toLocaleString('id-ID')}%0A`+
+  `Metode: Transfer BCA / QRIS%0A%0A`+
+  `Mohon dicek ya kak, terima kasih 🙏`;
+
+  // 3. Kosongkan keranjang & lempar ke WA kakak (085178098354)
+  localStorage.removeItem('arinda_cart2');
+  window.location.href=`https://wa.me/${WA_NUMBER}?text=${pesan}`;
+}
 </script>
 </body></html>
