@@ -242,15 +242,25 @@ function closeProd(){document.getElementById('prodModal').classList.remove('show
 function showCartToast(c,i){const t=document.getElementById('cartToast');document.getElementById('toastImg').src=getOptImg(i,80);document.getElementById('toastText').innerText=c+' MASUK KERANJANG';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 function addToCartFromModal(){const cur=curVariants.find(v=>v.image_url===curImg);if(cur&&isOut(cur))return;const big=document.getElementById('bigImg');if(big) flyToCart(curImg,big);addCart(curProd.name+' - '+curColor,curProd.price,curImg);showCartToast(curColor,curImg);}
 
-// === FUNGSI YANG DIUBAH - LANGKAH 1 TANPA WA ===
+// === KUNCI WAJIB CEK ONGKIR - CUMA INI YANG DITAMBAH ===
+function wajibCekOngkir(){
+  if(!selectedOngkirCost || selectedOngkirCost===0){
+    alert('⚠️ WAJIB CEK ONGKIR DULU KAK!\n\nPilih kota tujuan & pilih layanan ongkir dulu sebelum checkout.\n\nKetik kota di kolom CEK ONGKIR, klik CEK, lalu pilih ongkirnya.');
+    return false;
+  }
+  return true;
+}
+
 function buyFromModal(){
+  if(!wajibCekOngkir()) return; // KUNCI
   const cur=curVariants.find(v=>v.image_url===curImg);
   if(cur&&isOut(cur))return;
-  // Masukkan ke cart dulu, JANGAN LANGSUNG WA
   addCart(curProd.name+' - '+curColor,curProd.price,curImg);
+  // simpan untuk checkout.html LV theme
+  localStorage.setItem('selectedOngkirCost', String(selectedOngkirCost||0));
+  localStorage.setItem('selectedOngkirCity', document.getElementById('destSearchProd')?.value || selectedService || '');
   localStorage.setItem('arinda_ongkir_cost', String(selectedOngkirCost||0));
   localStorage.setItem('arinda_ongkir_service', selectedService||'');
-  // Lompat ke checkout.html
   window.location.href='checkout.html';
 }
 
@@ -284,19 +294,25 @@ function cekOngkirCart(){
 }
 function pilihOngkirCart(cost,service){
   selectedOngkirCost=cost; selectedService=service;
+  // simpan juga untuk checkout LV theme
+  localStorage.setItem('selectedOngkirCost', String(cost));
+  localStorage.setItem('selectedOngkirCity', document.getElementById('destCityCart')?.value || service);
   renderCart();
   document.getElementById('ongkirNoteCart').innerText='✓ '+service+' dipilih - Rp'+cost.toLocaleString('id-ID');
 }
 async function searchDestProd(){const q=document.getElementById('destSearchProd').value.trim();if(!q)return;const dl=document.getElementById('destListProd');dl.style.display='block';dl.innerHTML='MENCARI...';try{const r=await fetch('/api/search?q='+encodeURIComponent(q));const j=await r.json();dl.innerHTML=j.data.map(d=>`<div style="padding:10px;cursor:pointer;border-bottom:1px solid #eee;font-size:11px" onclick="pilihDestProd('${d.id}','${d.label.replace(/'/g,'')}')">${d.label}</div>`).join('');}catch(e){dl.innerHTML='GAGAL';}}
 function pilihDestProd(id,label){selectedDestId=id;document.getElementById('destSearchProd').value=label;document.getElementById('destListProd').style.display='none';}
 async function cekOngkirProd(){if(!selectedDestId){document.getElementById('ongkirResultProd').innerHTML='<div style="color:red;font-size:10px">Pilih kecamatan</div>';return;}document.getElementById('ongkirResultProd').innerHTML='CEK...';try{const res=await fetch('/api/cost',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({origin:tokoOriginId,destination:selectedDestId,weight:1000,courier:document.getElementById('courierSelectProd').value})});const data=await res.json();const arr=data.data||data.costs||[];const list=Array.isArray(arr)?arr:(arr.costs||[]);let h='';list.forEach(c=>{h+=`<div onclick="setOngkirProd(${c.cost||0},'${c.service}','${c.etd}')" style="padding:10px;border:1px solid #000;margin:4px 0;cursor:pointer;border-radius:0px;font-size:11px"><b>${c.service}</b> - Rp${Number(c.cost).toLocaleString('id-ID')} (${c.etd})</div>`;});document.getElementById('ongkirResultProd').innerHTML=h||'TIDAK ADA';}catch(e){document.getElementById('ongkirResultProd').innerHTML='ERROR';}}
-function setOngkirProd(cost,service,etd){selectedOngkirCost=Number(cost);selectedService=service+' ('+etd+')';document.getElementById('ongkirSelectedProd').innerHTML=`✓ ${selectedService} - Rp${selectedOngkirCost.toLocaleString('id-ID')}`;document.getElementById('ongkirResultProd').innerHTML='';renderCart();}
+function setOngkirProd(cost,service,etd){selectedOngkirCost=Number(cost);selectedService=service+' ('+etd+')';document.getElementById('ongkirSelectedProd').innerHTML=`✓ ${selectedService} - Rp${selectedOngkirCost.toLocaleString('id-ID')}`;document.getElementById('ongkirResultProd').innerHTML='';renderCart(); localStorage.setItem('selectedOngkirCost', String(selectedOngkirCost)); localStorage.setItem('selectedOngkirCity', document.getElementById('destSearchProd')?.value || service);}
 
-// === FUNGSI KE-2 YANG DIUBAH - TETAP KE CHECKOUT.HTML ===
+// === KUNCI WAJIB CEK ONGKIR UNTUK CART JUGA ===
 function checkoutWA(){
+  if(!wajibCekOngkir()) return; // KUNCI
   const c=getCart();
   if(!c.length) return;
   localStorage.setItem('arinda_cart2', JSON.stringify(c));
+  localStorage.setItem('selectedOngkirCost', String(selectedOngkirCost||0));
+  localStorage.setItem('selectedOngkirCity', document.getElementById('destCityCart')?.value || selectedService || '');
   localStorage.setItem('arinda_ongkir_cost', String(selectedOngkirCost||0));
   localStorage.setItem('arinda_ongkir_service', selectedService||'');
   const cityEl=document.getElementById('destCityCart');
