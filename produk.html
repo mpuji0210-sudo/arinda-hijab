@@ -218,7 +218,7 @@ function pickColorByIdx(idx){
 function closeProd(){document.getElementById('prodModal').classList.remove('show');}
 function showCartToast(c,i){const t=document.getElementById('cartToast');document.getElementById('toastImg').src=getOptImg(i,80);document.getElementById('toastText').innerText=c+' MASUK KERANJANG';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 function addToCartFromModal(){const cur=curVariants.find(v=>v.image_url===curImg);if(cur&&isOut(cur))return;const big=document.getElementById('bigImg');if(big) flyToCart(curImg,big);addCart(curProd.name+' - '+curColor,curProd.price,curImg);showCartToast(curColor,curImg);}
-function buyFromModal(){let msg=`Halo ARINDA %0A- ${curProd.name} - ${curColor} (${normalizeUnder(curUnder).join(',')}) = Rp${Number(curProd.price).toLocaleString('id-ID')}%0A`;if(selectedOngkirCost>0) msg+=`ONGKIR ${selectedService}: Rp${selectedOngkirCost.toLocaleString('id-ID')}%0A`;window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');}
+function buyFromModal(){let msg=`Halo ARINDA SAYA INGIN MEMESAN PRODUK %0A- ${curProd.name} - ${curColor} (${normalizeUnder(curUnder).join(',')}) = Rp${Number(curProd.price).toLocaleString('id-ID')}%0A`;if(selectedOngkirCost>0) msg+=`ONGKIR ${selectedService}: Rp${selectedOngkirCost.toLocaleString('id-ID')}%0A`;window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');}
 function addCart(n,p,i){let c=getCart();let idx=c.findIndex(a=>a.warna==n);if(idx>-1)c[idx].qty++;else c.push({warna:n,qty:1,harga:Number(p),img:i});saveCart(c);}
 function openCart(){renderCart();document.getElementById('cartModal').classList.add('open');}
 function closeCart(){document.getElementById('cartModal').classList.remove('open');}
