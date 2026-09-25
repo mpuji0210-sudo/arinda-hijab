@@ -1,93 +1,37 @@
-<!DOCTYPE html><html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Checkout - ARINDA Hijab Premium</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-*{box-sizing:border-box}body{margin:0;background:#fff;color:#000;font-family:'Inter',sans-serif;font-weight:300}
-.wrap{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:1px;background:#E9E9E9;border:1px solid #E9E9E9}
-@media(max-width:800px){.wrap{grid-template-columns:1fr}}
-.card{background:#fff;padding:20px}
-input,textarea{width:100%;padding:12px 0;border:none;border-bottom:1px solid #000;outline:none;font-size:12px;background:transparent;margin-top:8px}
-label{font-size:9px;letter-spacing:2px;opacity:.6;margin-top:14px;display:block}
-.btn{width:100%;padding:14px;background:#000;color:#fff;border:none;font-size:10px;letter-spacing:3px;cursor:pointer;margin-top:14px}
-.pay-opt{border:1px solid #000;padding:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;margin-top:8px;background:#fff}
-.pay-opt.active{background:#000;color:#fff}
-</style>
-</head><body>
-<div style="max-width:960px;margin:0 auto;padding:20px 16px;display:flex;justify-content:space-between;align-items:center">
-<div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:20px">ARINDA<span style="display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4">HIJAB PREMIUM</span></div>
-<a href="produk.html" style="font-size:9px;letter-spacing:3px;color:#000;text-decoration:none;border-bottom:1px solid #000">← KEMBALI</a>
-</div>
-<div class="wrap">
-<div class="card">
-<div style="font-size:10px;letter-spacing:4px">ALAMAT PENGIRIMAN</div>
-<label>NAMA LENGKAP</label><input id="cName" placeholder="Siti Aminah">
-<label>NO WA AKTIF</label><input id="cWA" placeholder="0812xxxx">
-<label>ALAMAT LENGKAP</label><textarea id="cAddr" rows="3" placeholder="Jl. Melati No 10"></textarea>
-<label>KOTA TUJUAN</label><input id="cCity" placeholder="Surabaya">
-<label>CATATAN (opsional)</label><input id="cNote" placeholder="Warna: ...">
-<div style="margin-top:20px;font-size:10px;letter-spacing:4px">METODE PEMBAYARAN</div>
-<div class="pay-opt active" onclick="pickPay(this,'QRIS')"><span>QRIS - All E-Wallet</span><span>•</span></div>
-<div class="pay-opt" onclick="pickPay(this,'TRANSFER MANUAL')"><span>Transfer Manual BCA</span><span>•</span></div>
-<div class="pay-opt" onclick="pickPay(this,'COD')"><span>COD (Bayar di tempat)</span><span>•</span></div>
-</div>
-<div class="card" style="background:#FAFAFA">
-<div style="font-size:10px;letter-spacing:4px">RINGKASAN PESANAN</div>
-<div id="sumList" style="margin-top:12px"></div>
-<div style="border-top:1px solid #E9E9E9;margin-top:12px;padding-top:12px">
-<div style="display:flex;justify-content:space-between;font-size:11px"><span>SUBTOTAL</span><span id="sumSub">Rp0</span></div>
-<div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px"><span>ONGKIR <small id="sumOngkirLab"></small></span><span id="sumOngkir">Rp0</span></div>
-<div style="display:flex;justify-content:space-between;font-size:16px;margin-top:12px"><b>TOTAL BAYAR</b><b id="sumTotal">Rp0</b></div>
-</div>
-<button class="btn" id="btnBayar" onclick="bayarSekarang()">BUAT PESANAN →</button>
-<div style="font-size:9px;opacity:.5;margin-top:10px">Checkout otomatis aktif - pesanan langsung masuk Supabase</div>
-</div>
-</div>
 <script>
-const SUPA_URL = 'https://qjgevvizqeebtdqcbqmt.supabase.co';
-const SUPA_KEY = 'sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
-const supa = supabase.createClient(SUPA_URL,SUPA_KEY);
-let selectedPay='QRIS';
-function getCart(){try{return JSON.parse(localStorage.getItem('arinda_cart2')||'[]')}catch(e){return []}}
-let ongkirCost=0, ongkirService='';
-try{ ongkirCost=Number(localStorage.getItem('arinda_ongkir_cost')||0); ongkirService=localStorage.getItem('arinda_ongkir_service')||'' }catch(e){}
-function pickPay(el,method){document.querySelectorAll('.pay-opt').forEach(b=>b.classList.remove('active'));el.classList.add('active');selectedPay=method;}
-function renderSum(){
-  const cart=getCart();
-  const sub=cart.reduce((a,b)=>a+b.harga*b.qty,0);
-  document.getElementById('sumSub').innerText='Rp'+sub.toLocaleString('id-ID');
-  document.getElementById('sumOngkir').innerText='Rp'+ongkirCost.toLocaleString('id-ID');
-  document.getElementById('sumTotal').innerText='Rp'+(sub+ongkirCost).toLocaleString('id-ID');
-  document.getElementById('sumOngkirLab').innerText=ongkirService?`(${ongkirService})`:'';
-  document.getElementById('sumList').innerHTML=cart.map(i=>`<div style="display:flex;justify-content:space-between;font-size:11px;margin-top:8px"><span>${i.warna||i.nama||'Hijab'} x${i.qty}</span><span>Rp${(i.harga*i.qty).toLocaleString('id-ID')}</span></div>`).join('') || '<div style="opacity:.4;font-size:11px">Keranjang kosong</div>';
-}
-async function bayarSekarang(){
-  const name=document.getElementById('cName').value.trim();
-  const wa=document.getElementById('cWA').value.trim();
-  const addr=document.getElementById('cAddr').value.trim();
-  const city=document.getElementById('cCity').value.trim();
-  const note=document.getElementById('cNote').value.trim();
-  if(!name||!wa||!addr){alert('Lengkapi nama, WA, alamat dulu kak');return;}
-  const cart=getCart();
-  if(!cart.length){alert('Keranjang kosong');return;}
-  const sub=cart.reduce((a,b)=>a+b.harga*b.qty,0);
-  const total=sub+ongkirCost;
-  const code='ARINDA-'+Date.now();
-  const btn=document.getElementById('btnBayar'); btn.innerText='MEMPROSES...'; btn.disabled=true;
-  const {error} = await supa.from('orders').insert([{
-    order_code:code, customer_name:name, customer_wa:wa,
-    customer_address: addr + (note ? ' | Catatan: '+note : ''),
-    city:city, items:cart, subtotal:sub, ongkir:ongkirCost,
-    ongkir_service:ongkirService, total:total,
-    payment_method:selectedPay, status:'MENUNGGU PEMBAYARAN'
+const SUPABASE_URL="https://qjgevvizqeebtdqcbqmt.supabase.co";
+const SUPABASE_KEY="sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19";
+const supa=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const NO_WA_ARINDA="6285178098354"; // <-- GANTI NOMOR WA KAKAK DISINI
+
+function beliWA(namaProduk, harga){
+  const nama = prompt("Nama kakak siapa?");
+  if(!nama) return;
+  const kota = prompt("Kota Tujuan (contoh: Papua / Bandung)?");
+  if(!kota) return;
+  const qty = parseInt(prompt("Mau berapa pcs?", "1")||"1");
+  const ongkir = kota.toLowerCase().includes('papua') ? 40000 : 17000;
+  const jenisOngkir = ongkir==40000 ? "YES - 1 HARI" : "REG (8 day)";
+  const subtotal = harga*qty;
+  const total = subtotal + ongkir;
+
+  // 1. Simpan ke Supabase biar masuk admin
+  supa.from('orders').insert([{
+    customer_name: nama,
+    alamat: '-',
+    kota_tujuan: kota,
+    total: total,
+    total_price: total,
+    status: 'MENUNGGU PEMBAYARAN'
   }]);
-  if(error){ alert('Gagal: '+error.message); btn.innerText='BUAT PESANAN →'; btn.disabled=false; return; }
-  localStorage.setItem('arinda_last_order',code);
-  localStorage.setItem('arinda_cart2','[]');
-  localStorage.removeItem('arinda_ongkir_cost');
-  window.location.href='sukses.html?code='+code;
+
+  // 2. Format WA persis kayak foto kakak
+  const pesan = `Halo ARINDA\nSaya mau pesan:\n- ${namaProduk} x${qty} = Rp${subtotal.toLocaleString('id-ID')}\n\nKota Tujuan: ${kota}\nSUBTOTAL Rp${subtotal.toLocaleString('id-ID')}\nONGKIR ${jenisOngkir}: Rp${ongkir.toLocaleString('id-ID')}\nTOTAL Rp${total.toLocaleString('id-ID')}`;
+  
+  window.open(`https://wa.me/${NO_WA_ARINDA}?text=${encodeURIComponent(pesan)}`, '_blank');
 }
-renderSum();
 </script>
-</body></html>
+
+<!-- CONTOH TOMBOL DI PRODUK -->
+<button onclick="beliWA('Segi empat Paris premium - CORAL PEACH SEGI EMPAT', 55000)" class="bg-pink-600 text-white px-4 py-2 rounded-xl">Beli Langsung WA</button>
