@@ -93,17 +93,16 @@ function getUndertoneForColor(cName){
   if(!cName) return ['NEUTRAL'];
   let found = masterColorsCache.find(m=>m.name.toUpperCase()===cName);
   if(found) return found.undertone;
-  if(['HITAM','BLACK','NAVY','BLUE','PUTIH','WHITE','ABU','GREY','LILAC','PLUM','BURGUNDY','CHARCOAL','DENIM','STONE','EMERALD'].includes(cName)) return ['COOL'];
-  if(['MILO','MAROON','MUSTARD','CARAMEL','OLIVE','BROWN','COKSU','PEACH','BEIGE','MOCCA','CORAL','TERRACOTTA','MUSTARD','CARAMEL'].includes(cName)) return ['WARM'];
-  if(['CREAM','KREAM','WHITE','KREM','BEIGE','NUDE','TAUPE','DUSTY','MAUVE','ROSE'].includes(cName)) return ['NEUTRAL'];
-  if(['SAGE','OLIVE','ARMY','KHAKI','GREEN','MOSS'].includes(cName)) return ['OLIVE'];
-  if(cName.includes('SAGE')||cName.includes('OLIVE')) return ['OLIVE'];
-  if(cName.includes('BEIGE')||cName.includes('CREAM')) return ['NEUTRAL'];
-  if(cName.includes('NAVY')||cName.includes('DENIM')||cName.includes('LILAC')||cName.includes('GREY')) return ['COOL'];
+  if(['HITAM','BLACK','NAVY','DENIM','EMERALD','BURGUNDY','LILAC','GREY','PLUM','CHARCOAL','STONE','BLUE','PUTIH','WHITE'].includes(cName)) return ['COOL'];
+  if(['MILO','MAROON','MUSTARD','CARAMEL','BROWN','COKSU','PEACH','MOCCA','CORAL','TERRACOTTA','BRICK','RUST','CARAMEL BROWN','MUSTARD YELLOW','CORAL PEACH','TERRACOTTA BROWN'].includes(cName)) return ['WARM'];
+  if(['OLIVE GREEN','SAGE GREEN','SAGE','OLIVE','ARMY','KHAKI','MOSS','GREEN'].includes(cName)) return ['OLIVE'];
+  if(cName.includes('TERACOTTA')||cName.includes('CARAMEL')||cName.includes('MUSTARD')||cName.includes('CORAL')||cName.includes('PEACH')||cName.includes('BRICK')||cName.includes('RUST')||cName.includes('MILO')||cName.includes('MAROON')) return ['WARM'];
+  if(cName.includes('OLIVE')||cName.includes('SAGE')||cName.includes('ARMY')||cName.includes('KHAKI')) return ['OLIVE'];
+  if(cName.includes('NAVY')||cName.includes('DENIM')||cName.includes('LILAC')||cName.includes('GREY')||cName.includes('BURGUNDY')||cName.includes('EMERALD')||cName.includes('HITAM')||cName.includes('BLACK')) return ['COOL'];
   return ['NEUTRAL'];
 }
 function aggregateUndertone(){
-  const rows=[...document.querySelectorAll('#varInputs .slot')];
+  const rows=[...document.querySelectorAll('#varInputs.slot')];
   let all = new Set();
   rows.forEach(r=>{
     let checks=[...r.querySelectorAll('.under-check:checked')].map(c=>c.value);
@@ -172,7 +171,7 @@ window.delP=async(id)=>{showConfirm('HAPUS PRODUK?','Akan terhapus permanen',asy
 window.saveProd=async()=>{
  const btn=$('btnProd');if(btn.disabled) return;btn.disabled=true; btn.innerText='MENYIMPAN...';
  const name=$('pName').value.trim();const price=Number($('pPrice').value);if(!name||!price){toast('ISI NAMA & HARGA');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
- const rows=[...document.querySelectorAll('#varInputs .slot')];if(!rows.length){toast('TAMBAH WARNA DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
+ const rows=[...document.querySelectorAll('#varInputs.slot')];if(!rows.length){toast('TAMBAH WARNA DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
  $('saveStatus').innerText='PROSES '+rows.length+' WARNA...';
  let finalVars=[];
  for(let idx=0; idx<rows.length; idx++){
