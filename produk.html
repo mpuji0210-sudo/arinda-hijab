@@ -107,29 +107,34 @@ function getMatchedVariant(productId, q, under){
   }
   return vars[0];
 }
-// ==== FIX FINAL: 2 MODE ====
+// ==== HANYA INI YANG DIRUBAH: JADI PER-VARIAN BUKAN PER-PRODUK ====
 function applyFilters(qOverride){
   let q = (qOverride!==undefined?qOverride:cleanSearchQuery(document.getElementById('q').value||'')).toLowerCase().trim();
   q = cleanSearchQuery(q);
   lastSearchQuery=q;
-  const isDefaultView = (activeUnder==='ALL' &&!q);
-  if(isDefaultView){
-    document.getElementById('prodCount').innerText=allProducts.length+' PRODUK';
-    renderProducts(allProducts);
-    return;
-  }
   let flat=[];
   allProducts.forEach(p=>{
     const vars = window._varMap[p.id]||[];
+    if(!vars.length){
+      const u = normalizeUnder(p.undertone||[]);
+      const matchUnder = activeUnder==='ALL' || u.includes(activeUnder);
+      const matchQ =!q || p.name.toLowerCase().includes(q);
+      if(matchUnder && matchQ){
+        flat.push({p, v:{color_name:p.name,image_url:p.image_url,undertone:p.undertone,stock:1,is_available:true}});
+      }
+      return;
+    }
     vars.forEach(v=>{
       const u = normalizeUnder(v.undertone||p.undertone||[]);
       const matchUnder = activeUnder==='ALL' || u.includes(activeUnder);
       const matchQ =!q || (v.color_name||'').toLowerCase().includes(q) || p.name.toLowerCase().includes(q);
-      if(matchUnder && matchQ) flat.push({p,v});
+      if(matchUnder && matchQ){
+        flat.push({p, v});
+      }
     });
   });
   document.getElementById('prodCount').innerText=flat.length+' WARNA';
-  renderVariants(flat);
+  render(flat);
 }
 function handleUrlSearch(){
   const p=new URLSearchParams(location.search);
@@ -145,27 +150,19 @@ function underBadgeHtml(arr){
   let a = normalizeUnder(arr);
   return a.map(u=>`<span class="under-badge">${u}</span>`).join('');
 }
-function renderProducts(list){
-  const el=document.getElementById('list');
-  el.innerHTML=list.map((p,i)=>{
-    const matched = getMatchedVariant(p.id, lastSearchQuery, activeUnder) || {image_url:p.image_url,color_name:p.name,undertone:p.undertone};
-    let img = matched.image_url; let col = matched.color_name; let under = matched.undertone||p.undertone||[];
-    return `<div class="prod-card"><div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this,${i},'${(col||'').replace(/'/g,'')}')"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}-${i}" src="${getOptImg(img,400)}" loading="lazy" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="padding:8px;border-top:1px solid #F6F1EB" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div><div style="font-size:8px;margin-top:2px">${underBadgeHtml(under)}</div><div style="font-size:10px;margin-top:3px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
-  }).join('');
-}
-function renderVariants(list){
+function render(list){
   const el=document.getElementById('list');
   if(!list.length){el.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:60px 0;opacity:.5">TIDAK ADA WARNA UNTUK "${document.getElementById('q').value||activeUnder}"<br><button onclick="document.getElementById('q').value='';activeUnder='ALL';applyFilters('')" style="margin-top:10px;padding:8px 16px;border-radius:20px;border:1px solid #111;background:#fff;font-size:9px">LIHAT SEMUA</button></div>`;return;}
   el.innerHTML=list.map((item,i)=>{
-    const p=item.p; const matched=item.v;
-    let img = matched.image_url; let col = matched.color_name; let under = matched.undertone||p.undertone||[];
+    const p=item.p;
+    const matched=item.v;
+    let img = matched? matched.image_url : p.image_url;
+    let col = matched? matched.color_name : p.name;
+    let under = matched? (matched.undertone||p.undertone||[]) : (p.undertone||[]);
     return `<div class="prod-card"><div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this,${i},'${(col||'').replace(/'/g,'')}')"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}-${i}" src="${getOptImg(img,400)}" loading="lazy" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="padding:8px;border-top:1px solid #F6F1EB" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${col}</div><div style="font-size:8px;margin-top:2px">${underBadgeHtml(under)}</div><div style="font-size:10px;margin-top:3px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
   }).join('');
 }
-function render(list){
-  if(list.length && list[0].p && list[0].v){ renderVariants(list); } else { renderProducts(list); }
-}
-// ==== END FIX ====
+// ==== END RUBAHAN ====
 function quickAdd(id,btnEl,idx,colorName){
   const p=allProducts.find(x=>String(x.id)===String(id));
   const vars=window._varMap[id]||[];
@@ -223,5 +220,5 @@ async function cekOngkirProd(){if(!selectedDestId){document.getElementById('ongk
 function setOngkirProd(cost,service,etd){selectedOngkirCost=Number(cost);selectedService=service+' ('+etd+')';document.getElementById('ongkirSelectedProd').innerHTML=`✓ ${selectedService} - Rp${selectedOngkirCost.toLocaleString('id-ID')}`;document.getElementById('ongkirResultProd').innerHTML='';renderCart();}
 function checkoutWA(){const c=getCart();if(!c.length)return;let msg=`Halo ARINDA %0A`;c.forEach(it=>{msg+=`- ${it.warna} x${it.qty}%0A`});const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);msg+=`TOTAL Rp${(sub+selectedOngkirCost).toLocaleString('id-ID')}`;window.open('https://wa.me/'+WA_NUMBER+'?text='+msg,'_blank');}
 </script>
-<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js" onload="(async()=>{supabaseClient=supabase.createClient(SUPA_URL,SUPA_KEY);const {data:all}=await supabaseClient.from('products').select('id,name,price,image_url,category,undertone').order('id',{ascending:false}).limit(50);const {data:vars}=await supabaseClient.from('product_variants').select('product_id,color_name,image_url,stock,is_available,undertone').limit(400);allProducts=all||[];window._varMap={};(vars||[]).forEach(v=>{if(!window._varMap[v.product_id])window._varMap[v.product_id]=[];window._varMap[v.product_id].push(v);});updateCount();handleUrlSearch();if(!new URLSearchParams(location.search).has('undertone') &&!new URLSearchParams(location.search).has('warna') &&!new URLSearchParams(location.search).has('q')){ applyFilters(''); }})()"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js" onload="(async()=>{supabaseClient=supabase.createClient(SUPA_URL,SUPA_KEY);const {data:all}=await supabaseClient.from('products').select('id,name,price,image_url,category,undertone').order('id',{ascending:false}).limit(50);const {data:vars}=await supabaseClient.from('product_variants').select('product_id,color_name,image_url,stock,is_available,undertone').limit(400);allProducts=all||[];window._varMap={};(vars||[]).forEach(v=>{if(!window._varMap[v.product_id])window._varMap[v.product_id]=[];window._varMap[v.product_id].push(v);});updateCount();handleUrlSearch();})()"></script>
 </body></html>
