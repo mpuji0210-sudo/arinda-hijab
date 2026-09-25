@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADMIN V87 + JENIS PRODUK</title>
+<title>ADMIN V88 + ADD JENIS PRODUK</title>
 <meta name="robots" content="noindex, nofollow">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
@@ -46,7 +46,7 @@ textarea.input{border:1px solid var(--line);padding:10px;background:var(--bg);re
 <input type="hidden" id="editId"><input id="pName" class="input" placeholder="NAMA PRODUK ex: Paris Premium Segiempat">
 <input id="pPrice" type="number" class="input" placeholder="HARGA ex: 45000">
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-<select id="pJenis" class="input"><option value="">PILIH JENIS PRODUK</option><option value="SEGI EMPAT">SEGI EMPAT</option><option value="SEGI EMPAT PARIS">SEGI EMPAT PARIS PREMIUM</option><option value="PASHMINA">PASHMINA</option><option value="PASHMINA SHAWL">PASHMINA SHAWL</option></select>
+<select id="pJenis" class="input"><option value="">PILIH JENIS PRODUK</option></select>
 <select id="pCat" class="input"><option value="">PILIH BAHAN</option></select>
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
@@ -55,7 +55,20 @@ textarea.input{border:1px solid var(--line);padding:10px;background:var(--bg);re
 </div>
 <input id="pMaterialDetail" class="input" placeholder="JENIS BAHAN DETAIL">
 <textarea id="pDesc" class="input" rows="4" placeholder="DESKRIPSI PRODUK"></textarea>
-<div style="margin-top:10px;border:1px solid var(--line);padding:10px;background:var(--bg)"><div style="display:flex;gap:6px"><input id="catName" class="input" placeholder="BAHAN BARU ex: VOAL PREMIUM" style="margin:0"><button class="btn" style="width:70px;margin:0" onclick="addCat()">ADD</button></div><div id="catList" style="margin-top:8px"></div></div>
+
+<!-- TAMBAHAN BARU: KELOLA JENIS PRODUK -->
+<div style="margin-top:10px;border:1px solid var(--line);padding:10px;background:var(--bg)">
+<div style="font-size:8px;letter-spacing:2px;opacity:.6;margin-bottom:6px;font-weight:700">KELOLA JENIS PRODUK (SEGI EMPAT / PASHMINA)</div>
+<div style="display:flex;gap:6px"><input id="jenisName" class="input" placeholder="JENIS BARU ex: SEGI EMPAT SYARI" style="margin:0"><button class="btn" style="width:70px;margin:0" onclick="addJenis()">ADD</button></div>
+<div id="jenisList" style="margin-top:8px"></div>
+</div>
+
+<div style="margin-top:10px;border:1px solid var(--line);padding:10px;background:var(--bg)">
+<div style="font-size:8px;letter-spacing:2px;opacity:.6;margin-bottom:6px;font-weight:700">KELOLA BAHAN</div>
+<div style="display:flex;gap:6px"><input id="catName" class="input" placeholder="BAHAN BARU ex: VOAL PREMIUM" style="margin:0"><button class="btn" style="width:70px;margin:0" onclick="addCat()">ADD</button></div>
+<div id="catList" style="margin-top:8px"></div>
+</div>
+
 <div style="margin-top:14px; background:#111; color:#fff; padding:12px; border-radius:10px;">
 <div style="font-size:9px; letter-spacing:3px; margin-bottom:8px;">MASTER WARNA -> AUTO UNDERTONE</div>
 <div id="autoUndertoneBox" style="min-height:20px; font-size:8px; opacity:.8;">Isi warna di bawah, undertone auto masuk per foto</div>
@@ -89,7 +102,7 @@ let confirmCb=null;function showConfirm(t,d,cb){$('confirmTitle').innerText=t;$(
 function closeConfirm(){$('confirmModal').classList.remove('open');confirmCb=null;}
 $('confirmOk').onclick=()=>{if(confirmCb)confirmCb();closeConfirm();};
 function setBtnLoading(btnId,statusId,loading,loadingText='MENYIMPAN...'){const b=$(btnId); const s=$(statusId);if(!b) return;b.disabled=loading;b.innerText=loading?loadingText:'SIMPAN';if(loading && s) s.innerText='PROSES...';}
-async function init(){try{const {data}=await supa.from('settings').select('*');if(data){const g=k=>data.find(s=>s.key===k)?.value;if(g('store_name'))$('storeName').value=g('store_name');if(g('wa_number'))$('waNumber').value=g('wa_number');if(g('toko_origin_id')){tokoOriginId=g('toko_origin_id');tokoOriginLabel=g('toko_origin_label')||tokoOriginLabel;}if(g('home_koleksi_terlaris')){try{const p=JSON.parse(g('home_koleksi_terlaris'));if(p.length)koleksiSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}if(g('home_undertone_images')){try{const p=JSON.parse(g('home_undertone_images'));if(p.length)undertoneSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}if(g('home_faq_list')){try{faqSlots=JSON.parse(g('home_faq_list'))}catch(e){}}}}catch(e){}$('curOrigin').innerText=tokoOriginLabel+' - '+tokoOriginId;await loadCats();await loadMasterColors();await loadProducts();await loadBanners();initVar();renderKoleksi();renderUnder();renderFaq();}
+async function init(){try{const {data}=await supa.from('settings').select('*');if(data){const g=k=>data.find(s=>s.key===k)?.value;if(g('store_name'))$('storeName').value=g('store_name');if(g('wa_number'))$('waNumber').value=g('wa_number');if(g('toko_origin_id')){tokoOriginId=g('toko_origin_id');tokoOriginLabel=g('toko_origin_label')||tokoOriginLabel;}if(g('home_koleksi_terlaris')){try{const p=JSON.parse(g('home_koleksi_terlaris'));if(p.length)koleksiSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}if(g('home_undertone_images')){try{const p=JSON.parse(g('home_undertone_images'));if(p.length)undertoneSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}if(g('home_faq_list')){try{faqSlots=JSON.parse(g('home_faq_list'))}catch(e){}}}}catch(e){}$('curOrigin').innerText=tokoOriginLabel+' - '+tokoOriginId;await loadJenis();await loadCats();await loadMasterColors();await loadProducts();await loadBanners();initVar();renderKoleksi();renderUnder();renderFaq();}
 async function loadMasterColors(){const {data}=await supa.from('master_colors').select('*'); masterColorsCache = data||[]; aggregateUndertone();}
 function getUndertoneForColor(cName){
   cName=(cName||'').toUpperCase().trim();
@@ -143,6 +156,42 @@ window.autoCheckUndertone=(inputEl)=>{
   aggregateUndertone();
 };
 window.prevVar=(inp)=>{const f=inp.files[0];if(!f)return;const url=URL.createObjectURL(f);let img=inp.closest('.slot').querySelector('.preview-img');if(!img){img=document.createElement('img');img.className='preview-img';img.style.cssText='width:100%;height:200px;object-fit:cover;border:1px solid var(--line);margin-top:8px;object-position:top';inp.closest('.slot').insertBefore(img,inp);}img.src=url;};
+
+// === LOAD JENIS PRODUK ===
+async function loadJenis(){
+  let data=null;
+  try{
+    const res=await supa.from('jenis_produk').select('*').order('id');
+    if(res.data) data=res.data;
+  }catch(e){}
+  // fallback kalau tabel belum ada -> pakai default + categories bahan juga
+  if(!data){
+    const fallback=['SEGI EMPAT','SEGI EMPAT PARIS PREMIUM','PASHMINA','PASHMINA SHAWL'];
+    data=fallback.map((n,i)=>({id:i,name:n}));
+  }
+  $('jenisList').innerHTML=data.map(c=>'<span style="display:inline-block;border:1px solid var(--line);background:var(--bg);padding:4px 10px;margin:3px;font-size:9px">'+esc(c.name)+' <b style="cursor:pointer" onclick="delJenis(\''+c.id+'\',\''+esc(c.name)+'\')">x</b></span>').join('');
+  $('pJenis').innerHTML='<option value="">PILIH JENIS PRODUK</option>'+data.map(c=>'<option value="'+esc(c.name)+'">'+esc(c.name)+'</option>').join('');
+}
+window.addJenis=async()=>{
+  const v=$('jenisName').value.trim().toUpperCase();
+  if(!v) return;
+  try{
+    await supa.from('jenis_produk').insert({name:v});
+  }catch(e){
+    // kalau tabel belum ada, simpan ke settings sebagai fallback
+    toast('TABEL JENIS_PRODUK BELUM ADA, BUAT DULU DI SUPABASE');
+  }
+  $('jenisName').value='';
+  await loadJenis();
+  toast(v+' DITAMBAH');
+};
+window.delJenis=async(id,name)=>{
+  showConfirm('HAPUS JENIS?',''+name+' akan hilang',async()=>{
+    try{ await supa.from('jenis_produk').delete().eq('id',id); }catch(e){}
+    loadJenis(); toast('DIHAPUS');
+  });
+};
+
 async function loadCats(){const {data}=await supa.from('categories').select('*');if(!data)return;$('catList').innerHTML=data.map(c=>'<span style="display:inline-block;border:1px solid var(--line);background:var(--bg);padding:4px 10px;margin:3px;font-size:9px">'+esc(c.name)+' <b style="cursor:pointer" onclick="delCat(\''+c.id+'\')">x</b></span>').join('');$('pCat').innerHTML='<option value="">PILIH BAHAN</option>'+data.map(c=>'<option value="'+esc(c.name)+'">'+esc(c.name)+'</option>').join('');}
 window.addCat=async()=>{const v=$('catName').value.trim();if(!v)return;await supa.from('categories').insert({name:v});$('catName').value='';loadCats();};
 window.delCat=async(id)=>{showConfirm('HAPUS BAHAN?','Filter bahan akan hilang',async()=>{await supa.from('categories').delete().eq('id',id);loadCats();toast('DIHAPUS');});};
