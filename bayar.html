@@ -1,86 +1,141 @@
 <!DOCTYPE html>
 <html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BAYAR - ARINDA</title>
+<title>Pembayaran - ARINDA HIJAB</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
+<style>body{font-family:'Inter',sans-serif}</style>
 </head>
-<body class="bg-[#FAFAFA]">
-<div class="max-w-[460px] mx-auto bg-white border border-[#E9E9E9] m-3 p-5">
-  <div style="font-family:serif;letter-spacing:7px;font-size:20px">ARINDA</div>
-  <div style="font-size:8px;letter-spacing:4px;opacity:.4">LANGKAH 2 - PEMBAYARAN</div>
-
-  <div id="info" class="bg-[#FAFAFA] border p-3 my-4 text-[11px] leading-6"></div>
-
-  <div class="border border-black p-4 my-4">
-    <div style="font-size:10px;letter-spacing:3px;font-weight:bold">TRANSFER BANK</div>
-    <div style="font-size:12px;margin-top:10px;line-height:20px">
-      Bank BCA<br>
-      No. Rek: <b id="norek">8740376161</b> <button onclick="copyRek()" style="font-size:8px;border:1px solid #000;padding:2px 6px;margin-left:6px">SALIN</button><br>
-      A/N: MUHAMMAD PUJIANTO<br>
-      Total Transfer: <b id="totalBayar" style="font-size:16px">Rp0</b>
-    </div>
+<body class="bg-[#FAFAFA] min-h-screen">
+<div class="max-w-[460px] mx-auto bg-white min-h-screen border-x">
+  <!-- header -->
+  <div class="border-b px-5 py-4 flex justify-between items-center">
+    <div><div style="font-family:'Cormorant Garamond';letter-spacing:7px;font-size:20px">ARINDA</div><div style="font-size:8px;letter-spacing:4px;opacity:.4">HIJAB • LANGKAH 2 - BAYAR</div></div>
+    <div id="countdown" class="text-[11px] font-mono bg-black text-white px-3 py-1">03:00:00</div>
   </div>
 
-  <div class="border border-black p-4">
-    <div style="font-size:10px;letter-spacing:3px;font-weight:bold">QRIS</div>
-    <div style="text-align:center;padding:15px">
-      <img src="https://via.placeholder.com/250x250?text=QRIS+ARINDA" id="qrisImg" style="width:220px;margin:0 auto;border:1px solid #eee">
-      <div style="font-size:8px;opacity:.5;margin-top:8px">Scan QRIS di atas - Ganti src dengan QRIS asli kakak di baris 25</div>
+  <div class="p-5">
+    <!-- Ringkasan -->
+    <div class="bg-[#FAFAFA] border p-4 mb-5">
+      <div class="text-[9px] tracking-[2px] opacity-50 mb-2">RINGKASAN PESANAN</div>
+      <div id="ringkasan" class="text-[11px] leading-6"></div>
+      <div class="mt-3 pt-3 border-t flex justify-between font-bold"><span>TOTAL TRANSFER</span><span id="totalText" class="text-[15px]">Rp0</span></div>
     </div>
-  </div>
 
-  <button onclick="sudahBayar()" id="btnLunas" class="w-full bg-black text-white py-4 mt-5 text-[10px] tracking-[3px]">SAYA SUDAH BAYAR - KONFIRMASI WA</button>
-  <div style="text-align:center;font-size:8px;opacity:.4;margin-top:10px">Order akan otomatis jadi LUNAS di admin setelah klik tombol ini</div>
+    <!-- BCA -->
+    <div class="border-2 border-black p-5 mb-4">
+      <div class="flex justify-between items-center mb-3">
+        <div class="flex items-center gap-2"><div class="w-8 h-8 bg-[#0066AE] text-white flex items-center justify-center text-[10px] font-bold">BCA</div><div><div class="text-[12px] font-bold">Bank BCA</div><div class="text-[9px] opacity-60">Transfer Manual - Cek otomatis</div></div></div>
+        <div class="text-[8px] bg-green-100 text-green-700 px-2 py-1">REKOMENDASI</div>
+      </div>
+
+      <div class="bg-black text-white p-4 text-center">
+        <div class="text-[9px] tracking-[3px] opacity-60 mb-1">NO REKENING</div>
+        <div id="norek" class="text-[22px] font-mono tracking-[3px] font-bold">8740376161</div>
+        <div class="text-[10px] mt-1 tracking-[1px]">a.n MUHAMMAD PUJIANTO</div>
+      </div>
+
+      <button onclick="copyRek()" id="btnCopy" class="w-full mt-3 border border-black py-3 text-[10px] tracking-[3px] font-bold hover:bg-black hover:text-white transition">SALIN NO REKENING</button>
+      <div class="text-[9px] opacity-50 mt-3 text-center">Transfer sesuai TOTAL sampai 3 digit terakhir. Jangan dibulatkan!</div>
+    </div>
+
+    <!-- instruksi -->
+    <div class="bg-amber-50 border border-amber-200 p-3 text-[10px] leading-5 mb-5">
+      <b>Cara Bayar:</b><br>
+      1. Salin No Rek BCA di atas<br>
+      2. Transfer TOTAL PERSIS via m-BCA / ATM<br>
+      3. Klik tombol LUNAS di bawah setelah transfer<br>
+      4. Pesanan otomatis masuk Admin & langsung diproses
+    </div>
+
+    <button id="btnLunas" onclick="sudahBayar()" class="w-full bg-black text-white py-4 text-[11px] tracking-[4px] font-bold">SAYA SUDAH TRANSFER - KONFIRMASI LUNAS</button>
+    <div id="status" class="text-[10px] text-center mt-3"></div>
+
+    <div class="text-center mt-8 text-[8px] tracking-[2px] opacity-30">ARINDA HIJAB • JAKARTA • 2026<br>QRIS akan segera tersedia</div>
+  </div>
 </div>
 
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
-const WA_NUMBER="6285178098354";
 
-const params=new URLSearchParams(location.search);
-const total=Number(params.get('total')||localStorage.getItem('arinda_last_order')?JSON.parse(localStorage.getItem('arinda_last_order')).total:0);
-const orderId=localStorage.getItem('arinda_last_order_id');
-const lastOrder=JSON.parse(localStorage.getItem('arinda_last_order')||'{}');
-const cart=JSON.parse(localStorage.getItem('arinda_cart2')||'[]');
+const params=new URLSearchParams(window.location.search);
+let total=Number(params.get('total')||0);
+let lastOrder=JSON.parse(localStorage.getItem('arinda_last_order')||'{}');
+if(!total) total=lastOrder.total||0;
 
-document.getElementById('totalBayar').innerText='Rp'+total.toLocaleString('id-ID');
-document.getElementById('info').innerHTML=
-  `Nama: ${params.get('nama')||lastOrder.nama||''}<br>`+
-  `Kota: ${params.get('kota')||lastOrder.kota||''}<br>`+
-  `Order ID: ${orderId||'-'}<br><br>`+
-  cart.map(i=>`• ${i.warna} x${i.qty} = Rp${(i.harga*i.qty).toLocaleString('id-ID')}`).join('<br>')+
-  `<br><br><b>TOTAL: Rp${total.toLocaleString('id-ID')}</b>`;
+document.getElementById('totalText').innerText='Rp'+total.toLocaleString('id-ID');
+document.getElementById('ringkasan').innerHTML=`
+  Nama: <b>${lastOrder.nama||params.get('nama')||'-'}</b><br>
+  Kota: ${lastOrder.kota||params.get('kota')||'-'} ${lastOrder.kota_tujuan?'('+lastOrder.kota_tujuan+')':''}<br>
+  Alamat: ${lastOrder.alamat||'-'}<br>
+  ${lastOrder.cart?lastOrder.cart.map(i=>`• ${i.warna} x${i.qty}`).join('<br>'):''}
+`;
 
 function copyRek(){
-  const rek=document.getElementById('norek').innerText;
-  navigator.clipboard.writeText(rek); alert('No Rek disalin: '+rek);
+  navigator.clipboard.writeText('8740376161');
+  document.getElementById('btnCopy').innerText='✓ TERSALIN!';
+  setTimeout(()=>document.getElementById('btnCopy').innerText='SALIN NO REKENING',1500);
 }
+
+// countdown 3 jam
+let sec=10800;
+setInterval(()=>{
+  sec--; let h=Math.floor(sec/3600), m=Math.floor((sec%3600)/60), s=sec%60;
+  document.getElementById('countdown').innerText=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+},1000);
 
 async function sudahBayar(){
   const btn=document.getElementById('btnLunas');
-  btn.innerText='MEMPROSES LUNAS...'; btn.disabled=true;
+  const orderId=localStorage.getItem('arinda_last_order_id');
+  if(!orderId){alert('ID Pesanan tidak ditemukan! Balik ke checkout lagi.');return;}
 
-  // 1. Update Supabase jadi LUNAS
-  if(orderId){
-    await supa.from('orders').update({status:'LUNAS', paid_at:new Date().toISOString()}).eq('id',orderId);
+  btn.innerText='MEMPROSES...'; btn.disabled=true;
+  document.getElementById('status').innerText='Mengkonfirmasi pembayaran ke pusat...';
+
+  try{
+    // Jika ID masih temp- (gagal insert di checkout) -> insert baru sekarang sebagai LUNAS
+    if(orderId.startsWith('temp-')){
+      const orderData={
+        customer_name: lastOrder.nama||'Customer',
+        wa: lastOrder.wa||'',
+        kota: lastOrder.kota||'',
+        alamat: lastOrder.alamat||'',
+        total: total,
+        total_price: total,
+        kota_tujuan: lastOrder.kota_tujuan||'',
+        ongkir: lastOrder.ongkir||0,
+        items: lastOrder.cart||[],
+        status: 'LUNAS',
+        paid_at: new Date().toISOString()
+      };
+      const {data,error}=await supa.from('orders').insert([orderData]).select();
+      if(error) throw error;
+      localStorage.setItem('arinda_last_order_id', data[0].id);
+    }else{
+      // Update order lama jadi LUNAS
+      const {error}=await supa.from('orders').update({status:'LUNAS', paid_at:new Date().toISOString(), total:total}).eq('id',orderId);
+      if(error) throw error;
+    }
+
+    document.getElementById('status').innerHTML='<span class="text-green-600 font-bold">✓ LUNAS BERHASIL!</span>';
+    btn.innerText='✓ PESANAN LUNAS';
+
+    // Bersihin cart
+    localStorage.removeItem('arinda_cart2');
+
+    setTimeout(()=>{
+      alert('Pembayaran Berhasil! Pesananmu LUNAS dan sudah masuk ke Admin ARINDA. Akan segera diproses kak!');
+      window.location.href='produk.html';
+    },800);
+
+  }catch(e){
+    console.error(e);
+    document.getElementById('status').innerText='Gagal update: '+e.message+' - Coba lagi';
+    btn.innerText='SAYA SUDAH TRANSFER - KONFIRMASI LUNAS';
+    btn.disabled=false;
   }
-
-  // 2. Bikin pesan WA otomatis LUNAS
-  let pesan=`Halo ARINDA HIJAB%0ASAYA SUDAH BAYAR LUNAS ✅%0A%0A`+
-  `Order ID: ${orderId||''}%0A`+
-  `Nama: ${lastOrder.nama||params.get('nama')||''}%0A`+
-  `Kota: ${lastOrder.kota||params.get('kota')||''}%0A`+
-  `Alamat: ${lastOrder.alamat||''}%0A%0A`+
-  `DETAIL:%0A${cart.map(i=>`- ${i.warna} x${i.qty} = Rp${(i.harga*i.qty).toLocaleString('id-ID')}`).join('%0A')}%0A%0A`+
-  `TOTAL TRANSFER: Rp${total.toLocaleString('id-ID')}%0A`+
-  `Metode: Transfer BCA / QRIS%0A%0A`+
-  `Mohon dicek ya kak, terima kasih 🙏`;
-
-  // 3. Kosongkan keranjang & lempar ke WA kakak (085178098354)
-  localStorage.removeItem('arinda_cart2');
-  window.location.href=`https://wa.me/${WA_NUMBER}?text=${pesan}`;
 }
 </script>
 </body></html>
