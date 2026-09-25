@@ -1,23 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin Pesanan Arinda Hijab</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+body{background:#FFF6F9;font-family:'Inter',sans-serif}
+.title{color:#E91E63;font-family:cursive;font-size:26px;padding:16px;font-weight:bold}
+</style>
+</head>
+<body>
+<div class="title">Admin Pesanan Arinda Hijab</div>
+<div style="padding:0 16px;display:flex;gap:10px">
+  <input id="search" placeholder="Cari nama / kota..." style="flex:1;padding:14px 18px;border-radius:20px;border:1px solid #eee;outline:none">
+  <button onclick="load()" style="background:#E91E63;color:#fff;padding:14px 24px;border-radius:20px;border:none;font-weight:bold">Refresh</button>
+</div>
+<div id="list" style="padding:16px"></div>
+
+<script>
+const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
+const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
+const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
+
 async function load(){
+  const listEl=document.getElementById('list');
+  listEl.innerHTML='<div style="text-align:center;padding:40px;opacity:.5">Loading...</div>';
+  
+  // 1. Coba ambil dari Supabase
   try{
     const {data, error} = await supa.from('orders').select('*').order('created_at',{ascending:false}).limit(50);
-    if(data && data.length>0){ renderSupabase(data); return; }
-  }catch(e){}
-  
-  // Fallback: ambil dari localStorage kalau Supabase kosong
+    if(data && data.length>0){
+      renderSupabase(data);
+      return;
+    }
+  }catch(e){ console.log('Supabase error',e); }
+
+  // 2. Fallback: ambil dari HP customer (localStorage)
   const last = JSON.parse(localStorage.getItem('arinda_last_order')||'null');
   const lastId = localStorage.getItem('arinda_last_order_id');
   if(last){
-    document.getElementById('list').innerHTML = `
-      <div style="background:#fff;padding:16px;border:1px solid #E9E9E9">
-        <b>${last.nama} - ${last.kota} (LOCAL)</b><br>
-        <small>${last.alamat}</small><br><br>
-        ${last.cart.map(i=>`• ${i.warna} x${i.qty} = Rp${(i.harga*i.qty).toLocaleString('id-ID')}`).join('<br>')}
-        <br><br><b>TOTAL: Rp${last.total.toLocaleString('id-ID')}</b><br>
-        <span style="background:#000;color:#fff;padding:4px 8px;font-size:9px">LUNAS - WA SUDAH MASUK</span>
-        <br><small>ID: ${lastId||''}</small>
+    listEl.innerHTML = `
+      <div style="background:#fff;padding:18px;border-radius:18px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+        <div style="display:flex;justify-content:space-between">
+          <b style="font-size:16px">${last.nama} - ${last.kota} (LOCAL)</b>
+          <span style="background:#000;color:#fff;padding:6px 12px;border-radius:20px;font-size:10px">LUNAS - WA SUDAH MASUK</span>
+        </div>
+        <div style="font-size:12px;opacity:.6;margin-top:4px">${last.alamat} • ID: ${lastId||'-'}</div>
+        <div style="margin-top:14px;background:#FFF6F9;padding:12px;border-radius:12px;font-size:12px;line-height:20px">
+          ${last.cart.map(i=>`• ${i.warna} x${i.qty} = Rp${(i.harga*i.qty).toLocaleString('id-ID')}`).join('<br>')}
+        </div>
+        <div style="margin-top:10px;font-weight:bold">TOTAL: Rp${last.total.toLocaleString('id-ID')}</div>
+        <div style="margin-top:8px;font-size:10px;opacity:.5">Ini data dari HP ini aja. Kalau Supabase sudah dibuka kuncinya (RUN SQL), data akan masuk otomatis dari semua HP customer.</div>
       </div>`;
   } else {
-    document.getElementById('list').innerHTML = '<div style="text-align:center;padding:40px;opacity:.5">Belum ada pesanan</div>';
+    listEl.innerHTML = '<div style="text-align:center;padding:60px 20px;background:#fff;border-radius:18px">Belum ada pesanan<br><small style="opacity:.5">Coba order 1x lagi setelah RUN SQL di Supabase</small></div>';
   }
 }
+
+function renderSupabase(data){
+  const q=(document.getElementById('search').value||'').toLowerCase();
+  let filtered=data.filter(d=> (d.customer_name||'').toLowerCase().includes(q) || (d.kota||d.kota_tujuan||'').toLowerCase().includes(q));
+  document.getElementById('list').innerHTML = filtered.map(o=>`
+    <div style="background:#fff;padding:18px;border-radius:18px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+      <div style="display:flex;justify-content:space-between">
+        <b>${o.customer_name||'-'} - ${o.kota||o.kota_tujuan||''}</b>
+        <span style="background:${o.status==='LUNAS'?'#000':'#E91E63'};color:#fff;padding:6px 12px;border-radius:20px;font-size:10px">${o.status||'MENUNGGU'}</span>
+      </div>
+      <div style="font-size:12px;opacity:.6;margin-top:4px">${o.alamat||''} • Rp${Number(o.total||o.total_price||0).toLocaleString('id-ID')} • ID: ${o.id}</div>
+      <div style="margin-top:10px;background:#FFF6F9;padding:12px;border-radius:12px;font-size:11px">
+        ${(o.items||[]).map(i=>`• ${i.warna||i.name||''} x${i.qty||1}`).join('<br>')}
+      </div>
+    </div>
+  `).join('') || '<div style="text-align:center;padding:40px">Tidak ada hasil</div>';
+}
+
+document.getElementById('search').addEventListener('input', load);
+load();
+</script>
+</body>
+</html>
