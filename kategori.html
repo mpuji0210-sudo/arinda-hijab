@@ -1,70 +1,22 @@
-<!DOCTYPE html><html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KATEGORI - ARINDA HIJAB PREMIUM</title>
-<link rel="preconnect" href="https://qjgevvizqeebtdqcbqmt.supabase.co" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-<style>
-:root{--black:#111;--line:#EDE8E1;--bg:#FFFCF9}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--black);font-family:'Inter',sans-serif;font-weight:300}
-nav{position:sticky;top:0;z-index:99;background:rgba(255,252,249,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(17,17,17,0.06)}
-.nav-top{max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px}.logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px}
-.menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:36px;border-top:1px solid rgba(17,17,17,0.06)}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:13px 0;opacity:.35;white-space:nowrap}.menu a.active{opacity:1;border-bottom:1px solid #111}
-.section{max-width:1240px;margin:0 auto;padding:24px 16px}
-.k-title{font-family:'Cormorant Garamond';font-size:22px;letter-spacing:3px;font-weight:300;margin:28px 0 14px}
-.k-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-@media(min-width:700px){.k-grid{grid-template-columns:repeat(3,1fr)}}
-.k-card{background:#fff;border:1px solid var(--line);padding:18px 16px;border-radius:12px;cursor:pointer;position:relative;min-height:130px;display:flex;flex-direction:column;justify-content:space-between}
-.k-card b{font-size:11px;letter-spacing:3px;font-weight:400;line-height:1.4;display:block;max-width:85%}
-.k-count{position:absolute;top:16px;right:14px;background:#111;color:#fff;font-size:9px;min-width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.k-link{font-size:8px;letter-spacing:3px;opacity:.4;margin-top:20px}
-</style></head><body>
-<nav><div class="nav-top"><div class="logo">ARINDA<span>HIJAB PREMIUM</span></div><div style="font-size:9px;letter-spacing:2px;opacity:.5">KATEGORI</div></div>
-<div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a class="active">KATEGORI</a></div></nav>
-
-<main class="section">
-<div class="k-title">Kategori Jenis Produk</div>
-<div class="k-grid" id="gridJenis"></div>
-
-<div class="k-title">Kategori Bahan</div>
-<div class="k-grid" id="gridBahan"></div>
-</main>
-
-<footer style="margin-top:28px;padding:28px 16px;text-align:center;border-top:1px solid var(--line)"><div style="font-family:'Cormorant Garamond';letter-spacing:8px">ARINDA</div><div style="font-size:7px;letter-spacing:5px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div></footer>
-
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KATEGORI - ARINDA</title><style>:root{--line:#EDE8E1;--bg:#FFFCF9}*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,sans-serif}.nav{max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between}.menu{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;gap:36px;border-top:1px solid rgba(0,0,0,.06)}.menu a{font-size:9px;letter-spacing:4px;color:#111;text-decoration:none;padding:13px 0;opacity:.35}.menu a.active{opacity:1;border-bottom:1px solid #111}.section{max-width:1240px;margin:0 auto;padding:20px 16px}.k-title{font-size:22px;letter-spacing:3px;margin:28px 0 14px}.k-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.k-card{background:#fff;border:1px solid var(--line);padding:18px;border-radius:12px;cursor:pointer;position:relative;min-height:120px}.k-count{position:absolute;top:14px;right:14px;background:#111;color:#fff;font-size:9px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center}</style></head><body>
+<div class="nav"><b>ARINDA HIJAB PREMIUM</b><span>KATEGORI</span></div>
+<div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a class="active">KATEGORI</a></div>
+<main class="section"><div class="k-title">Kategori Jenis Produk</div><div class="k-grid" id="gridJenis"></div><div class="k-title">Kategori Bahan</div><div class="k-grid" id="gridBahan"></div></main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
 <script>
-const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
-const supa=supabase.createClient(SUPA_URL,SUPA_KEY);
+const supa=supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
 async function load(){
-  const {data:products}=await supa.from('products').select('category').limit(100);
-  // Hitung jenis
-  let jenisCount={};let bahanCount={};
-  (products||[]).forEach(p=>{
-    let cat=(p.category||'PARIS PREMIUM').toUpperCase();
-    jenisCount[cat]=(jenisCount[cat]||0)+1;
-    // Bahan deteksi dari nama kategori
-    if(cat.includes('CERUTY')) bahanCount['CERUTY BABYDOLL']=(bahanCount['CERUTY BABYDOLL']||0)+1;
-    else if(cat.includes('VUAL')||cat.includes('PARIS')) bahanCount['VUAL ULTRA FINE / PARIS ULTRA FINE']=(bahanCount['VUAL ULTRA FINE / PARIS ULTRA FINE']||0)+1;
-    else if(cat.includes('VOAL')) bahanCount['VOAL PREMIUM']=(bahanCount['VOAL PREMIUM']||0)+1;
-    else bahanCount[cat]=(bahanCount[cat]||0)+1;
+  const {data}=await supa.from('products').select('category').limit(100);
+  let jenis={},bahan={};
+  (data||[]).forEach(p=>{let c=(p.category||'PARIS').toUpperCase(); jenis[c]=(jenis[c]||0)+1;
+    if(c.includes('CERUTY')) bahan['CERUTY BABYDOLL']=(bahan['CERUTY BABYDOLL']||0)+1;
+    else if(c.includes('VUAL')||c.includes('PARIS')) bahan['VUAL ULTRA FINE / PARIS ULTRA FINE']=(bahan['VUAL ULTRA FINE / PARIS ULTRA FINE']||0)+1;
+    else if(c.includes('VOAL')) bahan['VOAL PREMIUM']=(bahan['VOAL PREMIUM']||0)+1;
+    else bahan[c]=(bahan[c]||0)+1;
   });
-  // Kalau di DB masih 1 kategori semua, pakai default 4 bahan sesuai screenshot
-  if(Object.keys(bahanCount).length<=1){
-    bahanCount={'CERUTY BABYDOLL':1,'VUAL ULTRA FINE / PARIS ULTRA FINE':1,'VOAL PREMIUM':1,'PARIS PREMIUM 110x110':1};
-  }
-  if(Object.keys(jenisCount).length<=1){
-    jenisCount={'HIJAB PARIS PREMIUM 110x110':2,'PASHMINA CERUTY BABYDOLL':1,'VOAL PREMIUM':1};
-  }
-  document.getElementById('gridJenis').innerHTML=Object.entries(jenisCount).map(([k,v])=>`
-    <div class="k-card" onclick="location.href='produk.html?kategori=${encodeURIComponent(k)}'">
-      <b>${k}</b><span class="k-count">${v}</span><div class="k-link">KLIK LIHAT PRODUK</div>
-    </div>`).join('');
-  document.getElementById('gridBahan').innerHTML=Object.entries(bahanCount).map(([k,v])=>`
-    <div class="k-card" onclick="location.href='produk.html?bahan=${encodeURIComponent(k)}'">
-      <b>${k}</b><span class="k-count">${v}</span><div class="k-link">KLIK LIHAT PRODUK</div>
-    </div>`).join('');
-}
-load();
-</script>
-</body></html>
+  if(Object.keys(bahan).length<=1) bahan={'CERUTY BABYDOLL':1,'VUAL ULTRA FINE / PARIS ULTRA FINE':1,'VOAL PREMIUM':1};
+  if(Object.keys(jenis).length<=1) jenis={'HIJAB PARIS PREMIUM 110x110':2,'PASHMINA CERUTY BABYDOLL':1,'VOAL PREMIUM':1};
+  document.getElementById('gridJenis').innerHTML=Object.entries(jenis).map(([k,v])=>`<div class="k-card" onclick="location.href='produk.html?kategori=${encodeURIComponent(k)}'"><b>${k}</b><span class="k-count">${v}</span><div style="margin-top:20px;font-size:8px;opacity:.4">KLIK LIHAT PRODUK</div></div>`).join('');
+  document.getElementById('gridBahan').innerHTML=Object.entries(bahan).map(([k,v])=>`<div class="k-card" onclick="location.href='produk.html?bahan=${encodeURIComponent(k)}'"><b>${k}</b><span class="k-count">${v}</span><div style="margin-top:20px;font-size:8px;opacity:.4">KLIK LIHAT PRODUK</div></div>`).join('');
+}load();
+</script></body></html>
