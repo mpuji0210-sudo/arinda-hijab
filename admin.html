@@ -53,8 +53,6 @@ textarea.input{border:1px solid var(--line);padding:10px;background:var(--bg);re
 <input id="pMaterialDetail" class="input" placeholder="JENIS BAHAN DETAIL">
 <textarea id="pDesc" class="input" rows="4" placeholder="DESKRIPSI PRODUK"></textarea>
 <div style="margin-top:10px;border:1px solid var(--line);padding:10px;background:var(--bg)"><div style="display:flex;gap:6px"><input id="catName" class="input" placeholder="BAHAN BARU" style="margin:0"><button class="btn" style="width:70px;margin:0" onclick="addCat()">ADD</button></div><div id="catList" style="margin-top:8px"></div></div>
-
-<!-- V86 MASTER WARNA -->
 <div style="margin-top:14px; background:#111; color:#fff; padding:12px; border-radius:10px;">
 <div style="font-size:9px; letter-spacing:3px; margin-bottom:8px;">MASTER WARNA -> AUTO UNDERTONE</div>
 <div id="autoUndertoneBox" style="min-height:20px; font-size:8px; opacity:.8;">Isi warna di bawah, undertone auto masuk per foto</div>
@@ -64,7 +62,6 @@ textarea.input{border:1px solid var(--line);padding:10px;background:var(--bg);re
 <button class="btn" style="width:50px;margin:0; background:#fff; color:#111; border-radius:6px;" onclick="addMasterColorQuick()">+</button>
 </div>
 </div>
-
 <div id="varInputs" style="margin-top:12px"></div>
 <button class="btn-line" onclick="addVarRow()">+ WARNA + STOK + FOTO</button>
 <button class="btn" id="btnProd" onclick="saveProd()">SIMPAN PRODUK</button><div id="saveStatus" class="save-status"></div>
@@ -106,7 +103,7 @@ function getUndertoneForColor(cName){
   return ['NEUTRAL'];
 }
 function aggregateUndertone(){
-  const rows=[...document.querySelectorAll('#varInputs .slot')];
+  const rows=[...document.querySelectorAll('#varInputs.slot')];
   let all = new Set();
   rows.forEach(r=>{
     let checks=[...r.querySelectorAll('.under-check:checked')].map(c=>c.value);
@@ -175,7 +172,7 @@ window.delP=async(id)=>{showConfirm('HAPUS PRODUK?','Akan terhapus permanen',asy
 window.saveProd=async()=>{
  const btn=$('btnProd');if(btn.disabled) return;btn.disabled=true; btn.innerText='MENYIMPAN...';
  const name=$('pName').value.trim();const price=Number($('pPrice').value);if(!name||!price){toast('ISI NAMA & HARGA');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
- const rows=[...document.querySelectorAll('#varInputs .slot')];if(!rows.length){toast('TAMBAH WARNA DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
+ const rows=[...document.querySelectorAll('#varInputs.slot')];if(!rows.length){toast('TAMBAH WARNA DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
  $('saveStatus').innerText='PROSES '+rows.length+' WARNA...';
  let finalVars=[];
  for(let idx=0; idx<rows.length; idx++){
@@ -211,11 +208,9 @@ window.saveProd=async()=>{
      const {data,error}=await supa.from('products').insert({name,price,image_url:finalVars[0].image_url,category:$('pCat').value||null,description:$('pDesc').value.trim(),size_info:$('pSize').value.trim(),material_detail:$('pMaterialDetail').value.trim(),finishing:$('pFinish').value.trim(),undertone:productUndertone, colors: finalVars.map(v=>v.color_name)}).select().single();
      if(error) throw error; pid=data.id;
    }
-   // Coba simpan dengan kolom undertone, kalau gagal fallback tanpa undertone
    try{
      await supa.from('product_variants').insert(finalVars.map(v=>({product_id:pid,color_name:v.color_name,image_url:v.image_url, stock:v.stock, is_available:v.is_available, undertone:v.undertone})));
    }catch(e){
-     console.log('fallback tanpa undertone col', e);
      await supa.from('product_variants').insert(finalVars.map(v=>({product_id:pid,color_name:v.color_name,image_url:v.image_url, stock:v.stock, is_available:v.is_available})));
    }
    $('saveStatus').innerText='OK '+finalVars.length+' WARNA - '+productUndertone.join(',');toast('TERSIMPAN '+finalVars.length+' WARNA - '+productUndertone.join(','));$('editId').value='';$('pName').value='';$('pPrice').value='';$('pDesc').value='';initVar();loadProducts();
