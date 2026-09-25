@@ -3,21 +3,67 @@
 <title>Checkout - ARINDA</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Inter',sans-serif}
+.font-serif{font-family:'Cormorant Garamond',serif}
+.modal-bg{backdrop-filter:blur(10px);background:rgba(0,0,0,0.45)}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+</style>
 </head>
 <body class="bg-[#FAFAFA]">
-<div class="max-w-[460px] mx-auto bg-white border p-5 m-3">
-  <div style="font-family:serif;letter-spacing:7px;font-size:20px">ARINDA</div>
-  <div style="font-size:8px;letter-spacing:4px;opacity:.4">LANGKAH 1 - ALAMAT</div>
 
-  <div id="ringkasan" class="bg-[#FAFAFA] border p-3 my-4 text-[11px]"></div>
+<div class="max-w-[480px] mx-auto bg-white min-h-screen md:min-h-0 md:my-6 md:border md:rounded-[20px] overflow-hidden">
+  <div class="p-6 pb-4 border-b">
+    <div class="font-serif tracking-[8px] text-[22px]">ARINDA</div>
+    <div class="flex items-center gap-2 mt-2">
+      <div class="h-[2px] w-8 bg-black"></div>
+      <div class="text-[9px] tracking-[4px] opacity-50">LANGKAH 1 - ALAMAT & KONFIRMASI</div>
+    </div>
+  </div>
 
-  <input id="nama" placeholder="Nama Lengkap" style="width:100%;border:1px solid #000;padding:14px;margin-bottom:10px">
-  <input id="wa" placeholder="No WA" style="width:100%;border:1px solid #000;padding:14px;margin-bottom:10px">
-  <input id="kota" placeholder="Kota / Kecamatan" style="width:100%;border:1px solid #000;padding:14px;margin-bottom:10px">
-  <textarea id="alamat" placeholder="Alamat Lengkap" style="width:100%;border:1px solid #000;padding:14px;margin-bottom:10px"></textarea>
+  <div class="p-6">
+    <div id="ringkasan" class="bg-[#FAFAFA] border border-dashed rounded-[16px] p-4 text-[12px] leading-6"></div>
 
-  <button id="btnBayar" onclick="prosesCheckout()" class="w-full bg-black text-white py-4 text-[10px] tracking-[3px]">LANJUT KE PEMBAYARAN</button>
-  <div id="status" style="font-size:10px;margin-top:10px;text-align:center"></div>
+    <div class="mt-6 space-y-3">
+      <p class="text-[10px] tracking-[3px] opacity-60">DATA PENERIMA</p>
+      <input id="nama" placeholder="Nama Lengkap" class="w-full border border-black rounded-[12px] px-4 py-3.5 text-[13px] outline-none focus:ring-2 focus:ring-black/10">
+      <input id="wa" placeholder="No WA ( contoh: 08xxxxxxxxxx )" class="w-full border border-black rounded-[12px] px-4 py-3.5 text-[13px] outline-none">
+      <input id="kota" placeholder="Kota / Kecamatan" class="w-full border border-black rounded-[12px] px-4 py-3.5 text-[13px] outline-none">
+      <textarea id="alamat" placeholder="Alamat Lengkap ( Jalan, No Rumah, RT/RW )" class="w-full border border-black rounded-[12px] px-4 py-3.5 text-[13px] outline-none h-[90px]"></textarea>
+    </div>
+
+    <button id="btnBayar" onclick="bukaModal()" class="w-full mt-6 bg-black text-white py-4 rounded-[14px] text-[11px] tracking-[3px] font-semibold hover:bg-zinc-800 transition">LANJUT KE PEMBAYARAN →</button>
+    <div id="status" class="text-[11px] mt-3 text-center text-zinc-500"></div>
+
+    <div class="mt-4 bg-[#f0f8ff] border border-dashed border-blue-300 rounded-[12px] p-3 text-center">
+      <p class="text-[10px] tracking-[2px] opacity-60">PEMBAYARAN KE</p>
+      <p class="font-bold text-[14px] text-blue-600">BCA 8740376161</p>
+      <p class="text-[11px]">a.n MUHAMMAD PUJIANTO</p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ELEGAN -->
+<div id="modalCheckout" class="fixed inset-0 modal-bg hidden items-end md:items-center justify-center z-50 p-0 md:p-4">
+  <div class="bg-white w-full max-w-[480px] rounded-t-[28px] md:rounded-[24px] p-6 md:p-7 shadow-2xl" style="animation:slideUp 0.3s ease">
+    <div class="w-10 h-1 bg-black/10 rounded-full mx-auto mb-5 md:hidden"></div>
+    <h3 class="font-serif text-[22px] tracking-wide">Konfirmasi Pesanan</h3>
+    <p class="text-[11px] tracking-[2px] opacity-50 mt-1">PASTIKAN DATA SUDAH BENAR</p>
+
+    <div id="modalContent" class="mt-5 space-y-3 text-[13px]"></div>
+
+    <div class="bg-black text-white rounded-[14px] p-4 mt-5 flex justify-between items-center">
+      <span class="text-[10px] tracking-[3px] opacity-70">TOTAL TRANSFER</span>
+      <span id="modalTotal" class="font-bold text-[16px]"></span>
+    </div>
+
+    <div class="flex gap-3 mt-5">
+      <button onclick="tutupModal()" class="flex-1 py-3.5 rounded-[14px] border border-black text-[11px] tracking-[2px] font-semibold">KEMBALI</button>
+      <button onclick="prosesCheckout()" id="btnKonfirm" class="flex-[1.4] py-3.5 rounded-[14px] bg-black text-white text-[11px] tracking-[2px] font-semibold">YA, BAYAR SEKARANG</button>
+    </div>
+    <p class="text-[10px] text-center opacity-40 mt-3">Pesanan akan masuk ke Admin BCA 8740376161</p>
+  </div>
 </div>
 
 <script>
@@ -31,56 +77,79 @@ const kotaOngkir = localStorage.getItem('selectedOngkirCity')||'';
 let subtotal=0; cart.forEach(i=>subtotal+=i.harga*i.qty);
 let total=subtotal+ongkir;
 
-document.getElementById('ringkasan').innerHTML=
-  cart.map(i=>`• ${i.warna} x${i.qty} = Rp${(i.harga*i.qty).toLocaleString('id-ID')}`).join('<br>')+
-  `<br><br>Subtotal: Rp${subtotal.toLocaleString('id-ID')}<br>Ongkir ${kotaOngkir}: Rp${ongkir.toLocaleString('id-ID')}<br><b>TOTAL: Rp${total.toLocaleString('id-ID')}</b>`;
+function formatRp(n){return 'Rp'+n.toLocaleString('id-ID')}
 
-async function prosesCheckout(){
+document.getElementById('ringkasan').innerHTML=`
+  <div class="text-[10px] tracking-[3px] opacity-50 mb-2">RINGKASAN PESANAN</div>
+  ${cart.map(i=>`<div class="flex justify-between"><span>• ${i.warna} x${i.qty}</span><span>${formatRp(i.harga*i.qty)}</span></div>`).join('')}
+  <div class="border-t border-dashed mt-3 pt-3 space-y-1">
+    <div class="flex justify-between opacity-60"><span>Subtotal</span><span>${formatRp(subtotal)}</span></div>
+    <div class="flex justify-between opacity-60"><span>Ongkir ${kotaOngkir}</span><span>${formatRp(ongkir)}</span></div>
+    <div class="flex justify-between font-bold text-[13px] pt-1"><span>TOTAL</span><span>${formatRp(total)}</span></div>
+  </div>
+`;
+document.getElementById('modalTotal').innerText=formatRp(total);
+
+let tempData={};
+function bukaModal(){
   const nama=document.getElementById('nama').value.trim();
   const wa=document.getElementById('wa').value.trim();
   const kota=document.getElementById('kota').value.trim();
   const alamat=document.getElementById('alamat').value.trim();
-  if(!nama||!wa||!kota||!alamat){alert('Lengkapi semua!');return;}
+  if(!nama||!wa||!kota||!alamat){alert('Lengkapi Nama, WA, Kota, Alamat dulu kak!');return;}
+  tempData={nama,wa,kota,alamat};
 
-  document.getElementById('btnBayar').innerText='MENYIMPAN PESANAN...';
-  document.getElementById('btnBayar').disabled=true;
+  document.getElementById('modalContent').innerHTML=`
+    <div class="flex justify-between border-b border-dashed py-2.5"><span class="opacity-50">Nama</span><b>${nama}</b></div>
+    <div class="flex justify-between border-b border-dashed py-2.5"><span class="opacity-50">WA</span><b>${wa}</b></div>
+    <div class="flex justify-between border-b border-dashed py-2.5"><span class="opacity-50">Kota</span><b>${kota} ${kotaOngkir?`(${kotaOngkir})`:''}</b></div>
+    <div class="flex justify-between border-b border-dashed py-2.5"><span class="opacity-50">Alamat</span><b class="text-right max-w-[60%]">${alamat}</b></div>
+    <div class="bg-[#f0f8ff] rounded-[12px] p-3 text-center mt-2 text-[12px]">Transfer ke <b class="text-blue-600">BCA 8740376161 a.n MUHAMMAD PUJIANTO</b></div>
+  `;
+  document.getElementById('modalCheckout').classList.remove('hidden');
+  document.getElementById('modalCheckout').classList.add('flex');
+}
+function tutupModal(){
+  document.getElementById('modalCheckout').classList.add('hidden');
+  document.getElementById('modalCheckout').classList.remove('flex');
+}
+
+async function prosesCheckout(){
+  const {nama,wa,kota,alamat}=tempData;
+  document.getElementById('btnKonfirm').innerText='MENYIMPAN...';
+  document.getElementById('btnKonfirm').disabled=true;
 
   const orderData={
-    customer_name:nama,
-    wa:wa,
-    kota:kota,
-    alamat:alamat,
-    total:total,
-    total_price:total,
-    kota_tujuan:kotaOngkir||kota,
-    ongkir:ongkir,
-    items:cart,
-    status:'MENUNGGU_BAYAR',
-    created_at:new Date().toISOString()
+    customer_name:nama, wa:wa, kota:kota, alamat:alamat,
+    total:total, total_price:total, kota_tujuan:kotaOngkir||kota,
+    ongkir:ongkir, items:cart, status:'MENUNGGU_BAYAR', created_at:new Date().toISOString()
   };
 
   try{
     const {data, error} = await supa.from('orders').insert([orderData]).select();
     if(error) throw error;
-
     const newId=data[0].id;
+
     localStorage.setItem('arinda_last_order_id', newId);
-    localStorage.setItem('arinda_last_order', JSON.stringify({nama,kota,alamat,total,cart,kota_tujuan:kotaOngkir}));
-    document.getElementById('status').innerText='Berhasil! Mengalihkan ke pembayaran...';
+    localStorage.setItem('arinda_last_order', JSON.stringify({nama,kota,alamat,total,cart,kota_tujuan:kotaOngkir,wa}));
+    localStorage.setItem('checkout_nama', nama);
+    localStorage.setItem('checkout_kota', kota);
+    localStorage.setItem('checkout_alamat', alamat);
+    localStorage.setItem('checkout_total', formatRp(total));
+    localStorage.setItem('checkout_produk', cart.map(i=>`${i.warna} x${i.qty}`).join(', '));
 
-    // Lempar ke bayar.html dengan ID beneran
-    setTimeout(()=>{
-      window.location.href=`bayar.html?total=${total}&nama=${encodeURIComponent(nama)}&kota=${encodeURIComponent(kota)}`;
-    },800);
+    let orders = JSON.parse(localStorage.getItem('arinda_orders')||'[]');
+    orders.unshift({nama,kota,alamat,produk:cart.map(i=>`${i.warna} x${i.qty}`).join(', '),total:formatRp(total),wa,waktu:new Date().toLocaleString('id-ID'),rekening:'BCA 8740376161 a.n MUHAMMAD PUJIANTO'});
+    localStorage.setItem('arinda_orders', JSON.stringify(orders));
 
+    document.getElementById('status').innerText='Berhasil! Mengalihkan...';
+    setTimeout(()=>{ window.location.href=`bayar.html?total=${total}&nama=${encodeURIComponent(nama)}&kota=${encodeURIComponent(kota)}`; },600);
   }catch(e){
     console.log(e);
-    // Kalau gagal lagi, tetap lanjut tapi kasih tau
-    document.getElementById('status').innerText='Gagal simpan ke pusat: '+e.message+' - Tetap lanjut...';
+    document.getElementById('status').innerText='Gagal pusat, tetap lanjut: '+e.message;
     const tempId='temp-'+Date.now();
     localStorage.setItem('arinda_last_order_id', tempId);
-    localStorage.setItem('arinda_last_order', JSON.stringify({nama,kota,alamat,total,cart}));
-    setTimeout(()=>{window.location.href=`bayar.html?total=${total}&nama=${encodeURIComponent(nama)}&kota=${encodeURIComponent(kota)}`},1000);
+    setTimeout(()=>{ window.location.href=`bayar.html?total=${total}&nama=${encodeURIComponent(nama)}&kota=${encodeURIComponent(kota)}`; },800);
   }
 }
 </script>
