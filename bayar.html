@@ -7,8 +7,8 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
 .font-serif{font-family:'Cormorant Garamond',serif}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#000;color:#fff;padding:10px 18px;font-size:10px;letter-spacing:2px;transition:.4s;opacity:0;z-index:9999}
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-#lunasModal{display:none;position:fixed;inset:0;background:rgba(20,15,10,0.55);backdrop-filter:blur(12px);z-index:9999;align-items:center;justify-content:center;padding:20px}
-#lunasModal.show{display:flex}
+#lunasModal, #suksesModal{display:none;position:fixed;inset:0;background:rgba(20,15,10,0.55);backdrop-filter:blur(12px);z-index:9999;align-items:center;justify-content:center;padding:20px}
+#lunasModal.show, #suksesModal.show{display:flex}
 @keyframes lvSlide{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
 </style>
 </head>
@@ -85,6 +85,16 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
   </div>
 </div>
 
+<!-- MODAL SUKSES - PESANAN DIPROSES (BARU) -->
+<div id="suksesModal">
+  <div style="background:#FFFEFB;width:100%;max-width:380px;border-radius:28px;border:1px solid #E8E0D0;padding:28px 24px;box-shadow:0 30px 80px rgba(0,0,0,0.25);animation:lvSlide .4s cubic-bezier(0.16,1,0.3,1);text-align:center">
+    <div style="width:64px;height:64px;border-radius:50%;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto">✓</div>
+    <div style="font-family:'Cormorant Garamond';font-size:26px;margin-top:16px;color:#1a1a1a;line-height:1.2">Pesanan Anda<br>Sedang Kami Proses!</div>
+    <div style="font-size:12px;line-height:1.8;color:#1a1a1a;opacity:.6;margin-top:14px">Terima kasih kak <b id="sNama" style="opacity:1"></b> 🙏<br>Konfirmasi WA sudah terkirim untuk total <b id="sTotal" style="opacity:1"></b><br><br>Admin akan cek transfer dan kirim resi secepatnya ya.</div>
+    <button onclick="keBeranda()" style="width:100%;margin-top:22px;height:52px;background:#000;color:#fff;border:none;border-radius:16px;font-size:10px;letter-spacing:3px;cursor:pointer">KEMBALI KE BERANDA →</button>
+  </div>
+</div>
+
 <script>
 const params=new URLSearchParams(location.search);
 const total=Number(params.get('total')||localStorage.getItem('selectedOngkirCost')||0);
@@ -112,7 +122,18 @@ function closeLunas(){document.getElementById('lunasModal').classList.remove('sh
 function konfirmLunas(){
   document.getElementById('btnLunas').innerText='MENGIRIM...';
   const pesan=`Halo Admin ARINDA, saya sudah transfer%0A%0ANama: ${nama}%0AKota: ${kota}%0ATotal: ${formatRp(total)}%0AProduk: ${cart.map(i=>i.warna+' x'+i.qty).join(', ')}%0A%0AMohon dicek ya kak 🙏`;
-  setTimeout(()=>{window.location.href=`https://wa.me/6285178098354?text=${pesan}`;},600);
+  const waLink=`https://wa.me/6285178098354?text=${pesan}`;
+  // 1. Tetep konfirmasi ke WA
+  window.open(waLink,'_blank');
+  // 2. Setelah WA, muncul modal pesanan diproses
+  setTimeout(()=>{
+    closeLunas();
+    localStorage.removeItem('arinda_cart2');
+    document.getElementById('sNama').innerText=nama;
+    document.getElementById('sTotal').innerText=formatRp(total);
+    document.getElementById('suksesModal').classList.add('show');
+  },600);
 }
+function keBeranda(){window.location.href='index.html';}
 </script>
 </body></html>
