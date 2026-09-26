@@ -46,7 +46,6 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-f
 #confirmBox{background:#FFFFFF;width:100%;max-width:360px;border:1px solid #E9E9E9;padding:22px;border-radius:0px}
 #cartToast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#000;color:#fff;padding:10px 18px;border-radius:0px;display:flex;align-items:center;gap:12px;z-index:9999;transition:.5s;opacity:0}#cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}
 #cartToast img{width:32px;height:32px;border-radius:0px;object-fit:cover}
-/* MODAL LV BARU - HANYA INI TAMBAHAN CSS */
 #ongkirLockModal{display:none;position:fixed;inset:0;background:rgba(20,15,10,0.55);backdrop-filter:blur(12px);z-index:9999;align-items:center;justify-content:center;padding:20px}
 #ongkirLockModal.show{display:flex}
 @keyframes lvSlide{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
@@ -74,8 +73,6 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-f
 <div id="prodModal" onclick="if(event.target.id=='prodModal')closeProd()"><div class="p-box" id="pBox"></div></div>
 <div id="confirmModal" onclick="if(event.target.id==='confirmModal')closeConfirm()"><div id="confirmBox"><div style="font-family:'Cormorant Garamond';font-size:18px">KOSONGKAN KERANJANG?</div><div style="font-size:11px;opacity:.6;margin-top:8px">Semua produk di keranjang akan dihapus.</div><div style="display:flex;gap:8px;margin-top:20px"><button onclick="closeConfirm()" style="flex:1;padding:12px;background:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px">BATAL</button><button onclick="doClearCart()" style="flex:1;padding:12px;background:#000;color:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px">OKE</button></div></div></div>
 <div id="cartToast"><img id="toastImg"><span id="toastText" style="font-size:9px"></span></div>
-
-<!-- MODAL ELEGAN LV - HANYA INI TAMBAHAN HTML -->
 <div id="ongkirLockModal" onclick="if(event.target.id==='ongkirLockModal')closeOngkirLock()">
   <div style="background:#FFFEFB;width:100%;max-width:380px;border-radius:28px;border:1px solid #E8E0D0;padding:28px 24px;box-shadow:0 30px 80px rgba(0,0,0,0.25);animation:lvSlide.35s cubic-bezier(0.16,1,0.3,1)">
     <div style="width:46px;height:46px;border-radius:50%;background:#F9F6F1;border:1px solid #E8E0D0;display:flex;align-items:center;justify-content:center;font-size:20px">⚠️</div>
@@ -85,7 +82,6 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-f
     <div style="text-align:center;font-size:9px;letter-spacing:2.5px;opacity:.25;margin-top:14px">ARINDA HIJAB PREMIUM</div>
   </div>
 </div>
-
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 let supabaseClient,allProducts=[],WA_NUMBER="6285178098354",tokoOriginId="17523",selectedDestId=null,selectedOngkirCost=0,selectedService='',curProd={},curColor='',curImg='',curVariants=[],activeUnder='ALL',lastSearchQuery='',curUnder=[],activeKategori='ALL',activeBahan='ALL';
@@ -198,9 +194,12 @@ function underBadgeHtml(arr){
 function renderProducts(list){
   const el=document.getElementById('list');
   el.innerHTML=list.map((p,i)=>{
-    const matched = getMatchedVariant(p.id, lastSearchQuery, activeUnder) || {image_url:p.image_url,color_name:p.name,undertone:p.undertone};
+    const matched = getMatchedVariant(p.id, lastSearchQuery, activeUnder) || {image_url:p.image_url,color_name:p.name,undertone:p.undertone,stock:0};
     let img = matched.image_url; let col = matched.color_name; let under = matched.undertone||p.undertone||[];
-    return `<div class="prod-card"><div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this,${i},'${(col||'').replace(/'/g,'')}')"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}-${i}" src="${getOptImg(img,400)}" loading="lazy" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="padding:8px;border-top:1px solid #F2F2F2" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div><div style="font-size:8px;margin-top:2px">${underBadgeHtml(under)}</div><div style="font-size:10px;margin-top:3px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
+    let out = isOut(matched);
+    let stokLabel = out? 'HABIS' : 'SISA '+(matched.stock??0);
+    let stokColor = out? 'background:#D32F2F' : 'background:#000';
+    return `<div class="prod-card"><div style="position:absolute;top:0;left:0;${stokColor};color:#fff;font-size:7px;letter-spacing:1px;padding:4px 6px;z-index:2">${stokLabel}</div><div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this,${i},'${(col||'').replace(/'/g,'')}')"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}-${i}" src="${getOptImg(img,400)}" loading="lazy" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')" style="${out?'opacity:.45;filter:grayscale(1)':''}"><div style="padding:8px;border-top:1px solid #F2F2F2" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div><div style="font-size:8px;margin-top:2px">${underBadgeHtml(under)}</div><div style="font-size:10px;margin-top:3px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
   }).join('');
 }
 function renderVariants(list){
@@ -209,7 +208,10 @@ function renderVariants(list){
   el.innerHTML=list.map((item,i)=>{
     const p=item.p; const matched=item.v;
     let img = matched.image_url; let col = matched.color_name; let under = matched.undertone||p.undertone||[];
-    return `<div class="prod-card"><div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this,${i},'${(col||'').replace(/'/g,'')}')"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}-${i}" src="${getOptImg(img,400)}" loading="lazy" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="padding:8px;border-top:1px solid #F2F2F2" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${col}</div><div style="font-size:8px;margin-top:2px">${underBadgeHtml(under)}</div><div style="font-size:10px;margin-top:3px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
+    let out = isOut(matched);
+    let stokLabel = out? 'HABIS' : 'SISA '+(matched.stock??0);
+    let stokColor = out? 'background:#D32F2F' : 'background:#000';
+    return `<div class="prod-card"><div style="position:absolute;top:0;left:0;${stokColor};color:#fff;font-size:7px;letter-spacing:1px;padding:4px 6px;z-index:2">${stokLabel}</div><div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this,${i},'${(col||'').replace(/'/g,'')}')"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><img id="img-${p.id}-${i}" src="${getOptImg(img,400)}" loading="lazy" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')" style="${out?'opacity:.45;filter:grayscale(1)':''}"><div style="padding:8px;border-top:1px solid #F2F2F2" onclick="openProd('${p.id}','${(col||'').replace(/'/g,'')}')"><div style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${col}</div><div style="font-size:8px;margin-top:2px">${underBadgeHtml(under)}</div><div style="font-size:10px;margin-top:3px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div></div></div>`;
   }).join('');
 }
 function render(list){if(list.length && list[0].p && list[0].v){ renderVariants(list); } else { renderProducts(list); }}
@@ -224,7 +226,6 @@ function quickAdd(id,btnEl,idx,colorName){
 }
 async function openProd(id,colorName){
   document.getElementById('prodModal').classList.add('show');
-  // LOADING ELEGAN BARU - HANYA INI YANG DIGANTI
   document.getElementById('pBox').innerHTML=`
   <div class="p-gallery" style="height:300px">
     <div class="p-main" style="background:#FAFAFA;position:relative;overflow:hidden">
@@ -277,8 +278,6 @@ function pickColorByIdx(idx){
 function closeProd(){document.getElementById('prodModal').classList.remove('show');}
 function showCartToast(c,i){const t=document.getElementById('cartToast');document.getElementById('toastImg').src=getOptImg(i,80);document.getElementById('toastText').innerText=c+' MASUK KERANJANG';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 function addToCartFromModal(){const cur=curVariants.find(v=>v.image_url===curImg);if(cur&&isOut(cur))return;const big=document.getElementById('bigImg');if(big) flyToCart(curImg,big);addCart(curProd.name+' - '+curColor,curProd.price,curImg);showCartToast(curColor,curImg);}
-
-// === MODAL BAGUS - GANTI ALERT JELEK ===
 function wajibCekOngkir(){
   if(!selectedOngkirCost || selectedOngkirCost===0){
     document.getElementById('ongkirLockModal').classList.add('show');
@@ -289,7 +288,6 @@ function wajibCekOngkir(){
 function closeOngkirLock(){
   document.getElementById('ongkirLockModal').classList.remove('show');
 }
-
 function buyFromModal(){
   if(!wajibCekOngkir()) return;
   const cur=curVariants.find(v=>v.image_url===curImg);
@@ -301,7 +299,6 @@ function buyFromModal(){
   localStorage.setItem('arinda_ongkir_service', selectedService||'');
   window.location.href='checkout.html';
 }
-
 function addCart(n,p,i){let c=getCart();let idx=c.findIndex(a=>a.warna==n);if(idx>-1)c[idx].qty++;else c.push({warna:n,qty:1,harga:Number(p),img:i});saveCart(c);}
 function openCart(){renderCart();document.getElementById('cartModal').classList.add('open');}
 function closeCart(){document.getElementById('cartModal').classList.remove('open');}
