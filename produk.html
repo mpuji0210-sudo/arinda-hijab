@@ -255,12 +255,19 @@ async function openProd(id,colorName){
   }
   curColor=initial.color_name;curImg=initial.image_url;curUnder=initial.undertone||p.undertone||['NEUTRAL'];
   document.getElementById('pBox').innerHTML=`
-  <div class="p-gallery"><div class="p-main"><img id="bigImg" src="${getOptImg(curImg,600)}"></div><div class="p-thumbs">${curVariants.map((v,i)=>`<img src="${getOptImg(v.image_url,80)}" class="${v.image_url===curImg?'active':''}" onclick="pickColorByIdx(${i})">`).join('')}</div></div>
+  <div class="p-gallery"><div class="p-main"><img id="bigImg" src="${getOptImg(curImg,600)}"></div><div class="p-thumbs">${curVariants.map((v,i)=>{
+    let s = Number(v.stock??0); let out=isOut(v);
+    return `<div style="position:relative"><img src="${getOptImg(v.image_url,80)}" class="${v.image_url===curImg?'active':''}" onclick="pickColorByIdx(${i})" style="${out?'opacity:.4;filter:grayscale(1)':''}"><span style="position:absolute;bottom:2px;left:2px;${out?'background:#D32F2F':'background:#000'};color:#fff;font-size:5px;padding:2px 3px">${out?'HABIS':'SISA '+s}</span></div>`;
+  }).join('')}</div></div>
   <div class="p-info"><div style="font-size:20px;font-family:'Cormorant Garamond'">${p.name}</div>
   <div style="margin-top:6px" id="underBadgeArea">${underBadgeHtml(curUnder)}</div>
   <div style="font-size:22px;margin-top:6px">Rp${Number(p.price).toLocaleString('id-ID')}</div>
+  <div id="stokAreaModal" style="margin-top:10px;font-size:10px;font-weight:600;letter-spacing:1px;padding:6px 10px;border:1px solid #000;display:inline-block">${(()=>{let cur=curVariants.find(v=>v.image_url===curImg)||curVariants[0]; let out=isOut(cur); return out? '<span style="color:#D32F2F">● HABIS - STOK 0</span>' : '● SISA '+ (cur.stock??0) +' PCS READY';})()}</div>
   <div style="margin-top:10px;font-size:8px;letter-spacing:2px">PILIH WARNA: <b id="selCol">${curColor}</b></div>
-  <div class="variant-wrap">${curVariants.map((v,i)=>`<button id="btn-${i}" class="${v.image_url===curImg?'active':''}" onclick="pickColorByIdx(${i})">${v.color_name}</button>`).join('')}</div>
+  <div class="variant-wrap">${curVariants.map((v,i)=>{
+    let s = Number(v.stock??0); let out=isOut(v);
+    return `<button id="btn-${i}" class="${v.image_url===curImg?'active':''}" onclick="pickColorByIdx(${i})" style="${out?'opacity:.4':''}">${v.color_name} - ${out?'HABIS':'SISA '+s}</button>`;
+  }).join('')}</div>
   <div style="margin-top:10px;font-size:8px;opacity:.6">UNDERTONE WARNA INI: <span id="selUnderText">${normalizeUnder(curUnder).join(', ')}</span></div>
   <div style="margin-top:14px;padding:12px;background:#FFFFFF;border:1px solid #E9E9E9;border-radius:0px"><div style="font-size:8px;letter-spacing:2px;opacity:.5;margin-bottom:8px;font-weight:700">CEK ONGKIR DULU SEBELUM BELI</div><div style="display:flex;gap:6px"><input id="destSearchProd" placeholder="Kecamatan - Beji Depok" style="flex:1;padding:10px;border:1px solid var(--line);border-radius:0px;font-size:11px"><button onclick="searchDestProd()" style="padding:10px 14px;background:#000;color:#fff;border:none;border-radius:0px;font-size:9px">CARI</button></div><div id="destListProd" style="display:none;margin-top:8px;max-height:100px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:0px"></div><div style="display:flex;gap:6px;margin-top:8px"><select id="courierSelectProd" style="flex:1;padding:9px;border:1px solid var(--line);border-radius:0px;font-size:11px"><option value="jne">JNE</option><option value="jnt">J&T</option><option value="sicepat">SiCepat</option><option value="pos">POS</option></select><button onclick="cekOngkirProd()" style="flex:1;padding:9px;background:#fff;border:1px solid #000;border-radius:0px;font-size:9px">CEK ONGKIR</button></div><div id="ongkirResultProd" style="margin-top:8px"></div><div id="ongkirSelectedProd" style="margin-top:8px;font-size:10px;font-weight:600">${selectedService?'✓ '+selectedService+' - Rp'+selectedOngkirCost.toLocaleString('id-ID'):''}</div></div>
   <div style="display:flex;gap:8px;margin-top:14px"><button class="btn" style="background:#fff;color:#000;border:1px solid #000" onclick="addToCartFromModal()">+ KERANJANG</button><button class="btn" onclick="buyFromModal()">BELI</button></div></div>`;
@@ -272,6 +279,7 @@ function pickColorByIdx(idx){
   const sel=document.getElementById('selCol');if(sel) sel.innerText=v.color_name;
   const selU=document.getElementById('selUnderText');if(selU) selU.innerText=normalizeUnder(curUnder).join(', ');
   const badgeArea=document.getElementById('underBadgeArea');if(badgeArea) badgeArea.innerHTML=underBadgeHtml(curUnder);
+  const stokArea=document.getElementById('stokAreaModal');if(stokArea){ let out=isOut(v); stokArea.innerHTML= out? '<span style="color:#D32F2F">● HABIS - STOK 0</span>' : '● SISA '+ (v.stock??0) +' PCS READY'; }
   document.querySelectorAll('.p-thumbs img').forEach((el,j)=>el.classList.toggle('active',j===idx));
   document.querySelectorAll('.variant-wrap button').forEach((b,j)=>b.classList.toggle('active',j===idx));
 }
