@@ -7,13 +7,12 @@
 <style>
 body{font-family:'Inter',sans-serif;background:#FFFFFF;color:#000}
 .font-serif{font-family:'Cormorant Garamond',serif}
-.input-clean{border:1px solid #000;background:#fff;transition:all .2s}
+.input-clean{border:1px solid #000;background:#fff;transition:all.2s}
 .input-clean:focus{border-color:#000;outline:none}
 </style>
 </head>
 <body>
 
-<!-- HEADER SAMA KAYAK FILE PRODUK -->
 <nav style="position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9">
   <div style="max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
     <div>
@@ -24,11 +23,7 @@ body{font-family:'Inter',sans-serif;background:#FFFFFF;color:#000}
 </nav>
 
 <div style="max-width:480px;margin:0 auto;padding:24px 16px 40px">
-
-  <!-- RINGKASAN CLEAN -->
   <div id="ringkasan" style="border:1px solid #E9E9E9;padding:16px;background:#fff"></div>
-
-  <!-- FORM CLEAN TANPA TULISAN RAME -->
   <div style="margin-top:24px">
     <div style="display:flex;flex-direction:column;gap:12px">
       <input id="nama" placeholder="Nama Lengkap" class="input-clean" style="width:100%;height:52px;padding:0 16px;font-size:13px">
@@ -42,14 +37,12 @@ body{font-family:'Inter',sans-serif;background:#FFFFFF;color:#000}
   </div>
 </div>
 
-<!-- FOOTER SAMA KAYAK FILE PRODUK -->
 <footer style="margin-top:32px;padding:48px 16px 40px;text-align:center;border-top:1px solid #E9E9E9;background:#FFFFFF">
   <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:18px">ARINDA</div>
   <div style="font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div>
   <div style="margin-top:18px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA HIJAB PREMIUM</div>
 </footer>
 
-<!-- MODAL KONFIRMASI CLEAN -->
 <div id="modalCheckout" style="position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:99;padding:16px">
   <div style="background:#fff;width:100%;max-width:400px;border:1px solid #E9E9E9;padding:20px">
     <div style="display:flex;justify-content:space-between"><b style="font-family:'Cormorant Garamond';font-size:18px;letter-spacing:1px">KONFIRMASI PESANAN</b><button onclick="tutupModal()" style="border:none;background:none;font-size:20px">×</button></div>
@@ -85,7 +78,41 @@ document.getElementById('ringkasan').innerHTML=`
 document.getElementById('modalTotal').innerText=formatRp(total);
 
 let tempData={};
-function bukaModal(){
+
+// === CUMA INI YANG DITAMBAH - VALIDASI STOK ===
+async function validasiStok(){
+  const err=document.getElementById('errorMsg');
+  for(let item of cart){
+    let warnaOnly = item.warna.split(' - ').pop().trim();
+    try{
+      const {data,error} = await supa.from('product_variants').select('stock,is_available,color_name').ilike('color_name', warnaOnly).limit(1).maybeSingle();
+      if(error) continue;
+      if(!data) continue;
+      if(data.is_available===false || (data.stock!=null && Number(data.stock) < item.qty)){
+        err.innerText = `Maaf kak, warna ${warnaOnly} SISA ${data.stock??0}, gak cukup untuk ${item.qty} pcs. Kurangi qty atau hapus ya.`;
+        err.style.display='block';
+        return false;
+      }
+    }catch(e){}
+  }
+  err.style.display='none';
+  return true;
+}
+
+async function kurangiStok(){
+  for(let item of cart){
+    let warnaOnly = item.warna.split(' - ').pop().trim();
+    try{
+      const {data} = await supa.from('product_variants').select('id,stock').ilike('color_name', warnaOnly).limit(1).maybeSingle();
+      if(!data) continue;
+      let newStock = Math.max(0, Number(data.stock||0) - Number(item.qty||1));
+      await supa.from('product_variants').update({stock:newStock, is_available: newStock>0}).eq('id', data.id);
+    }catch(e){}
+  }
+}
+// === SELESAI TAMBAHAN ===
+
+async function bukaModal(){
   const nama=document.getElementById('nama').value.trim();
   const wa=document.getElementById('wa').value.trim();
   const kota=document.getElementById('kota').value.trim();
@@ -95,6 +122,11 @@ function bukaModal(){
     err.innerText='Lengkapi Nama, WA, Kota, Alamat dulu kak';
     err.style.display='block'; return;
   }
+  document.getElementById('mainBtn').innerText='CEK STOK...';
+  let ok = await validasiStok();
+  document.getElementById('mainBtn').innerText='LANJUT KE PEMBAYARAN →';
+  if(!ok) return;
+
   err.style.display='none';
   tempData={nama,wa,kota,alamat};
   document.getElementById('modalContent').innerHTML=`
@@ -111,10 +143,15 @@ function tutupModal(){document.getElementById('modalCheckout').style.display='no
 async function prosesCheckout(){
   const {nama,wa,kota,alamat}=tempData;
   document.getElementById('btnKonfirm').innerText='MENYIMPAN...';document.getElementById('btnKonfirm').disabled=true;
+  // validasi stok lagi sebelum simpan biar aman
+  let ok = await validasiStok();
+  if(!ok){ document.getElementById('btnKonfirm').innerText='YA, BAYAR';document.getElementById('btnKonfirm').disabled=false; tutupModal(); return; }
+
   const orderData={customer_name:nama,wa,kota,alamat,total,total_price:total,kota_tujuan:kotaOngkir||kota,ongkir,items:cart,status:'MENUNGGU_BAYAR',created_at:new Date().toISOString()};
   try{
     const {data}=await supa.from('orders').insert([orderData]).select();
     if(data&&data[0]) localStorage.setItem('arinda_last_order_id',data[0].id);
+    await kurangiStok();
   }catch(e){}
   localStorage.setItem('checkout_nama',nama);
   window.location.href=`bayar.html?total=${total}&nama=${encodeURIComponent(nama)}&kota=${encodeURIComponent(kota)}`;
