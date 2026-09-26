@@ -79,7 +79,6 @@ document.getElementById('modalTotal').innerText=formatRp(total);
 
 let tempData={};
 
-// === CUMA INI YANG DITAMBAH - VALIDASI STOK ===
 async function validasiStok(){
   const err=document.getElementById('errorMsg');
   for(let item of cart){
@@ -110,7 +109,6 @@ async function kurangiStok(){
     }catch(e){}
   }
 }
-// === SELESAI TAMBAHAN ===
 
 async function bukaModal(){
   const nama=document.getElementById('nama').value.trim();
@@ -129,6 +127,7 @@ async function bukaModal(){
 
   err.style.display='none';
   tempData={nama,wa,kota,alamat};
+  localStorage.setItem('checkout_alamat', alamat);
   document.getElementById('modalContent').innerHTML=`
     <div style="font-size:12px;display:flex;flex-direction:column;gap:8px">
       <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Nama</span><b>${nama}</b></div>
@@ -143,7 +142,6 @@ function tutupModal(){document.getElementById('modalCheckout').style.display='no
 async function prosesCheckout(){
   const {nama,wa,kota,alamat}=tempData;
   document.getElementById('btnKonfirm').innerText='MENYIMPAN...';document.getElementById('btnKonfirm').disabled=true;
-  // validasi stok lagi sebelum simpan biar aman
   let ok = await validasiStok();
   if(!ok){ document.getElementById('btnKonfirm').innerText='YA, BAYAR';document.getElementById('btnKonfirm').disabled=false; tutupModal(); return; }
 
@@ -154,6 +152,7 @@ async function prosesCheckout(){
     await kurangiStok();
   }catch(e){}
   localStorage.setItem('checkout_nama',nama);
+  localStorage.setItem('checkout_alamat', alamat);
   window.location.href=`bayar.html?total=${total}&nama=${encodeURIComponent(nama)}&kota=${encodeURIComponent(kota)}`;
 }
 </script>
