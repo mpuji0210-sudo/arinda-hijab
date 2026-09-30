@@ -26,7 +26,6 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
 </nav>
 
 <div style="max-width:800px;margin:0 auto;padding:24px 16px 60px">
-  <!-- KELOLA REKENING -->
   <div class="card" style="padding:16px;margin-bottom:20px">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div style="font-family:'Cormorant Garamond';font-size:18px;letter-spacing:1px">Kelola Rekening & QRIS</div>
@@ -84,8 +83,9 @@ const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 let delId=null;
 
-// === KUNCI AKSES - WAJIB LOGIN DULU ===
-if(!localStorage.getItem('admin_login')){
+// === KUNCI AKSES SINKRON DENGAN login.html BARU ===
+const isLogin = localStorage.getItem('arinda_admin')==='login' || localStorage.getItem('admin_login')==='true';
+if(!isLogin){
   window.location.href='login.html';
 }
 
@@ -144,7 +144,7 @@ async function loadOrders(){
   const count=document.getElementById('count');
   if(!data || data.length===0){
     count.innerText='0 PESANAN';
-    list.innerHTML=`<div style="text-align:center;padding:100px 20px;border:1px solid #E9E9E9;background:#FAFAFA"><div style="font-family:'Cormorant Garamond';font-size:20px">Belum ada pesanan</div><div style="font-size:11px;opacity:.4;margin-top:10px">Pesanan BCA 8740376161 akan muncul di sini</div></div>`; return;
+    list.innerHTML=`<div style="text-align:center;padding:100px 20px;border:1px solid #E9E9E9;background:#FAFAFA"><div style="font-family:'Cormorant Garamond';font-size:20px">Belum ada pesanan</div><div style="font-size:11px;opacity:.4;margin-top:10px">Pesanan akan muncul di sini</div></div>`; return;
   }
   count.innerText=data.length+' PESANAN';
   list.innerHTML=data.map(o=>{
@@ -180,7 +180,12 @@ function waCustomer(wa,nama){
   let n=wa.replace(/[^0-9]/g,''); if(n.startsWith('0')) n='62'+n.slice(1);
   window.open(`https://wa.me/${n}?text=Halo ${nama}, pesanan ARINDA sudah kami terima ya kak`,'_blank');
 }
-function logout(){localStorage.removeItem('admin_login'); window.location.href='login.html';}
+function logout(){
+  localStorage.removeItem('admin_login');
+  localStorage.removeItem('arinda_admin');
+  localStorage.removeItem('arinda_login_time');
+  window.location.href='login.html';
+}
 loadOrders();
 </script>
 </body></html>
