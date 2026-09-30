@@ -8,15 +8,8 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
 .card{border:1px solid #E9E9E9;background:#fff}
 .btn-black{height:44px;background:#000;color:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
 .btn-white{height:44px;background:#fff;color:#000;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
-
-/* === MODAL PREMIUM BARU - CUMA INI YANG DIUBAH === */
-#delModal{display:none;position:fixed;inset:0;background:rgba(17,17,17,0.45);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);z-index:9999;align-items:center;justify-content:center;padding:20px}
-#delModal.show{display:flex}
-#delModal.modal-card{background:#FFFEFB;width:100%;max-width:400px;border-radius:32px;border:1px solid #EFE9E0;padding:0;box-shadow:0 24px 80px rgba(0,0,0,0.22), 0 0 0 1px rgba(255,255,255,0.6) inset;overflow:hidden;animation:lvSlide.45s cubic-bezier(0.16,1,0.3,1)}
-#delModal.modal-top{padding:28px 26px 0 26px}
-#delModal.modal-icon{width:52px;height:52px;border-radius:50%;background:linear-gradient(180deg,#FFFBF5 0%,#F6F0E8 100%);border:1px solid #E8E0D0;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.05) inset}
-#delModal.modal-body{padding:18px 26px 0 26px}
-#delModal.modal-foot{margin-top:26px;padding:18px 22px;background:#FAF7F2;border-top:1px solid #F0EBE3;display:flex;gap:10px}
+#delModal,#appModal{display:none;position:fixed;inset:0;background:rgba(17,17,17,0.45);backdrop-filter:blur(14px);z-index:9999;align-items:center;justify-content:center;padding:20px}
+#delModal.show,#appModal.show{display:flex}
 @keyframes lvSlide{from{transform:translateY(18px) scale(.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
 </style>
 </head>
@@ -73,21 +66,32 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
 </footer>
 
 <div id="delModal" onclick="if(event.target.id==='delModal')closeDel()">
-  <div class="modal-card">
-    <div class="modal-top">
+  <div style="background:#FFFEFB;width:100%;max-width:400px;border-radius:32px;border:1px solid #EFE9E0;padding:0;box-shadow:0 24px 80px rgba(0,0,0,0.22);overflow:hidden;animation:lvSlide.45s cubic-bezier(0.16,1,0.3,1)">
+    <div style="padding:28px 26px 0 26px">
       <div style="display:flex;justify-content:space-between;align-items:flex-start">
-        <div class="modal-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.2"><path d="M3 6h18M8 6V4h8v2M10 11v6M14 11v6M5 6l1 14h12l1-14"/></svg></div>
+        <div style="width:52px;height:52px;border-radius:50%;background:#F6F0E8;border:1px solid #E8E0D0;display:flex;align-items:center;justify-content:center">🗑️</div>
         <div style="font-size:8px;letter-spacing:3px;opacity:.35;border:1px solid #E8E0D0;padding:5px 10px;border-radius:20px;background:#fff">PERMANEN</div>
       </div>
-      <div style="font-family:'Cormorant Garamond';font-size:26px;line-height:1.1;margin-top:18px;letter-spacing:.3px;color:#111">Hapus pesanan ini?</div>
+      <div style="font-family:'Cormorant Garamond';font-size:26px;margin-top:18px">Hapus pesanan ini?</div>
     </div>
-    <div class="modal-body">
-      <div style="font-size:12.5px;line-height:1.75;color:#111;opacity:.65">Pesanan akan dihapus permanen dari database Supabase. Pastikan kakak sudah hubungi customer via WhatsApp dan pesanan sudah selesai ya.</div>
-      <div style="margin-top:14px;display:flex;gap:8px;align-items:center;font-size:10px;opacity:.5"><div style="width:6px;height:6px;border-radius:50%;background:#C9A86A"></div> Tindakan ini tidak bisa dibatalkan</div>
-    </div>
-    <div class="modal-foot">
+    <div style="padding:18px 26px 0 26px;font-size:12.5px;line-height:1.7;opacity:.65">Pesanan akan dihapus permanen dari database. Pastikan sudah di-WA dan selesai ya kak.</div>
+    <div style="margin-top:26px;padding:18px 22px;background:#FAF7F2;border-top:1px solid #F0EBE3;display:flex;gap:10px">
       <button onclick="closeDel()" style="flex:1;height:48px;background:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer">BATAL</button>
-      <button onclick="confirmDel()" id="btnDel" style="flex:1;height:48px;background:#111;color:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,0.15)">YA, HAPUS</button>
+      <button onclick="confirmDel()" id="btnDel" style="flex:1;height:48px;background:#111;color:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer">YA, HAPUS</button>
+    </div>
+  </div>
+</div>
+
+<div id="appModal" onclick="if(event.target.id==='appModal')closeApp()">
+  <div style="background:#FFFEFB;width:100%;max-width:380px;border-radius:28px;border:1px solid #EFE9E0;padding:0;box-shadow:0 24px 80px rgba(0,0,0,0.22);overflow:hidden;animation:lvSlide.35s cubic-bezier(0.16,1,0.3,1)">
+    <div style="padding:26px 24px 0 24px">
+      <div id="appIcon" style="width:46px;height:46px;border-radius:50%;background:#F6F0E8;border:1px solid #E8E0D0;display:flex;align-items:center;justify-content:center;font-size:20px">⚠️</div>
+      <div id="appTitle" style="font-family:'Cormorant Garamond';font-size:22px;margin-top:16px">Perhatian</div>
+    </div>
+    <div id="appMsg" style="padding:12px 24px 0 24px;font-size:12.5px;line-height:1.7;opacity:.65">Pesan</div>
+    <div style="margin-top:22px;padding:16px 20px;background:#FAF7F2;border-top:1px solid #F0EBE3;display:flex;gap:10px">
+      <button id="appCancel" onclick="closeApp()" style="flex:1;height:46px;background:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer;display:none">BATAL</button>
+      <button id="appOk" onclick="closeApp()" style="flex:1;height:46px;background:#111;color:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer">OKE</button>
     </div>
   </div>
 </div>
@@ -97,12 +101,22 @@ const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 let delId=null;
+let pendingDeletePayIndex=null;
 
-// === KUNCI AKSES SINKRON DENGAN login.html BARU ===
 const isLogin = localStorage.getItem('arinda_admin')==='login' || localStorage.getItem('admin_login')==='true';
-if(!isLogin){
-  window.location.href='login.html';
+if(!isLogin){ window.location.href='login.html'; }
+
+// === MODAL PREMIUM PENGGANTI ALERT/CONFIRM ===
+function openApp({title,msg,icon='⚠️',showCancel=false,okText='OKE',onOk=null}){
+  document.getElementById('appTitle').innerText=title;
+  document.getElementById('appMsg').innerText=msg;
+  document.getElementById('appIcon').innerText=icon;
+  document.getElementById('appCancel').style.display=showCancel?'block':'none';
+  document.getElementById('appOk').innerText=okText;
+  document.getElementById('appModal').classList.add('show');
+  document.getElementById('appOk').onclick=()=>{ closeApp(); if(onOk) onOk(); };
 }
+function closeApp(){ document.getElementById('appModal').classList.remove('show'); pendingDeletePayIndex=null; }
 
 let payMethods=[];
 async function loadPayments(){
@@ -139,17 +153,38 @@ function addPayMethod(){
   const r=document.getElementById('p_rek').value.trim();
   const n=document.getElementById('p_nama').value.trim();
   const q=document.getElementById('p_qr').value.trim();
-  if(!b||!r) return alert('Bank & No Rek wajib diisi');
+  if(!b||!r){
+    openApp({title:'Belum Lengkap',msg:'Bank & No Rek wajib diisi kak.',icon:'⚠️',okText:'OKE, ISI DULU'});
+    return;
+  }
   payMethods.push({bank:b,no_rek:r,atas_nama:n||'ARINDA',qr_url:q,aktif:true});
   renderPayments();
   document.getElementById('p_bank').value='';document.getElementById('p_rek').value='';document.getElementById('p_nama').value='';document.getElementById('p_qr').value='';
 }
-function removePay(i){ if(confirm('Hapus metode ini?')){ payMethods.splice(i,1); renderPayments(); } }
+function removePay(i){
+  pendingDeletePayIndex=i;
+  const m=payMethods[i];
+  openApp({
+    title:'Hapus Metode?',
+    msg:`Hapus ${m.bank} - ${m.no_rek} a.n ${m.atas_nama}? Data akan hilang dari bayar.html.`,
+    icon:'🗑️',
+    showCancel:true,
+    okText:'YA, HAPUS',
+    onOk:()=>{
+      payMethods.splice(pendingDeletePayIndex,1);
+      renderPayments();
+    }
+  });
+}
 function togglePay(i){ payMethods[i].aktif=!payMethods[i].aktif; renderPayments(); }
 async function savePayments(){
   document.getElementById('payStatus').innerText='Menyimpan...';
   const {error}=await supa.from('settings').upsert({key:'payment_methods', value: JSON.stringify(payMethods) },{onConflict:'key'});
-  if(error){ document.getElementById('payStatus').innerText='Gagal: '+error.message; } else { document.getElementById('payStatus').innerText='✓ Tersimpan! bayar.html otomatis update'; }
+  if(error){ openApp({title:'Gagal Simpan',msg:error.message,icon:'❌'}); document.getElementById('payStatus').innerText='Gagal: '+error.message; }
+  else {
+    document.getElementById('payStatus').innerText='✓ Tersimpan! bayar.html otomatis update';
+    openApp({title:'Berhasil',msg:'Rekening tersimpan & bayar.html otomatis update kak.',icon:'✅',okText:'MANTAP'});
+  }
 }
 loadPayments();
 
