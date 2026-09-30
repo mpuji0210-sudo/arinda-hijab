@@ -2,6 +2,27 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ARINDA Hijab Premium - Paris Premium 110x110cm</title>
 <meta name="description" content="ARINDA Hijab Paris 110x110cm - adem tidak menerawang, laser cut.">
+
+<!-- META TEKS SEO - HANYA INI YANG DITAMBAH DI HEAD -->
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="ARINDA Hijab Premium">
+<meta name="keywords" content="ARINDA Hijab, Hijab Premium, Paris Premium 110x110, Hijab Adem, Hijab Laser Cut">
+<meta name="theme-color" content="#000000">
+<link rel="canonical" href="https://arinda.id/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="id_ID">
+<meta property="og:site_name" content="ARINDA Hijab Premium">
+<meta property="og:title" content="ARINDA Hijab Premium - Paris Premium 110x110cm">
+<meta property="og:description" content="ARINDA Hijab Paris 110x110cm - adem tidak menerawang, laser cut.">
+<meta property="og:url" content="https://arinda.id/">
+<meta property="og:image" content="">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ARINDA Hijab Premium - Paris Premium 110x110cm">
+<meta name="twitter:description" content="ARINDA Hijab Paris 110x110cm - adem tidak menerawang, laser cut.">
+<meta name="twitter:image" content="">
+
 <link rel="preconnect" href="https://qjgevvizqeebtdqcbqmt.supabase.co" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" onload="this.rel='stylesheet'">
@@ -70,7 +91,6 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-f
 <div id="cartList" style="margin-top:12px"></div>
 <div style="border-top:1px solid var(--line);margin-top:12px;padding-top:12px">
 
-<!-- PATCH CEK ONGKIR - CUMA INI YANG DITAMBAH -->
 <div style="background:#FAFAFA;border:1px solid #E9E9E9;padding:12px;margin-bottom:12px">
 <div style="font-size:8px;letter-spacing:3px;margin-bottom:8px">CEK ONGKIR DARI JAKARTA</div>
 <div style="display:flex;gap:6px">
@@ -128,8 +148,6 @@ function renderCart(){
   list.innerHTML=c.map((it,i)=>`<div style="display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #F2EFEA;align-items:center"><img src="${it.img}" style="width:52px;height:52px;border-radius:10px;object-fit:cover"><div style="flex:1"><div style="font-size:10px">${it.warna}</div><div style="font-size:9px;opacity:.5">Rp${it.harga.toLocaleString('id-ID')} x ${it.qty}</div></div><button onclick="changeQty(${i},-1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#fff">-</button><span style="margin:0 6px;font-size:11px">${it.qty}</span><button onclick="changeQty(${i},1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#fff">+</button></div>`).join('');
 }
 function changeQty(i,d){let c=getCart();c[i].qty+=d;if(c[i].qty<=0)c.splice(i,1);saveCart(c);}
-
-/* === LOGIC CEK ONGKIR BARU === */
 function cekOngkir(){
   const input=document.getElementById('destCity'); const city=(input.value||'').toLowerCase().trim();
   if(!city){alert('Ketik kota tujuan dulu kak'); input.focus(); return;}
@@ -141,7 +159,6 @@ function cekOngkir(){
     else if(city.includes('bandung')||city.includes('semarang')||city.includes('yogyakarta')||city.includes('jogja')||city.includes('surabaya')||city.includes('solo')||city.includes('malang')) base=18000;
     else if(city.includes('medan')||city.includes('palembang')||city.includes('pekanbaru')||city.includes('lampung')||city.includes('bali')||city.includes('denpasar')) base=28000;
     else if(city.includes('makassar')||city.includes('manado')||city.includes('balikpapan')||city.includes('banjarmasin')||city.includes('pontianak')||city.includes('jayapura')||city.includes('ambon')) base=35000;
-
     const options=[
       {service:'REG - 2-3 HARI',cost:base,est:'2-3 hari'},
       {service:'CARGO - 3-5 HARI',cost:Math.max(10000,base-3000),est:'3-5 hari'},
@@ -159,7 +176,6 @@ function pilihOngkir(cost,service){
   renderCart();
   document.getElementById('ongkirNote').innerText='✓ Ongkir '+service+' dipilih - Rp'+cost.toLocaleString('id-ID');
 }
-
 function checkoutWA(){
   const c=getCart();if(!c.length){alert('Keranjang kosong');return;}
   if(!selectedOngkirCost){ const city=document.getElementById('destCity'); if(city&&!city.value.trim()){alert('Cek ongkir dulu ya kak, ketik kota tujuan'); openCart(); if(city) city.focus(); return; } if(!confirm('Ongkir belum dipilih, lanjut tanpa ongkir?')) return; }
@@ -210,9 +226,18 @@ async function init(){
     const{data:banners}=await supabaseClient.from('banners').select('image_url,image_mobile_url,title,link_url').eq('is_active',true).order('created_at',{ascending:false}).limit(1);
     if(banners&&banners[0]){
       const img=document.getElementById('bannerImg');const srcPC=document.getElementById('bannerSourcePC');
+      const bannerFullUrl = banners[0].image_url || banners[0].image_mobile_url;
       if(img){img.src=getBannerImg(banners[0].image_mobile_url||banners[0].image_url,800);if(srcPC) srcPC.srcset=getBannerImg(banners[0].image_url,1240);}
       const bt=document.getElementById('bannerTitle'); if(bt) bt.innerText=banners[0].title||'ELEGANCE IN EVERY LAYER';
       const bl=document.getElementById('bannerLink'); if(bl) bl.href=banners[0].link_url||'produk.html';
+      // AUTO UPDATE OG IMAGE DARI SUPABASE - HANYA INI TAMBAHAN JS
+      try{
+        const ogUrl = getBannerImg(bannerFullUrl, 1200);
+        const ogTag = document.querySelector('meta[property="og:image"]');
+        const twTag = document.querySelector('meta[name="twitter:image"]');
+        if(ogTag) ogTag.setAttribute('content', ogUrl);
+        if(twTag) twTag.setAttribute('content', ogUrl);
+      }catch(e){}
     }
     const{data:settings}=await supabaseClient.from('settings').select('key,value').in('key',['home_koleksi_terlaris','home_undertone_images']);
     if(settings){
