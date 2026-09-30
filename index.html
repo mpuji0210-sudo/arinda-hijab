@@ -2,8 +2,6 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ARINDA Hijab Premium - Paris Premium 110x110cm</title>
 <meta name="description" content="ARINDA Hijab Paris 110x110cm - adem tidak menerawang, laser cut.">
-
-<!-- META TEKS SEO - HANYA INI YANG DITAMBAH DI HEAD -->
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="ARINDA Hijab Premium">
 <meta name="keywords" content="ARINDA Hijab, Hijab Premium, Paris Premium 110x110, Hijab Adem, Hijab Laser Cut">
@@ -230,7 +228,6 @@ async function init(){
       if(img){img.src=getBannerImg(banners[0].image_mobile_url||banners[0].image_url,800);if(srcPC) srcPC.srcset=getBannerImg(banners[0].image_url,1240);}
       const bt=document.getElementById('bannerTitle'); if(bt) bt.innerText=banners[0].title||'ELEGANCE IN EVERY LAYER';
       const bl=document.getElementById('bannerLink'); if(bl) bl.href=banners[0].link_url||'produk.html';
-      // AUTO UPDATE OG IMAGE DARI SUPABASE - HANYA INI TAMBAHAN JS
       try{
         const ogUrl = getBannerImg(bannerFullUrl, 1200);
         const ogTag = document.querySelector('meta[property="og:image"]');
@@ -243,7 +240,19 @@ async function init(){
     if(settings){
       const get=k=>settings.find(s=>s.key===k)?.value;
       try{
-        const raw=JSON.parse(get('home_koleksi_terlaris')||'[]');
+        let raw=JSON.parse(get('home_koleksi_terlaris')||'[]');
+        // FIX ANTI DOBEL - HANYA INI YANG DITAMBAH
+        if(Array.isArray(raw)){
+          const seen = new Set();
+          raw = raw.filter(v=>{
+            const url = (typeof v==='string'?v:v.url||'').trim();
+            const titleKey = (typeof v==='object'?(v.title||''):'').toLowerCase().trim();
+            const key = (url + '|' + titleKey).toLowerCase();
+            if(!url || seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          });
+        }
         if(raw.length){
           const grid=document.getElementById('koleksi4Grid');
           if(grid) grid.innerHTML=raw.slice(0,9).map((v,i)=>{
@@ -260,7 +269,17 @@ async function init(){
       try{
         const rawU=get('home_undertone_images');
         if(rawU){
-          const uImgs=JSON.parse(rawU);
+          let uImgs=JSON.parse(rawU);
+          // FIX ANTI DOBEL UNDERTONE JUGA
+          if(Array.isArray(uImgs)){
+            const seenU = new Set();
+            uImgs = uImgs.filter(it=>{
+              const url=typeof it==='string'?it:it.url||'';
+              if(!url || seenU.has(url)) return false;
+              seenU.add(url);
+              return true;
+            });
+          }
           const grid=document.getElementById('undertoneGrid');
           if(grid&&uImgs.length){
             grid.innerHTML=uImgs.slice(0,4).map((it,i)=>{
