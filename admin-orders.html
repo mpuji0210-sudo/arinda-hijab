@@ -26,7 +26,7 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
 </nav>
 
 <div style="max-width:800px;margin:0 auto;padding:24px 16px 60px">
-  <!-- === TAMBAHAN EDIT REK - HANYA BAGIAN INI YANG DITAMBAH === -->
+  <!-- KELOLA REKENING -->
   <div class="card" style="padding:16px;margin-bottom:20px">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div style="font-family:'Cormorant Garamond';font-size:18px;letter-spacing:1px">Kelola Rekening & QRIS</div>
@@ -34,7 +34,6 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
     </div>
     <div style="font-size:9px;letter-spacing:2px;opacity:.5;margin-top:6px">GANTI NO REK / TAMBAH QR TANPA UBAH KODINGAN - OTOMATIS MUNCUL DI bayar.html</div>
     <div id="payListAdmin" style="margin-top:14px;display:flex;flex-direction:column;gap:8px"></div>
-
     <div style="border-top:1px solid #F2F2F2;margin-top:16px;padding-top:14px">
       <div style="font-size:9px;letter-spacing:2px;margin-bottom:8px">TAMBAH / EDIT METODE BARU</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
@@ -50,7 +49,6 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
       <div id="payStatus" style="font-size:10px;opacity:.5;margin-top:8px"></div>
     </div>
   </div>
-  <!-- === END TAMBAHAN === -->
 
   <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px">
     <div>
@@ -68,7 +66,6 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
   <div style="margin-top:18px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA HIJAB PREMIUM</div>
 </footer>
 
-<!-- MODAL HAPUS ELEGAN - GANTI CONFIRM JELEK -->
 <div id="delModal" onclick="if(event.target.id==='delModal')closeDel()">
   <div style="background:#FFFEFB;width:100%;max-width:380px;border-radius:28px;border:1px solid #E8E0D0;padding:28px 24px;box-shadow:0 30px 80px rgba(0,0,0,0.25);animation:lvSlide.35s cubic-bezier(0.16,1,0.3,1)">
     <div style="width:46px;height:46px;border-radius:50%;background:#F9F6F1;border:1px solid #E8E0D0;display:flex;align-items:center;justify-content:center;font-size:20px">🗑️</div>
@@ -87,7 +84,11 @@ const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 let delId=null;
 
-// === LOGIC PAYMENT - HANYA INI TAMBAHAN ===
+// === KUNCI AKSES - WAJIB LOGIN DULU ===
+if(!localStorage.getItem('admin_login')){
+  window.location.href='login.html';
+}
+
 let payMethods=[];
 async function loadPayments(){
   document.getElementById('payStatus').innerText='Loading...';
@@ -95,7 +96,6 @@ async function loadPayments(){
   if(data && data.value){
     try{ payMethods = JSON.parse(data.value); }catch(e){ payMethods=[]; }
   } else {
-    // default kalau belum ada
     payMethods=[{bank:'BCA',no_rek:'8740376161',atas_nama:'ARINDA ADMIN',qr_url:'',aktif:true}];
   }
   renderPayments();
@@ -137,7 +137,6 @@ async function savePayments(){
   if(error){ document.getElementById('payStatus').innerText='Gagal: '+error.message; } else { document.getElementById('payStatus').innerText='✓ Tersimpan! bayar.html otomatis update'; }
 }
 loadPayments();
-// === END LOGIC PAYMENT ===
 
 async function loadOrders(){
   const {data} = await supa.from('orders').select('*').order('created_at',{ascending:false});
