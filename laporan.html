@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Laporan - ARINDA</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -9,41 +7,45 @@
 <style>
 body{margin:0;background:#FFF;color:#000;font-family:'Inter',sans-serif}
 .card{border:1px solid #E9E9E9;background:#fff;padding:16px}
-#pinModal{display:none;position:fixed;inset:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(14px);z-index:9999;align-items:center;justify-content:center;padding:20px}
+#pinModal{display:none;position:fixed;inset:0;background:rgba(255,255,255,0.97);backdrop-filter:blur(14px);z-index:9999;align-items:center;justify-content:center;padding:20px}
 #pinModal.show{display:flex}
-</style>
-</head>
-<body>
+@keyframes lvSlide{from{transform:translateY(18px) scale(.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+</style></head><body>
+
 <div id="pinModal" class="show">
-  <div style="background:#fff;width:100%;max-width:340px;border:1px solid #000;padding:28px;text-align:center">
-    <div style="font-family:'Cormorant Garamond';font-size:22px;letter-spacing:8px">ARINDA</div>
-    <div style="font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px;margin-bottom:20px">PRIVATE REPORT</div>
+  <div style="background:#fff;width:100%;max-width:360px;border:1px solid #000;padding:28px;text-align:center;animation:lvSlide.4s cubic-bezier(0.16,1,0.3,1)">
+    <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:22px">ARINDA</div>
+    <div style="font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px;margin-bottom:22px">PRIVATE REPORT • OWNER ONLY</div>
     <div style="font-size:9px;letter-spacing:3px;margin-bottom:12px">MASUKKAN PIN LAPORAN</div>
-    <input id="pinInput" type="password" placeholder="****" style="width:100%;height:44px;border:1px solid #000;text-align:center;font-size:18px;letter-spacing:8px">
-    <button onclick="checkPin()" style="width:100%;height:44px;background:#000;color:#fff;border:1px solid #000;margin-top:12px;font-size:9px;letter-spacing:2px;cursor:pointer">BUKA LAPORAN</button>
-    <div id="pinErr" style="font-size:10px;color:red;margin-top:8px;display:none">PIN salah kak</div>
-    <button onclick="location.href='login.html'" style="margin-top:14px;background:none;border:none;font-size:8px;letter-spacing:2px;opacity:.5;cursor:pointer">KEMBALI KE LOGIN</button>
+    <input id="pinInput" type="password" placeholder="••••" style="width:100%;height:46px;border:1px solid #000;text-align:center;font-size:20px;letter-spacing:10px">
+    <button onclick="checkPin()" style="width:100%;height:46px;background:#000;color:#fff;border:1px solid #000;margin-top:12px;font-size:9px;letter-spacing:2px;cursor:pointer">BUKA LAPORAN</button>
+    <div id="pinErr" style="font-size:10px;color:#c00;margin-top:10px;display:none">PIN salah kak</div>
+    <div id="pinInfo" style="font-size:9px;opacity:.4;margin-top:10px">Default: 1234 • Ganti di admin-orders.html</div>
+    <button onclick="location.href='login.html'" style="margin-top:16px;background:none;border:none;font-size:8px;letter-spacing:2px;opacity:.4;cursor:pointer">KEMBALI KE LOGIN</button>
   </div>
 </div>
+
 <nav style="position:sticky;top:0;z-index:90;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9">
-  <div style="max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+  <div style="max-width:900px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
     <div><div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px">ARINDA</div><span style="display:block;font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">LAPORAN HARIAN • PRIVATE</span></div>
     <button onclick="logout()" style="padding:10px 14px;background:#fff;border:1px solid #000;font-size:8px;letter-spacing:2px;cursor:pointer">LOGOUT</button>
   </div>
 </nav>
+
 <div style="max-width:900px;margin:0 auto;padding:24px 16px 60px">
   <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:20px">
     <div><div style="font-family:'Cormorant Garamond';font-size:26px;font-weight:300">Laporan Penjualan</div><div id="tgl" style="font-size:9px;letter-spacing:3px;opacity:.4;margin-top:4px"></div></div>
-    <select id="filter" onchange="loadLaporan()" style="height:36px;border:1px solid #000;padding:0 10px;font-size:11px"><option value="week" selected>7 HARI TERAKHIR</option><option value="today">HARI INI</option><option value="month">BULAN INI</option><option value="all">SEMUA</option></select>
+    <select id="filter" onchange="loadLaporan()" style="height:36px;border:1px solid #000;padding:0 10px;font-size:11px"><option value="week" selected>7 HARI</option><option value="today">HARI INI</option><option value="month">BULAN INI</option><option value="all">SEMUA</option></select>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px">
     <div class="card"><div style="font-size:8px;letter-spacing:2px;opacity:.5">OMSET</div><div id="omset" style="font-family:'Cormorant Garamond';font-size:22px;margin-top:8px">Rp 0</div><div id="count" style="font-size:9px;opacity:.5;margin-top:4px">0 pesanan</div></div>
-    <div class="card"><div style="font-size:8px;letter-spacing:2px;opacity:.5">LABA EST (40%)</div><div id="laba" style="font-family:'Cormorant Garamond';font-size:22px;margin-top:8px;color:#0a7a2a">Rp 0</div><div style="font-size:9px;opacity:.5;margin-top:4px">Modal 60%</div></div>
+    <div class="card"><div style="font-size:8px;letter-spacing:2px;opacity:.5">LABA EST 40%</div><div id="laba" style="font-family:'Cormorant Garamond';font-size:22px;margin-top:8px;color:#0a7a2a">Rp 0</div><div style="font-size:9px;opacity:.5;margin-top:4px">Modal 60%</div></div>
     <div class="card"><div style="font-size:8px;letter-spacing:2px;opacity:.5">TERLARIS</div><div id="best" style="font-size:13px;font-weight:600;margin-top:8px">-</div><div id="bestQty" style="font-size:9px;opacity:.5;margin-top:4px">-</div></div>
   </div>
   <div class="card" style="margin-bottom:20px"><div style="font-size:9px;letter-spacing:2px;margin-bottom:12px">GRAFIK OMSET 7 HARI</div><canvas id="chart" height="120"></canvas></div>
   <div class="card"><div style="font-size:9px;letter-spacing:2px;margin-bottom:12px">RINCIAN WARNA TERLARIS</div><div id="listWarna" style="display:flex;flex-direction:column;gap:8px"></div></div>
 </div>
+
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
@@ -52,16 +54,19 @@ if(localStorage.getItem('arinda_admin')!=='login' && localStorage.getItem('admin
 document.getElementById('tgl').innerText=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 let REAL_PIN='1234';
 async function initPin(){
-  const {data}=await supa.from('settings').select('value').eq('key','laporan_pin').maybeSingle();
-  if(data && data.value){
-    try{ let j=JSON.parse(data.value); REAL_PIN=j.pin||j.value||data.value; }catch(e){ REAL_PIN=data.value.replace(/"/g,''); }
-  }
+  try{
+    const {data}=await supa.from('settings').select('value').eq('key','laporan_pin').maybeSingle();
+    if(data && data.value){
+      try{ let j=JSON.parse(data.value); REAL_PIN=(j.pin||j.value||data.value).toString(); }catch(e){ REAL_PIN=data.value.toString().replace(/"/g,''); }
+      document.getElementById('pinInfo').innerText='PIN aktif: ada • Ganti di admin-orders.html';
+    }
+  }catch(e){}
 }
 initPin();
 function checkPin(){
   const inp=document.getElementById('pinInput').value.trim();
   if(inp===REAL_PIN){ document.getElementById('pinModal').classList.remove('show'); loadLaporan(); }
-  else{ document.getElementById('pinErr').style.display='block'; }
+  else{ document.getElementById('pinErr').style.display='block'; document.getElementById('pinErr').innerText='PIN salah, coba lagi. Default 1234'; }
 }
 function logout(){ localStorage.removeItem('admin_login'); localStorage.removeItem('arinda_admin'); location.href='login.html'; }
 let chartIns=null;
@@ -73,7 +78,7 @@ async function loadLaporan(){
   else if(f==='week'){ let s=new Date(); s.setDate(now.getDate()-6); s.setHours(0,0,0,0); q=q.gte('created_at',s.toISOString()); }
   else if(f==='month'){ let s=new Date(now.getFullYear(),now.getMonth(),1); q=q.gte('created_at',s.toISOString()); }
   const {data}=await q;
-  if(!data||data.length===0){ document.getElementById('omset').innerText='Rp 0'; document.getElementById('laba').innerText='Rp 0'; document.getElementById('count').innerText='0 pesanan'; document.getElementById('listWarna').innerHTML='<div style="font-size:11px;opacity:.4">Belum ada data di periode ini</div>'; return; }
+  if(!data||data.length===0){ document.getElementById('omset').innerText='Rp 0'; document.getElementById('laba').innerText='Rp 0'; document.getElementById('count').innerText='0 pesanan di periode ini'; document.getElementById('listWarna').innerHTML='<div style="font-size:11px;opacity:.4">Belum ada data</div>'; if(chartIns) chartIns.destroy(); return; }
   let omset=data.reduce((a,b)=>a+Number(b.total||0),0);
   document.getElementById('omset').innerText='Rp'+omset.toLocaleString('id-ID');
   document.getElementById('laba').innerText='Rp'+Math.round(omset*0.4).toLocaleString('id-ID');
@@ -81,14 +86,15 @@ async function loadLaporan(){
   let map={}; data.forEach(o=>{ try{ let its=typeof o.items==='string'?JSON.parse(o.items):o.items; (Array.isArray(its)?its:[]).forEach(i=>{ let w=i.warna||i.name||i.color||'Lain'; map[w]=(map[w]||0)+Number(i.qty||1); }); }catch(e){} });
   let sorted=Object.entries(map).sort((a,b)=>b[1]-a[1]);
   if(sorted[0]){ document.getElementById('best').innerText=sorted[0][0]; document.getElementById('bestQty').innerText=sorted[0][1]+' pcs'; }
-  document.getElementById('listWarna').innerHTML=sorted.map(([w,qty])=>`<div style="display:flex;justify-content:space-between;border-bottom:1px solid #F2F2F2;padding:10px 0"><span style="font-size:12px">${w}</span><span style="font-size:12px;font-weight:600">${qty} pcs</span></div>`).join('')||'<div style="font-size:11px;opacity:.4">Belum ada data warna</div>';
+  document.getElementById('listWarna').innerHTML=sorted.map(([w,qty])=>`<div style="display:flex;justify-content:space-between;border-bottom:1px solid #F2F2F2;padding:10px 0"><span style="font-size:12px">${w}</span><span style="font-size:12px;font-weight:600">${qty} pcs</span></div>`).join('')||'<div style="font-size:11px;opacity:.4">Belum ada warna</div>';
   let days={}; for(let i=6;i>=0;i--){ let d=new Date(); d.setDate(now.getDate()-i); let k=d.toISOString().slice(0,10); days[k]=0; }
   data.forEach(o=>{ let k=new Date(o.created_at).toISOString().slice(0,10); if(days[k]!==undefined) days[k]+=Number(o.total||0); });
   let labels=Object.keys(days).map(k=>{ let d=new Date(k); return d.toLocaleDateString('id-ID',{day:'2-digit',month:'short'}); });
   let vals=Object.values(days);
   if(chartIns) chartIns.destroy();
-  chartIns=new Chart(document.getElementById('chart'),{type:'bar',data:{labels:labels,datasets:[{label:'Omset',data:vals,backgroundColor:'#000'}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+  chartIns=new Chart(document.getElementById('chart'),{type:'bar',data:{labels:labels,[STRIPPED]
 }
+document.getElementById('pinInput').addEventListener('keyup',e=>{ if(e.key==='Enter') checkPin(); });
 </script>
 </body>
 </html>
