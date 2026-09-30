@@ -4,7 +4,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-body{margin:0;background:#FFFCF9;color:#111;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+body{margin:0;background:#FFFCF9;color:#111;font-family:'Inter',sans-serif}
 .wrap{max-width:480px;margin:0 auto;padding:18px 14px 60px}
 .card{border:1px solid #E9E9E9;background:#fff}
 .pay-card{border:1px solid #111;background:#fff;padding:16px;margin-top:12px}
@@ -12,11 +12,8 @@ body{margin:0;background:#FFFCF9;color:#111;font-family:'Inter',sans-serif;-webk
 .btn-white{width:100%;height:48px;background:#fff;color:#000;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
 .btn-wa{width:100%;height:52px;background:#25D366;color:#fff;border:1px solid #25D366;font-size:10px;letter-spacing:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600}
 .qr{width:100%;max-width:300px;display:block;margin:12px auto;border:1px solid #E9E9E9;border-radius:12px}
-#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 18px;border-radius:20px;font-size:11px;opacity:0;transition:.35s;z-index:9999;pointer-events:none}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 18px;border-radius:20px;font-size:11px;opacity:0;transition:.35s;z-index:9999}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-#appModal{display:none;position:fixed;inset:0;background:rgba(17,17,17,.45);backdrop-filter:blur(14px);z-index:9999;align-items:center;justify-content:center;padding:20px}
-#appModal.show{display:flex}
-@keyframes lv{from{transform:translateY(16px) scale(.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
 </style>
 </head><body>
 <div class="wrap">
@@ -24,85 +21,114 @@ body{margin:0;background:#FFFCF9;color:#111;font-family:'Inter',sans-serif;-webk
     <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:22px">ARINDA</div>
     <div style="font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM</div>
   </div>
-
   <div class="card" style="padding:14px 16px;margin-top:12px">
     <div style="font-size:8px;letter-spacing:3px;opacity:.4">TOTAL PEMBAYARAN</div>
     <div id="totalBox" style="font-family:'Cormorant Garamond';font-size:28px;margin-top:6px">Rp -</div>
-    <div id="orderInfo" style="font-size:10px;opacity:.5;margin-top:6px;line-height:1.6"></div>
+    <div id="orderInfo" style="font-size:10px;opacity:.6;margin-top:8px;line-height:1.6;background:#FAF7F2;padding:8px 10px;border:1px dashed #E8E0D0"></div>
   </div>
-
-  <div style="margin-top:18px;display:flex;justify-content:space-between;align-items:center">
-    <div style="font-family:'Cormorant Garamond';font-size:18px">Metode Pembayaran</div>
-    <div style="font-size:8px;letter-spacing:2px;opacity:.4" id="payCount">0 METODE</div>
-  </div>
-
-  <div id="payList" style="margin-top:10px"><div style="border:1px dashed #E9E9E9;padding:30px;text-align:center;font-size:11px;opacity:.4">Memuat rekening dari admin...</div></div>
-
+  <div style="margin-top:18px;display:flex;justify-content:space-between"><div style="font-family:'Cormorant Garamond';font-size:18px">Metode Pembayaran</div><div style="font-size:8px;opacity:.4" id="payCount"></div></div>
+  <div id="payList" style="margin-top:10px"><div style="border:1px dashed #E9E9E9;padding:30px;text-align:center;font-size:11px;opacity:.4">Memuat rekening...</div></div>
   <div style="margin-top:22px;display:flex;flex-direction:column;gap:10px">
     <button onclick="confirmWA()" class="btn-wa">💬 KONFIRMASI PEMBAYARAN VIA WA</button>
     <button onclick="location.href='index.html'" class="btn-white">KEMBALI KE BERANDA</button>
-    <div style="text-align:center;font-size:8px;letter-spacing:2px;opacity:.35;margin-top:4px">085178098354 - ARINDA ADMIN</div>
-  </div>
-
-  <div style="margin-top:18px;padding:12px 14px;border:1px solid #F0EBE3;background:#FFFEFB;font-size:10px;line-height:1.7;opacity:.7">
-    <b style="font-size:9px;letter-spacing:2px">CARA BAYAR:</b><br>1. Salin No Rek / Scan QRIS<br>2. Transfer sesuai total<br>3. Klik KONFIRMASI VIA WA & kirim bukti ke 085178098354
+    <div style="text-align:center;font-size:8px;letter-spacing:2px;opacity:.35">WA ADMIN 085178098354</div>
   </div>
 </div>
-
 <div id="toast"></div>
-<div id="appModal" onclick="if(event.target.id==='appModal')closeApp()">
-  <div style="background:#FFFEFB;width:100%;max-width:360px;border-radius:28px;border:1px solid #EFE9E0;overflow:hidden;animation:lv .35s cubic-bezier(0.16,1,0.3,1)">
-    <div style="padding:24px 22px 0"><div style="width:44px;height:44px;border-radius:50%;background:#F6F0E8;border:1px solid #E8E0D0;display:flex;align-items:center;justify-content:center">✅</div>
-    <div style="font-family:'Cormorant Garamond';font-size:20px;margin-top:14px" id="appTitle">Tersalin</div></div>
-    <div style="padding:10px 22px 0;font-size:12px;opacity:.6;line-height:1.6" id="appMsg">No rek disalin</div>
-    <div style="margin-top:18px;padding:14px 18px;background:#FAF7F2;border-top:1px solid #F0EBE3"><button onclick="closeApp()" style="width:100%;height:44px;background:#111;color:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer">OKE</button></div>
-  </div>
-</div>
-
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 const WA_ADMIN = '6285178098354';
-let lastTotal = '-';
-let lastMethods = [];
+let lastTotal='-'; let lastMethods=[]; let lastCustomer={};
 
 function toast(t){ const el=document.getElementById('toast'); el.innerText=t; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2200); }
-function openApp(title,msg){ document.getElementById('appTitle').innerText=title; document.getElementById('appMsg').innerText=msg; document.getElementById('appModal').classList.add('show'); }
-function closeApp(){ document.getElementById('appModal').classList.remove('show'); }
-function copyText(txt,bank){ navigator.clipboard.writeText(txt).then(()=>{ toast(bank+' disalin'); openApp('Tersalin ✓', bank+' '+txt+' berhasil disalin'); }); }
+function copyText(txt,bank){ navigator.clipboard.writeText(txt).then(()=>toast(bank+' '+txt+' disalin')); }
+
+function getCustomerFromStorage(){
+  const keysToTry = ['arinda_customer','arinda_last_customer','arinda_checkout','checkoutData','customerData','arinda_order','order_data','arinda_form'];
+  for(let k of keysToTry){
+    try{
+      const raw = localStorage.getItem(k) || sessionStorage.getItem(k);
+      if(!raw) continue;
+      const obj = JSON.parse(raw);
+      if(obj && (obj.name||obj.customer_name||obj.wa)){
+        return {
+          name: obj.name||obj.customer_name||obj.nama||'',
+          wa: obj.wa||obj.phone||obj.no_wa||obj.whatsapp||'',
+          alamat: obj.alamat||obj.address||obj.alamat_lengkap||'',
+          kota: obj.kota||obj.city||'',
+          total: obj.total||''
+        };
+      }
+    }catch(e){}
+  }
+  // coba key terpisah
+  return {
+    name: localStorage.getItem('customer_name')||localStorage.getItem('nama')||localStorage.getItem('name')||sessionStorage.getItem('customer_name')||'',
+    wa: localStorage.getItem('wa')||localStorage.getItem('no_wa')||localStorage.getItem('phone')||sessionStorage.getItem('wa')||'',
+    alamat: localStorage.getItem('alamat')||localStorage.getItem('address')||sessionStorage.getItem('alamat')||'',
+    kota: localStorage.getItem('kota')||sessionStorage.getItem('kota')||''
+  };
+}
 
 function confirmWA(){
-  const cust = JSON.parse(localStorage.getItem('arinda_customer')||localStorage.getItem('arinda_last_customer')||'{}');
+  const c = lastCustomer;
   const total = lastTotal;
   const rekText = lastMethods.map(m=>`- ${m.bank} ${m.no_rek} a.n ${m.atas_nama}`).join('%0A');
-  const msg = `Halo kak ARINDA HIJAB 👋%0A%0ASaya sudah transfer ya kak:%0A%0A*Total:* Rp${Number(total).toLocaleString('id-ID')}%0A*Nama:* ${cust.name||cust.customer_name||'-'}%0A*WA:* ${cust.wa||'-'}%0A*Alamat:* ${cust.alamat||'-'}%0A%0A*Rekening Tujuan: *%0A${rekText}%0A%0AMohon dicek, saya kirim bukti di sini. Terima kasih 🙏`;
+  const alamatFull = [c.alamat, c.kota].filter(Boolean).join(', ') || '-';
+  const msg = `Halo kak ARINDA HIJAB %F0%9F%91%8B%0A%0ASaya sudah transfer ya kak:%0A%0A*Total:* Rp${Number(total).toLocaleString('id-ID')}%0A*Nama:* ${c.name||'-'}%0A*WA:* ${c.wa||'-'}%0A*Alamat:* ${alamatFull}%0A%0A*Rekening Tujuan:*%0A${rekText}%0A%0AMohon dicek, saya kirim bukti di sini. Terima kasih %F0%9F%99%8F`;
   window.open(`https://wa.me/${WA_ADMIN}?text=${msg}`,'_blank');
 }
 
 async function loadPay(){
+  // 1. total
   const tryKeys=['arinda_total','total','arinda_checkout_total','checkout_total','cart_total','arinda_last_total'];
   for(let k of tryKeys){ const v=localStorage.getItem(k)||sessionStorage.getItem(k); if(v&&v!=='-'){ lastTotal=String(v).replace(/[^0-9]/g,''); break; } }
-  if(lastTotal==='-'||!lastTotal){
-    try{ const {data}=await supa.from('orders').select('total,customer_name').order('created_at',{ascending:false}).limit(1).maybeSingle(); if(data&&data.total){ lastTotal=String(data.total); } }catch(e){}
+
+  // 2. customer dari local
+  lastCustomer = getCustomerFromStorage();
+
+  // 3. kalau masih kosong, ambil order terakhir dari supabase (ini yang paling akurat)
+  try{
+    const {data:order} = await supa.from('orders').select('*').order('created_at',{ascending:false}).limit(1).maybeSingle();
+    if(order){
+      if(lastTotal==='-'||!lastTotal) lastTotal = String(order.total||'');
+      // override customer kalau local kosong atau -
+      if(!lastCustomer.name || lastCustomer.name==='-' || !lastCustomer.wa){
+        lastCustomer = {
+          name: order.customer_name||lastCustomer.name,
+          wa: order.wa||lastCustomer.wa,
+          alamat: order.alamat||lastCustomer.alamat,
+          kota: order.kota||lastCustomer.kota
+        };
+      }
+      document.getElementById('orderInfo').innerHTML = `Nama: <b>${order.customer_name||'-'}</b> • WA: ${order.wa||'-'}<br>Alamat: ${order.alamat||'-'} ${order.kota||''}`;
+    }
+  }catch(e){ console.log(e); }
+
+  // fallback tampilkan yang dari local kalau supabase gagal
+  if(!document.getElementById('orderInfo').innerHTML){
+    document.getElementById('orderInfo').innerHTML = `Nama: <b>${lastCustomer.name||'-'}</b> • WA: ${lastCustomer.wa||'-'}<br>Alamat: ${lastCustomer.alamat||'-'} ${lastCustomer.kota||''}`;
   }
+
   document.getElementById('totalBox').innerText = lastTotal==='-'? 'Rp -' : 'Rp'+Number(lastTotal).toLocaleString('id-ID');
 
+  // 4. payment methods
   try{
     const {data}=await supa.from('settings').select('value').eq('key','payment_methods').maybeSingle();
-    if(!data||!data.value){ document.getElementById('payList').innerHTML='<div style="padding:20px;text-align:center;font-size:11px">Belum ada metode di admin-orders.html</div>'; return; }
-    let methods=data.value; if(typeof methods==='string'){ try{ methods=JSON.parse(methods);}catch(e){methods=[]} }
-    lastMethods = methods.filter(m=>m.aktif);
-    document.getElementById('payCount').innerText = lastMethods.length+' METODE AKTIF';
+    let methods=data?.value; if(typeof methods==='string'){ try{ methods=JSON.parse(methods);}catch(e){methods=[]} }
+    lastMethods = (methods||[]).filter(m=>m.aktif);
+    document.getElementById('payCount').innerText = lastMethods.length+' METODE';
     document.getElementById('payList').innerHTML = lastMethods.map(m=>`
       <div class="pay-card">
-        <div style="display:flex;justify-content:space-between"><div><b style="font-size:12px;letter-spacing:1px">${m.bank}</b><div style="font-size:10px;opacity:.5">a.n ${m.atas_nama}</div></div><span style="font-size:8px;border:1px solid #111;padding:4px 8px">${m.bank.substring(0,8)}</span></div>
-        <div style="margin-top:12px;padding:10px 12px;background:#FAFAFA;border:1px dashed #E9E9E9">No: <b style="font-size:15px">${m.no_rek}</b></div>
-        ${m.qr_url?`<img src="${m.qr_url}" class="qr" onerror="this.style.display='none'" onclick="window.open(this.src)">`:''}
-        <div style="display:flex;gap:8px;margin-top:12px"><button class="btn-white" onclick="copyText('${m.no_rek}','${m.bank}')">SALIN NO REK</button><button class="btn" onclick="copyText('${m.no_rek}','${m.bank}')">SALIN & BAYAR</button></div>
+        <div style="display:flex;justify-content:space-between"><div><b style="font-size:12px">${m.bank}</b><div style="font-size:10px;opacity:.5">a.n ${m.atas_nama}</div></div></div>
+        <div style="margin-top:10px;padding:10px;background:#FAFAFA;border:1px dashed #E9E9E9">No: <b>${m.no_rek}</b></div>
+        ${m.qr_url?`<img src="${m.qr_url}" class="qr">`:''}
+        <div style="display:flex;gap:8px;margin-top:10px"><button class="btn-white" onclick="copyText('${m.no_rek}','${m.bank}')">SALIN</button><button class="btn" onclick="copyText('${m.no_rek}','${m.bank}')">SALIN & BAYAR</button></div>
       </div>`).join('');
   }catch(err){
-    document.getElementById('payList').innerHTML='<div style="padding:20px;font-size:11px">Gagal: '+err.message+'</div>';
+    document.getElementById('payList').innerHTML='Gagal: '+err.message;
   }
 }
 loadPay();
