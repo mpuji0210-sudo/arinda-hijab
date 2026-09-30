@@ -1,29 +1,32 @@
 <!DOCTYPE html>
-<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>Laporan - ARINDA</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-body{margin:0;background:#FFF;color:#000;font-family:'Inter',sans-serif; -webkit-tap-highlight-color: transparent;}
+body{margin:0;background:#FFF;color:#000;font-family:'Inter',sans-serif;-webkit-tap-highlight-color:transparent}
 .card{border:1px solid #E9E9E9;background:#fff;padding:16px}
 #pinModal{position:fixed;inset:0;background:#FFFFFF;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px}
 #pinModal.hide{display:none}
 #pinInput:focus{outline:2px solid #000}
-#btnBuka{touch-action: manipulation; -webkit-tap-highlight-color: transparent;}
-</style></head><body>
+#btnBuka{touch-action:manipulation}
+</style>
+</head>
+<body>
 
 <div id="pinModal">
   <div style="background:#fff;width:100%;max-width:360px;border:1px solid #000;padding:28px;text-align:center">
     <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:22px">ARINDA</div>
     <div style="font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px;margin-bottom:22px">PRIVATE REPORT • OWNER ONLY</div>
     <div style="font-size:9px;letter-spacing:3px;margin-bottom:12px">MASUKKAN PIN LAPORAN</div>
-    <!-- FIX: type=text biar bisa ketik arinda2026 -->
-    <input id="pinInput" type="text" autocomplete="off" value="arinda2026" style="width:100%;height:52px;border:2px solid #000;text-align:center;font-size:18px;letter-spacing:2px;background:#fff;color:#000;text-transform:lowercase">
+    <input id="pinInput" type="text" autocomplete="off" value="arinda2026" style="width:100%;height:52px;border:2px solid #000;text-align:center;font-size:18px;letter-spacing:2px;background:#fff;color:#000">
     <button id="btnBuka" type="button" style="width:100%;height:52px;background:#000;color:#fff;border:2px solid #000;margin-top:14px;font-size:10px;letter-spacing:3px;cursor:pointer;display:block">BUKA LAPORAN</button>
     <div id="pinErr" style="font-size:11px;color:#c00;margin-top:12px;display:none"></div>
-    <div style="font-size:9px;opacity:.4;margin-top:12px">PIN: arinda2026 • bisa diganti di admin-orders</div>
-    <button onclick="location.href='login.html'" type="button" style="margin-top:16px;background:none;border:none;font-size:8px;letter-spacing:2px;opacity:.4;cursor:pointer">KEMBALI KE LOGIN</button>
+    <div style="font-size:9px;opacity:.4;margin-top:12px">PIN: arinda2026</div>
   </div>
 </div>
 
@@ -37,11 +40,16 @@ body{margin:0;background:#FFF;color:#000;font-family:'Inter',sans-serif; -webkit
 <div style="max-width:900px;margin:0 auto;padding:24px 16px 60px">
   <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:20px">
     <div><div style="font-family:'Cormorant Garamond';font-size:26px;font-weight:300">Laporan Penjualan</div><div id="tgl" style="font-size:9px;letter-spacing:3px;opacity:.4;margin-top:4px"></div></div>
-    <select id="filter" onchange="loadLaporan()" style="height:36px;border:1px solid #000;padding:0 10px;font-size:11px"><option value="week" selected>7 HARI</option><option value="today">HARI INI</option><option value="month">BULAN INI</option><option value="all">SEMUA</option></select>
+    <select id="filter" onchange="loadLaporan()" style="height:36px;border:1px solid #000;padding:0 10px;font-size:11px">
+      <option value="week" selected>7 HARI</option>
+      <option value="today">HARI INI</option>
+      <option value="month">BULAN INI</option>
+      <option value="all">SEMUA</option>
+    </select>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px">
     <div class="card"><div style="font-size:8px;letter-spacing:2px;opacity:.5">OMSET</div><div id="omset" style="font-family:'Cormorant Garamond';font-size:22px;margin-top:8px">Rp 0</div><div id="count" style="font-size:9px;opacity:.5;margin-top:4px">0 pesanan</div></div>
-    <div class="card"><div style="font-size:8px;letter-spacing:2px;opacity:.5">LABA EST 40%</div><div id="laba" style="font-family:'Cormorant Garamond';font-size:22px;margin-top:8px;color:#0a7a2a">Rp 0</div><div style="font-size:9px;opacity:.5;margin-top:4px">Modal 60%</div></div>
+    <div class="card"><div style="font-size:8px;letter-spacing:2px;opacity:.5">LABA EST 40%</div><div id="laba" style="font-family:'Cormorant Garamond';font-size:22px;margin-top:8px;color:#0a7a2a">Rp 0</div></div>
     <div class="card"><div style="font-size:8px;letter-spacing:2px;opacity:.5">TERLARIS</div><div id="best" style="font-size:13px;font-weight:600;margin-top:8px">-</div><div id="bestQty" style="font-size:9px;opacity:.5;margin-top:4px">-</div></div>
   </div>
   <div class="card" style="margin-bottom:20px"><div style="font-size:9px;letter-spacing:2px;margin-bottom:12px">GRAFIK OMSET 7 HARI</div><canvas id="chart" height="120"></canvas></div>
@@ -52,20 +60,27 @@ body{margin:0;background:#FFF;color:#000;font-family:'Inter',sans-serif; -webkit
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
-if(localStorage.getItem('arinda_admin')!=='login' && localStorage.getItem('admin_login')!=='true'){ location.href='login.html'; }
+
+if(localStorage.getItem('arinda_admin')!=='login' && localStorage.getItem('admin_login')!=='true'){
+  localStorage.setItem('arinda_next','laporan.html');
+  location.href='login.html';
+}
+
 document.getElementById('tgl').innerText=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 let REAL_PIN='arinda2026';
+
 async function initPin(){
   try{
     const {data}=await supa.from('settings').select('value').eq('key','laporan_pin').maybeSingle();
     if(data && data.value){
-      try{ let j=JSON.parse(data.value); REAL_PIN=(j.pin||j.value||data.value).toString(); }catch(e){ REAL_PIN=data.value.toString().replace(/"/g,''); }
+      try{ let j=JSON.parse(data.value); REAL_PIN=(j.pin||j.value||data.value).toString(); }
+      catch(e){ REAL_PIN=data.value.toString().replace(/"/g,''); }
     }
   }catch(e){}
-  document.getElementById('pinInput').focus();
-  document.getElementById('pinInput').select();
 }
+
 initPin();
+
 function checkPin(){
   const inp=document.getElementById('pinInput').value.trim().toLowerCase();
   const real=REAL_PIN.toString().trim().toLowerCase();
@@ -75,13 +90,20 @@ function checkPin(){
   } else {
     const err=document.getElementById('pinErr');
     err.style.display='block';
-    err.innerText='PIN salah. Kamu ketik '+inp+'. Coba arinda2026';
+    err.innerText='PIN salah. Ketik: arinda2026';
   }
 }
+
 document.getElementById('btnBuka').addEventListener('click', checkPin);
 document.getElementById('btnBuka').addEventListener('touchend', (e)=>{ e.preventDefault(); checkPin(); });
 document.getElementById('pinInput').addEventListener('keyup', e=>{ if(e.key==='Enter') checkPin(); });
-function logout(){ localStorage.removeItem('admin_login'); localStorage.removeItem('arinda_admin'); location.href='login.html'; }
+
+function logout(){
+  localStorage.removeItem('admin_login');
+  localStorage.removeItem('arinda_admin');
+  location.href='login.html';
+}
+
 let chartIns=null;
 async function loadLaporan(){
   const f=document.getElementById('filter').value;
@@ -91,12 +113,24 @@ async function loadLaporan(){
   else if(f==='week'){ let s=new Date(); s.setDate(now.getDate()-6); s.setHours(0,0,0,0); q=q.gte('created_at',s.toISOString()); }
   else if(f==='month'){ let s=new Date(now.getFullYear(),now.getMonth(),1); q=q.gte('created_at',s.toISOString()); }
   const {data}=await q;
-  if(!data||data.length===0){ document.getElementById('omset').innerText='Rp 0'; document.getElementById('laba').innerText='Rp 0'; document.getElementById('count').innerText='0 pesanan'; document.getElementById('listWarna').innerHTML='<div style="font-size:11px;opacity:.4">Belum ada data</div>'; if(chartIns) chartIns.destroy(); return; }
+  if(!data||data.length===0){
+    document.getElementById('omset').innerText='Rp 0';
+    document.getElementById('laba').innerText='Rp 0';
+    document.getElementById('count').innerText='0 pesanan';
+    document.getElementById('listWarna').innerHTML='<div style="font-size:11px;opacity:.4">Belum ada data</div>';
+    if(chartIns) chartIns.destroy(); return;
+  }
   let omset=data.reduce((a,b)=>a+Number(b.total||0),0);
   document.getElementById('omset').innerText='Rp'+omset.toLocaleString('id-ID');
   document.getElementById('laba').innerText='Rp'+Math.round(omset*0.4).toLocaleString('id-ID');
   document.getElementById('count').innerText=data.length+' pesanan';
-  let map={}; data.forEach(o=>{ try{ let its=typeof o.items==='string'?JSON.parse(o.items):o.items; (Array.isArray(its)?its:[]).forEach(i=>{ let w=i.warna||i.name||i.color||'Lain'; map[w]=(map[w]||0)+Number(i.qty||1); }); }catch(e){} });
+  let map={};
+  data.forEach(o=>{
+    try{
+      let its=typeof o.items==='string'?JSON.parse(o.items):o.items;
+      (Array.isArray(its)?its:[]).forEach(i=>{ let w=i.warna||i.name||i.color||'Lain'; map[w]=(map[w]||0)+Number(i.qty||1); });
+    }catch(e){}
+  });
   let sorted=Object.entries(map).sort((a,b)=>b[1]-a[1]);
   if(sorted[0]){ document.getElementById('best').innerText=sorted[0][0]; document.getElementById('bestQty').innerText=sorted[0][1]+' pcs'; }
   document.getElementById('listWarna').innerHTML=sorted.map(([w,qty])=>`<div style="display:flex;justify-content:space-between;border-bottom:1px solid #F2F2F2;padding:10px 0"><span style="font-size:12px">${w}</span><span style="font-size:12px;font-weight:600">${qty} pcs</span></div>`).join('')||'<div style="font-size:11px;opacity:.4">Belum ada warna</div>';
@@ -105,7 +139,7 @@ async function loadLaporan(){
   let labels=Object.keys(days).map(k=>{ let d=new Date(k); return d.toLocaleDateString('id-ID',{day:'2-digit',month:'short'}); });
   let vals=Object.values(days);
   if(chartIns) chartIns.destroy();
-  chartIns=new Chart(document.getElementById('chart'),{type:'bar',data:{labels:labels,datasets:[{label:'Omset',data:vals,backgroundColor:'#000',borderWidth:0}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'Rp'+(v/1000)+'k'}}}}});
+  chartIns=new Chart(document.getElementById('chart'),{type:'bar',data:{labels:labels,datasets:[{label:'Omset',data:vals}]},options:{plugins:{legend:{display:false}}}});
 }
 </script>
 </body>
