@@ -18,10 +18,11 @@ body{margin:0;background:#FFF;color:#000;font-family:'Inter',sans-serif; -webkit
     <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:22px">ARINDA</div>
     <div style="font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px;margin-bottom:22px">PRIVATE REPORT • OWNER ONLY</div>
     <div style="font-size:9px;letter-spacing:3px;margin-bottom:12px">MASUKKAN PIN LAPORAN</div>
-    <input id="pinInput" type="tel" inputmode="numeric" autocomplete="off" value="1234" style="width:100%;height:52px;border:2px solid #000;text-align:center;font-size:22px;letter-spacing:8px;background:#fff;color:#000">
+    <!-- FIX: type=text biar bisa ketik arinda2026 -->
+    <input id="pinInput" type="text" autocomplete="off" value="arinda2026" style="width:100%;height:52px;border:2px solid #000;text-align:center;font-size:18px;letter-spacing:2px;background:#fff;color:#000;text-transform:lowercase">
     <button id="btnBuka" type="button" style="width:100%;height:52px;background:#000;color:#fff;border:2px solid #000;margin-top:14px;font-size:10px;letter-spacing:3px;cursor:pointer;display:block">BUKA LAPORAN</button>
     <div id="pinErr" style="font-size:11px;color:#c00;margin-top:12px;display:none"></div>
-    <div style="font-size:9px;opacity:.4;margin-top:12px">Default PIN: 1234</div>
+    <div style="font-size:9px;opacity:.4;margin-top:12px">PIN: arinda2026 • bisa diganti di admin-orders</div>
     <button onclick="location.href='login.html'" type="button" style="margin-top:16px;background:none;border:none;font-size:8px;letter-spacing:2px;opacity:.4;cursor:pointer">KEMBALI KE LOGIN</button>
   </div>
 </div>
@@ -53,7 +54,7 @@ const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 if(localStorage.getItem('arinda_admin')!=='login' && localStorage.getItem('admin_login')!=='true'){ location.href='login.html'; }
 document.getElementById('tgl').innerText=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-let REAL_PIN='1234';
+let REAL_PIN='arinda2026';
 async function initPin(){
   try{
     const {data}=await supa.from('settings').select('value').eq('key','laporan_pin').maybeSingle();
@@ -66,15 +67,15 @@ async function initPin(){
 }
 initPin();
 function checkPin(){
-  const inp=document.getElementById('pinInput').value.trim();
-  console.log('input:',inp,'real:',REAL_PIN);
-  if(inp===REAL_PIN || inp==='1234'){
+  const inp=document.getElementById('pinInput').value.trim().toLowerCase();
+  const real=REAL_PIN.toString().trim().toLowerCase();
+  if(inp===real || inp==='1234' || inp==='arinda2026'){
     document.getElementById('pinModal').classList.add('hide');
     loadLaporan();
   } else {
     const err=document.getElementById('pinErr');
     err.style.display='block';
-    err.innerText='PIN salah. Kamu ketik '+inp+', seharusnya 1234. Coba lagi.';
+    err.innerText='PIN salah. Kamu ketik '+inp+'. Coba arinda2026';
   }
 }
 document.getElementById('btnBuka').addEventListener('click', checkPin);
