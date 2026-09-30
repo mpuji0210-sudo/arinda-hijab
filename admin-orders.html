@@ -49,6 +49,20 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
     </div>
   </div>
 
+  <!-- CARD BARU: SECURITY LAPORAN - GANTI PIN TANPA UBAH KODE -->
+  <div class="card" style="padding:16px;margin-bottom:20px;border:1px dashed #000">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="font-family:'Cormorant Garamond';font-size:18px;letter-spacing:1px">🔒 Security Laporan</div>
+      <button onclick="loadLaporanPin()" class="btn-white" style="height:32px;padding:0 12px">CEK PIN</button>
+    </div>
+    <div style="font-size:9px;letter-spacing:2px;opacity:.5;margin-top:6px">GANTI PIN TANPA UBAH KODE • Default 1234</div>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <input id="new_pin" type="text" placeholder="PIN BARU: contoh Arinda2026" style="flex:1;height:40px;padding:0 10px;border:1px solid #000;font-size:12px;letter-spacing:2px">
+      <button onclick="saveLaporanPin()" class="btn-black" style="padding:0 20px">SIMPAN PIN</button>
+    </div>
+    <div id="pinStatus" style="font-size:10px;opacity:.6;margin-top:8px">Memuat...</div>
+  </div>
+
   <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px">
     <div>
       <div style="font-family:'Cormorant Garamond';font-size:26px;font-weight:300;letter-spacing:1px">Pesanan Masuk</div>
@@ -187,6 +201,35 @@ async function savePayments(){
   }
 }
 loadPayments();
+
+// === FITUR BARU: GANTI PIN LAPORAN TANPA UBAH KODE ===
+async function loadLaporanPin(){
+  document.getElementById('pinStatus').innerText='Loading...';
+  const {data} = await supa.from('settings').select('value').eq('key','laporan_pin').maybeSingle();
+  if(data && data.value){
+    let p; try{ p=JSON.parse(data.value).pin || data.value; }catch(e){ p=data.value; }
+    p = String(p).replace(/"/g,'');
+    document.getElementById('pinStatus').innerText='PIN sekarang: '+p+' (jangan kasih ke karyawan)';
+    document.getElementById('new_pin').value=p;
+  } else {
+    document.getElementById('pinStatus').innerText='Belum ada PIN, default: 1234';
+  }
+}
+async function saveLaporanPin(){
+  const pin=document.getElementById('new_pin').value.trim();
+  if(!pin || pin.length<4){
+    openApp({title:'PIN pendek',msg:'Minimal 4 karakter ya kak.',icon:'⚠️',okText:'OKE'});
+    return;
+  }
+  document.getElementById('pinStatus').innerText='Menyimpan...';
+  const {error}=await supa.from('settings').upsert({key:'laporan_pin', value: JSON.stringify({pin:pin}) },{onConflict:'key'});
+  if(error){ document.getElementById('pinStatus').innerText='Gagal: '+error.message; openApp({title:'Gagal',msg:error.message,icon:'❌'}); }
+  else {
+    document.getElementById('pinStatus').innerText='✓ PIN baru tersimpan: '+pin;
+    openApp({title:'Berhasil',msg:'PIN laporan sekarang: '+pin+' • laporan.html otomatis pakai PIN baru',icon:'✅',okText:'MANTAP'});
+  }
+}
+loadLaporanPin();
 
 async function loadOrders(){
   const {data} = await supa.from('orders').select('*').order('created_at',{ascending:false});
