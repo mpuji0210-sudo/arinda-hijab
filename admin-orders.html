@@ -26,10 +26,36 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
 </nav>
 
 <div style="max-width:800px;margin:0 auto;padding:24px 16px 60px">
+  <!-- === TAMBAHAN EDIT REK - HANYA BAGIAN INI YANG DITAMBAH === -->
+  <div class="card" style="padding:16px;margin-bottom:20px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="font-family:'Cormorant Garamond';font-size:18px;letter-spacing:1px">Kelola Rekening & QRIS</div>
+      <button onclick="loadPayments()" class="btn-white" style="height:32px;padding:0 12px">REFRESH</button>
+    </div>
+    <div style="font-size:9px;letter-spacing:2px;opacity:.5;margin-top:6px">GANTI NO REK / TAMBAH QR TANPA UBAH KODINGAN - OTOMATIS MUNCUL DI bayar.html</div>
+    <div id="payListAdmin" style="margin-top:14px;display:flex;flex-direction:column;gap:8px"></div>
+
+    <div style="border-top:1px solid #F2F2F2;margin-top:16px;padding-top:14px">
+      <div style="font-size:9px;letter-spacing:2px;margin-bottom:8px">TAMBAH / EDIT METODE BARU</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <input id="p_bank" placeholder="BANK: BCA / MANDIRI / QRIS" style="height:40px;padding:0 10px;border:1px solid #000;font-size:11px">
+        <input id="p_rek" placeholder="NO REK: 8740376161" style="height:40px;padding:0 10px;border:1px solid #000;font-size:11px">
+        <input id="p_nama" placeholder="ATAS NAMA: ARINDA HIJAB" style="height:40px;padding:0 10px;border:1px solid #000;font-size:11px">
+        <input id="p_qr" placeholder="LINK GAMBAR QR (opsional)" style="height:40px;padding:0 10px;border:1px solid #000;font-size:11px">
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button onclick="addPayMethod()" class="btn-black" style="flex:1">+ TAMBAH KE DAFTAR</button>
+        <button onclick="savePayments()" class="btn-white" style="flex:1">SIMPAN KE DATABASE</button>
+      </div>
+      <div id="payStatus" style="font-size:10px;opacity:.5;margin-top:8px"></div>
+    </div>
+  </div>
+  <!-- === END TAMBAHAN === -->
+
   <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px">
     <div>
       <div style="font-family:'Cormorant Garamond';font-size:26px;font-weight:300;letter-spacing:1px">Pesanan Masuk</div>
-      <div style="font-size:9px;letter-spacing:3px;opacity:.4;margin-top:4px">BCA 8740376161 - ARINDA ADMIN</div>
+      <div id="paySummary" style="font-size:9px;letter-spacing:3px;opacity:.4;margin-top:4px">BCA 8740376161 - ARINDA ADMIN</div>
     </div>
     <div id="count" style="font-size:9px;letter-spacing:2px;opacity:.4">0 PESANAN</div>
   </div>
@@ -44,7 +70,7 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
 
 <!-- MODAL HAPUS ELEGAN - GANTI CONFIRM JELEK -->
 <div id="delModal" onclick="if(event.target.id==='delModal')closeDel()">
-  <div style="background:#FFFEFB;width:100%;max-width:380px;border-radius:28px;border:1px solid #E8E0D0;padding:28px 24px;box-shadow:0 30px 80px rgba(0,0,0,0.25);animation:lvSlide .35s cubic-bezier(0.16,1,0.3,1)">
+  <div style="background:#FFFEFB;width:100%;max-width:380px;border-radius:28px;border:1px solid #E8E0D0;padding:28px 24px;box-shadow:0 30px 80px rgba(0,0,0,0.25);animation:lvSlide.35s cubic-bezier(0.16,1,0.3,1)">
     <div style="width:46px;height:46px;border-radius:50%;background:#F9F6F1;border:1px solid #E8E0D0;display:flex;align-items:center;justify-content:center;font-size:20px">🗑️</div>
     <div style="font-family:'Cormorant Garamond';font-size:23px;margin-top:16px;color:#1a1a1a">Hapus pesanan ini?</div>
     <div style="font-size:12px;line-height:1.7;color:#1a1a1a;opacity:.6;margin-top:12px">Pesanan akan dihapus permanen dari database. Pastikan sudah di-WA dan selesai ya kak.</div>
@@ -61,6 +87,58 @@ const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 let delId=null;
 
+// === LOGIC PAYMENT - HANYA INI TAMBAHAN ===
+let payMethods=[];
+async function loadPayments(){
+  document.getElementById('payStatus').innerText='Loading...';
+  const {data} = await supa.from('settings').select('value').eq('key','payment_methods').maybeSingle();
+  if(data && data.value){
+    try{ payMethods = JSON.parse(data.value); }catch(e){ payMethods=[]; }
+  } else {
+    // default kalau belum ada
+    payMethods=[{bank:'BCA',no_rek:'8740376161',atas_nama:'ARINDA ADMIN',qr_url:'',aktif:true}];
+  }
+  renderPayments();
+  document.getElementById('payStatus').innerText=payMethods.length+' metode aktif';
+}
+function renderPayments(){
+  const el=document.getElementById('payListAdmin');
+  const sum=document.getElementById('paySummary');
+  if(!payMethods.length){ el.innerHTML='<div style="font-size:11px;opacity:.4">Belum ada rekening</div>'; sum.innerText='-'; return; }
+  el.innerHTML=payMethods.map((m,i)=>`
+    <div style="border:1px solid #E9E9E9;padding:10px;display:flex;justify-content:space-between;align-items:center;background:${m.aktif?'#fff':'#FAFAFA'}">
+      <div>
+        <div style="font-size:11px;font-weight:600">${m.bank} - ${m.no_rek}</div>
+        <div style="font-size:10px;opacity:.5">a.n ${m.atas_nama} ${m.qr_url? ' • ada QR':''}</div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button onclick="togglePay(${i})" style="font-size:8px;padding:6px 8px;border:1px solid #000;background:${m.aktif?'#000':'#fff'};color:${m.aktif?'#fff':'#000'}">${m.aktif?'AKTIF':'OFF'}</button>
+        <button onclick="removePay(${i})" style="font-size:8px;padding:6px 8px;border:1px solid #000;background:#fff">HAPUS</button>
+      </div>
+    </div>
+  `).join('');
+  sum.innerText=payMethods.filter(m=>m.aktif).map(m=>`${m.bank} ${m.no_rek}`).join(' • ') || '-';
+}
+function addPayMethod(){
+  const b=document.getElementById('p_bank').value.trim();
+  const r=document.getElementById('p_rek').value.trim();
+  const n=document.getElementById('p_nama').value.trim();
+  const q=document.getElementById('p_qr').value.trim();
+  if(!b||!r) return alert('Bank & No Rek wajib diisi');
+  payMethods.push({bank:b,no_rek:r,atas_nama:n||'ARINDA',qr_url:q,aktif:true});
+  renderPayments();
+  document.getElementById('p_bank').value='';document.getElementById('p_rek').value='';document.getElementById('p_nama').value='';document.getElementById('p_qr').value='';
+}
+function removePay(i){ if(confirm('Hapus metode ini?')){ payMethods.splice(i,1); renderPayments(); } }
+function togglePay(i){ payMethods[i].aktif=!payMethods[i].aktif; renderPayments(); }
+async function savePayments(){
+  document.getElementById('payStatus').innerText='Menyimpan...';
+  const {error}=await supa.from('settings').upsert({key:'payment_methods', value: JSON.stringify(payMethods) },{onConflict:'key'});
+  if(error){ document.getElementById('payStatus').innerText='Gagal: '+error.message; } else { document.getElementById('payStatus').innerText='✓ Tersimpan! bayar.html otomatis update'; }
+}
+loadPayments();
+// === END LOGIC PAYMENT ===
+
 async function loadOrders(){
   const {data} = await supa.from('orders').select('*').order('created_at',{ascending:false});
   const list=document.getElementById('list');
@@ -71,8 +149,8 @@ async function loadOrders(){
   }
   count.innerText=data.length+' PESANAN';
   list.innerHTML=data.map(o=>{
-    const items = o.items ? (typeof o.items==='string'? JSON.parse(o.items): o.items) : [];
-    const itemText = Array.isArray(items) ? items.map(i=>`${i.warna||i.name} x${i.qty||1}`).join(', ') : (o.produk||'-');
+    const items = o.items? (typeof o.items==='string'? JSON.parse(o.items): o.items) : [];
+    const itemText = Array.isArray(items)? items.map(i=>`${i.warna||i.name} x${i.qty||1}`).join(', ') : (o.produk||'-');
     return `<div class="card" style="padding:16px">
       <div style="display:flex;justify-content:space-between;align-items:flex-start">
         <div><div style="font-size:13px;font-weight:600">${o.customer_name||'-'} - ${o.kota||'-'}</div><div style="font-size:10px;opacity:.5;margin-top:4px">${new Date(o.created_at).toLocaleString('id-ID')} • WA: ${o.wa||'-'}</div></div>
