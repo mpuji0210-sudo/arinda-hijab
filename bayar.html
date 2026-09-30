@@ -1,29 +1,79 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bayar - ARINDA</title>
-<style>body{font-family:Inter,sans-serif;max-width:480px;margin:0 auto;padding:16px;background:#fff} .pay-card{border:1px solid #111;padding:14px;margin-top:10px} .btn{width:100%;padding:14px;background:#000;color:#fff;border:none;letter-spacing:2px;font-size:10px;cursor:pointer} .qr{width:100%;max-width:280px;display:block;margin:10px auto;border:1px solid #E9E9E9}</style>
+<title>Bayar - ARINDA HIJAB PREMIUM</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Inter',sans-serif;margin:0;background:#FFFEFB;color:#111;-webkit-font-smoothing:antialiased}
+.wrap{max-width:480px;margin:0 auto;padding:20px 16px 80px}
+.card{border:1px solid #E9E9E9;background:#fff;padding:16px;border-radius:2px}
+.btn{width:100%;height:44px;background:#000;color:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
+.btn-white{width:100%;height:44px;background:#fff;color:#000;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
+.qr{width:100%;max-width:300px;display:block;margin:12px auto;border:1px solid #E9E9E9;cursor:zoom-in}
+.pay-card{border:1px solid #111;padding:14px;margin-top:12px;background:#fff}
+</style>
 </head><body>
-<h2 style="letter-spacing:4px">PEMBAYARAN</h2>
-<div id="totalBox" style="font-size:12px;margin:10px 0"></div>
-<div id="payList">Loading metode bayar...</div>
+
+<div class="wrap">
+  <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:22px;text-align:center">ARINDA</div>
+  <div style="font-size:7px;letter-spacing:6px;opacity:.4;text-align:center;margin-top:4px">HIJAB PREMIUM</div>
+  
+  <h2 style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:3px;margin-top:24px;font-size:20px">PEMBAYARAN</h2>
+  <div id="totalBox" class="card" style="font-size:12px;margin:12px 0;background:#FAFAFA"></div>
+  
+  <div id="payList">Loading metode bayar...</div>
+
+  <div class="card" style="margin-top:18px;font-size:11px;line-height:1.7;opacity:.7">
+    Setelah transfer, screenshot bukti & kirim ke WA Admin. Pesanan diproses setelah pembayaran diverifikasi ya kak.
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
 <script>
 const supabaseClient = supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
+
 async function loadPay(){
-  const total = localStorage.getItem('arinda_total')||'-';
-  document.getElementById('totalBox').innerHTML = 'Total yang harus dibayar: <b>Rp'+total+'</b>';
-  const {data} = await supabaseClient.from('settings').select('value').eq('key','payment_methods').single();
-  if(!data){document.getElementById('payList').innerHTML='Belum ada metode bayar di admin';return;}
-  const methods = JSON.parse(data.value).filter(m=>m.aktif);
-  document.getElementById('payList').innerHTML = methods.map(m=>`
+  const total = localStorage.getItem('arinda_total')|| localStorage.getItem('total') || '-';
+  document.getElementById('totalBox').innerHTML = 'Total yang harus dibayar:<br><span style="font-size:18px;font-weight:600">Rp'+Number(total).toLocaleString('id-ID')+'</span>';
+
+  const {data, error} = await supabaseClient.from('settings').select('value').eq('key','payment_methods').maybeSingle();
+  const listEl = document.getElementById('payList');
+
+  if(error || !data || !data.value){
+    listEl.innerHTML='<div class="card" style="text-align:center;padding:24px;font-size:12px;opacity:.5">Belum ada metode bayar.<br>Silakan hubungi admin via WhatsApp.</div>';
+    return;
+  }
+  
+  let methods = [];
+  try{ methods = JSON.parse(data.value); }catch(e){ methods=[]; }
+  methods = methods.filter(m=>m.aktif);
+
+  if(!methods.length){
+    listEl.innerHTML='<div class="card" style="text-align:center;padding:24px;font-size:12px;opacity:.5">Metode pembayaran sedang non-aktif.</div>';
+    return;
+  }
+
+  listEl.innerHTML = methods.map(m=>`
     <div class="pay-card">
-      <div style="display:flex;justify-content:space-between"><b>${m.bank}</b><span style="font-size:10px;border:1px solid #111;padding:2px 6px">${m.logo||m.bank}</span></div>
-      <div style="margin-top:8px;font-size:13px">No: <b id="rek-${m.bank}">${m.no_rek}</b> a.n ${m.atas_nama}</div>
-      ${m.qr_url?`<img src="${m.qr_url}" class="qr" onclick="window.open(this.src)">`:''}
-      <button class="btn" style="margin-top:10px" onclick="navigator.clipboard.writeText('${m.no_rek}');alert('No rek ${m.bank} disalin')">SALIN NO REK</button>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <b style="font-size:13px;letter-spacing:1px">${m.bank}</b>
+        <span style="font-size:8px;border:1px solid #111;padding:3px 8px;letter-spacing:2px">${m.bank}</span>
+      </div>
+      <div style="margin-top:10px;font-size:13px;line-height:1.5">No: <b id="rek-${m.bank}">${m.no_rek}</b><br><span style="font-size:11px;opacity:.6">a.n ${m.atas_nama}</span></div>
+      ${m.qr_url?`<img src="${m.qr_url}" class="qr" onclick="window.open(this.src,'_blank')" onerror="this.style.display='none'">`:''}
+      <button class="btn" style="margin-top:12px" onclick="copyRek('${m.no_rek}','${m.bank}')">SALIN NO REK ${m.bank}</button>
     </div>
   `).join('');
 }
+
+function copyRek(no, bank){
+  navigator.clipboard.writeText(no).then(()=>{
+    alert('No rek '+bank+' '+no+' disalin ✓');
+  }).catch(()=>{
+    // fallback
+    const ta=document.createElement('textarea'); ta.value=no; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    alert('No rek '+bank+' disalin ✓');
+  });
+}
+
 loadPay();
 </script>
 </body></html>
