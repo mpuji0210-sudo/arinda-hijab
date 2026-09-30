@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ARINDA Hijab Premium - Paris Premium 110x110cm</title>
-<meta name="description" content="ARINDA Hijab Paris 110x110cm - adem tidak menerawang, laser cut.">
+<meta name="description" content="ARINDA Hijab Paris Premium 110x110cm - adem, tidak menerawang, laser cut premium. Ready Olive Green, Blush, Navy, Burgundy.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="ARINDA Hijab Premium">
 <meta name="keywords" content="ARINDA Hijab, Hijab Premium, Paris Premium 110x110, Hijab Adem, Hijab Laser Cut">
@@ -11,15 +11,16 @@
 <meta property="og:locale" content="id_ID">
 <meta property="og:site_name" content="ARINDA Hijab Premium">
 <meta property="og:title" content="ARINDA Hijab Premium - Paris Premium 110x110cm">
-<meta property="og:description" content="ARINDA Hijab Paris 110x110cm - adem tidak menerawang, laser cut.">
+<meta property="og:description" content="ARINDA Hijab Paris Premium 110x110cm - adem, tidak menerawang, laser cut premium. Ready Olive Green, Blush, Navy, Burgundy. Cek ongkir dari Jakarta.">
 <meta property="og:url" content="https://arinda.id/">
-<meta property="og:image" content="">
+<meta property="og:image" content="https://arinda-hijab.vercel.app/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ARINDA Hijab Premium">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ARINDA Hijab Premium - Paris Premium 110x110cm">
-<meta name="twitter:description" content="ARINDA Hijab Paris 110x110cm - adem tidak menerawang, laser cut.">
-<meta name="twitter:image" content="">
+<meta name="twitter:description" content="ARINDA Hijab Paris Premium 110x110cm - adem, tidak menerawang, laser cut premium. Ready Olive Green, Blush, Navy.">
+<meta name="twitter:image" content="https://arinda-hijab.vercel.app/og-image.jpg">
 
 <link rel="preconnect" href="https://qjgevvizqeebtdqcbqmt.supabase.co" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -232,8 +233,8 @@ async function init(){
         const ogUrl = getBannerImg(bannerFullUrl, 1200);
         const ogTag = document.querySelector('meta[property="og:image"]');
         const twTag = document.querySelector('meta[name="twitter:image"]');
-        if(ogTag) ogTag.setAttribute('content', ogUrl);
-        if(twTag) twTag.setAttribute('content', ogUrl);
+        if(ogTag && ogUrl) { if(!ogTag.content || ogTag.content.includes('og-image.jpg')) { /* keep static fallback if dynamic exists */ } ogTag.setAttribute('content', ogUrl); }
+        if(twTag && ogUrl) twTag.setAttribute('content', ogUrl);
       }catch(e){}
     }
     const{data:settings}=await supabaseClient.from('settings').select('key,value').in('key',['home_koleksi_terlaris','home_undertone_images']);
@@ -241,7 +242,6 @@ async function init(){
       const get=k=>settings.find(s=>s.key===k)?.value;
       try{
         let raw=JSON.parse(get('home_koleksi_terlaris')||'[]');
-        // FIX ANTI DOBEL - HANYA INI YANG DITAMBAH
         if(Array.isArray(raw)){
           const seen = new Set();
           raw = raw.filter(v=>{
@@ -270,7 +270,6 @@ async function init(){
         const rawU=get('home_undertone_images');
         if(rawU){
           let uImgs=JSON.parse(rawU);
-          // FIX ANTI DOBEL UNDERTONE JUGA
           if(Array.isArray(uImgs)){
             const seenU = new Set();
             uImgs = uImgs.filter(it=>{
