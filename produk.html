@@ -170,6 +170,14 @@ function applyFilters(qOverride){
       if(matchUnder && matchQ) flat.push({p,v});
     });
   });
+  // FIX ANTI DOBEL - HANYA INI YANG DITAMBAH
+  const seenFlat = new Set();
+  flat = flat.filter(item=>{
+    const key = `${item.p.id}|${(item.v.color_name||'').toLowerCase().trim()}|${(item.v.image_url||'')}`;
+    if(seenFlat.has(key)) return false;
+    seenFlat.add(key);
+    return true;
+  });
   document.getElementById('prodCount').innerText=flat.length+' WARNA';
   renderVariants(flat);
 }
@@ -360,5 +368,5 @@ function checkoutWA(){
   window.location.href='checkout.html';
 }
 </script>
-<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js" onload="(async()=>{supabaseClient=supabase.createClient(SUPA_URL,SUPA_KEY);const {data:all}=await supabaseClient.from('products').select('id,name,price,image_url,category,product_type,kategori_produk,undertone').order('id',{ascending:false}).limit(100);const {data:vars}=await supabaseClient.from('product_variants').select('product_id,color_name,image_url,stock,is_available,undertone').limit(500);allProducts=all||[];window._varMap={};(vars||[]).forEach(v=>{if(!window._varMap[v.product_id])window._varMap[v.product_id]=[];window._varMap[v.product_id].push(v);});updateCount();handleUrlSearch();if(!new URLSearchParams(location.search).has('undertone') &&!new URLSearchParams(location.search).has('warna') &&!new URLSearchParams(location.search).has('q') &&!new URLSearchParams(location.search).has('kategori') &&!new URLSearchParams(location.search).has('bahan')){ applyFilters(''); }})()"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js" onload="(async()=>{supabaseClient=supabase.createClient(SUPA_URL,SUPA_KEY);const {data:all}=await supabaseClient.from('products').select('id,name,price,image_url,category,product_type,kategori_produk,undertone').order('id',{ascending:false}).limit(100);const {data:vars}=await supabaseClient.from('product_variants').select('product_id,color_name,image_url,stock,is_available,undertone').limit(500);allProducts=all||[];window._varMap={};(vars||[]).forEach(v=>{const key=(v.color_name||'').toLowerCase().trim()+'|'+(v.image_url||''); if(!window._varMap[v.product_id]){window._varMap[v.product_id]=[];window._varMap[v.product_id]._seen=new Set();} if(window._varMap[v.product_id]._seen.has(key)) return; window._varMap[v.product_id]._seen.add(key); window._varMap[v.product_id].push(v);});updateCount();handleUrlSearch();if(!new URLSearchParams(location.search).has('undertone') &&!new URLSearchParams(location.search).has('warna') &&!new URLSearchParams(location.search).has('q') &&!new URLSearchParams(location.search).has('kategori') &&!new URLSearchParams(location.search).has('bahan')){ applyFilters(''); }})()"></script>
 </body></html>
