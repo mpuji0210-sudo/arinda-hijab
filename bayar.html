@@ -1,79 +1,130 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Bayar - ARINDA HIJAB PREMIUM</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-body{font-family:'Inter',sans-serif;margin:0;background:#FFFEFB;color:#111;-webkit-font-smoothing:antialiased}
-.wrap{max-width:480px;margin:0 auto;padding:20px 16px 80px}
-.card{border:1px solid #E9E9E9;background:#fff;padding:16px;border-radius:2px}
+body{margin:0;background:#FFFCF9;color:#111;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:480px;margin:0 auto;padding:18px 14px 60px}
+.card{border:1px solid #E9E9E9;background:#fff;border-radius:2px}
+.pay-card{border:1px solid #111;background:#fff;padding:16px;margin-top:12px}
 .btn{width:100%;height:44px;background:#000;color:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
-.btn-white{width:100%;height:44px;background:#fff;color:#000;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
-.qr{width:100%;max-width:300px;display:block;margin:12px auto;border:1px solid #E9E9E9;cursor:zoom-in}
-.pay-card{border:1px solid #111;padding:14px;margin-top:12px;background:#fff}
+.btn-white{height:44px;background:#fff;color:#000;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
+.qr{width:100%;max-width:300px;display:block;margin:12px auto;border:1px solid #E9E9E9;border-radius:12px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 18px;border-radius:20px;font-size:11px;letter-spacing:.5px;opacity:0;transition:.35s;z-index:9999;pointer-events:none}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#appModal{display:none;position:fixed;inset:0;background:rgba(17,17,17,.45);backdrop-filter:blur(14px);z-index:9999;align-items:center;justify-content:center;padding:20px}
+#appModal.show{display:flex}
+@keyframes lv{from{transform:translateY(16px) scale(.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
 </style>
 </head><body>
-
 <div class="wrap">
-  <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:22px;text-align:center">ARINDA</div>
-  <div style="font-size:7px;letter-spacing:6px;opacity:.4;text-align:center;margin-top:4px">HIJAB PREMIUM</div>
-  
-  <h2 style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:3px;margin-top:24px;font-size:20px">PEMBAYARAN</h2>
-  <div id="totalBox" class="card" style="font-size:12px;margin:12px 0;background:#FAFAFA"></div>
-  
-  <div id="payList">Loading metode bayar...</div>
+  <div style="text-align:center;padding:16px 0 10px">
+    <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:22px">ARINDA</div>
+    <div style="font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM</div>
+  </div>
 
-  <div class="card" style="margin-top:18px;font-size:11px;line-height:1.7;opacity:.7">
-    Setelah transfer, screenshot bukti & kirim ke WA Admin. Pesanan diproses setelah pembayaran diverifikasi ya kak.
+  <div class="card" style="padding:14px 16px;margin-top:12px">
+    <div style="font-size:8px;letter-spacing:3px;opacity:.4">TOTAL PEMBAYARAN</div>
+    <div id="totalBox" style="font-family:'Cormorant Garamond';font-size:26px;margin-top:6px">Rp -</div>
+    <div id="orderInfo" style="font-size:10px;opacity:.5;margin-top:4px;line-height:1.6"></div>
+  </div>
+
+  <div style="margin-top:18px;display:flex;justify-content:space-between;align-items:center">
+    <div style="font-family:'Cormorant Garamond';font-size:18px">Metode Pembayaran</div>
+    <div style="font-size:8px;letter-spacing:2px;opacity:.4" id="payCount">0 METODE</div>
+  </div>
+
+  <div id="payList" style="margin-top:10px">
+    <div style="border:1px dashed #E9E9E9;padding:30px;text-align:center;font-size:11px;opacity:.4">Memuat rekening dari admin...</div>
+  </div>
+
+  <div style="margin-top:18px;padding:12px 14px;border:1px solid #F0EBE3;background:#FFFEFB;font-size:10px;line-height:1.7;opacity:.7">
+    <b style="font-size:9px;letter-spacing:2px">CARA BAYAR:</b><br>
+    1. Salin No Rek / Scan QRIS di atas<br>
+    2. Transfer sesuai total<br>
+    3. Kirim bukti ke WA Admin - Pesanan otomatis masuk di admin-orders.html
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
+<div id="toast"></div>
+
+<div id="appModal" onclick="if(event.target.id==='appModal')closeApp()">
+  <div style="background:#FFFEFB;width:100%;max-width:360px;border-radius:28px;border:1px solid #EFE9E0;overflow:hidden;animation:lv .35s cubic-bezier(0.16,1,0.3,1)">
+    <div style="padding:24px 22px 0"><div style="width:44px;height:44px;border-radius:50%;background:#F6F0E8;border:1px solid #E8E0D0;display:flex;align-items:center;justify-content:center">✅</div>
+    <div style="font-family:'Cormorant Garamond';font-size:20px;margin-top:14px" id="appTitle">Tersalin</div></div>
+    <div style="padding:10px 22px 0;font-size:12px;opacity:.6;line-height:1.6" id="appMsg">No rek disalin</div>
+    <div style="margin-top:18px;padding:14px 18px;background:#FAF7F2;border-top:1px solid #F0EBE3"><button onclick="closeApp()" style="width:100%;height:44px;background:#111;color:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer">OKE</button></div>
+  </div>
+</div>
+
 <script>
-const supabaseClient = supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
+const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
+const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
+const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 
-async function loadPay(){
-  const total = localStorage.getItem('arinda_total')|| localStorage.getItem('total') || '-';
-  document.getElementById('totalBox').innerHTML = 'Total yang harus dibayar:<br><span style="font-size:18px;font-weight:600">Rp'+Number(total).toLocaleString('id-ID')+'</span>';
-
-  const {data, error} = await supabaseClient.from('settings').select('value').eq('key','payment_methods').maybeSingle();
-  const listEl = document.getElementById('payList');
-
-  if(error || !data || !data.value){
-    listEl.innerHTML='<div class="card" style="text-align:center;padding:24px;font-size:12px;opacity:.5">Belum ada metode bayar.<br>Silakan hubungi admin via WhatsApp.</div>';
-    return;
-  }
-  
-  let methods = [];
-  try{ methods = JSON.parse(data.value); }catch(e){ methods=[]; }
-  methods = methods.filter(m=>m.aktif);
-
-  if(!methods.length){
-    listEl.innerHTML='<div class="card" style="text-align:center;padding:24px;font-size:12px;opacity:.5">Metode pembayaran sedang non-aktif.</div>';
-    return;
-  }
-
-  listEl.innerHTML = methods.map(m=>`
-    <div class="pay-card">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <b style="font-size:13px;letter-spacing:1px">${m.bank}</b>
-        <span style="font-size:8px;border:1px solid #111;padding:3px 8px;letter-spacing:2px">${m.bank}</span>
-      </div>
-      <div style="margin-top:10px;font-size:13px;line-height:1.5">No: <b id="rek-${m.bank}">${m.no_rek}</b><br><span style="font-size:11px;opacity:.6">a.n ${m.atas_nama}</span></div>
-      ${m.qr_url?`<img src="${m.qr_url}" class="qr" onclick="window.open(this.src,'_blank')" onerror="this.style.display='none'">`:''}
-      <button class="btn" style="margin-top:12px" onclick="copyRek('${m.no_rek}','${m.bank}')">SALIN NO REK ${m.bank}</button>
-    </div>
-  `).join('');
+function toast(t){
+  const el=document.getElementById('toast');
+  el.innerText=t; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2200);
 }
-
-function copyRek(no, bank){
-  navigator.clipboard.writeText(no).then(()=>{
-    alert('No rek '+bank+' '+no+' disalin ✓');
-  }).catch(()=>{
-    // fallback
-    const ta=document.createElement('textarea'); ta.value=no; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-    alert('No rek '+bank+' disalin ✓');
+function openApp(title,msg){ document.getElementById('appTitle').innerText=title; document.getElementById('appMsg').innerText=msg; document.getElementById('appModal').classList.add('show'); }
+function closeApp(){ document.getElementById('appModal').classList.remove('show'); }
+function copyText(txt,bank){
+  navigator.clipboard.writeText(txt).then(()=>{
+    toast(bank+' disalin');
+    openApp('Tersalin ✓', bank+' '+txt+' berhasil disalin ke clipboard');
   });
 }
 
+async function loadPay(){
+  // Total bisa dari 3 sumber biar gak kosong
+  const totalLS = localStorage.getItem('arinda_total') || localStorage.getItem('total') || sessionStorage.getItem('arinda_total') || '-';
+  document.getElementById('totalBox').innerText = totalLS==='-'? 'Rp -' : 'Rp'+Number(String(totalLS).replace(/[^0-9]/g,'')).toLocaleString('id-ID');
+  document.getElementById('orderInfo').innerText = 'Rekening di bawah ini otomatis update dari admin-orders.html';
+
+  try{
+    const {data, error} = await supa.from('settings').select('value').eq('key','payment_methods').maybeSingle();
+    if(error) throw error;
+    if(!data || !data.value){
+      document.getElementById('payList').innerHTML = '<div style="border:1px solid #E9E9E9;padding:20px;text-align:center;font-size:11px">Belum ada metode bayar. Silakan tambah di admin-orders.html</div>';
+      return;
+    }
+    let methods = data.value;
+    // tahan banting: bisa string JSON atau sudah array (jsonb)
+    if(typeof methods==='string'){ try{ methods = JSON.parse(methods); }catch(e){ methods=[]; } }
+    if(!Array.isArray(methods)) methods = [];
+    const aktif = methods.filter(m=>m.aktif);
+
+    document.getElementById('payCount').innerText = aktif.length+' METODE AKTIF';
+    if(!aktif.length){
+      document.getElementById('payList').innerHTML = '<div style="border:1px solid #E9E9E9;padding:20px;text-align:center;font-size:11px">Semua metode sedang OFF di admin</div>';
+      return;
+    }
+
+    document.getElementById('payList').innerHTML = aktif.map(m=>`
+      <div class="pay-card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-weight:700;font-size:12px;letter-spacing:1px">${m.bank}</div>
+            <div style="font-size:10px;opacity:.5;margin-top:2px">a.n ${m.atas_nama||'ARINDA'}</div>
+          </div>
+          <span style="font-size:8px;letter-spacing:2px;border:1px solid #111;padding:4px 8px">${(m.bank||'').substring(0,8).toUpperCase()}</span>
+        </div>
+        <div style="margin-top:12px;padding:10px 12px;background:#FAFAFA;border:1px dashed #E9E9E9;font-size:13px">No: <b style="font-size:15px;letter-spacing:.5px">${m.no_rek}</b></div>
+        ${m.qr_url?`<img src="${m.qr_url}" class="qr" loading="lazy" onerror="this.style.display='none'" onclick="window.open(this.src,'_blank')">`:''}
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button class="btn-white" style="flex:1" onclick="copyText('${m.no_rek}','${m.bank}')">SALIN NO REK</button>
+          <button class="btn" style="flex:1" onclick="copyText('${m.no_rek}','${m.bank}')">SALIN & BAYAR</button>
+        </div>
+      </div>
+    `).join('');
+
+  }catch(err){
+    console.error(err);
+    document.getElementById('payList').innerHTML = `<div style="border:1px solid #E9E9E9;padding:20px;font-size:11px;line-height:1.6">Gagal memuat: ${err.message}<br><br>Pastikan di Supabase > Table settings > RLS: Enable SELECT untuk anon.</div>`;
+  }
+}
 loadPay();
 </script>
 </body></html>
