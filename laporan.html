@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Laporan - ARINDA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body{margin:0;background:#FFF;color:#000;font-family:'Inter',sans-serif}
+.card{border:1px solid #E9E9E9;background:#fff;padding:16px}
+.btn-black{height:44px;background:#000;color:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
+.btn-white{height:44px;background:#fff;color:#000;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
+</style>
+</head>
+<body>
+<nav style="position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9">
+  <div style="max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+    <div><div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px">ARINDA</div><span style="display:block;font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">LAPORAN HARIAN</span></div>
+    <div style="display:flex;gap:8px"><button onclick="location.href='admin.html'" class="btn-white" style="height:36px;padding:0 14px">ADMIN</button><button onclick="location.href='admin-orders.html'" class="btn-black" style="height:36px;padding:0 14px">ORDERS</button></div>
+  </div>
+</nav>
+
+<div style="max-width:900px;margin:0 auto;padding:24px 16px 60px">
+  <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:20px">
+    <div><div style="font-family:'Cormorant Garamond';font-size:26px;font-weight:300">Laporan Penjualan</div><div id="tgl" style="font-size:9px;letter-spacing:3px;opacity:.4;margin-top:4px"></div></div>
+    <select id="filter" onchange="loadLaporan()" style="height:36px;border:1px solid #000;padding:0 10px;font-size:11px"><option value="today">HARI INI</option><option value="week">7 HARI TERAKHIR</option><option value="month">BULAN INI</option><option value="all">SEMUA</option></select>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px">
+    <div class="card"><div style="font-size:8px;letter-spacing:2px;opacity:.5">OMSET</div><div id="omset" style="font-family:'Cormorant Garamond';font-size:22px;margin-top:8px">Rp 0</div><div id="count" style="font-size:9px;opacity:.5;margin-top:4px">0 pesanan</div></div>
+    <div class="card"><div style="font-size:8px;letter-spacing:2px;opacity:.5">LABA EST (40%)</div><div id="laba" style="font-family:'Cormorant Garamond';font-size:22px;margin-top:8px;color:#0a7a2a">Rp 0</div><div style="font-size:9px;opacity:.5;margin-top:4px">Modal 60%</div></div>
+    <div class="card"><div style="font-size:8px;letter-spacing:2px;opacity:.5">TERLARIS</div><div id="best" style="font-size:13px;font-weight:600;margin-top:8px">-</div><div id="bestQty" style="font-size:9px;opacity:.5;margin-top:4px">-</div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px"><div style="font-size:9px;letter-spacing:2px;margin-bottom:12px">GRAFIK OMSET 7 HARI</div><canvas id="chart" height="100"></canvas></div>
+
+  <div class="card"><div style="font-size:9px;letter-spacing:2px;margin-bottom:12px">RINCIAN WARNA TERLARIS</div><div id="listWarna" style="display:flex;flex-direction:column;gap:8px"></div></div>
+</div>
+
+<script>
+const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
+const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
+const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
+if(localStorage.getItem('arinda_admin')!=='login' && localStorage.getItem('admin_login')!=='true'){ location.href='login.html'; }
+document.getElementById('tgl').innerText=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+let chartIns=null;
+async function loadLaporan(){
+  const f=document.getElementById('filter').value;
+  let q=supa.from('orders').select('*').order('created_at',{ascending:false});
+  const now=new Date();
+  if(f==='today'){ const s=new Date(); s.setHours(0,0,0,0); q=q.gte('created_at',s.toISOString()); }
+  else if(f==='week'){ const s=new Date(); s.setDate(now.getDate()-6); s.setHours(0,0,0,0); q=q.gte('created_at',s.toISOString()); }
+  else if(f==='month'){ const s=new Date(now.getFullYear(),now.getMonth(),1); q=q.gte('created_at',s.toISOString()); }
+  const {data}=await q;
+  if(!data) return;
+  let omset=data.reduce((a,b)=>a+Number(b.total||0),0);
+  let laba=omset*0.4;
+  document.getElementById('omset').innerText='Rp'+omset.toLocaleString('id-ID');
+  document.getElementById('laba').innerText='Rp'+Math.round(laba).toLocaleString('id-ID');
+  document.getElementById('count').innerText=data.length+' pesanan';
+
+  // hitung warna terlaris dari items
+  let map={};
+  data.forEach(o=>{
+    try{
+      let its=typeof o.items==='string'?JSON.parse(o.items):o.items;
+      (Array.isArray(its)?its:[]).forEach(i=>{
+        let w=i.warna||i.name||i.color||'Lain'; let qty=Number(i.qty||1);
+        map[w]=(map[w]||0)+qty;
+      });
+    }catch(e){}
+  });
+  let sorted=Object.entries(map).sort((a,b)=>b[1]-a[1]);
+  if(sorted[0]){ document.getElementById('best').innerText=sorted[0][0]; document.getElementById('bestQty').innerText=sorted[0][1]+' pcs terjual'; }
+  document.getElementById('listWarna').innerHTML=sorted.map(([w,qty])=>`<div style="display:flex;justify-content:space-between;border-bottom:1px solid #F2F2F2;padding:10px 0"><span style="font-size:12px">${w}</span><span style="font-size:12px;font-weight:600">${qty} pcs</span></div>`).join('') || '<div style="font-size:11px;opacity:.4">Belum ada data warna</div>';
+
+  // chart 7 hari
+  let days={}; for(let i=6;i>=0;i--){ let d=new Date(); d.setDate(now.getDate()-i); let k=d.toISOString().slice(0,10); days[k]=0; }
+  data.forEach(o=>{ let k=new Date(o.created_at).toISOString().slice(0,10); if(days[k]!==undefined) days[k]+=Number(o.total||0); });
+  let labels=Object.keys(days).map(k=>{ let d=new Date(k); return d.toLocaleDateString('id-ID',{day:'2-digit',month:'short'}); });
+  let vals=Object.values(days);
+  if(chartIns) chartIns.destroy();
+  chartIns=new Chart(document.getElementById('chart'),{type:'bar',data:{labels:labels,datasets:[{data:vals,backgroundColor:'#000'}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+}
+loadLaporan();
+</script>
+</body>
+</html>
