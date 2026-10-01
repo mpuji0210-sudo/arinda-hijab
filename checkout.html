@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Checkout - ARINDA</title>
+<title>Checkout - ARINDA - SECURE V10</title>
+<meta name="robots" content="noindex, nofollow">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
@@ -10,15 +11,19 @@ body{font-family:'Inter',sans-serif;background:#FFFFFF;color:#000}
 .input-clean{border:1px solid #000;background:#fff;transition:all.2s}
 .input-clean:focus{border-color:#000;outline:none}
 </style>
-</head>
-<body>
+</head><body>
+
+<script>
+// === SECURE V10 - RESET 0 ===
+const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
+const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
+const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
+function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+</script>
 
 <nav style="position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9">
   <div style="max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
-    <div>
-      <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px">ARINDA</div>
-      <span style="display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM</span>
-    </div>
+    <div><div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px">ARINDA</div><span style="display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM - SECURE V10</span></div>
   </div>
 </nav>
 
@@ -26,10 +31,10 @@ body{font-family:'Inter',sans-serif;background:#FFFFFF;color:#000}
   <div id="ringkasan" style="border:1px solid #E9E9E9;padding:16px;background:#fff"></div>
   <div style="margin-top:24px">
     <div style="display:flex;flex-direction:column;gap:12px">
-      <input id="nama" placeholder="Nama Lengkap" class="input-clean" style="width:100%;height:52px;padding:0 16px;font-size:13px">
-      <input id="wa" placeholder="No WA" class="input-clean" style="width:100%;height:52px;padding:0 16px;font-size:13px">
-      <input id="kota" placeholder="Kota / Kecamatan" class="input-clean" style="width:100%;height:52px;padding:0 16px;font-size:13px">
-      <textarea id="alamat" placeholder="Alamat Lengkap (Jalan, No Rumah, RT/RW)" class="input-clean" style="width:100%;padding:14px 16px;font-size:13px;height:100px;resize:none"></textarea>
+      <input id="nama" placeholder="Nama Lengkap" maxlength="80" class="input-clean" style="width:100%;height:52px;padding:0 16px;font-size:13px">
+      <input id="wa" placeholder="No WA 08xxxx" maxlength="15" class="input-clean" style="width:100%;height:52px;padding:0 16px;font-size:13px">
+      <input id="kota" placeholder="Kota / Kecamatan" maxlength="60" class="input-clean" style="width:100%;height:52px;padding:0 16px;font-size:13px">
+      <textarea id="alamat" placeholder="Alamat Lengkap (Jalan, No Rumah, RT/RW)" maxlength="200" class="input-clean" style="width:100%;padding:14px 16px;font-size:13px;height:100px;resize:none"></textarea>
     </div>
     <p id="errorMsg" style="display:none;margin-top:12px;text-align:center;font-size:11px;color:#B42318;background:#FFF5F5;border:1px solid #FECDCA;padding:10px"></p>
     <button id="mainBtn" onclick="bukaModal()" style="width:100%;margin-top:16px;height:52px;background:#000;color:#fff;border:none;font-size:10px;letter-spacing:3px">LANJUT KE PEMBAYARAN →</button>
@@ -38,9 +43,7 @@ body{font-family:'Inter',sans-serif;background:#FFFFFF;color:#000}
 </div>
 
 <footer style="margin-top:32px;padding:48px 16px 40px;text-align:center;border-top:1px solid #E9E9E9;background:#FFFFFF">
-  <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:18px">ARINDA</div>
-  <div style="font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div>
-  <div style="margin-top:18px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA HIJAB PREMIUM</div>
+  <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:18px">ARINDA</div><div style="font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:6px">HIJAB PREMIUM - RESET 0</div>
 </footer>
 
 <div id="modalCheckout" style="position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:99;padding:16px">
@@ -48,35 +51,28 @@ body{font-family:'Inter',sans-serif;background:#FFFFFF;color:#000}
     <div style="display:flex;justify-content:space-between"><b style="font-family:'Cormorant Garamond';font-size:18px;letter-spacing:1px">KONFIRMASI PESANAN</b><button onclick="tutupModal()" style="border:none;background:none;font-size:20px">×</button></div>
     <div id="modalContent" style="margin-top:16px;border:1px solid #F2F2F2;padding:12px;background:#FAFAFA"></div>
     <div style="margin-top:12px;display:flex;justify-content:space-between;font-weight:600"><span>TOTAL</span><span id="modalTotal"></span></div>
-    <div style="display:flex;gap:8px;margin-top:16px">
-      <button onclick="tutupModal()" style="flex:1;height:44px;background:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px">KEMBALI</button>
-      <button onclick="prosesCheckout()" id="btnKonfirm" style="flex:1;height:44px;background:#000;color:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px">YA, BAYAR</button>
-    </div>
+    <div style="display:flex;gap:8px;margin-top:16px"><button onclick="tutupModal()" style="flex:1;height:44px;background:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px">KEMBALI</button><button onclick="prosesCheckout()" id="btnKonfirm" style="flex:1;height:44px;background:#000;color:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px">YA, BAYAR</button></div>
   </div>
 </div>
 
 <script>
-const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
-const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
-const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 const cart = JSON.parse(localStorage.getItem('arinda_cart2')||'[]');
 const ongkir = Number(localStorage.getItem('selectedOngkirCost')||localStorage.getItem('arinda_ongkir_cost')||0);
 const kotaOngkir = localStorage.getItem('selectedOngkirCity')||localStorage.getItem('arinda_ongkir_service')||'';
-let subtotal=0; cart.forEach(i=>subtotal+=i.harga*i.qty);
+let subtotal=0; cart.forEach(i=>subtotal+= Number(i.harga||0)*Number(i.qty||0));
 let total=subtotal+ongkir;
-const formatRp=n=>'Rp'+n.toLocaleString('id-ID');
+const formatRp=n=>'Rp'+Number(n||0).toLocaleString('id-ID');
 
 document.getElementById('ringkasan').innerHTML=`
-  <div style="font-size:9px;letter-spacing:3px;opacity:.4;margin-bottom:12px">${cart.length} ITEM</div>
-  <div style="display:flex;flex-direction:column;gap:8px;font-size:12px">${cart.map(i=>`<div style="display:flex;justify-content:space-between"><span>${i.warna} x${i.qty}</span><span>${formatRp(i.harga*i.qty)}</span></div>`).join('') || '<div style="opacity:.4">Keranjang kosong</div>'}</div>
+  <div style="font-size:9px;letter-spacing:3px;opacity:.4;margin-bottom:12px">${cart.length} ITEM - RESET 0</div>
+  <div style="display:flex;flex-direction:column;gap:8px;font-size:12px">${cart.map(i=>`<div style="display:flex;justify-content:space-between"><span>${esc(i.warna)} x${Number(i.qty)}</span><span>${formatRp(Number(i.harga)*Number(i.qty))}</span></div>`).join('') || '<div style="opacity:.4">Keranjang kosong</div>'}</div>
   <div style="border-top:1px solid #E9E9E9;margin-top:12px;padding-top:12px;display:flex;flex-direction:column;gap:4px;font-size:11px">
     <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Subtotal</span><span>${formatRp(subtotal)}</span></div>
-    <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Ongkir ${kotaOngkir||''}</span><span>${formatRp(ongkir)}</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Ongkir ${esc(kotaOngkir||'')}</span><span>${formatRp(ongkir)}</span></div>
     <div style="display:flex;justify-content:space-between;font-weight:700;font-size:14px;margin-top:8px"><span>TOTAL</span><span>${formatRp(total)}</span></div>
   </div>
 `;
 document.getElementById('modalTotal').innerText=formatRp(total);
-
 let tempData={};
 
 async function validasiStok(){
@@ -84,11 +80,10 @@ async function validasiStok(){
   for(let item of cart){
     let warnaOnly = item.warna.split(' - ').pop().trim();
     try{
-      const {data,error} = await supa.from('product_variants').select('stock,is_available,color_name').ilike('color_name', warnaOnly).limit(1).maybeSingle();
-      if(error) continue;
+      const {data} = await supa.from('product_variants').select('stock,is_available,color_name').ilike('color_name', warnaOnly).limit(1).maybeSingle();
       if(!data) continue;
-      if(data.is_available===false || (data.stock!=null && Number(data.stock) < item.qty)){
-        err.innerText = `Maaf kak, warna ${warnaOnly} SISA ${data.stock??0}, gak cukup untuk ${item.qty} pcs. Kurangi qty atau hapus ya.`;
+      if(data.is_available===false || (data.stock!=null && Number(data.stock) < Number(item.qty))){
+        err.innerText = `Maaf kak, warna ${esc(warnaOnly)} SISA ${data.stock??0}, gak cukup untuk ${item.qty} pcs. Kurangi qty atau hapus ya.`;
         err.style.display='block';
         return false;
       }
@@ -98,62 +93,60 @@ async function validasiStok(){
   return true;
 }
 
-async function kurangiStok(){
-  for(let item of cart){
-    let warnaOnly = item.warna.split(' - ').pop().trim();
-    try{
-      const {data} = await supa.from('product_variants').select('id,stock').ilike('color_name', warnaOnly).limit(1).maybeSingle();
-      if(!data) continue;
-      let newStock = Math.max(0, Number(data.stock||0) - Number(item.qty||1));
-      await supa.from('product_variants').update({stock:newStock, is_available: newStock>0}).eq('id', data.id);
-    }catch(e){}
-  }
-}
-
 async function bukaModal(){
   const nama=document.getElementById('nama').value.trim();
-  const wa=document.getElementById('wa').value.trim();
+  const wa=document.getElementById('wa').value.trim().replace(/[^0-9]/g,'');
   const kota=document.getElementById('kota').value.trim();
   const alamat=document.getElementById('alamat').value.trim();
   const err=document.getElementById('errorMsg');
-  if(!nama||!wa||!kota||!alamat){
-    err.innerText='Lengkapi Nama, WA, Kota, Alamat dulu kak';
-    err.style.display='block'; return;
-  }
+  if(!nama||!wa||!kota||!alamat){ err.innerText='Lengkapi Nama, WA, Kota, Alamat dulu kak'; err.style.display='block'; return; }
+  if(wa.length<10){ err.innerText='No WA minimal 10 angka'; err.style.display='block'; return; }
+  if(cart.length===0){ err.innerText='Keranjang kosong'; err.style.display='block'; return; }
   document.getElementById('mainBtn').innerText='CEK STOK...';
   let ok = await validasiStok();
   document.getElementById('mainBtn').innerText='LANJUT KE PEMBAYARAN →';
   if(!ok) return;
-
   err.style.display='none';
   tempData={nama,wa,kota,alamat};
   localStorage.setItem('checkout_alamat', alamat);
   document.getElementById('modalContent').innerHTML=`
     <div style="font-size:12px;display:flex;flex-direction:column;gap:8px">
-      <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Nama</span><b>${nama}</b></div>
-      <div style="display:flex;justify-content:space-between"><span style="opacity:.5">WA</span><b>${wa}</b></div>
-      <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Kota</span><b>${kota}</b></div>
-      <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Alamat</span><b style="text-align:right;max-width:60%">${alamat}</b></div>
+      <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Nama</span><b>${esc(nama)}</b></div>
+      <div style="display:flex;justify-content:space-between"><span style="opacity:.5">WA</span><b>${esc(wa)}</b></div>
+      <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Kota</span><b>${esc(kota)}</b></div>
+      <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Alamat</span><b style="text-align:right;max-width:60%">${esc(alamat)}</b></div>
     </div>
   `;
   document.getElementById('modalCheckout').style.display='flex';
 }
 function tutupModal(){document.getElementById('modalCheckout').style.display='none';}
+
 async function prosesCheckout(){
   const {nama,wa,kota,alamat}=tempData;
-  document.getElementById('btnKonfirm').innerText='MENYIMPAN...';document.getElementById('btnKonfirm').disabled=true;
+  const btn=document.getElementById('btnKonfirm');
+  btn.innerText='MENYIMPAN...';btn.disabled=true;
   let ok = await validasiStok();
-  if(!ok){ document.getElementById('btnKonfirm').innerText='YA, BAYAR';document.getElementById('btnKonfirm').disabled=false; tutupModal(); return; }
-
-  const orderData={customer_name:nama,wa,kota,alamat,total,total_price:total,kota_tujuan:kotaOngkir||kota,ongkir,items:cart,status:'MENUNGGU_BAYAR',created_at:new Date().toISOString()};
+  if(!ok){ btn.innerText='YA, BAYAR';btn.disabled=false; tutupModal(); return; }
+  // hitung ulang total biar gak bisa di-bypass
+  let sub=0; cart.forEach(i=>sub+= Number(i.harga||0)*Number(i.qty||0));
+  let tot=sub+ongkir;
+  const orderData={customer_name:nama,wa,kota,alamat,total:tot,total_price:tot,kota_tujuan:kotaOngkir||kota,ongkir,items:cart,status:'MENUNGGU_BAYAR',created_at:new Date().toISOString()};
   try{
-    const {data}=await supa.from('orders').insert([orderData]).select();
+    const {data, error}=await supa.from('orders').insert([orderData]).select();
+    if(error) throw error;
     if(data&&data[0]) localStorage.setItem('arinda_last_order_id',data[0].id);
-    await kurangiStok();
-  }catch(e){}
+    // Simpan ke localStorage untuk bayar.html (ANTI BOCOR)
+    localStorage.setItem('arinda_customer', JSON.stringify({name:nama, wa:wa, alamat:alamat, kota:kota, total:tot}));
+    localStorage.setItem('arinda_total', String(tot));
+    localStorage.setItem('arinda_last_customer', JSON.stringify({name:nama, wa:wa, alamat:alamat, kota:kota}));
+  }catch(e){
+    document.getElementById('errorMsg').innerText='Gagal simpan order: '+e.message;
+    document.getElementById('errorMsg').style.display='block';
+    btn.innerText='YA, BAYAR';btn.disabled=false; return;
+  }
   localStorage.setItem('checkout_nama',nama);
   localStorage.setItem('checkout_alamat', alamat);
-  window.location.href=`bayar.html?total=${total}&nama=${encodeURIComponent(nama)}&kota=${encodeURIComponent(kota)}`;
+  window.location.href=`bayar.html?total=${tot}`;
 }
 </script>
 </body></html>
