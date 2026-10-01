@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bayar - ARINDA HIJAB PREMIUM</title>
+<title>Bayar - ARINDA HIJAB PREMIUM - SECURE V10</title>
+<meta name="robots" content="noindex, nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -19,10 +20,10 @@ body{margin:0;background:#FFFCF9;color:#111;font-family:'Inter',sans-serif}
 <div class="wrap">
   <div style="text-align:center;padding:16px 0 10px">
     <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:22px">ARINDA</div>
-    <div style="font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM</div>
+    <div style="font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM - SECURE V10</div>
   </div>
   <div class="card" style="padding:14px 16px;margin-top:12px">
-    <div style="font-size:8px;letter-spacing:3px;opacity:.4">TOTAL PEMBAYARAN</div>
+    <div style="font-size:8px;letter-spacing:3px;opacity:.4">TOTAL PEMBAYARAN - RESET 0</div>
     <div id="totalBox" style="font-family:'Cormorant Garamond';font-size:28px;margin-top:6px">Rp -</div>
     <div id="orderInfo" style="font-size:10px;opacity:.6;margin-top:8px;line-height:1.6;background:#FAF7F2;padding:8px 10px;border:1px dashed #E8E0D0"></div>
   </div>
@@ -36,14 +37,15 @@ body{margin:0;background:#FFFCF9;color:#111;font-family:'Inter',sans-serif}
 </div>
 <div id="toast"></div>
 <script>
+// === SECURE V10 - RESET 0 - BAYAR.HTML HANYA BACA PAYMENT_METHODS ===
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 const WA_ADMIN = '6285178098354';
 let lastTotal='-'; let lastMethods=[]; let lastCustomer={};
-
+function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function toast(t){ const el=document.getElementById('toast'); el.innerText=t; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2200); }
-function copyText(txt,bank){ navigator.clipboard.writeText(txt).then(()=>toast(bank+' '+txt+' disalin')); }
+function copyText(txt,bank){ navigator.clipboard.writeText(txt).then(()=>toast(bank+' '+txt+' disalin')).catch(()=>{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast(bank+' '+txt+' disalin');}); }
 
 function getCustomerFromStorage(){
   const keysToTry = ['arinda_customer','arinda_last_customer','arinda_checkout','checkoutData','customerData','arinda_order','order_data','arinda_form'];
@@ -63,7 +65,6 @@ function getCustomerFromStorage(){
       }
     }catch(e){}
   }
-  // coba key terpisah
   return {
     name: localStorage.getItem('customer_name')||localStorage.getItem('nama')||localStorage.getItem('name')||sessionStorage.getItem('customer_name')||'',
     wa: localStorage.getItem('wa')||localStorage.getItem('no_wa')||localStorage.getItem('phone')||sessionStorage.getItem('wa')||'',
@@ -77,58 +78,39 @@ function confirmWA(){
   const total = lastTotal;
   const rekText = lastMethods.map(m=>`- ${m.bank} ${m.no_rek} a.n ${m.atas_nama}`).join('%0A');
   const alamatFull = [c.alamat, c.kota].filter(Boolean).join(', ') || '-';
-  const msg = `Halo kak ARINDA HIJAB %F0%9F%91%8B%0A%0ASaya sudah transfer ya kak:%0A%0A*Total:* Rp${Number(total).toLocaleString('id-ID')}%0A*Nama:* ${c.name||'-'}%0A*WA:* ${c.wa||'-'}%0A*Alamat:* ${alamatFull}%0A%0A*Rekening Tujuan:*%0A${rekText}%0A%0AMohon dicek, saya kirim bukti di sini. Terima kasih %F0%9F%99%8F`;
+  const msg = `Halo kak ARINDA HIJAB %F0%9F%91%8B%0A%0ASaya sudah transfer ya kak:%0A%0A*Total:* Rp${Number(total||0).toLocaleString('id-ID')}%0A*Nama:* ${esc(c.name||'-')}%0A*WA:* ${esc(c.wa||'-')}%0A*Alamat:* ${esc(alamatFull)}%0A%0A*Rekening Tujuan:*%0A${esc(rekText)}%0A%0AMohon dicek, saya kirim bukti di sini. Terima kasih %F0%9F%99%8F`;
   window.open(`https://wa.me/${WA_ADMIN}?text=${msg}`,'_blank');
 }
 
 async function loadPay(){
-  // 1. total
+  // 1. total dari localStorage saja - ANTI BOCOR DATA ORDER
   const tryKeys=['arinda_total','total','arinda_checkout_total','checkout_total','cart_total','arinda_last_total'];
   for(let k of tryKeys){ const v=localStorage.getItem(k)||sessionStorage.getItem(k); if(v&&v!=='-'){ lastTotal=String(v).replace(/[^0-9]/g,''); break; } }
-
-  // 2. customer dari local
+  
+  // 2. customer dari localStorage saja
   lastCustomer = getCustomerFromStorage();
+  document.getElementById('orderInfo').innerHTML = `Nama: <b>${esc(lastCustomer.name||'-')}</b> • WA: ${esc(lastCustomer.wa||'-')}<br>Alamat: ${esc(lastCustomer.alamat||'-')} ${esc(lastCustomer.kota||'')}`;
+  document.getElementById('totalBox').innerText = lastTotal==='-'? 'Rp -' : 'Rp'+Number(lastTotal||0).toLocaleString('id-ID');
 
-  // 3. kalau masih kosong, ambil order terakhir dari supabase (ini yang paling akurat)
-  try{
-    const {data:order} = await supa.from('orders').select('*').order('created_at',{ascending:false}).limit(1).maybeSingle();
-    if(order){
-      if(lastTotal==='-'||!lastTotal) lastTotal = String(order.total||'');
-      // override customer kalau local kosong atau -
-      if(!lastCustomer.name || lastCustomer.name==='-' || !lastCustomer.wa){
-        lastCustomer = {
-          name: order.customer_name||lastCustomer.name,
-          wa: order.wa||lastCustomer.wa,
-          alamat: order.alamat||lastCustomer.alamat,
-          kota: order.kota||lastCustomer.kota
-        };
-      }
-      document.getElementById('orderInfo').innerHTML = `Nama: <b>${order.customer_name||'-'}</b> • WA: ${order.wa||'-'}<br>Alamat: ${order.alamat||'-'} ${order.kota||''}`;
-    }
-  }catch(e){ console.log(e); }
-
-  // fallback tampilkan yang dari local kalau supabase gagal
-  if(!document.getElementById('orderInfo').innerHTML){
-    document.getElementById('orderInfo').innerHTML = `Nama: <b>${lastCustomer.name||'-'}</b> • WA: ${lastCustomer.wa||'-'}<br>Alamat: ${lastCustomer.alamat||'-'} ${lastCustomer.kota||''}`;
-  }
-
-  document.getElementById('totalBox').innerText = lastTotal==='-'? 'Rp -' : 'Rp'+Number(lastTotal).toLocaleString('id-ID');
-
-  // 4. payment methods
+  // 3. payment methods - ini satu-satunya yang boleh dibaca public
   try{
     const {data}=await supa.from('settings').select('value').eq('key','payment_methods').maybeSingle();
     let methods=data?.value; if(typeof methods==='string'){ try{ methods=JSON.parse(methods);}catch(e){methods=[]} }
     lastMethods = (methods||[]).filter(m=>m.aktif);
     document.getElementById('payCount').innerText = lastMethods.length+' METODE';
+    if(!lastMethods.length){
+      document.getElementById('payList').innerHTML='<div style="border:1px dashed #E9E9E9;padding:30px;text-align:center;font-size:11px;opacity:.4">Belum ada rekening - set di admin-orders.html</div>';
+      return;
+    }
     document.getElementById('payList').innerHTML = lastMethods.map(m=>`
       <div class="pay-card">
-        <div style="display:flex;justify-content:space-between"><div><b style="font-size:12px">${m.bank}</b><div style="font-size:10px;opacity:.5">a.n ${m.atas_nama}</div></div></div>
-        <div style="margin-top:10px;padding:10px;background:#FAFAFA;border:1px dashed #E9E9E9">No: <b>${m.no_rek}</b></div>
-        ${m.qr_url?`<img src="${m.qr_url}" class="qr">`:''}
-        <div style="display:flex;gap:8px;margin-top:10px"><button class="btn-white" onclick="copyText('${m.no_rek}','${m.bank}')">SALIN</button><button class="btn" onclick="copyText('${m.no_rek}','${m.bank}')">SALIN & BAYAR</button></div>
+        <div style="display:flex;justify-content:space-between"><div><b style="font-size:12px">${esc(m.bank)}</b><div style="font-size:10px;opacity:.5">a.n ${esc(m.atas_nama)}</div></div></div>
+        <div style="margin-top:10px;padding:10px;background:#FAFAFA;border:1px dashed #E9E9E9">No: <b>${esc(m.no_rek)}</b></div>
+        ${m.qr_url?`<img src="${esc(m.qr_url)}" class="qr" onerror="this.style.display='none'">`:''}
+        <div style="display:flex;gap:8px;margin-top:10px"><button class="btn-white" onclick="copyText('${esc(m.no_rek)}','${esc(m.bank)}')">SALIN</button><button class="btn" onclick="copyText('${esc(m.no_rek)}','${esc(m.bank)}')">SALIN & BAYAR</button></div>
       </div>`).join('');
   }catch(err){
-    document.getElementById('payList').innerHTML='Gagal: '+err.message;
+    document.getElementById('payList').innerHTML='Gagal: '+esc(err.message);
   }
 }
 loadPay();
