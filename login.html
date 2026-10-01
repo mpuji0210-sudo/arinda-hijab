@@ -12,42 +12,32 @@
 .input{width:100%;padding:11px 0;border:none;border-bottom:1px solid var(--black);background:transparent;outline:none;font-size:12px;letter-spacing:.5px;margin-top:6px}
 .btn{width:100%;background:var(--black);color:#fff;border:none;padding:13px;margin-top:22px;font-size:9px;letter-spacing:3px;cursor:pointer}
 .small{font-size:8px;letter-spacing:2px;opacity:.4;text-align:center;margin-top:14px;line-height:1.6}
-.eye{position:absolute;right:0;top:50%;transform:translateY(-50%);cursor:pointer;opacity:.5;background:none;border:none}
-</style></head><body>
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+</head><body>
 <div class="card">
-<div class="logo">ARINDA<span>ADMIN</span></div>
-<label class="label">USERNAME</label>
-<input id="user" class="input" value="admin">
+<div class="logo">ARINDA<span>ADMIN SECURE</span></div>
+<label class="label">EMAIL ADMIN</label>
+<input id="email" class="input" value="admin@arinda.id">
 <label class="label">PASSWORD</label>
-<div style="position:relative">
 <input id="pass" class="input" type="password" placeholder="••••••••">
-<button class="eye" onclick="togglePass()" type="button">👁</button>
-</div>
-<button class="btn" onclick="doLogin()">LOGIN</button>
+<button class="btn" onclick="doLogin()" id="btn">LOGIN AMAN</button>
 <div class="small"><br><a href="index.html" style="color:#111;text-decoration:none;border-bottom:1px solid #111">KEMBALI KE BERANDA</a></div>
 <div id="msg" class="small" style="color:#B42318;opacity:1;display:none"></div>
 </div>
 <script>
-function togglePass(){const p=document.getElementById('pass');p.type=p.type==='password'?'text':'password';}
-function doLogin(){
-  const u=document.getElementById('user').value.trim();
-  const p=document.getElementById('pass').value.trim().toLowerCase();
-  const ok = (u==='admin' && (p==='admin123' || p==='arinda123' || p==='arinda2026'));
-  if(ok){
-    localStorage.setItem('arinda_admin','login');
-    localStorage.setItem('arinda_login_time',Date.now().toString());
-    localStorage.setItem('admin_login','true');
-    const next = localStorage.getItem('arinda_next') || '';
-    localStorage.removeItem('arinda_next');
-    if(next.includes('laporan')) location.href='laporan.html';
-    else if(document.referrer.includes('laporan') || next.includes('laporan')) location.href='laporan.html';
-    else if(document.referrer.includes('admin-orders')) location.href='admin-orders.html';
-    else location.href='laporan.html';
-  } else {
-    const m=document.getElementById('msg');
-    m.style.display='block'; m.innerText='PASSWORD SALAH - pakai arinda2026';
-    setTimeout(()=>m.style.display='none',3000);
-  }
+const SUPABASE_URL = 'https://qjgevvizqeebtdcqbqmt.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+async function doLogin(){
+  const btn=document.getElementById('btn'); const m=document.getElementById('msg');
+  btn.innerText='CEK...'; btn.disabled=true;
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email: document.getElementById('email').value.trim(),
+    password: document.getElementById('pass').value.trim()
+  });
+  if(error){ m.style.display='block'; m.innerText='GAGAL: '+error.message; btn.innerText='LOGIN AMAN'; btn.disabled=false; return; }
+  location.href='admin.html';
 }
 document.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 </script></body></html>
