@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>Laporan - ARINDA</title>
+<title>Laporan - ARINDA - SECURE V10</title>
+<meta name="robots" content="noindex, nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -18,21 +19,32 @@ body{margin:0;background:#FFF;color:#000;font-family:'Inter',sans-serif;-webkit-
 </head>
 <body>
 
+<script>
+// === KUNCI ANTI BOBOL V10 - RESET 0 ===
+const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
+const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
+const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
+(async()=>{
+  const { data:{ session } } = await supa.auth.getSession();
+  if(!session){ localStorage.setItem('arinda_next','laporan.html'); location.href='login.html'; }
+})();
+function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+</script>
+
 <div id="pinModal">
   <div style="background:#fff;width:100%;max-width:360px;border:1px solid #000;padding:28px;text-align:center">
     <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:22px">ARINDA</div>
-    <div style="font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px;margin-bottom:22px">PRIVATE REPORT • OWNER ONLY</div>
+    <div style="font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px;margin-bottom:22px">PRIVATE REPORT • OWNER ONLY - SECURE V10</div>
     <div style="font-size:9px;letter-spacing:3px;margin-bottom:12px">MASUKKAN PIN LAPORAN</div>
-    <input id="pinInput" type="text" autocomplete="off" value="" style="width:100%;height:52px;border:2px solid #000;text-align:center;font-size:18px;letter-spacing:2px;background:#fff;color:#000">
+    <input id="pinInput" type="password" autocomplete="off" value="" placeholder="PIN dari admin-orders" style="width:100%;height:52px;border:2px solid #000;text-align:center;font-size:18px;letter-spacing:2px;background:#fff;color:#000">
     <button id="btnBuka" type="button" style="width:100%;height:52px;background:#000;color:#fff;border:2px solid #000;margin-top:14px;font-size:10px;letter-spacing:3px;cursor:pointer;display:block">BUKA LAPORAN</button>
     <div id="pinErr" style="font-size:11px;color:#c00;margin-top:12px;display:none"></div>
-    <div style="font-size:9px;opacity:.4;margin-top:12px"></div>
   </div>
 </div>
 
 <nav style="position:sticky;top:0;z-index:90;background:#fff;border-bottom:1px solid #E9E9E9">
   <div style="max-width:900px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
-    <div><div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px">ARINDA</div><span style="display:block;font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">LAPORAN HARIAN • PRIVATE</span></div>
+    <div><div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px">ARINDA</div><span style="display:block;font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">LAPORAN HARIAN • PRIVATE - RESET 0</span></div>
     <button onclick="logout()" style="padding:10px 14px;background:#fff;border:1px solid #000;font-size:8px;letter-spacing:2px;cursor:pointer">LOGOUT</button>
   </div>
 </nav>
@@ -57,15 +69,6 @@ body{margin:0;background:#FFF;color:#000;font-family:'Inter',sans-serif;-webkit-
 </div>
 
 <script>
-const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
-const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
-const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
-
-if(localStorage.getItem('arinda_admin')!=='login' && localStorage.getItem('admin_login')!=='true'){
-  localStorage.setItem('arinda_next','laporan.html');
-  location.href='login.html';
-}
-
 document.getElementById('tgl').innerText=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 let REAL_PIN='';
 
@@ -75,32 +78,32 @@ async function initPin(){
     if(data && data.value){
       try{ let j=JSON.parse(data.value); REAL_PIN=(j.pin||j.value||data.value).toString(); }
       catch(e){ REAL_PIN=data.value.toString().replace(/"/g,''); }
+      REAL_PIN=REAL_PIN.trim();
     }
-  }catch(e){}
+    if(!REAL_PIN){ REAL_PIN=''; document.getElementById('pinErr').style.display='block'; document.getElementById('pinErr').innerText='PIN belum di-set di admin-orders.html. Set dulu ya kak.'; }
+  }catch(e){ REAL_PIN=''; }
 }
-
 initPin();
 
 function checkPin(){
-  const inp=document.getElementById('pinInput').value.trim().toLowerCase();
-  const real=REAL_PIN.toString().trim().toLowerCase();
-  if(inp===real || inp==='1234' || inp==='arinda2026'){
+  const inp=document.getElementById('pinInput').value.trim();
+  if(!REAL_PIN){ document.getElementById('pinErr').style.display='block'; document.getElementById('pinErr').innerText='PIN belum di-set. Buka admin-orders.html > Security Laporan'; return; }
+  if(inp===REAL_PIN){
     document.getElementById('pinModal').classList.add('hide');
     loadLaporan();
   } else {
     const err=document.getElementById('pinErr');
     err.style.display='block';
-    err.innerText='PIN salah. Ketik: arinda2026';
+    err.innerText='PIN salah. Cek di admin-orders.html > Security Laporan';
   }
 }
-
 document.getElementById('btnBuka').addEventListener('click', checkPin);
 document.getElementById('btnBuka').addEventListener('touchend', (e)=>{ e.preventDefault(); checkPin(); });
 document.getElementById('pinInput').addEventListener('keyup', e=>{ if(e.key==='Enter') checkPin(); });
 
-function logout(){
-  localStorage.removeItem('admin_login');
-  localStorage.removeItem('arinda_admin');
+async function logout(){
+  await supa.auth.signOut();
+  localStorage.clear();
   location.href='login.html';
 }
 
@@ -117,7 +120,7 @@ async function loadLaporan(){
     document.getElementById('omset').innerText='Rp 0';
     document.getElementById('laba').innerText='Rp 0';
     document.getElementById('count').innerText='0 pesanan';
-    document.getElementById('listWarna').innerHTML='<div style="font-size:11px;opacity:.4">Belum ada data</div>';
+    document.getElementById('listWarna').innerHTML='<div style="font-size:11px;opacity:.4">Belum ada data - RESET 0</div>';
     if(chartIns) chartIns.destroy(); return;
   }
   let omset=data.reduce((a,b)=>a+Number(b.total||0),0);
@@ -132,8 +135,8 @@ async function loadLaporan(){
     }catch(e){}
   });
   let sorted=Object.entries(map).sort((a,b)=>b[1]-a[1]);
-  if(sorted[0]){ document.getElementById('best').innerText=sorted[0][0]; document.getElementById('bestQty').innerText=sorted[0][1]+' pcs'; }
-  document.getElementById('listWarna').innerHTML=sorted.map(([w,qty])=>`<div style="display:flex;justify-content:space-between;border-bottom:1px solid #F2F2F2;padding:10px 0"><span style="font-size:12px">${w}</span><span style="font-size:12px;font-weight:600">${qty} pcs</span></div>`).join('')||'<div style="font-size:11px;opacity:.4">Belum ada warna</div>';
+  if(sorted[0]){ document.getElementById('best').innerText=esc(sorted[0][0]); document.getElementById('bestQty').innerText=sorted[0][1]+' pcs'; }
+  document.getElementById('listWarna').innerHTML=sorted.map(([w,qty])=>`<div style="display:flex;justify-content:space-between;border-bottom:1px solid #F2F2F2;padding:10px 0"><span style="font-size:12px">${esc(w)}</span><span style="font-size:12px;font-weight:600">${qty} pcs</span></div>`).join('')||'<div style="font-size:11px;opacity:.4">Belum ada warna</div>';
   let days={}; for(let i=6;i>=0;i--){ let d=new Date(); d.setDate(now.getDate()-i); let k=d.toISOString().slice(0,10); days[k]=0; }
   data.forEach(o=>{ let k=new Date(o.created_at).toISOString().slice(0,10); if(days[k]!==undefined) days[k]+=Number(o.total||0); });
   let labels=Object.keys(days).map(k=>{ let d=new Date(k); return d.toLocaleDateString('id-ID',{day:'2-digit',month:'short'}); });
