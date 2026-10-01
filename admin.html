@@ -35,14 +35,11 @@ textarea.input{border:1px solid var(--line);padding:10px;background:var(--bg);re
 .under-per-variant label{font-size:8px;display:flex;gap:4px;align-items:center;background:#fff;color:#111;padding:5px 8px;border-radius:20px;cursor:pointer;letter-spacing:1px}
 </style></head><body>
 <script>
-// FIX - URL BENAR + ANTI LOOP LOGIN
-const SUPA_URL = 'https://qjgevvizqeebtdqcbqmt.supabase.co';
-const SUPA_KEY = 'sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
-const _guard = supabase.createClient(SUPA_URL, SUPA_KEY);
+// === KUNCI AMAN BARU - HANYA INI YANG DITAMBAH DI ATAS ===
+const _guard = supabase.createClient('https://qjgevvizqeebtdcqbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
 (async()=>{
   const { data:{ session } } = await _guard.auth.getSession();
-  const legacy = localStorage.getItem('sb-access-token');
-  if(!session &&!legacy) location.href='login.html';
+  if(!session) location.href='login.html';
 })();
 </script>
 
@@ -56,7 +53,8 @@ const _guard = supabase.createClient(SUPA_URL, SUPA_KEY);
 <div id="tab-produk" class="hidden">
 <div class="card" style="border-color:var(--black)"><h3>PRODUK</h3>
 <input type="hidden" id="editId"><input id="pName" class="input" placeholder="NAMA PRODUK ex: Paris Premium Segiempat">
-<input id="pPrice" type="number" class="input" placeholder="HARGA ex: 45000"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<input id="pPrice" type="number" class="input" placeholder="HARGA ex: 45000">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
 <select id="pJenis" class="input"><option value="">PILIH JENIS PRODUK</option></select>
 <select id="pCat" class="input"><option value="">PILIH BAHAN</option></select>
 </div>
@@ -95,7 +93,7 @@ const _guard = supabase.createClient(SUPA_URL, SUPA_KEY);
 <div id="toast"></div>
 <div id="confirmModal"><div class="confirm-box"><div id="confirmTitle"></div><div id="confirmDesc"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px"><button onclick="closeConfirm()" style="padding:12px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-size:9px;letter-spacing:2px">BATAL</button><button id="confirmOk" style="padding:12px;background:#111;color:#fff;border:none;cursor:pointer;font-size:9px;letter-spacing:2px">YA, HAPUS</button></div></div></div>
 <script>
-const supa=supabase.createClient(SUPA_URL,SUPA_KEY);
+const supa=supabase.createClient('https://qjgevvizqeebtdcqbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
 let tokoOriginId="17523",tokoOriginLabel="CENGKARENG BARAT";let pcBase='',hpBase='';
 let koleksiSlots=[{url:"",title:""}];let undertoneSlots=[{url:"",title:""}];let faqSlots=[{q:'Apakah menerawang?',a:'Tidak.'}];
 let masterColorsCache = [];
@@ -124,7 +122,7 @@ function getUndertoneForColor(cName){
   return ['NEUTRAL'];
 }
 function aggregateUndertone(){
-  const rows=[...document.querySelectorAll('#varInputs.slot')];
+  const rows=[...document.querySelectorAll('#varInputs .slot')];
   let all = new Set();
   rows.forEach(r=>{
     let checks=[...r.querySelectorAll('.under-check:checked')].map(c=>c.value);
@@ -209,7 +207,7 @@ window.saveProd=async()=>{
  const jenisVal=$('pJenis').value; const bahanVal=$('pCat').value;
  if(!jenisVal){toast('PILIH JENIS PRODUK DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
  if(!bahanVal){toast('PILIH BAHAN DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
- const rows=[...document.querySelectorAll('#varInputs.slot')];if(!rows.length){toast('TAMBAH WARNA DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
+ const rows=[...document.querySelectorAll('#varInputs .slot')];if(!rows.length){toast('TAMBAH WARNA DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
  $('saveStatus').innerText='PROSES '+rows.length+' WARNA...';
  let finalVars=[];
  for(let idx=0; idx<rows.length; idx++){
