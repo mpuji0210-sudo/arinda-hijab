@@ -13,7 +13,7 @@
 .btn{width:100%;background:var(--black);color:#fff;border:none;padding:13px;margin-top:22px;font-size:9px;letter-spacing:3px;cursor:pointer}
 .small{font-size:8px;letter-spacing:2px;opacity:.4;text-align:center;margin-top:14px;line-height:1.6}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.54.0/dist/umd/supabase.min.js"></script>
 </head><body>
 <div class="card">
 <div class="logo">ARINDA<span>ADMIN SECURE</span></div>
@@ -31,13 +31,18 @@ const SUPABASE_ANON = 'sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 async function doLogin(){
   const btn=document.getElementById('btn'); const m=document.getElementById('msg');
+  m.style.display='none';
   btn.innerText='CEK...'; btn.disabled=true;
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
-    email: document.getElementById('email').value.trim(),
-    password: document.getElementById('pass').value.trim()
-  });
-  if(error){ m.style.display='block'; m.innerText='GAGAL: '+error.message; btn.innerText='LOGIN AMAN'; btn.disabled=false; return; }
-  location.href='admin.html';
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email: document.getElementById('email').value.trim(),
+      password: document.getElementById('pass').value.trim()
+    });
+    if(error){ throw error; }
+    location.href='admin.html';
+  } catch(err){
+    m.style.display='block'; m.innerText='GAGAL: '+err.message; btn.innerText='LOGIN AMAN'; btn.disabled=false;
+  }
 }
 document.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 </script></body></html>
