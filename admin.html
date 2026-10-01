@@ -34,18 +34,12 @@ textarea.input{border:1px solid var(--line);padding:10px;background:var(--bg);re
 .under-per-variant{display:flex;gap:6px;flex-wrap:wrap;background:#111;padding:8px;border-radius:8px;margin-top:8px}
 .under-per-variant label{font-size:8px;display:flex;gap:4px;align-items:center;background:#fff;color:#111;padding:5px 8px;border-radius:20px;cursor:pointer;letter-spacing:1px}
 </style></head><body>
-
 <script>
-// === KUNCI ANTI BOBOL V10 - FIX TYPO & RESET 0 ===
 const SUPA_URL = 'https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY = 'sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const _guard = window.supabase.createClient(SUPA_URL, SUPA_KEY);
-(async()=>{
-  const { data:{ session } } = await _guard.auth.getSession();
-  if(!session) location.href='login.html';
-})();
+(async()=>{const { data:{ session } } = await _guard.auth.getSession(); if(!session) location.href='login.html';})();
 </script>
-
 <header><div class="logo">ARINDA - RESET 0</div><button onclick="_guard.auth.signOut().then(()=>{localStorage.clear(); location.href='login.html'})" style="background:none;border:1px solid var(--line);padding:6px 12px;font-size:8px;letter-spacing:2px;cursor:pointer">LOGOUT</button></header>
 <div class="tabs"><div class="tab active" onclick="openTab('toko',this)">BANNER</div><div class="tab" onclick="openTab('koleksi',this)">BEST</div><div class="tab" onclick="openTab('undertone',this)">UNDERTONE</div><div class="tab" onclick="openTab('faq',this)">FAQ</div><div class="tab" onclick="openTab('produk',this)">PRODUK</div></div>
 <div class="wrap">
@@ -111,31 +105,8 @@ $('confirmOk').onclick=()=>{if(confirmCb)confirmCb();closeConfirm();};
 function setBtnLoading(btnId,statusId,loading,loadingText='MENYIMPAN...'){const b=$(btnId); const s=$(statusId);if(!b) return;b.disabled=loading;b.innerText=loading?loadingText:'SIMPAN';if(loading && s) s.innerText='PROSES...';}
 async function init(){try{const {data}=await supa.from('settings').select('*');if(data){const g=k=>data.find(s=>s.key===k)?.value;if(g('store_name'))$('storeName').value=g('store_name');if(g('wa_number'))$('waNumber').value=g('wa_number');if(g('toko_origin_id')){tokoOriginId=g('toko_origin_id');tokoOriginLabel=g('toko_origin_label')||tokoOriginLabel;}if(g('home_koleksi_terlaris')){try{const p=JSON.parse(g('home_koleksi_terlaris'));if(p.length)koleksiSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}if(g('home_undertone_images')){try{const p=JSON.parse(g('home_undertone_images'));if(p.length)undertoneSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}if(g('home_faq_list')){try{faqSlots=JSON.parse(g('home_faq_list'))}catch(e){}}}}catch(e){}$('curOrigin').innerText=tokoOriginLabel+' - '+tokoOriginId;await loadJenis();await loadCats();await loadMasterColors();await loadProducts();await loadBanners();initVar();renderKoleksi();renderUnder();renderFaq();}
 async function loadMasterColors(){const {data}=await supa.from('master_colors').select('*'); masterColorsCache = data||[]; aggregateUndertone();}
-function getUndertoneForColor(cName){
-  cName=(cName||'').toUpperCase().trim();
-  if(!cName) return ['NEUTRAL'];
-  let found = masterColorsCache.find(m=>m.name.toUpperCase()===cName);
-  if(found) return found.undertone;
-  if(['HITAM','BLACK','NAVY','DENIM','EMERALD','BURGUNDY','LILAC','GREY','PLUM','CHARCOAL','STONE','BLUE','PUTIH','WHITE'].includes(cName)) return ['COOL'];
-  if(['MILO','MAROON','MUSTARD','CARAMEL','BROWN','COKSU','PEACH','MOCCA','CORAL','TERRACOTTA','BRICK','RUST','CARAMEL BROWN','MUSTARD YELLOW','CORAL PEACH','TERRACOTTA BROWN'].includes(cName)) return ['WARM'];
-  if(['OLIVE GREEN','SAGE GREEN','SAGE','OLIVE','ARMY','KHAKI','MOSS','GREEN'].includes(cName)) return ['OLIVE'];
-  if(cName.includes('TERACOTTA')||cName.includes('CARAMEL')||cName.includes('MUSTARD')||cName.includes('CORAL')||cName.includes('PEACH')||cName.includes('BRICK')||cName.includes('RUST')||cName.includes('MILO')||cName.includes('MAROON')) return ['WARM'];
-  if(cName.includes('OLIVE')||cName.includes('SAGE')||cName.includes('ARMY')||cName.includes('KHAKI')) return ['OLIVE'];
-  if(cName.includes('NAVY')||cName.includes('DENIM')||cName.includes('LILAC')||cName.includes('GREY')||cName.includes('BURGUNDY')||cName.includes('EMERALD')||cName.includes('HITAM')||cName.includes('BLACK')) return ['COOL'];
-  return ['NEUTRAL'];
-}
-function aggregateUndertone(){
-  const rows=[...document.querySelectorAll('#varInputs.slot')];
-  let all = new Set();
-  rows.forEach(r=>{
-    let checks=[...r.querySelectorAll('.under-check:checked')].map(c=>c.value);
-    checks.forEach(v=>all.add(v));
-  });
-  let arr = Array.from(all);
-  if(arr.length===0) arr=['NEUTRAL'];
-  $('autoUndertoneBox').innerHTML = arr.map(u=>`<span class="under-badge">${u}</span>`).join('') + ` <span style="font-size:8px;opacity:.7">GABUNGAN DARI ${rows.length} WARNA</span>`;
-  return arr;
-}
+function getUndertoneForColor(cName){cName=(cName||'').toUpperCase().trim(); if(!cName) return ['NEUTRAL']; let found = masterColorsCache.find(m=>m.name.toUpperCase()===cName); if(found) return found.undertone; if(['HITAM','BLACK','NAVY','DENIM','EMERALD','BURGUNDY','LILAC','GREY','PLUM','CHARCOAL','STONE','BLUE','PUTIH','WHITE'].includes(cName)) return ['COOL']; if(['MILO','MAROON','MUSTARD','CARAMEL','BROWN','COKSU','PEACH','MOCCA','CORAL','TERRACOTTA','BRICK','RUST','CARAMEL BROWN','MUSTARD YELLOW','CORAL PEACH','TERRACOTTA BROWN'].includes(cName)) return ['WARM']; if(['OLIVE GREEN','SAGE GREEN','SAGE','OLIVE','ARMY','KHAKI','MOSS','GREEN'].includes(cName)) return ['OLIVE']; if(cName.includes('TERACOTTA')||cName.includes('CARAMEL')||cName.includes('MUSTARD')||cName.includes('CORAL')||cName.includes('PEACH')||cName.includes('BRICK')||cName.includes('RUST')||cName.includes('MILO')||cName.includes('MAROON')) return ['WARM']; if(cName.includes('OLIVE')||cName.includes('SAGE')||cName.includes('ARMY')||cName.includes('KHAKI')) return ['OLIVE']; if(cName.includes('NAVY')||cName.includes('DENIM')||cName.includes('LILAC')||cName.includes('GREY')||cName.includes('BURGUNDY')||cName.includes('EMERALD')||cName.includes('HITAM')||cName.includes('BLACK')) return ['COOL']; return ['NEUTRAL'];}
+function aggregateUndertone(){const rows=[...document.querySelectorAll('#varInputs.slot')]; let all = new Set(); rows.forEach(r=>{let checks=[...r.querySelectorAll('.under-check:checked')].map(c=>c.value); checks.forEach(v=>all.add(v));}); let arr = Array.from(all); if(arr.length===0) arr=['NEUTRAL']; $('autoUndertoneBox').innerHTML = arr.map(u=>`<span class="under-badge">${u}</span>`).join('') + ` <span style="font-size:8px;opacity:.7">GABUNGAN DARI ${rows.length} WARNA</span>`; return arr;}
 window.addMasterColorQuick=async()=>{let name=$('newMasterColor').value.trim().toUpperCase(); let u=$('newMasterUnder').value.split(',').map(s=>s.trim());if(!name) return toast('ISI NAMA WARNA');await supa.from('master_colors').upsert({name:name, undertone:u}, {onConflict:'name'});$('newMasterColor').value=''; toast(name+' DITAMBAH - '+u.join(',')); await loadMasterColors();};
 function initVar(){ const el=$('varInputs'); if(!el) return; el.innerHTML=''; addVarRow(); }
 function addVarRow(c,img,stock,avail,undertones){
@@ -143,38 +114,16 @@ function addVarRow(c,img,stock,avail,undertones){
  undertones = undertones || getUndertoneForColor(c);
  var id='vf_'+Date.now()+'_'+Math.random().toString(36).slice(2);
  var d=document.createElement('div');d.className='slot';
- var underHtml = ['COOL','WARM','NEUTRAL','OLIVE'].map(u=>{
-   let checked = undertones.includes(u)?'checked':'';
-   return `<label><input type="checkbox" value="${u}" class="under-check" ${checked} onchange="aggregateUndertone()"> ${u}</label>`;
- }).join('');
+ var underHtml = ['COOL','WARM','NEUTRAL','OLIVE'].map(u=>{let checked = undertones.includes(u)?'checked':''; return `<label><input type="checkbox" value="${u}" class="under-check" ${checked} onchange="aggregateUndertone()"> ${u}</label>`;}).join('');
  var h=`<div style="display:flex;gap:6px;align-items:center"><input class="input var-color" placeholder="NAMA WARNA ex: SAGE" value="${esc(c)}" style="flex:1;margin:0" oninput="autoCheckUndertone(this)"><input class="input var-stock" type="number" value="${stock}" style="width:70px;margin:0;text-align:center"><label style="font-size:8px;display:flex;align-items:center;gap:4px"><input type="checkbox" class="var-avail" ${avail?'checked':''}>READY</label><div class="x" onclick="this.parentElement.parentElement.remove();aggregateUndertone()">x</div></div>`;
  if(img){ h+=`<img src="${img}" class="preview-img">`; }
  h+=`<input type="file" class="var-file" accept="image/*" style="display:none" id="${id}" onchange="prevVar(this)"><label for="${id}" class="file-btn">FOTO WARNA</label><div class="under-per-variant">${underHtml}</div><input type="hidden" class="var-old-url" value="${img}">`;
  d.innerHTML=h; $('varInputs').appendChild(d); aggregateUndertone();
 }
-window.autoCheckUndertone=(inputEl)=>{
-  let cName=inputEl.value.trim().toUpperCase();
-  let under = getUndertoneForColor(cName);
-  let slot=inputEl.closest('.slot');
-  if(!slot) return;
-  slot.querySelectorAll('.under-check').forEach(chk=>{
-    chk.checked = under.includes(chk.value);
-  });
-  aggregateUndertone();
-};
+window.autoCheckUndertone=(inputEl)=>{let cName=inputEl.value.trim().toUpperCase(); let under = getUndertoneForColor(cName); let slot=inputEl.closest('.slot'); if(!slot) return; slot.querySelectorAll('.under-check').forEach(chk=>{chk.checked = under.includes(chk.value);}); aggregateUndertone();};
 window.prevVar=(inp)=>{const f=inp.files[0];if(!f)return;const url=URL.createObjectURL(f);let img=inp.closest('.slot').querySelector('.preview-img');if(!img){img=document.createElement('img');img.className='preview-img';img.style.cssText='width:100%;height:200px;object-fit:cover;border:1px solid var(--line);margin-top:8px;object-position:top';inp.closest('.slot').insertBefore(img,inp);}img.src=url;};
-async function loadJenis(){
-  let data=null;
-  try{ const res=await supa.from('jenis_produk').select('*').order('id'); if(res.data) data=res.data; }catch(e){}
-  if(!data){ const fallback=['SEGI EMPAT','SEGI EMPAT PARIS PREMIUM','PASHMINA','PASHMINA SHAWL']; data=fallback.map((n,i)=>({id:i,name:n})); }
-  $('jenisList').innerHTML=data.map(c=>'<span style="display:inline-block;border:1px solid var(--line);background:var(--bg);padding:4px 10px;margin:3px;font-size:9px">'+esc(c.name)+' <b style="cursor:pointer" onclick="delJenis(\''+c.id+'\',\''+esc(c.name)+'\')">x</b></span>').join('');
-  $('pJenis').innerHTML='<option value="">PILIH JENIS PRODUK</option>'+data.map(c=>'<option value="'+esc(c.name)+'">'+esc(c.name)+'</option>').join('');
-}
-window.addJenis=async()=>{
-  const v=$('jenisName').value.trim().toUpperCase(); if(!v) return;
-  try{ await supa.from('jenis_produk').insert({name:v}); }catch(e){ toast('TABEL JENIS_PRODUK BELUM ADA, BUAT DULU DI SUPABASE'); }
-  $('jenisName').value=''; await loadJenis(); toast(v+' DITAMBAH');
-};
+async function loadJenis(){let data=null; try{ const res=await supa.from('jenis_produk').select('*').order('id'); if(res.data) data=res.data; }catch(e){} if(!data){ const fallback=['SEGI EMPAT','SEGI EMPAT PARIS PREMIUM','PASHMINA','PASHMINA SHAWL']; data=fallback.map((n,i)=>({id:i,name:n})); } $('jenisList').innerHTML=data.map(c=>'<span style="display:inline-block;border:1px solid var(--line);background:var(--bg);padding:4px 10px;margin:3px;font-size:9px">'+esc(c.name)+' <b style="cursor:pointer" onclick="delJenis(\''+c.id+'\',\''+esc(c.name)+'\')">x</b></span>').join(''); $('pJenis').innerHTML='<option value="">PILIH JENIS PRODUK</option>'+data.map(c=>'<option value="'+esc(c.name)+'">'+esc(c.name)+'</option>').join('');}
+window.addJenis=async()=>{const v=$('jenisName').value.trim().toUpperCase(); if(!v) return; try{ await supa.from('jenis_produk').insert({name:v}); }catch(e){ toast('TABEL JENIS_PRODUK BELUM ADA, BUAT DULU DI SUPABASE'); } $('jenisName').value=''; await loadJenis(); toast(v+' DITAMBAH');};
 window.delJenis=async(id,name)=>{ showConfirm('HAPUS JENIS?',''+name+' akan hilang',async()=>{ try{ await supa.from('jenis_produk').delete().eq('id',id); }catch(e){} loadJenis(); toast('DIHAPUS'); }); };
 async function loadCats(){const {data}=await supa.from('categories').select('*');if(!data)return;$('catList').innerHTML=data.map(c=>'<span style="display:inline-block;border:1px solid var(--line);background:var(--bg);padding:4px 10px;margin:3px;font-size:9px">'+esc(c.name)+' <b style="cursor:pointer" onclick="delCat(\''+c.id+'\')">x</b></span>').join('');$('pCat').innerHTML='<option value="">PILIH BAHAN</option>'+data.map(c=>'<option value="'+esc(c.name)+'">'+esc(c.name)+'</option>').join('');}
 window.addCat=async()=>{const v=$('catName').value.trim();if(!v)return;await supa.from('categories').insert({name:v});$('catName').value='';loadCats();};
@@ -190,19 +139,7 @@ $('underGaleri').addEventListener('change',async e=>{for(let f of e.target.files
 function renderFaq(){let h='';faqSlots.forEach((f,i)=>{h+='<div class="slot"><div class="x" onclick="faqSlots.splice('+i+',1);renderFaq()">x</div><input class="input" placeholder="Q" value="'+esc(f.q)+'" oninput="faqSlots['+i+'].q=this.value"><textarea class="input" rows="2" placeholder="A" oninput="faqSlots['+i+'].a=this.value">'+esc(f.a)+'</textarea></div>'});$('faqWrap').innerHTML=h;}
 window.addFaq=()=>{faqSlots.push({q:'',a:''});renderFaq();};
 async function loadProducts(){const {data}=await supa.from('products').select('*').order('id',{ascending:false});$('prodCount').innerText=(data||[]).length;$('list').innerHTML=(data||[]).map(p=>'<div class="prod-card"><img src="'+p.image_url+'"><div style="padding:8px"><div style="font-size:10px">'+esc(p.name)+'</div><div style="font-size:8px;opacity:.6">'+esc((p.product_type||p.kategori_produk||'')+' | '+(p.category||''))+'</div><div style="font-size:12px">Rp'+Number(p.price).toLocaleString('id-ID')+'</div><div style="font-size:7px;opacity:.5;margin-top:4px">'+esc((p.undertone||[]).join(', '))+'</div><button class="btn-light" style="width:100%;margin-top:6px" onclick="editP(\''+p.id+'\')">EDIT</button><button class="btn-light" style="width:100%;margin-top:4px" onclick="delP(\''+p.id+'\')">HAPUS</button></div></div>').join('');window._p=data||[];}
-window.editP=async(id)=>{
-  const p=window._p.find(x=>String(x.id)===String(id));if(!p)return;
-  $('editId').value=p.id;$('pName').value=p.name;$('pPrice').value=p.price;$('pCat').value=p.category||'';$('pJenis').value=p.product_type||p.kategori_produk||'';$('pSize').value=p.size_info||'110x110cm';$('pFinish').value=p.finishing||'Laser Cut';$('pMaterialDetail').value=p.material_detail||'';$('pDesc').value=p.description||'';$('varInputs').innerHTML='';
-  const {data:vars}=await supa.from('product_variants').select('*').eq('product_id',id);
-  if(vars&&vars.length){
-    vars.forEach(v=>{
-      let under = v.undertone || v.undertone_arr || getUndertoneForColor(v.color_name);
-      if(typeof under==='string'){try{under=JSON.parse(under)}catch(e){under=[under]}}
-      addVarRow(v.color_name,v.image_url, v.stock??10, v.is_available??true, under);
-    });
-  }else initVar();
-  openTab('produk',document.querySelectorAll('.tab')[4]);window.scrollTo({top:0,behavior:'smooth'});toast('EDIT MODE - '+p.name);
-};
+window.editP=async(id)=>{const p=window._p.find(x=>String(x.id)===String(id));if(!p)return; $('editId').value=p.id;$('pName').value=p.name;$('pPrice').value=p.price;$('pCat').value=p.category||'';$('pJenis').value=p.product_type||p.kategori_produk||'';$('pSize').value=p.size_info||'110x110cm';$('pFinish').value=p.finishing||'Laser Cut';$('pMaterialDetail').value=p.material_detail||'';$('pDesc').value=p.description||'';$('varInputs').innerHTML=''; const {data:vars}=await supa.from('product_variants').select('*').eq('product_id',id); if(vars&&vars.length){vars.forEach(v=>{let under = v.undertone || v.undertone_arr || getUndertoneForColor(v.color_name); if(typeof under==='string'){try{under=JSON.parse(under)}catch(e){under=[under]}} addVarRow(v.color_name,v.image_url, v.stock??10, v.is_available??true, under);});}else initVar(); openTab('produk',document.querySelectorAll('.tab')[4]);window.scrollTo({top:0,behavior:'smooth'});toast('EDIT MODE - '+p.name);};
 window.delP=async(id)=>{showConfirm('HAPUS PRODUK?','Akan terhapus permanen',async()=>{await supa.from('products').delete().eq('id',id);loadProducts();toast('DIHAPUS');});};
 window.saveProd=async()=>{
  const btn=$('btnProd');if(btn.disabled) return;btn.disabled=true; btn.innerText='MENYIMPAN...';
@@ -259,11 +196,85 @@ async function cariOrigin(){const q=$('originSearch').value.trim();if(!q)return;
 window.pilihOrigin=(id,label)=>{tokoOriginId=id;tokoOriginLabel=label;$('curOrigin').innerText=label+' - '+id;$('originList').innerHTML='';};
 $('filePC').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;pcBase=await fileToBase64(f);$('prevPC').src=pcBase;$('prevPC').style.display='block';});
 $('fileHP').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;hpBase=await fileToBase64(f);$('prevHP').src=hpBase;$('prevHP').style.display='block';});
-window.saveToko=async()=>{const btn=$('btnToko'); if(btn.disabled) return;setBtnLoading('btnToko','statusToko',true,'MENYIMPAN BANNER...');try{const ups=[];if($('storeName').value)ups.push({key:'store_name',value:$('storeName').value});if($('waNumber').value)ups.push({key:'wa_number',value:$('waNumber').value});ups.push({key:'toko_origin_id',value:tokoOriginId},{key:'toko_origin_label',value:tokoOriginLabel});if(ups.length) await supa.from('settings').upsert(ups,{onConflict:'key'});if(pcBase){$('statusToko').innerText='UPLOAD BANNER PC...';const pcBlob=await (await fetch(pcBase)).blob();const fn='pc_'+Date.now()+'.jpg';const {error:e1}=await supa.storage.from('banners').upload(fn,pcBlob); if(e1) throw e1;const pcUrl=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;let hpUrl=pcUrl;if(hpBase){$('statusToko').innerText='UPLOAD BANNER HP...'; const hpBlob=await (await fetch(hpBase)).blob();const hfn='hp_'+Date.now()+'.jpg';await supa.storage.from('banners').upload(hfn,hpBlob);hpUrl=supa.storage.from('banners').getPublicUrl(hfn).data.publicUrl;}$('statusToko').innerText='SIMPAN DATABASE...';await supa.from('banners').update({is_active:false}).eq('is_active',true);await supa.from('banners').insert({title:$('bTitle').value||'BANNER',image_url:pcUrl,image_mobile_url:hpUrl,link_url:$('bLink').value||'produk.html',is_active:true});}$('statusToko').innerText='BERHASIL DISIMPAN'; toast('BANNER TERSIMPAN'); loadBanners();}catch(e){$('statusToko').innerText='ERROR: '+e.message; toast('GAGAL: '+e.message);} finally {setBtnLoading('btnToko','statusToko',false); setTimeout(()=>{$('statusToko').innerText=''},3000);}};
+
+// === FIX KHUSUS BANNER - SESUAI TABEL ASLI banner_pc_url & banner_hp_url ===
+window.saveToko=async()=>{
+  const btn=$('btnToko'); if(btn.disabled) return;
+  setBtnLoading('btnToko','statusToko',true,'MENYIMPAN BANNER...');
+  try{
+    const ups=[];
+    if($('storeName').value)ups.push({key:'store_name',value:$('storeName').value});
+    if($('waNumber').value)ups.push({key:'wa_number',value:$('waNumber').value});
+    ups.push({key:'toko_origin_id',value:tokoOriginId},{key:'toko_origin_label',value:tokoOriginLabel});
+    if(ups.length) await supa.from('settings').upsert(ups,{onConflict:'key'});
+
+    if(!pcBase &&!hpBase){
+      $('statusToko').innerText='PILIH BANNER DULU';
+      toast('PILIH FOTO BANNER PC/HP DULU');
+      setBtnLoading('btnToko','statusToko',false);
+      return;
+    }
+
+    $('statusToko').innerText='UPLOAD BANNER...';
+    let pcUrl=null, hpUrl=null;
+    const toBlob = async b64 => (await fetch(b64)).blob();
+
+    if(pcBase){
+      const blob=await toBlob(pcBase);
+      const fn='pc_'+Date.now()+'.jpg';
+      const {error}=await supa.storage.from('banners').upload(fn,blob,{contentType:'image/jpeg', upsert:true});
+      if(error) throw error;
+      pcUrl=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;
+    }
+    if(hpBase){
+      const blob=await toBlob(hpBase);
+      const fn='hp_'+Date.now()+'.jpg';
+      const {error}=await supa.storage.from('banners').upload(fn,blob,{contentType:'image/jpeg', upsert:true});
+      if(error) throw error;
+      hpUrl=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;
+    }
+    if(!hpUrl) hpUrl=pcUrl;
+    if(!pcUrl) pcUrl=hpUrl;
+
+    $('statusToko').innerText='SIMPAN DATABASE...';
+    await supa.from('banners').update({is_active:false}).eq('is_active',true);
+    const {error:errIns}=await supa.from('banners').insert({
+      banner_pc_url: pcUrl,
+      banner_hp_url: hpUrl,
+      is_active: true
+    });
+    if(errIns) throw errIns;
+
+    $('statusToko').innerText='BERHASIL DISIMPAN';
+    toast('BANNER TERSIMPAN');
+    pcBase=''; hpBase='';
+    $('prevPC').style.display='none';
+    $('prevHP').style.display='none';
+    loadBanners();
+  }catch(e){
+    $('statusToko').innerText='ERROR: '+e.message;
+    toast('GAGAL: '+e.message);
+  }finally{
+    setBtnLoading('btnToko','statusToko',false);
+    setTimeout(()=>{$('statusToko').innerText=''},3000);
+  }
+};
+
 window.saveKoleksi=async()=>{const btn=$('btnKoleksi'); if(btn.disabled) return;const list=koleksiSlots.filter(x=>x.url); if(!list.length){toast('TAMBAH FOTO DULU');return;}setBtnLoading('btnKoleksi','statusKoleksi',true,'MENYIMPAN...');try{let final=[];for(let i=0;i<list.length;i++){let v=list[i]; $('statusKoleksi').innerText=`UPLOAD ${i+1}/${list.length}...`;let url=v.url; if(String(url).startsWith('data:')){const blob=await (await fetch(url)).blob();const fn='k_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';const {error}=await supa.storage.from('banners').upload(fn,blob); if(error) throw error; url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}final.push({url,title:v.title||''});}$('statusKoleksi').innerText='SIMPAN DATABASE...';await supa.from('settings').upsert({key:'home_koleksi_terlaris',value:JSON.stringify(final)},{onConflict:'key'});$('statusKoleksi').innerText=`BERHASIL ${final.length} FOTO`; toast(`BEST ${final.length} TERSIMPAN`);}catch(e){$('statusKoleksi').innerText='ERROR: '+e.message; toast('GAGAL');} finally {setBtnLoading('btnKoleksi','statusKoleksi',false); setTimeout(()=>{$('statusKoleksi').innerText=''},3000);}};
 window.saveUndertone=async()=>{const btn=$('btnUnder'); if(btn.disabled) return;const list=undertoneSlots.filter(x=>x.url); if(!list.length){toast('TAMBAH FOTO DULU');return;}setBtnLoading('btnUnder','statusUnder',true,'MENYIMPAN...');try{let final=[];for(let i=0;i<list.length;i++){let v=list[i]; $('statusUnder').innerText=`UPLOAD ${i+1}/${list.length}...`;let url=v.url; if(String(url).startsWith('data:')){const blob=await (await fetch(url)).blob();const fn='u_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';const {error}=await supa.storage.from('banners').upload(fn,blob); if(error) throw error; url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}final.push({url,title:v.title||''});}$('statusUnder').innerText='SIMPAN DATABASE...';await supa.from('settings').upsert({key:'home_undertone_images',value:JSON.stringify(final)},{onConflict:'key'});$('statusUnder').innerText=`BERHASIL ${final.length} FOTO`; toast(`UNDERTONE ${final.length} TERSIMPAN`);}catch(e){$('statusUnder').innerText='ERROR: '+e.message; toast('GAGAL');} finally {setBtnLoading('btnUnder','statusUnder',false); setTimeout(()=>{$('statusUnder').innerText=''},3000);}};
 window.saveFaq=async()=>{const btn=$('btnFaq'); if(btn.disabled) return;const final=faqSlots.filter(x=>x.q&&x.a); if(!final.length){toast('ISI FAQ DULU');return;}setBtnLoading('btnFaq','statusFaq',true,'MENYIMPAN...');try{$('statusFaq').innerText='SIMPAN DATABASE...';await supa.from('settings').upsert({key:'home_faq_list',value:JSON.stringify(final)},{onConflict:'key'});$('statusFaq').innerText=`BERHASIL ${final.length} FAQ`; toast(`FAQ ${final.length} TERSIMPAN`);}catch(e){$('statusFaq').innerText='ERROR: '+e.message;} finally {setBtnLoading('btnFaq','statusFaq',false); setTimeout(()=>{$('statusFaq').innerText=''},3000);}};
-async function loadBanners(){const {data}=await supa.from('banners').select('*').order('id',{ascending:false});$('bannerList').innerHTML=(data||[]).map(b=>'<div style="border:1px solid var(--line);display:flex;gap:8px;padding:8px;margin-top:6px;background:#fff"><img src="'+b.image_url+'" style="width:56px;height:36px;object-fit:cover"><div style="flex:1;font-size:9px">'+esc(b.title)+'<br><span style="opacity:.5">'+(b.is_active?'AKTIF':'-')+'</span></div><button class="btn-light" style="width:auto" onclick="aktifB(\''+b.id+'\')">AKTIF</button><button class="btn-light" style="width:auto" onclick="hapusB(\''+b.id+'\')">HAPUS</button></div>').join('');}
+
+// === FIX KHUSUS LOAD BANNER - SESUAI TABEL ASLI ===
+async function loadBanners(){
+  const {data}=await supa.from('banners').select('*').order('created_at',{ascending:false});
+  $('bannerList').innerHTML=(data||[]).map(b=>`
+    <div style="border:1px solid var(--line);display:flex;gap:8px;padding:8px;margin-top:6px;background:#fff">
+      <img src="${b.banner_pc_url}" style="width:56px;height:36px;object-fit:cover">
+      <div style="flex:1;font-size:9px">BANNER<br><span style="opacity:.5">${b.is_active?'AKTIF':'-'}</span></div>
+      <button class="btn-light" style="width:auto" onclick="aktifB('${b.id}')">AKTIF</button>
+      <button class="btn-light" style="width:auto" onclick="hapusB('${b.id}')">HAPUS</button>
+    </div>`).join('');
+}
 window.aktifB=async(id)=>{await supa.from('banners').update({is_active:false}).eq('is_active',true);await supa.from('banners').update({is_active:true}).eq('id',id);loadBanners();toast('AKTIF');};
 window.hapusB=async(id)=>{showConfirm('HAPUS BANNER?','Tidak bisa dikembalikan',async()=>{await supa.from('banners').delete().eq('id',id);loadBanners();toast('HAPUS');});};
 init();
