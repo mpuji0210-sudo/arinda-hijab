@@ -26,19 +26,19 @@
 <div id="msg" class="small" style="color:#B42318;opacity:1;display:none"></div>
 </div>
 <script>
-const SUPABASE_URL = 'https://qjgevvizqeebtdqcbqmt.supabase.co/rest/v1/';
+const SUPABASE_URL = 'https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPABASE_ANON = 'sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 async function doLogin(){
   const btn=document.getElementById('btn'); const m=document.getElementById('msg');
   m.style.display='none';
   btn.innerText='CEK...'; btn.disabled=true;
   try {
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
+    const { error } = await db.auth.signInWithPassword({
       email: document.getElementById('email').value.trim(),
       password: document.getElementById('pass').value.trim()
     });
-    if(error){ throw error; }
+    if(error) throw error;
     location.href='admin.html';
   } catch(err){
     m.style.display='block'; m.innerText='GAGAL: '+err.message; btn.innerText='LOGIN AMAN'; btn.disabled=false;
