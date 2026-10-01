@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Admin Order - ARINDA</title>
+<title>Admin Order - ARINDA - SECURE V10</title>
+<meta name="robots" content="noindex, nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -15,11 +16,23 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
 </head>
 <body>
 
+<script>
+// === KUNCI ANTI BOBOL V10 - RESET 0 ===
+const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
+const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
+const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
+(async()=>{
+  const { data:{ session } } = await supa.auth.getSession();
+  if(!session) location.href='login.html';
+})();
+function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+</script>
+
 <nav style="position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9">
   <div style="max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
     <div>
       <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px">ARINDA</div>
-      <span style="display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM</span>
+      <span style="display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM - SECURE V10</span>
     </div>
     <button onclick="logout()" style="padding:10px 18px;background:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer">LOGOUT</button>
   </div>
@@ -31,7 +44,7 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
       <div style="font-family:'Cormorant Garamond';font-size:18px;letter-spacing:1px">Kelola Rekening & QRIS</div>
       <button onclick="loadPayments()" class="btn-white" style="height:32px;padding:0 12px">REFRESH</button>
     </div>
-    <div style="font-size:9px;letter-spacing:2px;opacity:.5;margin-top:6px">GANTI NO REK </div>
+    <div style="font-size:9px;letter-spacing:2px;opacity:.5;margin-top:6px">GANTI NO REK - RESET 0</div>
     <div id="payListAdmin" style="margin-top:14px;display:flex;flex-direction:column;gap:8px"></div>
     <div style="border-top:1px solid #F2F2F2;margin-top:16px;padding-top:14px">
       <div style="font-size:9px;letter-spacing:2px;margin-bottom:8px">TAMBAH / EDIT METODE BARU</div>
@@ -49,7 +62,6 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
     </div>
   </div>
 
-  <!-- CARD BARU: SECURITY LAPORAN - GANTI PIN TANPA UBAH KODE -->
   <div class="card" style="padding:16px;margin-bottom:20px;border:1px dashed #000">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div style="font-family:'Cormorant Garamond';font-size:18px;letter-spacing:1px">🔒 Security Laporan</div>
@@ -65,7 +77,7 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
 
   <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px">
     <div>
-      <div style="font-family:'Cormorant Garamond';font-size:26px;font-weight:300;letter-spacing:1px">Pesanan Masuk</div>
+      <div style="font-family:'Cormorant Garamond';font-size:26px;font-weight:300;letter-spacing:1px">Pesanan Masuk - RESET 0</div>
       <div id="paySummary" style="font-size:9px;letter-spacing:3px;opacity:.4;margin-top:4px">BCA 8740376161 - ARINDA ADMIN</div>
     </div>
     <div id="count" style="font-size:9px;letter-spacing:2px;opacity:.4">0 PESANAN</div>
@@ -73,54 +85,25 @@ body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;-webk
   <div id="list" style="display:flex;flex-direction:column;gap:12px"></div>
 </div>
 
-<footer style="margin-top:32px;padding:48px 16px 40px;text-align:center;border-top:1px solid #E9E9E9;background:#FFFFFF">
-  <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:18px">ARINDA</div>
-  <div style="font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:6px">HIJAB PREMIUM</div>
-  <div style="margin-top:18px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA HIJAB PREMIUM</div>
-</footer>
-
 <div id="delModal" onclick="if(event.target.id==='delModal')closeDel()">
   <div style="background:#FFFEFB;width:100%;max-width:400px;border-radius:32px;border:1px solid #EFE9E0;padding:0;box-shadow:0 24px 80px rgba(0,0,0,0.22);overflow:hidden;animation:lvSlide.45s cubic-bezier(0.16,1,0.3,1)">
-    <div style="padding:28px 26px 0 26px">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start">
-        <div style="width:52px;height:52px;border-radius:50%;background:#F6F0E8;border:1px solid #E8E0D0;display:flex;align-items:center;justify-content:center">🗑️</div>
-        <div style="font-size:8px;letter-spacing:3px;opacity:.35;border:1px solid #E8E0D0;padding:5px 10px;border-radius:20px;background:#fff">PERMANEN</div>
-      </div>
-      <div style="font-family:'Cormorant Garamond';font-size:26px;margin-top:18px">Hapus pesanan ini?</div>
-    </div>
+    <div style="padding:28px 26px 0 26px"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div style="width:52px;height:52px;border-radius:50%;background:#F6F0E8;border:1px solid #E8E0D0;display:flex;align-items:center;justify-content:center">🗑️</div><div style="font-size:8px;letter-spacing:3px;opacity:.35;border:1px solid #E8E0D0;padding:5px 10px;border-radius:20px;background:#fff">PERMANEN</div></div><div style="font-family:'Cormorant Garamond';font-size:26px;margin-top:18px">Hapus pesanan ini?</div></div>
     <div style="padding:18px 26px 0 26px;font-size:12.5px;line-height:1.7;opacity:.65">Pesanan akan dihapus permanen dari database. Pastikan sudah di-WA dan selesai ya kak.</div>
-    <div style="margin-top:26px;padding:18px 22px;background:#FAF7F2;border-top:1px solid #F0EBE3;display:flex;gap:10px">
-      <button onclick="closeDel()" style="flex:1;height:48px;background:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer">BATAL</button>
-      <button onclick="confirmDel()" id="btnDel" style="flex:1;height:48px;background:#111;color:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer">YA, HAPUS</button>
-    </div>
+    <div style="margin-top:26px;padding:18px 22px;background:#FAF7F2;border-top:1px solid #F0EBE3;display:flex;gap:10px"><button onclick="closeDel()" style="flex:1;height:48px;background:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer">BATAL</button><button onclick="confirmDel()" id="btnDel" style="flex:1;height:48px;background:#111;color:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer">YA, HAPUS</button></div>
   </div>
 </div>
 
 <div id="appModal" onclick="if(event.target.id==='appModal')closeApp()">
   <div style="background:#FFFEFB;width:100%;max-width:380px;border-radius:28px;border:1px solid #EFE9E0;padding:0;box-shadow:0 24px 80px rgba(0,0,0,0.22);overflow:hidden;animation:lvSlide.35s cubic-bezier(0.16,1,0.3,1)">
-    <div style="padding:26px 24px 0 24px">
-      <div id="appIcon" style="width:46px;height:46px;border-radius:50%;background:#F6F0E8;border:1px solid #E8E0D0;display:flex;align-items:center;justify-content:center;font-size:20px">⚠️</div>
-      <div id="appTitle" style="font-family:'Cormorant Garamond';font-size:22px;margin-top:16px">Perhatian</div>
-    </div>
+    <div style="padding:26px 24px 0 24px"><div id="appIcon" style="width:46px;height:46px;border-radius:50%;background:#F6F0E8;border:1px solid #E8E0D0;display:flex;align-items:center;justify-content:center;font-size:20px">⚠️</div><div id="appTitle" style="font-family:'Cormorant Garamond';font-size:22px;margin-top:16px">Perhatian</div></div>
     <div id="appMsg" style="padding:12px 24px 0 24px;font-size:12.5px;line-height:1.7;opacity:.65">Pesan</div>
-    <div style="margin-top:22px;padding:16px 20px;background:#FAF7F2;border-top:1px solid #F0EBE3;display:flex;gap:10px">
-      <button id="appCancel" onclick="closeApp()" style="flex:1;height:46px;background:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer;display:none">BATAL</button>
-      <button id="appOk" onclick="closeApp()" style="flex:1;height:46px;background:#111;color:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer">OKE</button>
-    </div>
+    <div style="margin-top:22px;padding:16px 20px;background:#FAF7F2;border-top:1px solid #F0EBE3;display:flex;gap:10px"><button id="appCancel" onclick="closeApp()" style="flex:1;height:46px;background:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer;display:none">BATAL</button><button id="appOk" onclick="closeApp()" style="flex:1;height:46px;background:#111;color:#fff;border:1px solid #111;border-radius:14px;font-size:9px;letter-spacing:2px;cursor:pointer">OKE</button></div>
   </div>
 </div>
 
 <script>
-const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
-const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
-const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 let delId=null;
 let pendingDeletePayIndex=null;
-
-const isLogin = localStorage.getItem('arinda_admin')==='login' || localStorage.getItem('admin_login')==='true';
-if(!isLogin){ window.location.href='login.html'; }
-
-// === MODAL PREMIUM PENGGANTI ALERT/CONFIRM ===
 function openApp({title,msg,icon='⚠️',showCancel=false,okText='OKE',onOk=null}){
   document.getElementById('appTitle').innerText=title;
   document.getElementById('appMsg').innerText=msg;
@@ -131,7 +114,6 @@ function openApp({title,msg,icon='⚠️',showCancel=false,okText='OKE',onOk=nul
   document.getElementById('appOk').onclick=()=>{ closeApp(); if(onOk) onOk(); };
 }
 function closeApp(){ document.getElementById('appModal').classList.remove('show'); pendingDeletePayIndex=null; }
-
 let payMethods=[];
 async function loadPayments(){
   document.getElementById('payStatus').innerText='Loading...';
@@ -151,8 +133,8 @@ function renderPayments(){
   el.innerHTML=payMethods.map((m,i)=>`
     <div style="border:1px solid #E9E9E9;padding:10px;display:flex;justify-content:space-between;align-items:center;background:${m.aktif?'#fff':'#FAFAFA'}">
       <div>
-        <div style="font-size:11px;font-weight:600">${m.bank} - ${m.no_rek}</div>
-        <div style="font-size:10px;opacity:.5">a.n ${m.atas_nama} ${m.qr_url? ' • ada QR':''}</div>
+        <div style="font-size:11px;font-weight:600">${esc(m.bank)} - ${esc(m.no_rek)}</div>
+        <div style="font-size:10px;opacity:.5">a.n ${esc(m.atas_nama)} ${m.qr_url? ' • ada QR':''}</div>
       </div>
       <div style="display:flex;gap:6px">
         <button onclick="togglePay(${i})" style="font-size:8px;padding:6px 8px;border:1px solid #000;background:${m.aktif?'#000':'#fff'};color:${m.aktif?'#fff':'#000'}">${m.aktif?'AKTIF':'OFF'}</button>
@@ -167,10 +149,7 @@ function addPayMethod(){
   const r=document.getElementById('p_rek').value.trim();
   const n=document.getElementById('p_nama').value.trim();
   const q=document.getElementById('p_qr').value.trim();
-  if(!b||!r){
-    openApp({title:'Belum Lengkap',msg:'Bank & No Rek wajib diisi kak.',icon:'⚠️',okText:'OKE, ISI DULU'});
-    return;
-  }
+  if(!b||!r){ openApp({title:'Belum Lengkap',msg:'Bank & No Rek wajib diisi kak.',icon:'⚠️',okText:'OKE, ISI DULU'}); return; }
   payMethods.push({bank:b,no_rek:r,atas_nama:n||'ARINDA',qr_url:q,aktif:true});
   renderPayments();
   document.getElementById('p_bank').value='';document.getElementById('p_rek').value='';document.getElementById('p_nama').value='';document.getElementById('p_qr').value='';
@@ -178,31 +157,16 @@ function addPayMethod(){
 function removePay(i){
   pendingDeletePayIndex=i;
   const m=payMethods[i];
-  openApp({
-    title:'Hapus Metode?',
-    msg:`Hapus ${m.bank} - ${m.no_rek} a.n ${m.atas_nama}? Data akan hilang dari bayar.html.`,
-    icon:'🗑️',
-    showCancel:true,
-    okText:'YA, HAPUS',
-    onOk:()=>{
-      payMethods.splice(pendingDeletePayIndex,1);
-      renderPayments();
-    }
-  });
+  openApp({title:'Hapus Metode?',msg:`Hapus ${m.bank} - ${m.no_rek} a.n ${m.atas_nama}? Data akan hilang dari bayar.html.`,icon:'🗑️',showCancel:true,okText:'YA, HAPUS',onOk:()=>{payMethods.splice(pendingDeletePayIndex,1);renderPayments();}});
 }
 function togglePay(i){ payMethods[i].aktif=!payMethods[i].aktif; renderPayments(); }
 async function savePayments(){
   document.getElementById('payStatus').innerText='Menyimpan...';
   const {error}=await supa.from('settings').upsert({key:'payment_methods', value: JSON.stringify(payMethods) },{onConflict:'key'});
   if(error){ openApp({title:'Gagal Simpan',msg:error.message,icon:'❌'}); document.getElementById('payStatus').innerText='Gagal: '+error.message; }
-  else {
-    document.getElementById('payStatus').innerText='✓ Tersimpan! bayar.html otomatis update';
-    openApp({title:'Berhasil',msg:'Rekening tersimpan & bayar.html otomatis update kak.',icon:'✅',okText:'MANTAP'});
-  }
+  else { document.getElementById('payStatus').innerText='✓ Tersimpan! bayar.html otomatis update'; openApp({title:'Berhasil',msg:'Rekening tersimpan & bayar.html otomatis update kak.',icon:'✅',okText:'MANTAP'}); }
 }
 loadPayments();
-
-// === FITUR BARU: GANTI PIN LAPORAN TANPA UBAH KODE ===
 async function loadLaporanPin(){
   document.getElementById('pinStatus').innerText='Loading...';
   const {data} = await supa.from('settings').select('value').eq('key','laporan_pin').maybeSingle();
@@ -211,50 +175,41 @@ async function loadLaporanPin(){
     p = String(p).replace(/"/g,'');
     document.getElementById('pinStatus').innerText='PIN sekarang: '+p+' (jangan kasih ke karyawan)';
     document.getElementById('new_pin').value=p;
-  } else {
-    document.getElementById('pinStatus').innerText='Belum ada PIN, default: 1234';
-  }
+  } else { document.getElementById('pinStatus').innerText='Belum ada PIN, default: 1234'; }
 }
 async function saveLaporanPin(){
   const pin=document.getElementById('new_pin').value.trim();
-  if(!pin || pin.length<4){
-    openApp({title:'PIN pendek',msg:'Minimal 4 karakter ya kak.',icon:'⚠️',okText:'OKE'});
-    return;
-  }
+  if(!pin || pin.length<4){ openApp({title:'PIN pendek',msg:'Minimal 4 karakter ya kak.',icon:'⚠️',okText:'OKE'}); return; }
   document.getElementById('pinStatus').innerText='Menyimpan...';
   const {error}=await supa.from('settings').upsert({key:'laporan_pin', value: JSON.stringify({pin:pin}) },{onConflict:'key'});
   if(error){ document.getElementById('pinStatus').innerText='Gagal: '+error.message; openApp({title:'Gagal',msg:error.message,icon:'❌'}); }
-  else {
-    document.getElementById('pinStatus').innerText='✓ PIN baru tersimpan: '+pin;
-    openApp({title:'Berhasil',msg:'PIN laporan sekarang: '+pin+' • laporan.html otomatis pakai PIN baru',icon:'✅',okText:'MANTAP'});
-  }
+  else { document.getElementById('pinStatus').innerText='✓ PIN baru tersimpan: '+pin; openApp({title:'Berhasil',msg:'PIN laporan sekarang: '+pin,icon:'✅',okText:'MANTAP'}); }
 }
 loadLaporanPin();
-
 async function loadOrders(){
   const {data} = await supa.from('orders').select('*').order('created_at',{ascending:false});
   const list=document.getElementById('list');
   const count=document.getElementById('count');
   if(!data || data.length===0){
     count.innerText='0 PESANAN';
-    list.innerHTML=`<div style="text-align:center;padding:100px 20px;border:1px solid #E9E9E9;background:#FAFAFA"><div style="font-family:'Cormorant Garamond';font-size:20px">Belum ada pesanan</div><div style="font-size:11px;opacity:.4;margin-top:10px">Pesanan akan muncul di sini</div></div>`; return;
+    list.innerHTML=`<div style="text-align:center;padding:100px 20px;border:1px solid #E9E9E9;background:#FAFAFA"><div style="font-family:'Cormorant Garamond';font-size:20px">Belum ada pesanan - RESET 0</div><div style="font-size:11px;opacity:.4;margin-top:10px">Pesanan akan muncul di sini</div></div>`; return;
   }
   count.innerText=data.length+' PESANAN';
   list.innerHTML=data.map(o=>{
     const items = o.items? (typeof o.items==='string'? JSON.parse(o.items): o.items) : [];
-    const itemText = Array.isArray(items)? items.map(i=>`${i.warna||i.name} x${i.qty||1}`).join(', ') : (o.produk||'-');
+    const itemText = Array.isArray(items)? items.map(i=>`${esc(i.warna||i.name)} x${esc(i.qty||1)}`).join(', ') : esc(o.produk||'-');
     return `<div class="card" style="padding:16px">
       <div style="display:flex;justify-content:space-between;align-items:flex-start">
-        <div><div style="font-size:13px;font-weight:600">${o.customer_name||'-'} - ${o.kota||'-'}</div><div style="font-size:10px;opacity:.5;margin-top:4px">${new Date(o.created_at).toLocaleString('id-ID')} • WA: ${o.wa||'-'}</div></div>
-        <div style="font-size:10px;padding:4px 8px;border:1px solid #000;background:#000;color:#fff;letter-spacing:1px">${o.status||'BARU'}</div>
+        <div><div style="font-size:13px;font-weight:600">${esc(o.customer_name||'-')} - ${esc(o.kota||'-')}</div><div style="font-size:10px;opacity:.5;margin-top:4px">${esc(new Date(o.created_at).toLocaleString('id-ID'))} • WA: ${esc(o.wa||'-')}</div></div>
+        <div style="font-size:10px;padding:4px 8px;border:1px solid #000;background:#000;color:#fff;letter-spacing:1px">${esc(o.status||'BARU')}</div>
       </div>
       <div style="margin-top:12px;font-size:11px;line-height:1.6;border-top:1px solid #F2F2F2;padding-top:10px">
-        <div><span style="opacity:.5">Alamat:</span> ${o.alamat||'-'}</div>
+        <div><span style="opacity:.5">Alamat:</span> ${esc(o.alamat||'-')}</div>
         <div style="margin-top:6px"><span style="opacity:.5">Produk:</span> ${itemText}</div>
         <div style="margin-top:10px;display:flex;justify-content:space-between;font-weight:700;font-size:13px"><span>TOTAL</span><span>Rp${Number(o.total||0).toLocaleString('id-ID')}</span></div>
       </div>
       <div style="display:flex;gap:8px;margin-top:12px">
-        <button onclick="waCustomer('${o.wa||''}','${o.customer_name||''}')" class="btn-white" style="flex:1">CHAT WA</button>
+        <button onclick="waCustomer('${esc(o.wa||'') }','${esc(o.customer_name||'') }')" class="btn-white" style="flex:1">CHAT WA</button>
         <button onclick="openDel('${o.id}')" class="btn-black" style="flex:1">SELESAI / HAPUS</button>
       </div>
     </div>`;
@@ -267,17 +222,17 @@ async function confirmDel(){
   document.getElementById('btnDel').innerText='MENGHAPUS...';
   await supa.from('orders').delete().eq('id',delId);
   closeDel(); loadOrders();
+  document.getElementById('btnDel').innerText='YA, HAPUS';
 }
 function waCustomer(wa,nama){
   if(!wa){return}
   let n=wa.replace(/[^0-9]/g,''); if(n.startsWith('0')) n='62'+n.slice(1);
-  window.open(`https://wa.me/${n}?text=Halo ${nama}, pesanan ARINDA sudah kami terima ya kak`,'_blank');
+  window.open(`https://wa.me/${n}?text=Halo ${esc(nama)}, pesanan ARINDA sudah kami terima ya kak`,'_blank');
 }
-function logout(){
-  localStorage.removeItem('admin_login');
-  localStorage.removeItem('arinda_admin');
-  localStorage.removeItem('arinda_login_time');
-  window.location.href='login.html';
+async function logout(){
+  await supa.auth.signOut();
+  localStorage.clear();
+  location.href='login.html';
 }
 loadOrders();
 </script>
