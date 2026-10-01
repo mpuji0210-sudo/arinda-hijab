@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADD JENIS PRODUK</title>
+<title>ADMIN ARINDA - SECURE V10</title>
 <meta name="robots" content="noindex, nofollow">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
@@ -34,16 +34,19 @@ textarea.input{border:1px solid var(--line);padding:10px;background:var(--bg);re
 .under-per-variant{display:flex;gap:6px;flex-wrap:wrap;background:#111;padding:8px;border-radius:8px;margin-top:8px}
 .under-per-variant label{font-size:8px;display:flex;gap:4px;align-items:center;background:#fff;color:#111;padding:5px 8px;border-radius:20px;cursor:pointer;letter-spacing:1px}
 </style></head><body>
+
 <script>
-// === KUNCI AMAN BARU - HANYA INI YANG DITAMBAH DI ATAS ===
-const _guard = supabase.createClient('https://qjgevvizqeebtdcqbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
+// === KUNCI ANTI BOBOL V10 - FIX TYPO & RESET 0 ===
+const SUPA_URL = 'https://qjgevvizqeebtdqcbqmt.supabase.co';
+const SUPA_KEY = 'sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
+const _guard = window.supabase.createClient(SUPA_URL, SUPA_KEY);
 (async()=>{
   const { data:{ session } } = await _guard.auth.getSession();
   if(!session) location.href='login.html';
 })();
 </script>
 
-<header><div class="logo">ARINDA</div><button onclick="localStorage.clear(); _guard.auth.signOut().then(()=>location.href='login.html')" style="background:none;border:1px solid var(--line);padding:6px 12px;font-size:8px;letter-spacing:2px;cursor:pointer">LOGOUT</button></header>
+<header><div class="logo">ARINDA - RESET 0</div><button onclick="_guard.auth.signOut().then(()=>{localStorage.clear(); location.href='login.html'})" style="background:none;border:1px solid var(--line);padding:6px 12px;font-size:8px;letter-spacing:2px;cursor:pointer">LOGOUT</button></header>
 <div class="tabs"><div class="tab active" onclick="openTab('toko',this)">BANNER</div><div class="tab" onclick="openTab('koleksi',this)">BEST</div><div class="tab" onclick="openTab('undertone',this)">UNDERTONE</div><div class="tab" onclick="openTab('faq',this)">FAQ</div><div class="tab" onclick="openTab('produk',this)">PRODUK</div></div>
 <div class="wrap">
 <div id="tab-toko"><div class="card"><h3>BANNER</h3><input id="storeName" class="input" placeholder="NAMA TOKO"><input id="waNumber" class="input" placeholder="WA"><div style="font-size:9px;letter-spacing:2px;margin-top:12px;opacity:.5">ORIGIN: <span id="curOrigin">-</span></div><div style="display:flex;gap:8px"><input id="originSearch" class="input" placeholder="KECAMATAN"><button class="btn" style="width:80px;margin:0" onclick="cariOrigin()">CARI</button></div><div id="originList"></div><hr style="border:none;border-top:1px solid var(--line);margin:16px 0"><input type="file" id="filePC" accept="image/*" style="display:none"><label for="filePC" class="file-btn">BANNER PC</label><img id="prevPC" style="width:100%;height:180px;object-fit:cover;display:none;margin-top:8px;border:1px solid var(--line)"><input type="file" id="fileHP" accept="image/*" style="display:none"><label for="fileHP" class="file-btn" style="margin-top:12px">BANNER HP</label><img id="prevHP" style="width:100%;height:180px;object-fit:cover;display:none;margin-top:8px;border:1px solid var(--line)"><input id="bTitle" class="input" value="ELEGANCE IN EVERY LAYER"><input id="bLink" class="input" value="produk.html"><div id="bannerList" style="margin-top:12px"></div><button class="btn" id="btnToko" onclick="saveToko()">SIMPAN</button><div id="statusToko" class="save-status"></div></div></div>
@@ -51,7 +54,7 @@ const _guard = supabase.createClient('https://qjgevvizqeebtdcqbqmt.supabase.co',
 <div id="tab-undertone" class="hidden"><div class="card"><h3>UNDERTONE</h3><input type="file" id="underGaleri" accept="image/*" multiple style="display:none"><label for="underGaleri" class="file-btn">+ GALERI</label><div id="undertoneWrap" style="margin-top:10px"></div><button class="btn-line" onclick="addUndertone()">+ SLOT</button><button class="btn" id="btnUnder" onclick="saveUndertone()">SIMPAN</button><div id="statusUnder" class="save-status"></div></div></div>
 <div id="tab-faq" class="hidden"><div class="card"><h3>FAQ</h3><div id="faqWrap"></div><button class="btn-line" onclick="addFaq()">+ FAQ</button><button class="btn" id="btnFaq" onclick="saveFaq()">SIMPAN</button><div id="statusFaq" class="save-status"></div></div></div>
 <div id="tab-produk" class="hidden">
-<div class="card" style="border-color:var(--black)"><h3>PRODUK</h3>
+<div class="card" style="border-color:var(--black)"><h3>PRODUK - RESET 0</h3>
 <input type="hidden" id="editId"><input id="pName" class="input" placeholder="NAMA PRODUK ex: Paris Premium Segiempat">
 <input id="pPrice" type="number" class="input" placeholder="HARGA ex: 45000">
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
@@ -93,7 +96,7 @@ const _guard = supabase.createClient('https://qjgevvizqeebtdcqbqmt.supabase.co',
 <div id="toast"></div>
 <div id="confirmModal"><div class="confirm-box"><div id="confirmTitle"></div><div id="confirmDesc"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px"><button onclick="closeConfirm()" style="padding:12px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-size:9px;letter-spacing:2px">BATAL</button><button id="confirmOk" style="padding:12px;background:#111;color:#fff;border:none;cursor:pointer;font-size:9px;letter-spacing:2px">YA, HAPUS</button></div></div></div>
 <script>
-const supa=supabase.createClient('https://qjgevvizqeebtdcqbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
+const supa=window.supabase.createClient(SUPA_URL, SUPA_KEY);
 let tokoOriginId="17523",tokoOriginLabel="CENGKARENG BARAT";let pcBase='',hpBase='';
 let koleksiSlots=[{url:"",title:""}];let undertoneSlots=[{url:"",title:""}];let faqSlots=[{q:'Apakah menerawang?',a:'Tidak.'}];
 let masterColorsCache = [];
@@ -122,7 +125,7 @@ function getUndertoneForColor(cName){
   return ['NEUTRAL'];
 }
 function aggregateUndertone(){
-  const rows=[...document.querySelectorAll('#varInputs .slot')];
+  const rows=[...document.querySelectorAll('#varInputs.slot')];
   let all = new Set();
   rows.forEach(r=>{
     let checks=[...r.querySelectorAll('.under-check:checked')].map(c=>c.value);
@@ -207,7 +210,7 @@ window.saveProd=async()=>{
  const jenisVal=$('pJenis').value; const bahanVal=$('pCat').value;
  if(!jenisVal){toast('PILIH JENIS PRODUK DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
  if(!bahanVal){toast('PILIH BAHAN DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
- const rows=[...document.querySelectorAll('#varInputs .slot')];if(!rows.length){toast('TAMBAH WARNA DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
+ const rows=[...document.querySelectorAll('#varInputs.slot')];if(!rows.length){toast('TAMBAH WARNA DULU');btn.disabled=false;btn.innerText='SIMPAN PRODUK';return;}
  $('saveStatus').innerText='PROSES '+rows.length+' WARNA...';
  let finalVars=[];
  for(let idx=0; idx<rows.length; idx++){
