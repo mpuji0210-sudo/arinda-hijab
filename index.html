@@ -181,7 +181,29 @@ const underData={cool:{desc:'<b>COOL</b> — Ciri khas visual:Pembuluh darah cen
 function setUndertone(t){document.querySelectorAll('[id^="u-"]').forEach(b=>{b.style.background='#fff';b.style.color='#111'});const cur=document.getElementById('u-'+t);if(cur){cur.style.background='#111';cur.style.color='#fff';}const d=underData[t];const res=document.getElementById('uResult');if(res){res.innerHTML=d.desc+` <br><a href="produk.html?undertone=${esc(d.col)}" style="font-size:8px;letter-spacing:3px;color:#111;text-decoration:none;border-bottom:1px solid #111;margin-top:6px;display:inline-block">LIHAT ${esc(d.col)} →</a>`;}}
 async function init(){
   try{
-    // === FIX NAMA TOKO AENI OTOMATIS DARI SUPA ===
+    // === FIX AENI ANTI-KEDIP ===
+    const LS_KEY = 'store_name_cache';
+    const cached = localStorage.getItem(LS_KEY);
+    const applyName = (val)=>{
+      if(!val) return;
+      const name = val.toUpperCase();
+      document.title = val;
+      const logo = document.getElementById('storeLogo');
+      if(logo) logo.innerHTML = name + '<span>HIJAB PREMIUM</span>';
+      const footLogo = document.getElementById('footerLogo');
+      if(footLogo) footLogo.innerText = name;
+      const footCopy = document.getElementById('footerCopy');
+      if(footCopy) footCopy.innerText = '© 2026 ' + val + ' HIJAB PREMIUM';
+    };
+    if(cached) applyName(cached); // langsung tampil dari cache, gak kedip
+    try{
+      const {data:sd} = await supabaseClient.from('settings').select('value').eq('key','store_name').single();
+      if(sd && sd.value){
+        localStorage.setItem(LS_KEY, sd.value);
+        applyName(sd.value);
+      }
+    }catch(e){}
+    // === END FIX ===   
     try{
       const {data:sd} = await supabaseClient.from('settings').select('value').eq('key','store_name').single();
       if(sd && sd.value){
