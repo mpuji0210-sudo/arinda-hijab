@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADMIN ARINDA - OWNER ONLY V10</title>
+<title>ADMIN ARINDA </title>
 <meta name="robots" content="noindex, nofollow">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -32,7 +32,7 @@ const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const _guard=window.supabase.createClient(SUPA_URL,SUPA_KEY);
 (async()=>{const {data:{session}}=await _guard.auth.getSession();if(!session)location.href='login.html';})();
 </script>
-<header><div class="logo">ARINDA - OWNER ONLY</div><button onclick="_guard.auth.signOut().then(()=>{localStorage.clear();location.href='login.html'})" style="background:none;border:1px solid #EDE8E1;padding:6px 12px;font-size:8px;letter-spacing:2px;cursor:pointer">LOGOUT</button></header>
+<header><div class="logo">ARINDA </div><button onclick="_guard.auth.signOut().then(()=>{localStorage.clear();location.href='login.html'})" style="background:none;border:1px solid #EDE8E1;padding:6px 12px;font-size:8px;letter-spacing:2px;cursor:pointer">LOGOUT</button></header>
 <div class="tabs">
 <div class="tab active" onclick="openTab('toko',this)">BANNER & TOKO</div>
 <div class="tab" onclick="openTab('koleksi',this)">BEST</div>
@@ -72,7 +72,7 @@ const _guard=window.supabase.createClient(SUPA_URL,SUPA_KEY);
 <div id="toast"></div>
 <script>
 const supa=window.supabase.createClient(SUPA_URL,SUPA_KEY);
-let tokoOriginId="17523",tokoOriginLabel="CENGKARENG BARAT";let pcBase='',hpBase='';
+let tokoOriginId="11730",tokoOriginLabel="CENGKARENG BARAT";let pcBase='',hpBase='';
 let koleksiSlots=[{url:""}];let undertoneSlots=[{url:""}];let faqSlots=[{q:'Apakah menerawang?',a:'Tidak.'}];
 const $=id=>document.getElementById(id);
 function openTab(n,el){document.querySelectorAll('[id^="tab-"]').forEach(c=>c.classList.add('hidden'));$('tab-'+n).classList.remove('hidden');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
