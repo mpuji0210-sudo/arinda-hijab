@@ -1,7 +1,17 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title id="pageTitle">ARINDA - Hijab Premium</title>
-<meta name="description" content="Paris Premium 110x110cm - adem tidak menerawang, laser cut.">
+<title id="pageTitle">ARINDA - Hijab Premium Paris 110x110cm | Adem Tidak Menerawang Laser Cut</title>
+<meta name="description" content="ARINDA Hijab Premium Paris 110x110cm - Bahan Paris Premium adem, tidak menerawang, laser cut rapi. 50+ pilihan warna best seller untuk undertone COOL, WARM, NEUTRAL, OLIVE. Pengiriman dari Jakarta ke seluruh Indonesia.">
+<meta name="keywords" content="hijab premium, paris premium 110x110, hijab paris laser cut, arinda hijab, hijab adem tidak menerawang, hijab best seller, hijab undertone cool warm neutral olive">
+<meta name="author" content="ARINDA Hijab Premium">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ARINDA - Hijab Premium Paris 110x110cm | Adem Laser Cut">
+<meta property="og:description" content="Paris Premium 110x110cm - Adem, tidak menerawang, laser cut rapi. Temukan warna terbaik sesuai undertone kulitmu. 50+ warna best seller.">
+<meta property="og:image" content="https://qjgevvizqeebtdqcbqmt.supabase.co/storage/v1/object/public/banners/banner.jpg">
+<meta property="og:url" content="https://arinda-hijab.vercel.app">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ARINDA - Hijab Premium Paris 110x110cm">
+<meta name="twitter:description" content="Hijab Paris Premium adem, tidak menerawang, laser cut. 50+ warna untuk undertone COOL WARM NEUTRAL OLIVE.">
 <link rel="preconnect" href="https://qjgevvizqeebtdqcbqmt.supabase.co" crossorigin>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -29,14 +39,14 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.98);backdrop-f
 .under-title{font-family:'Cormorant Garamond';font-size:22px;letter-spacing:6px;text-align:left;margin:0 0 16px;color:#000;font-weight:500}
 .under-grid-clean{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(min-width:700px){.under-grid-clean{grid-template-columns:repeat(4,1fr);gap:14px}}
-.u-card{background:#fff;border:1px solid #DDD;cursor:pointer;transition:.2s}
+.u-card{background:#fff;border:1px solid #DDD;cursor:pointer;transition:.2s;display:flex;flex-direction:column}
 .u-card:hover{border-color:#000}
-.u-head{font-size:10px;letter-spacing:4px;text-align:center;padding:12px 6px;border-bottom:1px solid #EEE;background:#FFFCF9;color:#000;font-weight:600}
-.u-card img{width:100%;height:220px;object-fit:cover;display:block;background:#F6F6F6}
-@media(min-width:700px){.u-card img{height:300px}}
-.u-desc{font-size:11px;line-height:1.7;color:#222;padding:12px;min-height:84px;font-weight:400}
-.u-cta{font-size:9px;letter-spacing:2px;text-align:center;padding:12px;border-top:1px solid #EEE;color:#000;font-weight:600;background:#FAFAFA}
-.fly-img{position:fixed;left:0;top:0;z-index:99999;width:68px;height:68px;object-fit:cover;border-radius:50%;pointer-events:none;box-shadow:0 16px 32px rgba(0,0,0,.30);border:3px solid #fff;transition:all.75s cubic-bezier(.4,0,.2,1)}
+.u-head{font-size:11px;letter-spacing:4px;text-align:center;padding:12px 6px;border-bottom:1px solid #EEE;background:#FFFCF9;color:#000;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u-card img{width:100%;height:220px;object-fit:cover;display:block;background:#F6F6F6;flex-shrink:0}
+@media(min-width:700px){.u-card img{height:280px}}
+.u-desc{font-size:11px;line-height:1.6;color:#222;padding:10px 12px;min-height:68px;font-weight:400;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.u-cta{font-size:9px;letter-spacing:2px;text-align:center;padding:12px;border-top:1px solid #EEE;color:#000;font-weight:600;background:#FAFAFA;margin-top:auto}
+  .fly-img{position:fixed;left:0;top:0;z-index:99999;width:68px;height:68px;object-fit:cover;border-radius:50%;pointer-events:none;box-shadow:0 16px 32px rgba(0,0,0,.30);border:3px solid #fff;transition:all.75s cubic-bezier(.4,0,.2,1)}
 @keyframes cartBoom{0%{transform:scale(1)}30%{transform:scale(1.38)}60%{transform:scale(0.90)}100%{transform:scale(1)}}.cart-boom{animation:cartBoom.38s cubic-bezier(.34,1.56,.64,1)!important}
 #cartToast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(100px);background:#000;color:#fff;padding:10px 16px;border-radius:30px;display:flex;gap:10px;align-items:center;transition:.4s;opacity:0;z-index:100}#cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}
 #cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:flex-end}#cartModal.open{display:flex}#cartBox{background:#fff;width:100%;max-width:480px;margin:0 auto;max-height:88vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px}
@@ -76,7 +86,7 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.98);backdrop-f
 <div class="hero" id="heroWrap"><picture><source id="bannerSourcePC" media="(min-width:801px)"><img id="bannerImg" alt="Banner" width="1240" height="800" fetchpriority="high"></picture><div style="position:absolute;left:16px;bottom:18px;z-index:2"><a id="bannerLink" href="produk.html" class="btn">LIHAT KOLEKSI -></a></div></div>
 <div class="under-sec"><div class="under-title">FIND YOUR UNDERTONE</div><div id="undertoneGrid" class="under-grid-clean"></div></div>
 <div class="section"><div class="best-title">BEST SELLER</div><div class="colors" id="koleksi4Grid"></div></div>
-<footer style="margin-top:32px;padding:24px 16px;text-align:center;border-top:1px solid #DDD"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px;color:#000;font-weight:500" id="footerLogo">ARINDA</div><div style="font-size:8px;letter-spacing:5px;color:#000;margin-top:6px;font-weight:500;opacity:.8">HIJAB PREMIUM</div><div style="margin-top:10px;font-size:8px;letter-spacing:3px;color:#000;opacity:.6;font-weight:400" id="footerCopy">© 2026 ARINDA</div></footer>
+<footer style="margin-top:32px;padding:24px 16px;text-align:center;border-top:1px solid #DDD"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px;color:#000;font-weight:500" id="footerLogo">ARINDA</div><div style="font-size:8px;letter-spacing:5px;color:#000;margin-top:6px;font-weight:500;opacity:.8">HIJAB PREMIUM - PARIS 110x110CM ADEM LASER CUT - 50+ WARNA BEST SELLER</div><div style="margin-top:10px;font-size:8px;letter-spacing:3px;color:#000;opacity:.6;font-weight:400" id="footerCopy">© 2026 ARINDA - Hijab Premium Paris Laser Cut</div></footer>
 <div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()"><div id="cartBox"><div style="display:flex;justify-content:space-between;align-items:center"><b style="letter-spacing:2px;font-size:11px;color:#000">KERANJANG (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:22px;color:#000">×</button></div><div id="cartList" style="margin-top:12px"></div><div style="border-top:1px solid #E9E9E9;margin-top:12px;padding-top:12px"><div style="background:#FAFAFA;border:1px solid #DDD;padding:12px;margin-bottom:12px"><div style="font-size:9px;letter-spacing:3px;margin-bottom:8px;color:#000;font-weight:600">CEK ONGKIR DARI <span id="originLabelDisplay">JAKARTA</span></div><div style="display:flex;gap:6px"><input id="destCity" placeholder="Ketik kota: Surabaya..." maxlength="40" style="flex:1;padding:11px;border:1.5px solid #000;background:#fff;font-size:12px;color:#000"><button onclick="cekOngkir()" id="btnCekOngkir" style="padding:11px 16px;background:#000;color:#fff;border:none;font-size:8px;letter-spacing:2px">CEK</button></div><div id="ongkirOptions" style="display:none;margin-top:10px"></div><div id="ongkirNote" style="font-size:10px;color:#222;margin-top:6px;font-weight:400">Ketik kota min 3 huruf</div></div><div style="display:flex;justify-content:space-between;font-size:11px;color:#000;font-weight:500"><span>SUBTOTAL</span><span id="cartSubtotal">Rp0</span></div><div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px;color:#000;font-weight:500"><span>ONGKIR <small id="ongkirLabel"></small></span><span id="ongkirPriceCart">Rp0</span></div><div style="display:flex;justify-content:space-between;margin-top:10px;font-size:14px;color:#000;font-weight:600"><b>TOTAL BAYAR</b><b id="cartTotalPrice">Rp0</b></div><button onclick="checkoutWA()" class="btn" style="margin-top:14px;width:100%;padding:14px">LANJUT KE PEMBAYARAN →</button><button onclick="clearCart()" class="btn-light">KOSONGKAN KERANJANG</button></div></div></div>
 <div id="confirmModal" onclick="if(event.target.id==='confirmModal')closeConfirm()"><div id="confirmBox"><div style="font-family:'Cormorant Garamond';font-size:18px;color:#000">KOSONGKAN KERANJANG?</div><div style="display:flex;gap:8px;margin-top:20px"><button onclick="closeConfirm()" style="flex:1;padding:12px;background:#fff;border:1px solid #000;font-size:9px;font-weight:600">BATAL</button><button onclick="doClearCart()" style="flex:1;padding:12px;background:#000;color:#fff;border:1px solid #000;font-size:9px">OKE</button></div></div></div>
 <div id="cartToast"><img id="toastImg" style="width:26px;height:26px;border-radius:50%;object-fit:cover"><span id="toastText" style="font-size:9px;font-weight:500"></span></div>
@@ -113,13 +123,14 @@ warm:{title:'WARM',desc:'Pembuluh hijau, rona keemasan/peach. Cocok caramel, ter
 neutral:{title:'NEUTRAL',desc:'Campuran biru-hijau, rona netral. Cocok taupe, beige, sage green, dusty rose.',col:'NEUTRAL'},
 olive:{title:'OLIVE',desc:'Rona kehijauan/ashy, muted golden. Cocok olive, terracotta, burgundy, camel.',col:'OLIVE'}
 };
+function extractKey(text){const t=(text||'').toUpperCase();if(t.includes('COOL')) return 'cool';if(t.includes('WARM')) return 'warm';if(t.includes('OLIVE')) return 'olive';if(t.includes('NEUTRAL')) return 'neutral';return null;}
 async function init(){
 try{
-const cName=localStorage.getItem('store_name_cache');if(cName){STORE_NAME=cName;document.getElementById('storeLogo').innerHTML=cName.toUpperCase()+'<span>HIJAB PREMIUM</span>';document.getElementById('footerLogo').innerText=cName.toUpperCase();document.getElementById('sideLogo').innerText=cName.toUpperCase();const fc=document.getElementById('footerCopy'); if(fc) fc.innerText='© 2026 '+cName.toUpperCase();}
+const cName=localStorage.getItem('store_name_cache');if(cName){STORE_NAME=cName;document.getElementById('storeLogo').innerHTML=cName.toUpperCase()+'<span>HIJAB PREMIUM</span>';document.getElementById('footerLogo').innerText=cName.toUpperCase();document.getElementById('sideLogo').innerText=cName.toUpperCase();const fc=document.getElementById('footerCopy'); if(fc) fc.innerText='© 2026 '+cName.toUpperCase()+' - Hijab Premium Paris Laser Cut';}
 const {data:settings}=await supabaseClient.from('settings').select('key,value').in('key',['store_name','toko_origin_label','home_koleksi_terlaris','home_undertone_images']);
 if(settings){
 const g=k=>settings.find(s=>s.key===k)?.value;
-const sName=g('store_name');if(sName){localStorage.setItem('store_name_cache',sName);STORE_NAME=sName;document.getElementById('storeLogo').innerHTML=sName.toUpperCase()+'<span>HIJAB PREMIUM</span>';document.getElementById('footerLogo').innerText=sName.toUpperCase();document.getElementById('sideLogo').innerText=sName.toUpperCase();document.getElementById('pageTitle').innerText=sName+' - Hijab Premium';const fc=document.getElementById('footerCopy'); if(fc) fc.innerText='© 2026 '+sName.toUpperCase();}
+const sName=g('store_name');if(sName){localStorage.setItem('store_name_cache',sName);STORE_NAME=sName;document.getElementById('storeLogo').innerHTML=sName.toUpperCase()+'<span>HIJAB PREMIUM</span>';document.getElementById('footerLogo').innerText=sName.toUpperCase();document.getElementById('sideLogo').innerText=sName.toUpperCase();document.getElementById('pageTitle').innerText=sName+' - Hijab Premium Paris 110x110cm | Adem Laser Cut';const fc=document.getElementById('footerCopy'); if(fc) fc.innerText='© 2026 '+sName.toUpperCase()+' - Hijab Premium Paris Laser Cut';}
 const sOlabel=g('toko_origin_label');if(sOlabel){STORE_ORIGIN_LABEL=sOlabel;document.getElementById('originLabelDisplay').innerText=sOlabel;}
 }
 const {data:banners}=await supabaseClient.from('banners').select('banner_pc_url,banner_hp_url').eq('is_active',true).order('created_at',{ascending:false}).limit(1);
@@ -139,13 +150,10 @@ grid.innerHTML=uImgs.slice(0,4).map((it,i)=>{
 const url=typeof it==='string'?it:it.url;
 let titleRaw=typeof it==='object'?(it.title||it.name||''):`FOTO ${i+1}`;
 let tUp=titleRaw.toUpperCase();
-let key='neutral';
-if(tUp.includes('COOL')) key='cool'; else if(tUp.includes('WARM')) key='warm'; else if(tUp.includes('OLIVE')) key='olive'; else if(tUp.includes('NEUTRAL')) key='neutral'; else key=['cool','warm','neutral','olive'][i]||'neutral';
+let key=extractKey(tUp);
+if(!key){ key=['cool','warm','neutral','olive'][i]||'neutral'; }
 const dDefault=underData[key];
-let descFromAdmin=typeof it==='object'?(it.description||it.desc||it.caption||''):'';
-let finalDesc=descFromAdmin?descFromAdmin:dDefault.desc;
-let finalTitle=titleRaw?titleRaw.toUpperCase():dDefault.title;
-return `<div class="u-card" onclick="location.href='produk.html?undertone=${esc(dDefault.col)}'"><div class="u-head">${esc(finalTitle)}</div><img src="${getOptImg(url,500)}" loading="lazy"><div class="u-desc">${esc(finalDesc)}</div><div class="u-cta">LIHAT ${esc(dDefault.col)} →</div></div>`;
+return `<div class="u-card" onclick="location.href='produk.html?undertone=${esc(dDefault.col)}'"><div class="u-head">${esc(dDefault.title)}</div><img src="${getOptImg(url,500)}" loading="lazy"><div class="u-desc">${esc(dDefault.desc)}</div><div class="u-cta">LIHAT ${esc(dDefault.col)} →</div></div>`;
 }).join('');
 }else{
 grid.innerHTML=Object.keys(underData).map(k=>{const d=underData[k];return `<div class="u-card" onclick="location.href='produk.html?undertone=${esc(d.col)}'"><div class="u-head">${esc(d.title)}</div><img src="https://via.placeholder.com/400x500/F6F1EB/111?text=${esc(d.title)}"><div class="u-desc">${esc(d.desc)}</div><div class="u-cta">LIHAT ${esc(d.col)} →</div></div>`;}).join('');
