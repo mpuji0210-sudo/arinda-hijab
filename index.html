@@ -19,7 +19,6 @@ nav{position:sticky;top:0;z-index:99;background:#FFFFFF;border-bottom:1px solid 
 .s-btn{background:#000;color:#fff;border:none;padding:14px 24px;font-size:10px;font-weight:600;cursor:pointer}
 .hero{position:relative;width:100%;background:#FFFFFF;overflow:hidden;line-height:0}.hero img{width:100%;height:auto;object-fit:contain!important;display:block}
 .btn{background:#000;color:#fff;padding:13px 24px;font-size:10px;letter-spacing:3px;text-decoration:none;display:inline-block;font-weight:500}
-/* LV CLEAN SPACING */
 .section{max-width:1240px;margin:0 auto;padding:48px 16px 0;background:#FFFFFF}
 .colors{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:24px 16px!important;margin-top:20px;background:#FFFFFF!important;border:none!important}
 .k-card{background:#FFFFFF;cursor:pointer;overflow:hidden;position:relative}
@@ -74,10 +73,15 @@ nav{position:sticky;top:0;z-index:99;background:#FFFFFF;border-bottom:1px solid 
 <a href="kontak.html" class="side-link">KONTAK</a>
 <a href="#" onclick="openCart();closeSideMenu();return false" class="side-link">KERANJANG (<span id="sideCartCount">0</span>)</a>
 </div></div>
-<div class="hero" id="heroWrap"><picture><source id="bannerSourcePC" media="(min-width:801px)"><img id="bannerImg" alt="Banner" width="1240" height="800" fetchpriority="high"></picture><div style="position:absolute;left:16px;bottom:18px;z-index:2"><a id="bannerLink" href="produk.html" class="btn">LIHAT KOLEKSI -></a></div></div>
+<div class="hero" id="heroWrap"><picture><source id="bannerSourcePC" media="(min-width:801px)"><img id="bannerImg" alt="Banner" width="1240" height="800" fetchpriority="high"></picture>
+<div style="position:absolute;left:16px;bottom:18px;z-index:2;display:flex;flex-direction:column;gap:6px">
+<div id="bannerTitleText" style="color:#fff;font-family:'Cormorant Garamond';font-size:22px;letter-spacing:3px;text-shadow:0 2px 8px rgba(0,0,0,.4);font-weight:400"></div>
+<div id="bannerSubText" style="color:#fff;font-size:10px;letter-spacing:2px;text-shadow:0 1px 4px rgba(0,0,0,.5);opacity:.9"></div>
+<a id="bannerLink" href="produk.html" class="btn">LIHAT KOLEKSI -></a>
+</div></div>
 <div class="under-sec"><div class="under-title">FIND YOUR UNDERTONE</div><div id="undertoneGrid" class="under-grid-clean"></div></div>
 <div class="section"><div class="best-title">BEST SELLER</div><div class="colors" id="koleksi4Grid"></div></div>
-<footer style="margin-top:48px;padding:32px 16px;text-align:center;border-top:1px solid #EEEEEE;background:#FFFFFF"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:16px;color:#000;font-weight:300" id="footerLogo"></div><div style="font-size:8px;letter-spacing:5px;color:#000;margin-top:8px;font-weight:400;opacity:.6"></div><div style="margin-top:12px;font-size:8px;letter-spacing:3px;color:#000;opacity:.4;font-weight:300" id="footerCopy">© 2026 ARINDA </div></footer>
+<footer style="margin-top:48px;padding:32px 16px;text-align:center;border-top:1px solid #EEEEEE;background:#FFFFFF"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:16px;color:#000;font-weight:300" id="footerLogo">ARINDA</div><div style="font-size:8px;letter-spacing:5px;color:#000;margin-top:8px;font-weight:400;opacity:.6">HIJAB PREMIUM - PARIS 110x110CM ADEM LASER CUT</div><div style="margin-top:12px;font-size:8px;letter-spacing:3px;color:#000;opacity:.4;font-weight:300" id="footerCopy">© 2026 ARINDA</div></footer>
 <div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()"><div id="cartBox"><div style="display:flex;justify-content:space-between;align-items:center"><b style="letter-spacing:2px;font-size:11px;color:#000">KERANJANG (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:22px;color:#000">×</button></div><div id="cartList" style="margin-top:12px"></div><div style="border-top:1px solid #EEEEEE;margin-top:12px;padding-top:12px"><div style="background:#FAFAFA;border:1px solid #EEEEEE;padding:12px;margin-bottom:12px"><div style="font-size:9px;letter-spacing:3px;margin-bottom:8px;color:#000;font-weight:500">CEK ONGKIR DARI <span id="originLabelDisplay">JAKARTA</span></div><div style="display:flex;gap:6px"><input id="destCity" placeholder="Ketik kota: Surabaya..." maxlength="40" style="flex:1;padding:11px;border:1.5px solid #000;background:#fff;font-size:12px;color:#000"><button onclick="cekOngkir()" id="btnCekOngkir" style="padding:11px 16px;background:#000;color:#fff;border:none;font-size:8px;letter-spacing:2px">CEK</button></div><div id="ongkirOptions" style="display:none;margin-top:10px"></div><div id="ongkirNote" style="font-size:10px;color:#222;margin-top:6px;font-weight:300">Ketik kota min 3 huruf</div></div><div style="display:flex;justify-content:space-between;font-size:11px;color:#000;font-weight:400"><span>SUBTOTAL</span><span id="cartSubtotal">Rp0</span></div><div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px;color:#000;font-weight:400"><span>ONGKIR <small id="ongkirLabel"></small></span><span id="ongkirPriceCart">Rp0</span></div><div style="display:flex;justify-content:space-between;margin-top:10px;font-size:14px;color:#000;font-weight:500"><b>TOTAL BAYAR</b><b id="cartTotalPrice">Rp0</b></div><button onclick="checkoutWA()" class="btn" style="margin-top:14px;width:100%;padding:14px">LANJUT KE PEMBAYARAN →</button><button onclick="clearCart()" class="btn-light">KOSONGKAN KERANJANG</button></div></div></div>
 <div id="confirmModal" onclick="if(event.target.id==='confirmModal')closeConfirm()"><div id="confirmBox"><div style="font-family:'Cormorant Garamond';font-size:18px;color:#000;font-weight:300">KOSONGKAN KERANJANG?</div><div style="display:flex;gap:8px;margin-top:20px"><button onclick="closeConfirm()" style="flex:1;padding:12px;background:#fff;border:1px solid #000;font-size:9px;font-weight:500">BATAL</button><button onclick="doClearCart()" style="flex:1;padding:12px;background:#000;color:#fff;border:1px solid #000;font-size:9px">OKE</button></div></div></div>
 <div id="cartToast"><img id="toastImg" style="width:26px;height:26px;border-radius:50%;object-fit:cover"><span id="toastText" style="font-size:10px;font-weight:400"></span></div>
@@ -108,24 +112,56 @@ function getOptImg(url,w=300){if(!url) return url;if(!url.includes('supabase.co/
 function getBannerImg(url,w=1240){if(!url) return url;if(!url.includes('supabase.co/storage/v1/object/public/')) return url;try{const path=url.split('/object/public/')[1];return `${SUPA_URL}/storage/v1/render/image/public/${path}?width=${w}&quality=80&format=webp&resize=contain`;}catch(e){return url;}}
 function flyToCart(imgUrl,startEl){document.querySelectorAll('.fly-img').forEach(e=>e.remove());const cartIcon=document.getElementById('cartIcon');if(!cartIcon)return;const cartRect=cartIcon.getBoundingClientRect();const targetX=cartRect.left+cartRect.width/2-24;const targetY=cartRect.top+cartRect.height/2-22;let startRect=startEl?startEl.getBoundingClientRect():null;if(!startRect||startRect.width===0){startRect={left:innerWidth/2-34,top:innerHeight/2-34,width:68,height:68};}const fly=document.createElement('img');fly.src=getOptImg(imgUrl,120);fly.className='fly-img';fly.style.left=(startRect.left+startRect.width/2-34)+'px';fly.style.top=(startRect.top+startRect.height/2-34)+'px';document.body.appendChild(fly);requestAnimationFrame(()=>{requestAnimationFrame(()=>{fly.style.left=targetX+'px';fly.style.top=targetY+'px';fly.style.transform='scale(0.14)';fly.style.opacity='0.15';});});setTimeout(()=>{fly.remove();cartIcon.classList.remove('cart-boom');void cartIcon.offsetWidth;cartIcon.classList.add('cart-boom');setTimeout(()=>cartIcon.classList.remove('cart-boom'),420);},720);}
 async function quickAdd(title,img,el,idx){const imgEl=document.getElementById('img-best-'+idx)||(el?el.closest('.k-card')?.querySelector('img'):null);if(imgEl)flyToCart(imgEl.src||img,imgEl);let price=99000;try{const warnaOnly=title.split(' - ')[0].trim();const {data:variant}=await supabaseClient.from('product_variants').select('product_id').ilike('color_name','%'+warnaOnly+'%').limit(1).maybeSingle();if(variant){const {data:prod}=await supabaseClient.from('products').select('price').eq('id',variant.product_id).single();if(prod) price=Number(prod.price);}}catch(e){}addCart(title,price,img);showToast(title+' MASUK - Rp'+price.toLocaleString('id-ID'),getOptImg(img,80));}
-const underData={
-cool:{title:'COOL',desc:'Pembuluh biru/keunguan, rona pinkish. Cocok dusty pink, navy, emerald, ruby, plum.',col:'COOL'},
-warm:{title:'WARM',desc:'Pembuluh hijau, rona keemasan/peach. Cocok caramel, terracotta, mustard, olive, coral.',col:'WARM'},
-neutral:{title:'NEUTRAL',desc:'Campuran biru-hijau, rona netral. Cocok taupe, beige, sage green, dusty rose.',col:'NEUTRAL'},
-olive:{title:'OLIVE',desc:'Rona kehijauan/ashy, muted golden. Cocok olive, terracotta, burgundy, camel.',col:'OLIVE'}
+// FALLBACK DEFAULT JIKA ADMIN KOSONG
+const underFallback={
+cool:{title:'COOL',desc:'Pembuluh biru/keunguan, rona pinkish. Cocok dusty pink, navy, emerald.',col:'COOL'},
+warm:{title:'WARM',desc:'Pembuluh hijau, rona keemasan. Cocok caramel, terracotta, mustard.',col:'WARM'},
+neutral:{title:'NEUTRAL',desc:'Campuran biru-hijau, rona netral. Cocok taupe, beige, sage.',col:'NEUTRAL'},
+olive:{title:'OLIVE',desc:'Rona kehijauan/ashy. Cocok olive, terracotta, burgundy.',col:'OLIVE'}
 };
 function extractKey(text){const t=(text||'').toUpperCase();if(t.includes('COOL')) return 'cool';if(t.includes('WARM')) return 'warm';if(t.includes('OLIVE')) return 'olive';if(t.includes('NEUTRAL')) return 'neutral';return null;}
 async function init(){
 try{
 const cName=localStorage.getItem('store_name_cache');if(cName){STORE_NAME=cName;document.getElementById('storeLogo').innerHTML=cName.toUpperCase()+'<span>HIJAB PREMIUM</span>';document.getElementById('footerLogo').innerText=cName.toUpperCase();document.getElementById('sideLogo').innerText=cName.toUpperCase();const fc=document.getElementById('footerCopy'); if(fc) fc.innerText='© 2026 '+cName.toUpperCase();}
-const {data:settings}=await supabaseClient.from('settings').select('key,value').in('key',['store_name','toko_origin_label','home_koleksi_terlaris','home_undertone_images']);
-if(settings){const g=k=>settings.find(s=>s.key===k)?.value;const sName=g('store_name');if(sName){localStorage.setItem('store_name_cache',sName);STORE_NAME=sName;document.getElementById('storeLogo').innerHTML=sName.toUpperCase()+'<span>HIJAB PREMIUM</span>';document.getElementById('footerLogo').innerText=sName.toUpperCase();document.getElementById('sideLogo').innerText=sName.toUpperCase();document.getElementById('pageTitle').innerText=sName+' - Hijab Premium';const fc=document.getElementById('footerCopy'); if(fc) fc.innerText='© 2026 '+sName.toUpperCase();}const sOlabel=g('toko_origin_label');if(sOlabel){STORE_ORIGIN_LABEL=sOlabel;document.getElementById('originLabelDisplay').innerText=sOlabel;}}
-const {data:banners}=await supabaseClient.from('banners').select('banner_pc_url,banner_hp_url').eq('is_active',true).order('created_at',{ascending:false}).limit(1);
-if(banners&&banners[0]){const img=document.getElementById('bannerImg');const srcPC=document.getElementById('bannerSourcePC');const pcUrl=banners[0].banner_pc_url;const hpUrl=banners[0].banner_hp_url||pcUrl;if(img){img.src=getBannerImg(hpUrl,800);if(srcPC)srcPC.srcset=getBannerImg(pcUrl,1240);}}
-const {data:settings2}=await supabaseClient.from('settings').select('key,value').in('key',['home_koleksi_terlaris','home_undertone_images']);
-if(settings2){const get=k=>settings2.find(s=>s.key===k)?.value;
-try{let raw=JSON.parse(get('home_koleksi_terlaris')||'[]');if(raw.length){const grid=document.getElementById('koleksi4Grid');grid.innerHTML=raw.slice(0,8).map((v,i)=>{const url=typeof v==='string'?v:v.url;const rawTitle=(typeof v==='object'?v.title:'')||'';const upperTitle=esc(rawTitle.toUpperCase());const cleanColor=upperTitle.split('-')[0].replace(/BEST SELLER/g,'').trim()||'BEST';return `<div class="k-card" onclick="location.href='produk.html?warna=${esc(cleanColor.toLowerCase())}'"><img id="img-best-${i}" src="${getOptImg(url,400)}" loading="lazy"><div class="heart-btn" onclick="event.stopPropagation(); quickAdd('${esc(cleanColor)}','${esc(url)}', this, ${i})"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><div class="k-title">${upperTitle||'BEST'}</div></div>`}).join('');}}catch(e){}
-try{let uImgs=JSON.parse(get('home_undertone_images')||'[]');const grid=document.getElementById('undertoneGrid');if(uImgs.length){grid.innerHTML=uImgs.slice(0,4).map((it,i)=>{const url=typeof it==='string'?it:it.url;let titleRaw=typeof it==='object'?(it.title||it.name||''):`FOTO ${i+1}`;let tUp=titleRaw.toUpperCase();let key=extractKey(tUp);if(!key){ key=['cool','warm','neutral','olive'][i]||'neutral'; }const dDefault=underData[key];return `<div class="u-card" onclick="location.href='produk.html?undertone=${esc(dDefault.col)}'"><div class="u-head">${esc(dDefault.title)}</div><img src="${getOptImg(url,500)}" loading="lazy"><div class="u-desc">${esc(dDefault.desc)}</div><div class="u-cta">LIHAT ${esc(dDefault.col)} →</div></div>`;}).join('');}else{grid.innerHTML=Object.keys(underData).map(k=>{const d=underData[k];return `<div class="u-card" onclick="location.href='produk.html?undertone=${esc(d.col)}'"><div class="u-head">${esc(d.title)}</div><img src="https://via.placeholder.com/400x500/FFFFFF/111?text=${esc(d.title)}"><div class="u-desc">${esc(d.desc)}</div><div class="u-cta">LIHAT ${esc(d.col)} →</div></div>`;}).join('');}}catch(e){}}
-}catch(e){}updateCount();}
+const {data:settings}=await supabaseClient.from('settings').select('key,value').in('key',['store_name','toko_origin_label','home_koleksi_terlaris','home_undertone_images','home_banner_title','home_banner_subtitle']);
+if(settings){
+const g=k=>settings.find(s=>s.key===k)?.value;
+const sName=g('store_name');if(sName){localStorage.setItem('store_name_cache',sName);STORE_NAME=sName;document.getElementById('storeLogo').innerHTML=sName.toUpperCase()+'<span>HIJAB PREMIUM</span>';document.getElementById('footerLogo').innerText=sName.toUpperCase();document.getElementById('sideLogo').innerText=sName.toUpperCase();document.getElementById('pageTitle').innerText=sName+' - Hijab Premium';const fc=document.getElementById('footerCopy'); if(fc) fc.innerText='© 2026 '+sName.toUpperCase();}
+const sOlabel=g('toko_origin_label');if(sOlabel){STORE_ORIGIN_LABEL=sOlabel;document.getElementById('originLabelDisplay').innerText=sOlabel;}
+const bTitle=g('home_banner_title');if(bTitle){document.getElementById('bannerTitleText').innerText=bTitle.toUpperCase();}
+const bSub=g('home_banner_subtitle');if(bSub){document.getElementById('bannerSubText').innerText=bSub;}
+// BEST
+try{let raw=JSON.parse(g('home_koleksi_terlaris')||'[]');if(raw.length){const grid=document.getElementById('koleksi4Grid');grid.innerHTML=raw.slice(0,8).map((v,i)=>{const url=typeof v==='string'?v:v.url;const rawTitle=(typeof v==='object'?v.title:'')||'';const upperTitle=esc(rawTitle.toUpperCase());const cleanColor=upperTitle.split('-')[0].replace(/BEST SELLER/g,'').trim()||'BEST';return `<div class="k-card" onclick="location.href='produk.html?warna=${esc(cleanColor.toLowerCase())}'"><img id="img-best-${i}" src="${getOptImg(url,400)}" loading="lazy"><div class="heart-btn" onclick="event.stopPropagation(); quickAdd('${esc(cleanColor)}','${esc(url)}', this, ${i})"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><div class="k-title">${upperTitle||'BEST'}</div></div>`}).join('');}}catch(e){}
+// UNDERTONE - KONEK LANGSUNG KE ADMIN DESKRIPSI
+try{
+let uImgs=JSON.parse(g('home_undertone_images')||'[]');
+const grid=document.getElementById('undertoneGrid');
+if(uImgs.length){
+grid.innerHTML=uImgs.slice(0,4).map((it,i)=>{
+const url=typeof it==='string'?it:it.url;
+// AMBIL LANGSUNG DARI ADMIN - INI KUNCINYA
+let titleFromAdmin = (typeof it==='object'? (it.title||it.name||'') : '').trim();
+let descFromAdmin = (typeof it==='object'? (it.desc||it.description||it.caption||'') : '').trim();
+let key = extractKey(titleFromAdmin) || ['cool','warm','neutral','olive'][i] || 'neutral';
+let fallback = underFallback[key] || underFallback['neutral'];
+let finalTitle = titleFromAdmin? titleFromAdmin.toUpperCase() : fallback.title;
+let finalDesc = descFromAdmin? descFromAdmin : fallback.desc;
+let col = fallback.col;
+return `<div class="u-card" onclick="location.href='produk.html?undertone=${esc(col)}'"><div class="u-head">${esc(finalTitle)}</div><img src="${getOptImg(url,500)}" loading="lazy"><div class="u-desc">${esc(finalDesc)}</div><div class="u-cta">LIHAT ${esc(col)} →</div></div>`;
+}).join('');
+}else{
+grid.innerHTML=Object.keys(underFallback).map(k=>{const d=underFallback[k];return `<div class="u-card" onclick="location.href='produk.html?undertone=${esc(d.col)}'"><div class="u-head">${esc(d.title)}</div><img src="https://via.placeholder.com/400x500/FFFFFF/111?text=${esc(d.title)}"><div class="u-desc">${esc(d.desc)}</div><div class="u-cta">LIHAT ${esc(d.col)} →</div></div>`;}).join('');
+}
+}catch(e){console.log('undertone err',e)}
+}
+const {data:banners}=await supabaseClient.from('banners').select('banner_pc_url,banner_hp_url,banner_title,banner_subtitle').eq('is_active',true).order('created_at',{ascending:false}).limit(1);
+if(banners&&banners[0]){
+const img=document.getElementById('bannerImg');const srcPC=document.getElementById('bannerSourcePC');
+const pcUrl=banners[0].banner_pc_url;const hpUrl=banners[0].banner_hp_url||pcUrl;
+if(img){img.src=getBannerImg(hpUrl,800);if(srcPC)srcPC.srcset=getBannerImg(pcUrl,1240);}
+if(banners[0].banner_title) document.getElementById('bannerTitleText').innerText=banners[0].banner_title.toUpperCase();
+if(banners[0].banner_subtitle) document.getElementById('bannerSubText').innerText=banners[0].banner_subtitle;
+}
+}catch(e){console.log(e)}updateCount();}
 init();
 </script></body></html>
