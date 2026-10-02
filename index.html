@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root{--black:#000;--line:#E9E9E9;--bg:#FFFFFF}
-*{box-sizing:border-box}body{margin:0;background:#fff;color:#000;font-family:'Inter',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;font-weight:300;letter-spacing:0.2px;-webkit-font-smoothing:antialiased}
 nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9}
 .nav-top{max-width:1240px;margin:0 auto;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px}.logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px}
@@ -15,25 +15,30 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-f
 .badge{position:absolute;top:-2px;right:-2px;background:#000;color:#fff;font-size:7px;min-width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 .nav-menu{border-top:1px solid #F2F2F2;overflow-x:auto}.menu{max-width:1240px;margin:0 auto;padding:0 16px;display:flex;gap:28px}.menu a{font-size:9px;letter-spacing:4px;color:#000;text-decoration:none;padding:12px 0;opacity:.45;white-space:nowrap}.menu a.active{opacity:1;border-bottom:1px solid #000}
 #searchBox{display:none;max-width:1240px;margin:0 auto;padding:12px 16px;border-top:1px solid #F2F2F2;background:#fff;align-items:center;gap:10px}#searchBox.show{display:flex}
-#searchBox input{flex:1;padding:14px 20px;border:1px solid #000;background:#fff;outline:none;font-size:12px}
-.s-btn{background:#000;color:#fff;border:none;padding:14px 24px;font-size:10px;font-weight:700;cursor:pointer}
-.hero{position:relative;width:100%;background:#F6F6F6;overflow:hidden;line-height:0}.hero img{width:100%;height:auto;object-fit:contain!important;display:block}
-.btn{background:#000;color:#fff;padding:13px 24px;font-size:9px;letter-spacing:3px;text-decoration:none;display:inline-block}
+#searchBox input{flex:1;padding:14px 20px;border:1px solid #000;border-radius:0px;background:#fff;outline:none;font-size:12px;letter-spacing:1px}
+.s-btn{background:#000;color:#fff;border:none;padding:14px 24px;font-size:10px;font-weight:700;letter-spacing:1px;border-radius:0px;cursor:pointer}
+.hero{position:relative;width:100%;background:#F6F6F6;overflow:hidden;line-height:0}.hero img{width:100%;height:auto;object-fit:contain!important;object-position:center top!important;display:block}
+.hero picture{display:block;width:100%;line-height:0}
+.btn{background:#000;color:#fff;padding:13px 24px;font-size:9px;letter-spacing:3px;text-decoration:none;display:inline-block;border-radius:0px}
 .section{max-width:1240px;margin:0 auto;padding:18px 8px 0}.sub{font-size:8px;letter-spacing:4px}
 .colors{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:1px!important;margin-top:10px;background:#E9E9E9;border:1px solid #E9E9E9}
-.k-card{background:#fff;position:relative;cursor:pointer;overflow:hidden}.k-card img{width:100%!important;height:135px!important;object-fit:cover!important;display:block!important}
+.k-card{background:#fff;border:none;position:relative;cursor:pointer;border-radius:0px!important;overflow:hidden}
+.k-card img{width:100%!important;height:135px!important;aspect-ratio:1/1!important;object-fit:cover!important;object-position:center top!important;display:block!important;background:#FFFFFF!important}
 @media(min-width:700px){.k-card img{height:210px!important}.colors{grid-template-columns:repeat(4,1fr)!important}}
-.hero-text{position:absolute;left:16px;bottom:18px;max-width:360px;z-index:2}
+.hero-text{position:absolute;left:16px;bottom:18px;max-width:360px;z-index:2;line-height:1.1}
 .heart-btn{position:absolute;top:6px;right:6px;width:24px;height:24px;background:rgba(255,255,255,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #E9E9E9;z-index:3}.heart-btn svg{width:11px;height:11px;stroke:#000;fill:none;stroke-width:1.2}
-.u-wrap{border:1px solid #E9E9E9;background:#fff;display:flex;flex-wrap:wrap}.u-grid{display:grid!important;grid-template-columns:repeat(4,1fr)!important;flex:1;min-width:240px}
-.u-item{position:relative;border-right:1px solid #E9E9E9;cursor:pointer}.u-item img{width:100%!important;height:90px!important;object-fit:cover!important;display:block!important}
+.u-wrap{border:1px solid #E9E9E9;background:#fff;display:flex;flex-wrap:wrap;border-radius:0px;overflow:hidden}
+.u-grid{display:grid!important;grid-template-columns:repeat(4,1fr)!important;flex:1;min-width:240px}
+.u-item{position:relative;border-right:1px solid #E9E9E9;cursor:pointer;background:#FFFFFF}.u-item img{width:100%!important;height:90px!important;object-fit:cover!important;display:block!important}
 .u-label{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.55);color:#fff;font-size:6px;letter-spacing:2px;text-align:center;padding:5px}
-.fly-img{position:fixed;left:0;top:0;z-index:99999;width:68px;height:68px;object-fit:cover;border-radius:50%;pointer-events:none;box-shadow:0 16px 32px rgba(0,0,0,.30);border:3px solid #fff;transition:all.75s cubic-bezier(.4,0,.2,1)}
-@keyframes cartBoom{0%{transform:scale(1)}30%{transform:scale(1.38)}60%{transform:scale(0.90)}100%{transform:scale(1)}}.cart-boom{animation:cartBoom.38s cubic-bezier(.34,1.56,.64,1)!important}
+.fly-img{position:fixed;left:0;top:0;z-index:99999;width:68px;height:68px;object-fit:cover;border-radius:50%;pointer-events:none;box-shadow:0 16px 32px rgba(0,0,0,.30);border:3px solid #fff;transition:all.75s cubic-bezier(.4,0,.2,1);will-change:left,top,transform,opacity}
+@keyframes cartBoom{0%{transform:scale(1)}30%{transform:scale(1.38)}60%{transform:scale(0.90)}100%{transform:scale(1)}}
+.cart-boom{animation:cartBoom.38s cubic-bezier(.34,1.56,.64,1)!important}
 #cartToast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(100px);background:#000;color:#fff;padding:10px 16px;border-radius:30px;display:flex;gap:10px;align-items:center;transition:.4s;opacity:0;z-index:100}#cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}
 #cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:flex-end}#cartModal.open{display:flex}#cartBox{background:#fff;width:100%;max-width:480px;margin:0 auto;max-height:88vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px}
-.btn-light{width:100%;padding:11px;background:#fff;border:1px solid #E9E9E9;font-size:9px;letter-spacing:2px;cursor:pointer;margin-top:8px}
+.btn-light{width:100%;padding:11px;background:#fff;border:1px solid #E9E9E9;font-size:9px;letter-spacing:2px;cursor:pointer;margin-top:8px;border-radius:0px}
 #confirmModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;align-items:center;justify-content:center;padding:20px}#confirmModal.show{display:flex}
+#confirmBox{background:#FFFFFF;width:100%;max-width:360px;border:1px solid #E9E9E9;padding:22px;border-radius:0px}
 </style>
 </head><body>
 <nav id="mainNav"><div class="nav-top"><div class="logo" id="storeLogo">LOADING<span>HIJAB PREMIUM</span></div><div class="icons">
@@ -42,7 +47,7 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-f
 <button type="button" class="icon-btn" id="cartIcon" onclick="openCart()"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 10H7L6 7z"/><path d="M9 7V5.5A3 3 0 0 1 12 2.5a3 3 0 0 1 3 3V7"/></svg><span class="badge" id="cCount" style="display:none">0</span></button>
 </div></div><div class="nav-menu"><div class="menu"><a class="active">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a></div></div>
 <div id="searchBox"><input id="q" type="search" autocomplete="off" placeholder="CARI WARNA - MIS: PUTIH, NAVY, BLUSH" onkeydown="if(event.key==='Enter') doSearch()"><button class="s-btn" onclick="doSearch()">CARI</button><button class="s-btn" style="background:#fff;color:#111;border:1px solid #111" onclick="toggleSearch()">X</button></div></nav>
-<div class="hero" id="heroWrap"><picture><source id="bannerSourcePC" media="(min-width:801px)"><img id="bannerImg" alt="Banner" width="1240" height="800" fetchpriority="high" decoding="async"></picture><div class="hero-text"><div id="bannerTitle" style="font-size:8px;letter-spacing:5px;opacity:.9;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.35)"></div><h1 id="heroTitle" style="font-family:'Cormorant Garamond';font-size:36px;line-height:.9;margin:8px 0 14px;font-weight:300;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.45)">LOADING,<br>PREMIUM</h1><a id="bannerLink" href="produk.html" class="btn">LIHAT KOLEKSI -></a></div></div>
+<div class="hero" id="heroWrap"><picture><source id="bannerSourcePC" media="(min-width:801px)"><img id="bannerImg" alt="Banner" width="1240" height="800" fetchpriority="high" decoding="async"></picture><div class="hero-text"><div id="bannerTitle" style="font-size:8px;letter-spacing:5px;opacity:.9;color:#FFFFFF;text-shadow:0 1px 8px rgba(0,0,0,.35)"></div><h1 id="heroTitle" style="font-family:'Cormorant Garamond';font-size:36px;line-height:.9;margin:8px 0 14px;font-weight:300;color:#FFFFFF;text-shadow:0 2px 12px rgba(0,0,0,.45)">LOADING,<br>PREMIUM</h1><a id="bannerLink" href="produk.html" class="btn">LIHAT KOLEKSI -></a></div></div>
 <div style="max-width:1240px;margin:0 auto;padding:14px 8px 0"><div class="u-wrap">
 <div style="flex:1;min-width:260px;padding:16px 14px"><div style="font-family:'Cormorant Garamond';font-size:16px;letter-spacing:3px">FIND YOUR UNDERTONE</div>
 <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap">
@@ -97,9 +102,9 @@ function renderCart(){
   const c=getCart();const sub=c.reduce((a,b)=>a+b.harga*b.qty,0);
   document.getElementById('cartTotalQty').innerText=c.reduce((a,b)=>a+b.qty,0);
   document.getElementById('cartSubtotal').innerText='Rp'+sub.toLocaleString('id-ID');
-  const ongEl=document.getElementById('ongkirPriceCart');if(ongEl) ongEl.innerText='Rp'+selectedOngkirCost.toLocaleString('id-ID');
-  const totEl=document.getElementById('cartTotalPrice');if(totEl) totEl.innerText='Rp'+(sub+selectedOngkirCost).toLocaleString('id-ID');
-  const labEl=document.getElementById('ongkirLabel');if(labEl) labEl.innerText=selectedService?'('+esc(selectedService)+')':'';
+  document.getElementById('ongkirPriceCart').innerText='Rp'+selectedOngkirCost.toLocaleString('id-ID');
+  document.getElementById('cartTotalPrice').innerText='Rp'+(sub+selectedOngkirCost).toLocaleString('id-ID');
+  document.getElementById('ongkirLabel').innerText=selectedService?'('+esc(selectedService)+')':'';
   const list=document.getElementById('cartList');if(!list)return;
   if(!c.length){list.innerHTML='<p style="text-align:center;padding:30px;opacity:.4;font-size:11px">KERANJANG KOSONG</p>';return;}
   list.innerHTML=c.map((it,i)=>`<div style="display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #F2EFEA;align-items:center"><img src="${esc(it.img)}" style="width:52px;height:52px;border-radius:10px;object-fit:cover"><div style="flex:1"><div style="font-size:10px">${esc(it.warna)}</div><div style="font-size:9px;opacity:.5">Rp${Number(it.harga).toLocaleString('id-ID')} x ${it.qty}</div></div><button onclick="changeQty(${i},-1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#fff">-</button><span style="margin:0 6px;font-size:11px">${it.qty}</span><button onclick="changeQty(${i},1)" style="width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#fff">+</button></div>`).join('');
@@ -174,8 +179,8 @@ async function init(){
     const applyName=(val)=>{
       if(!val) return;
       STORE_NAME=val; const name=val.toUpperCase();
-      document.title=val; const logo=document.getElementById('storeLogo');
-      if(logo) logo.innerHTML=name+'<span>HIJAB PREMIUM</span>';
+      document.title=val;
+      const logo=document.getElementById('storeLogo'); if(logo) logo.innerHTML=name+'<span>HIJAB PREMIUM</span>';
       const footLogo=document.getElementById('footerLogo'); if(footLogo) footLogo.innerText=name;
       const footCopy=document.getElementById('footerCopy'); if(footCopy) footCopy.innerText='© 2026 '+val+' HIJAB PREMIUM';
       const heroT=document.getElementById('heroTitle'); if(heroT) heroT.innerHTML=name+',<br>PREMIUM';
@@ -194,7 +199,7 @@ async function init(){
       if(sOid){ STORE_ORIGIN_ID=sOid; localStorage.setItem('store_origin_id',sOid); }
       if(sOlabel){ STORE_ORIGIN_LABEL=sOlabel; localStorage.setItem('store_origin_label',sOlabel); const od=document.getElementById('originLabelDisplay'); if(od) od.innerText=sOlabel; }
     }
-    const {data:banners} = await supabaseClient.from('banners').select('banner_pc_url,banner_hp_url').eq('is_active',true).order('created_at',{ascending:false}).limit(1);
+    const {data:banners}=await supabaseClient.from('banners').select('banner_pc_url,banner_hp_url').eq('is_active',true).order('created_at',{ascending:false}).limit(1);
     if(banners && banners[0]){
       const img=document.getElementById('bannerImg'); const srcPC=document.getElementById('bannerSourcePC');
       const pcUrl=banners[0].banner_pc_url; const hpUrl=banners[0].banner_hp_url||pcUrl;
