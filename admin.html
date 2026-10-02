@@ -88,7 +88,7 @@ async function init(){
 }
 async function loadMasterColors(){const {data}=await supa.from('master_colors').select('*');masterColorsCache=data||[];aggregateUndertone();}
 function getUndertoneForColor(n){n=(n||'').toUpperCase().trim();if(!n)return['NEUTRAL'];let f=masterColorsCache.find(m=>m.name.toUpperCase()===n);if(f)return f.undertone;if(['HITAM','BLACK','NAVY','DENIM','EMERALD','BURGUNDY','LILAC','GREY'].includes(n))return['COOL'];if(['MILO','MAROON','MUSTARD','CARAMEL','BROWN','PEACH','MOCCA'].includes(n))return['WARM'];if(['OLIVE','SAGE','ARMY','KHAKI'].includes(n))return['OLIVE'];return['NEUTRAL'];}
-function aggregateUndertone(){const rows=[...document.querySelectorAll('#varInputs.slot')];let all=new Set();rows.forEach(r=>{[...r.querySelectorAll('.under-check:checked')].map(c=>c.value).forEach(v=>all.add(v));});let arr=Array.from(all);if(!arr.length)arr=['NEUTRAL'];$('autoUndertoneBox').innerHTML=arr.map(u=>`<span class="under-badge">${u}</span>`).join('')+` <span style="opacity:.7">${rows.length} warna</span>`;return arr;}
+function aggregateUndertone(){const rows=[...document.querySelectorAll('#varInputs .slot')];let all=new Set();rows.forEach(r=>{[...r.querySelectorAll('.under-check:checked')].map(c=>c.value).forEach(v=>all.add(v));});let arr=Array.from(all);if(!arr.length)arr=['NEUTRAL'];$('autoUndertoneBox').innerHTML=arr.map(u=>`<span class="under-badge">${u}</span>`).join('')+` <span style="opacity:.7">${rows.length} warna</span>`;return arr;}
 window.addMasterColorQuick=async()=>{let name=$('newMasterColor').value.trim().toUpperCase();let u=$('newMasterUnder').value.split(',').map(s=>s.trim());if(!name)return toast('Isi nama warna',true);await supa.from('master_colors').upsert({name:name,undertone:u},{onConflict:'name'});$('newMasterColor').value='';toast(name+' ditambah');await loadMasterColors();};
 function initVar(){const el=$('varInputs');if(!el)return;el.innerHTML='';addVarRow();}
 function addVarRow(c,img,stock,avail,undertones){
@@ -163,7 +163,7 @@ window.saveProd=async()=>{
   if(!price||price<1000)throw new Error('Harga minimal 1000');
   const jenisVal=$('pJenis').value;const bahanVal=$('pCat').value;
   if(!jenisVal)throw new Error('Pilih jenis dulu');if(!bahanVal)throw new Error('Pilih bahan dulu');
-  const rows=[...document.querySelectorAll('#varInputs.slot')];if(!rows.length)throw new Error('Tambah warna dulu');
+  const rows=[...document.querySelectorAll('#varInputs .slot')];if(!rows.length)throw new Error('Tambah warna dulu');
   let finalVars=[];
   for(let idx=0;idx<rows.length;idx++){
     let r=rows[idx];const col=r.querySelector('.var-color')?.value.trim().toUpperCase();if(!col)continue;
