@@ -49,7 +49,9 @@ const supaGuard=window.supabase.createClient(SUPA_URL,SUPA_KEY);
 <button class="btn" id="btnToko" onclick="saveToko()">SIMPAN TOKO</button><div id="statusToko" class="save-status"></div>
 </div></div>
 <div id="tab-koleksi" class="hidden"><div class="card"><h3>BEST SELLER</h3><input type="file" id="koleksiGaleri" accept="image/*" multiple style="display:none"><label for="koleksiGaleri" class="file-btn">+ Galeri</label><div id="koleksi4Wrap" style="margin-top:10px"></div><button class="btn-line" onclick="addKoleksi()">+ Slot</button><button class="btn" id="btnKoleksi" onclick="saveKoleksi()">SIMPAN BEST</button><div id="statusKoleksi" class="save-status"></div></div></div>
-<div id="tab-undertone" class="hidden"><div class="card"><h3>UNDERTONE</h3><input type="file" id="underGaleri" accept="image/*" multiple style="display:none"><label for="underGaleri" class="file-btn">+ Galeri</label><div id="undertoneWrap" style="margin-top:10px"></div><button class="btn-line" onclick="addUndertone()">+ Slot</button><button class="btn" id="btnUnder" onclick="saveUndertone()">SIMPAN UNDERTONE</button><div id="statusUnder" class="save-status"></div></div></div>
+<div id="tab-undertone" class="hidden"><div class="card"><h3>UNDERTONE + DESKRIPSI</h3>
+<div style="font-size:8px;opacity:.6;margin-bottom:8px;letter-spacing:1px">Isi JUDUL pendek (COOL/WARM) dan DESKRIPSI pendek biar tidak jebol di HP</div>
+<input type="file" id="underGaleri" accept="image/*" multiple style="display:none"><label for="underGaleri" class="file-btn">+ Galeri Undertone</label><div id="undertoneWrap" style="margin-top:10px"></div><button class="btn-line" onclick="addUndertone()">+ Slot Undertone</button><button class="btn" id="btnUnder" onclick="saveUndertone()">SIMPAN UNDERTONE</button><div id="statusUnder" class="save-status"></div></div></div>
 <div id="tab-faq" class="hidden"><div class="card"><h3>FAQ</h3><div id="faqWrap"></div><button class="btn-line" onclick="addFaq()">+ FAQ</button><button class="btn" id="btnFaq" onclick="saveFaq()">SIMPAN FAQ</button><div id="statusFaq" class="save-status"></div></div></div>
 <div id="tab-produk" class="hidden">
 <div class="card" style="border-color:var(--black)"><h3>PRODUK</h3>
@@ -71,7 +73,7 @@ const supaGuard=window.supabase.createClient(SUPA_URL,SUPA_KEY);
 <script>
 const supa=supabase.createClient(SUPA_URL,SUPA_KEY);
 let tokoOriginId="",tokoOriginLabel="";let pcBase='',hpBase='';
-let koleksiSlots=[{url:"",title:""}];let undertoneSlots=[{url:"",title:""}];let faqSlots=[{q:'Apakah menerawang?',a:'Tidak.'}];
+let koleksiSlots=[{url:"",title:""}];let undertoneSlots=[{url:"",title:"",desc:"",description:""}];let faqSlots=[{q:'Apakah menerawang?',a:'Tidak.'}];
 let masterColorsCache=[];const $=id=>document.getElementById(id);
 function openTab(n,el){document.querySelectorAll('[id^="tab-"]').forEach(c=>c.classList.add('hidden'));$('tab-'+n).classList.remove('hidden');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
 function toast(m,isErr){const t=$('toast');t.innerText=m;t.className=isErr?'err show':'show';setTimeout(()=>t.classList.remove('show'),3000)}
@@ -83,7 +85,7 @@ $('confirmOk').onclick=()=>{if(confirmCb)confirmCb();closeConfirm();};
 function setBtnLoading(bId,sId,ld,txt='MENYIMPAN...'){const b=$(bId);const s=$(sId);if(!b)return;b.disabled=ld;if(!b.dataset.ori)b.dataset.ori=b.innerText;b.innerText=ld?txt:b.dataset.ori;if(s&&ld)s.innerText='Proses...';}
 function validateFile(f){if(!f)return'';if(f.size>5*1024*1024)return'Foto max 5MB';if(!f.type.startsWith('image/'))return'File harus gambar';return'';}
 async function init(){
-  try{const {data}=await supa.from('settings').select('*');if(data){const g=k=>data.find(s=>s.key===k)?.value;if(g('store_name')){$('storeName').value=g('store_name');$('adminLogo').innerText=g('store_name');}if(g('wa_number'))$('waNumber').value=g('wa_number');if(g('toko_origin_id')){tokoOriginId=g('toko_origin_id');tokoOriginLabel=g('toko_origin_label')||'';$('curOrigin').innerText=tokoOriginLabel+' - '+tokoOriginId;}if(g('home_koleksi_terlaris')){try{const p=JSON.parse(g('home_koleksi_terlaris'));if(p.length)koleksiSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}if(g('home_undertone_images')){try{const p=JSON.parse(g('home_undertone_images'));if(p.length)undertoneSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}if(g('home_faq_list')){try{faqSlots=JSON.parse(g('home_faq_list'))}catch(e){}}}}catch(e){}
+  try{const {data}=await supa.from('settings').select('*');if(data){const g=k=>data.find(s=>s.key===k)?.value;if(g('store_name')){$('storeName').value=g('store_name');$('adminLogo').innerText=g('store_name');}if(g('wa_number'))$('waNumber').value=g('wa_number');if(g('toko_origin_id')){tokoOriginId=g('toko_origin_id');tokoOriginLabel=g('toko_origin_label')||'';$('curOrigin').innerText=tokoOriginLabel+' - '+tokoOriginId;}if(g('home_koleksi_terlaris')){try{const p=JSON.parse(g('home_koleksi_terlaris'));if(p.length)koleksiSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}if(g('home_undertone_images')){try{const p=JSON.parse(g('home_undertone_images'));if(p.length)undertoneSlots=p.map(x=>({url:x.url||x||'',title:x.title||x.name||'',desc:x.desc||x.description||x.caption||'',description:x.desc||x.description||x.caption||''}))}catch(e){}}if(g('home_faq_list')){try{faqSlots=JSON.parse(g('home_faq_list'))}catch(e){}}}}catch(e){}
   await loadJenis();await loadCats();await loadMasterColors();await loadProducts();await loadBanners();initVar();renderKoleksi();renderUnder();renderFaq();
 }
 async function loadMasterColors(){const {data}=await supa.from('master_colors').select('*');masterColorsCache=data||[];aggregateUndertone();}
@@ -111,13 +113,16 @@ window.delCat=async(id)=>{showConfirm('Hapus Bahan?','Bahan akan hilang',async()
 function renderKoleksi(){let h='';koleksiSlots.forEach((it,i)=>{h+='<div class="slot"><div class="x" onclick="koleksiSlots.splice('+i+',1);if(!koleksiSlots.length)koleksiSlots=[{url:\'\'}];renderKoleksi()">x</div>'+(it.url?'<img src="'+it.url+'">':'')+'<input type="file" style="display:none" id="kf'+i+'" accept="image/*" onchange="changeKoleksi('+i+',this)"><label for="kf'+i+'" class="file-btn">File</label><input class="input" placeholder="Judul" value="'+esc(it.title)+'" oninput="koleksiSlots['+i+'].title=this.value"></div>'});$('koleksi4Wrap').innerHTML=h;}
 window.changeKoleksi=async(i,inp)=>{const f=inp.files[0];if(!f)return;const err=validateFile(f);if(err){toast(err,true);return;}koleksiSlots[i].url=await fileToBase64(f);renderKoleksi();};
 window.addKoleksi=()=>{if(koleksiSlots.length>=9){toast('Max 9',true);return;}koleksiSlots.push({url:"",title:""});renderKoleksi();};
-function renderUnder(){let h='';undertoneSlots.forEach((it,i)=>{h+='<div class="slot"><div class="x" onclick="undertoneSlots.splice('+i+',1);if(!undertoneSlots.length)undertoneSlots=[{url:\'\'}];renderUnder()">x</div>'+(it.url?'<img src="'+it.url+'">':'')+'<input type="file" style="display:none" id="uf'+i+'" accept="image/*" onchange="changeUnder('+i+',this)"><label for="uf'+i+'" class="file-btn">File</label><input class="input" placeholder="Label WARM/COOL" value="'+esc(it.title)+'" oninput="undertoneSlots['+i+'].title=this.value.toUpperCase()"></div>'});$('undertoneWrap').innerHTML=h;}
+function renderUnder(){
+let h='';
+undertoneSlots.forEach((it,i)=>{
+h+='<div class="slot"><div class="x" onclick="undertoneSlots.splice('+i+',1);if(!undertoneSlots.length)undertoneSlots=[{url:\'\',title:\'\',desc:\'\'}];renderUnder()">x</div>'+(it.url?'<img src="'+it.url+'">':'')+'<input type="file" style="display:none" id="uf'+i+'" accept="image/*" onchange="changeUnder('+i+',this)"><label for="uf'+i+'" class="file-btn">File Foto</label><input class="input" placeholder="JUDUL PENDEK: COOL / WARM / NEUTRAL / OLIVE" value="'+esc(it.title)+'" oninput="undertoneSlots['+i+'].title=this.value.toUpperCase()" style="margin-top:8px;font-weight:700"><textarea class="input" rows="3" placeholder="DESKRIPSI PENDEK - mis: Pembuluh biru/keunguan, rona pinkish. Cocok dusty pink, navy..." oninput="undertoneSlots['+i+'].desc=this.value;undertoneSlots['+i+'].description=this.value" style="margin-top:6px">'+esc(it.desc||it.description||'')+'</textarea></div>'
+});$('undertoneWrap').innerHTML=h;}
 window.changeUnder=async(i,inp)=>{const f=inp.files[0];if(!f)return;const err=validateFile(f);if(err){toast(err,true);return;}undertoneSlots[i].url=await fileToBase64(f);renderUnder();};
-window.addUndertone=()=>{if(undertoneSlots.length>=6){toast('Max 6',true);return;}undertoneSlots.push({url:"",title:""});renderUnder();};
+window.addUndertone=()=>{if(undertoneSlots.length>=6){toast('Max 6',true);return;}undertoneSlots.push({url:"",title:"",desc:"",description:""});renderUnder();};
 function renderFaq(){let h='';faqSlots.forEach((f,i)=>{h+='<div class="slot"><div class="x" onclick="faqSlots.splice('+i+',1);renderFaq()">x</div><input class="input" placeholder="Pertanyaan" value="'+esc(f.q)+'" oninput="faqSlots['+i+'].q=this.value"><textarea class="input" rows="2" placeholder="Jawaban" oninput="faqSlots['+i+'].a=this.value">'+esc(f.a)+'</textarea></div>'});$('faqWrap').innerHTML=h;}
 window.addFaq=()=>{faqSlots.push({q:'',a:''});renderFaq();};
-
-// LOAD PRODUK - support kolom ID & EN
+  // LOAD PRODUK - support kolom ID & EN
 async function loadProducts(){
   const {data,error}=await supa.from('products').select('*').order('created_at',{ascending:false});
   if(error){$('list').innerHTML='Error: '+error.message;return;}
@@ -166,18 +171,23 @@ window.saveUndertone=async()=>{
         if(error) throw error;
         url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;
       }
-      final.push({url,title:(list[i].title||'').toUpperCase()});
+      // SIMPAN JUDUL + DESKRIPSI BARU
+      final.push({
+        url:url,
+        title:(list[i].title||'').toUpperCase(),
+        desc:list[i].desc||list[i].description||'',
+        description:list[i].desc||list[i].description||'',
+        caption:list[i].desc||list[i].description||''
+      });
     }
     const {error}=await supa.from('settings').upsert({key:'home_undertone_images',value:JSON.stringify(final)},{onConflict:'key'});
     if(error) throw error;
-    toast('Undertone disimpan '+final.length); $('statusUnder').innerText='✓ '+final.length+' foto';
+    toast('Undertone disimpan '+final.length+' - dengan deskripsi'); $('statusUnder').innerText='✓ '+final.length+' foto + deskripsi';
   }catch(e){ toast(e.message,true); $('statusUnder').innerText='✗ '+e.message; }
   finally{ setBtnLoading('btnUnder','statusUnder',false); }
 };
 window.saveFaq=async()=>{const final=faqSlots.filter(x=>x.q&&x.a);if(!final.length){toast('Isi FAQ dulu',true);return;}await supa.from('settings').upsert({key:'home_faq_list',value:JSON.stringify(final)},{onConflict:'key'});toast('FAQ disimpan');};
 async function loadBanners(){const {data}=await supa.from('banners').select('*').order('created_at',{ascending:false});$('bannerList').innerHTML=(data||[]).slice(0,3).map(b=>{const url=b.banner_pc_url||b.image_url||'';return `<div style="border:1px solid var(--line);display:flex;gap:8px;padding:8px;margin-top:6px"><img src="${url}" style="width:56px;height:36px;object-fit:cover"><div style="flex:1;font-size:8px">${b.is_active?'AKTIF':''} - ${(b.created_at||'').slice(0,10)}</div></div>`;}).join('');}
-
-// SAVE PRODUK - FINAL CLEAN + DUAL KOLOM (ID + EN) BIAR GAK ERROR name
 window.saveProd=async()=>{
  const btn=$('btnProd');if(btn.disabled)return;setBtnLoading('btnProd','saveStatus',true,'Menyimpan...');
  try{
@@ -199,7 +209,6 @@ window.saveProd=async()=>{
   if(!finalVars.length)throw new Error('Minimal 1 warna');
   let pid=$('editId').value;
   let allUnder=new Set();finalVars.forEach(v=>v.undertone.forEach(u=>allUnder.add(u)));let productUndertone=Array.from(allUnder);if(!productUndertone.length)productUndertone=['NEUTRAL'];
-  // PAYLOAD DUAL: isi kolom ID dan EN biar aman
   let payload={
     nama:name,name:name,
     harga:price,price:price,
@@ -237,6 +246,6 @@ window.saveProd=async()=>{
  }catch(e){$('saveStatus').innerText='✗ '+e.message;toast(e.message,true);console.error(e);}finally{setBtnLoading('btnProd','saveStatus',false);}
 };
 $('koleksiGaleri').addEventListener('change',async e=>{for(let f of e.target.files){const err=validateFile(f);if(err){toast(err,true);continue;}if(koleksiSlots.length>=9)break;koleksiSlots.push({url:await fileToBase64(f),title:''});}renderKoleksi();e.target.value='';});
-$('underGaleri').addEventListener('change',async e=>{for(let f of e.target.files){const err=validateFile(f);if(err){toast(err,true);continue;}if(undertoneSlots.length>=6)break;undertoneSlots.push({url:await fileToBase64(f),title:''});}renderUnder();e.target.value='';});
+$('underGaleri').addEventListener('change',async e=>{for(let f of e.target.files){const err=validateFile(f);if(err){toast(err,true);continue;}if(undertoneSlots.length>=6)break;undertoneSlots.push({url:await fileToBase64(f),title:'',desc:'',description:''});}renderUnder();e.target.value='';});
 init();
 </script></body></html>
