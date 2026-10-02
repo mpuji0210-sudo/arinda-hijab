@@ -43,16 +43,18 @@ const supaGuard=window.supabase.createClient(SUPA_URL,SUPA_KEY);
 <div style="display:flex;gap:8px"><input id="originSearch" class="input" placeholder="Cari kecamatan"><button class="btn" style="width:80px;margin:0" onclick="cariOrigin()">CARI</button></div><div id="originList"></div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><input id="manualOriginId" class="input" placeholder="ID Origin"><input id="manualOriginLabel" class="input" placeholder="Label Origin"></div><button class="btn-light" onclick="setManualOrigin()">Pakai Manual</button>
 <hr style="border:none;border-top:1px solid var(--line);margin:16px 0">
-<input type="file" id="filePC" accept="image/*" style="display:none"><label for="filePC" class="file-btn">Banner PC</label><img id="prevPC" style="width:100%;height:180px;object-fit:cover;display:none;margin-top:8px;border:1px solid var(--line)">
-<input type="file" id="fileHP" accept="image/*" style="display:none"><label for="fileHP" class="file-btn" style="margin-top:12px">Banner HP</label><img id="prevHP" style="width:100%;height:180px;object-fit:cover;display:none;margin-top:8px;border:1px solid var(--line)">
+<h3 style="font-size:12px;letter-spacing:3px">BANNER + JUDUL</h3>
+<input id="bannerTitle" class="input" placeholder="Judul Banner - mis: PARIS PREMIUM 110x110CM">
+<input id="bannerSubTitle" class="input" placeholder="Subjudul Banner - mis: Adem Tidak Menerawang Laser Cut">
+<div style="font-size:8px;opacity:.5;margin-top:4px">Judul ini muncul di atas foto banner di halaman depan</div>
+<input type="file" id="filePC" accept="image/*" style="display:none"><label for="filePC" class="file-btn">Upload Banner PC</label><img id="prevPC" style="width:100%;height:180px;object-fit:cover;display:none;margin-top:8px;border:1px solid var(--line)">
+<input type="file" id="fileHP" accept="image/*" style="display:none"><label for="fileHP" class="file-btn" style="margin-top:12px">Upload Banner HP</label><img id="prevHP" style="width:100%;height:180px;object-fit:cover;display:none;margin-top:8px;border:1px solid var(--line)">
 <div id="bannerList" style="margin-top:12px"></div>
-<button class="btn" id="btnToko" onclick="saveToko()">SIMPAN TOKO</button><div id="statusToko" class="save-status"></div>
+<button class="btn" id="btnToko" onclick="saveToko()">SIMPAN TOKO & BANNER</button><div id="statusToko" class="save-status"></div>
 </div></div>
-<div id="tab-koleksi" class="hidden"><div class="card"><h3>BEST SELLER</h3><input type="file" id="koleksiGaleri" accept="image/*" multiple style="display:none"><label for="koleksiGaleri" class="file-btn">+ Galeri</label><div id="koleksi4Wrap" style="margin-top:10px"></div><button class="btn-line" onclick="addKoleksi()">+ Slot</button><button class="btn" id="btnKoleksi" onclick="saveKoleksi()">SIMPAN BEST</button><div id="statusKoleksi" class="save-status"></div></div></div>
-<div id="tab-undertone" class="hidden"><div class="card"><h3>UNDERTONE + DESKRIPSI</h3>
-<div style="font-size:8px;opacity:.6;margin-bottom:8px;letter-spacing:1px">Isi JUDUL pendek (COOL/WARM) dan DESKRIPSI pendek biar tidak jebol di HP</div>
-<input type="file" id="underGaleri" accept="image/*" multiple style="display:none"><label for="underGaleri" class="file-btn">+ Galeri Undertone</label><div id="undertoneWrap" style="margin-top:10px"></div><button class="btn-line" onclick="addUndertone()">+ Slot Undertone</button><button class="btn" id="btnUnder" onclick="saveUndertone()">SIMPAN UNDERTONE</button><div id="statusUnder" class="save-status"></div></div></div>
-<div id="tab-faq" class="hidden"><div class="card"><h3>FAQ</h3><div id="faqWrap"></div><button class="btn-line" onclick="addFaq()">+ FAQ</button><button class="btn" id="btnFaq" onclick="saveFaq()">SIMPAN FAQ</button><div id="statusFaq" class="save-status"></div></div></div>
+<div id="tab-koleksi" class="hidden"><div class="card"><h3>BEST SELLER - FIX</h3><div style="font-size:8px;opacity:.6;margin-bottom:8px">Upload foto warna best seller, isi judul warna</div><input type="file" id="koleksiGaleri" accept="image/*" multiple style="display:none"><label for="koleksiGaleri" class="file-btn">+ Galeri Best (banyak)</label><div id="koleksi4Wrap" style="margin-top:10px"></div><button class="btn-line" onclick="addKoleksi()">+ Slot Manual</button><button class="btn" id="btnKoleksi" onclick="saveKoleksi()">SIMPAN BEST</button><div id="statusKoleksi" class="save-status"></div></div></div>
+<div id="tab-undertone" class="hidden"><div class="card"><h3>UNDERTONE + DESKRIPSI</h3><div style="font-size:8px;opacity:.6;margin-bottom:8px">Judul pendek COOL/WARM + deskripsi pendek</div><input type="file" id="underGaleri" accept="image/*" multiple style="display:none"><label for="underGaleri" class="file-btn">+ Galeri Undertone</label><div id="undertoneWrap" style="margin-top:10px"></div><button class="btn-line" onclick="addUndertone()">+ Slot Undertone</button><button class="btn" id="btnUnder" onclick="saveUndertone()">SIMPAN UNDERTONE</button><div id="statusUnder" class="save-status"></div></div></div>
+<div id="tab-faq" class="hidden"><div class="card"><h3>FAQ - FIX</h3><div id="faqWrap"></div><button class="btn-line" onclick="addFaq()">+ FAQ</button><button class="btn" id="btnFaq" onclick="saveFaq()">SIMPAN FAQ</button><div id="statusFaq" class="save-status"></div></div></div>
 <div id="tab-produk" class="hidden">
 <div class="card" style="border-color:var(--black)"><h3>PRODUK</h3>
 <input type="hidden" id="editId"><input id="pName" class="input" placeholder="Nama Produk">
@@ -85,7 +87,15 @@ $('confirmOk').onclick=()=>{if(confirmCb)confirmCb();closeConfirm();};
 function setBtnLoading(bId,sId,ld,txt='MENYIMPAN...'){const b=$(bId);const s=$(sId);if(!b)return;b.disabled=ld;if(!b.dataset.ori)b.dataset.ori=b.innerText;b.innerText=ld?txt:b.dataset.ori;if(s&&ld)s.innerText='Proses...';}
 function validateFile(f){if(!f)return'';if(f.size>5*1024*1024)return'Foto max 5MB';if(!f.type.startsWith('image/'))return'File harus gambar';return'';}
 async function init(){
-  try{const {data}=await supa.from('settings').select('*');if(data){const g=k=>data.find(s=>s.key===k)?.value;if(g('store_name')){$('storeName').value=g('store_name');$('adminLogo').innerText=g('store_name');}if(g('wa_number'))$('waNumber').value=g('wa_number');if(g('toko_origin_id')){tokoOriginId=g('toko_origin_id');tokoOriginLabel=g('toko_origin_label')||'';$('curOrigin').innerText=tokoOriginLabel+' - '+tokoOriginId;}if(g('home_koleksi_terlaris')){try{const p=JSON.parse(g('home_koleksi_terlaris'));if(p.length)koleksiSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}if(g('home_undertone_images')){try{const p=JSON.parse(g('home_undertone_images'));if(p.length)undertoneSlots=p.map(x=>({url:x.url||x||'',title:x.title||x.name||'',desc:x.desc||x.description||x.caption||'',description:x.desc||x.description||x.caption||''}))}catch(e){}}if(g('home_faq_list')){try{faqSlots=JSON.parse(g('home_faq_list'))}catch(e){}}}}catch(e){}
+  try{const {data}=await supa.from('settings').select('*');if(data){const g=k=>data.find(s=>s.key===k)?.value;
+  if(g('store_name')){$('storeName').value=g('store_name');$('adminLogo').innerText=g('store_name');}
+  if(g('wa_number'))$('waNumber').value=g('wa_number');
+  if(g('toko_origin_id')){tokoOriginId=g('toko_origin_id');tokoOriginLabel=g('toko_origin_label')||'';$('curOrigin').innerText=tokoOriginLabel+' - '+tokoOriginId;}
+  if(g('home_banner_title'))$('bannerTitle').value=g('home_banner_title');
+  if(g('home_banner_subtitle'))$('bannerSubTitle').value=g('home_banner_subtitle');
+  if(g('home_koleksi_terlaris')){try{const p=JSON.parse(g('home_koleksi_terlaris'));if(p.length)koleksiSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}
+  if(g('home_undertone_images')){try{const p=JSON.parse(g('home_undertone_images'));if(p.length)undertoneSlots=p.map(x=>({url:x.url||x||'',title:x.title||x.name||'',desc:x.desc||x.description||x.caption||'',description:x.desc||x.description||x.caption||''}))}catch(e){}}
+  if(g('home_faq_list')){try{faqSlots=JSON.parse(g('home_faq_list'))}catch(e){}}}}catch(e){}
   await loadJenis();await loadCats();await loadMasterColors();await loadProducts();await loadBanners();initVar();renderKoleksi();renderUnder();renderFaq();
 }
 async function loadMasterColors(){const {data}=await supa.from('master_colors').select('*');masterColorsCache=data||[];aggregateUndertone();}
@@ -110,19 +120,19 @@ window.delJenis=async(id,name)=>{showConfirm('Hapus Jenis?',''+name+' akan hilan
 async function loadCats(){const {data}=await supa.from('categories').select('*');if(!data)return;$('catList').innerHTML=data.map(c=>'<span style="display:inline-block;border:1px solid var(--line);background:var(--bg);padding:4px 10px;margin:3px;font-size:9px">'+esc(c.name)+' <b style="cursor:pointer" onclick="delCat(\''+c.id+'\')">x</b></span>').join('');$('pCat').innerHTML='<option value="">Pilih Bahan</option>'+data.map(c=>'<option value="'+esc(c.name)+'">'+esc(c.name)+'</option>').join('');}
 window.addCat=async()=>{const v=$('catName').value.trim();if(!v)return;await supa.from('categories').insert({name:v});$('catName').value='';loadCats();};
 window.delCat=async(id)=>{showConfirm('Hapus Bahan?','Bahan akan hilang',async()=>{await supa.from('categories').delete().eq('id',id);loadCats();toast('Dihapus');});};
-function renderKoleksi(){let h='';koleksiSlots.forEach((it,i)=>{h+='<div class="slot"><div class="x" onclick="koleksiSlots.splice('+i+',1);if(!koleksiSlots.length)koleksiSlots=[{url:\'\'}];renderKoleksi()">x</div>'+(it.url?'<img src="'+it.url+'">':'')+'<input type="file" style="display:none" id="kf'+i+'" accept="image/*" onchange="changeKoleksi('+i+',this)"><label for="kf'+i+'" class="file-btn">File</label><input class="input" placeholder="Judul" value="'+esc(it.title)+'" oninput="koleksiSlots['+i+'].title=this.value"></div>'});$('koleksi4Wrap').innerHTML=h;}
+function renderKoleksi(){let h='';koleksiSlots.forEach((it,i)=>{h+='<div class="slot"><div class="x" onclick="koleksiSlots.splice('+i+',1);if(!koleksiSlots.length)koleksiSlots=[{url:\'\'}];renderKoleksi()">x</div>'+(it.url?'<img src="'+it.url+'">':'')+'<input type="file" style="display:none" id="kf'+i+'" accept="image/*" onchange="changeKoleksi('+i+',this)"><label for="kf'+i+'" class="file-btn">Ganti Foto</label><input class="input" placeholder="Judul Warna - mis: NAVY" value="'+esc(it.title)+'" oninput="koleksiSlots['+i+'].title=this.value"></div>'});$('koleksi4Wrap').innerHTML=h;}
 window.changeKoleksi=async(i,inp)=>{const f=inp.files[0];if(!f)return;const err=validateFile(f);if(err){toast(err,true);return;}koleksiSlots[i].url=await fileToBase64(f);renderKoleksi();};
 window.addKoleksi=()=>{if(koleksiSlots.length>=9){toast('Max 9',true);return;}koleksiSlots.push({url:"",title:""});renderKoleksi();};
 function renderUnder(){
 let h='';
 undertoneSlots.forEach((it,i)=>{
-h+='<div class="slot"><div class="x" onclick="undertoneSlots.splice('+i+',1);if(!undertoneSlots.length)undertoneSlots=[{url:\'\',title:\'\',desc:\'\'}];renderUnder()">x</div>'+(it.url?'<img src="'+it.url+'">':'')+'<input type="file" style="display:none" id="uf'+i+'" accept="image/*" onchange="changeUnder('+i+',this)"><label for="uf'+i+'" class="file-btn">File Foto</label><input class="input" placeholder="JUDUL PENDEK: COOL / WARM / NEUTRAL / OLIVE" value="'+esc(it.title)+'" oninput="undertoneSlots['+i+'].title=this.value.toUpperCase()" style="margin-top:8px;font-weight:700"><textarea class="input" rows="3" placeholder="DESKRIPSI PENDEK - mis: Pembuluh biru/keunguan, rona pinkish. Cocok dusty pink, navy..." oninput="undertoneSlots['+i+'].desc=this.value;undertoneSlots['+i+'].description=this.value" style="margin-top:6px">'+esc(it.desc||it.description||'')+'</textarea></div>'
+h+='<div class="slot"><div class="x" onclick="undertoneSlots.splice('+i+',1);if(!undertoneSlots.length)undertoneSlots=[{url:\'\',title:\'\',desc:\'\'}];renderUnder()">x</div>'+(it.url?'<img src="'+it.url+'">':'')+'<input type="file" style="display:none" id="uf'+i+'" accept="image/*" onchange="changeUnder('+i+',this)"><label for="uf'+i+'" class="file-btn">File Foto</label><input class="input" placeholder="JUDUL PENDEK: COOL / WARM / NEUTRAL / OLIVE" value="'+esc(it.title)+'" oninput="undertoneSlots['+i+'].title=this.value.toUpperCase()" style="margin-top:8px;font-weight:700"><textarea class="input" rows="3" placeholder="DESKRIPSI PENDEK" oninput="undertoneSlots['+i+'].desc=this.value;undertoneSlots['+i+'].description=this.value" style="margin-top:6px">'+esc(it.desc||it.description||'')+'</textarea></div>'
 });$('undertoneWrap').innerHTML=h;}
 window.changeUnder=async(i,inp)=>{const f=inp.files[0];if(!f)return;const err=validateFile(f);if(err){toast(err,true);return;}undertoneSlots[i].url=await fileToBase64(f);renderUnder();};
 window.addUndertone=()=>{if(undertoneSlots.length>=6){toast('Max 6',true);return;}undertoneSlots.push({url:"",title:"",desc:"",description:""});renderUnder();};
-function renderFaq(){let h='';faqSlots.forEach((f,i)=>{h+='<div class="slot"><div class="x" onclick="faqSlots.splice('+i+',1);renderFaq()">x</div><input class="input" placeholder="Pertanyaan" value="'+esc(f.q)+'" oninput="faqSlots['+i+'].q=this.value"><textarea class="input" rows="2" placeholder="Jawaban" oninput="faqSlots['+i+'].a=this.value">'+esc(f.a)+'</textarea></div>'});$('faqWrap').innerHTML=h;}
+function renderFaq(){let h='';faqSlots.forEach((f,i)=>{h+='<div class="slot"><div class="x" onclick="faqSlots.splice('+i+',1);renderFaq()">x</div><input class="input" placeholder="Pertanyaan - mis: Apakah menerawang?" value="'+esc(f.q)+'" oninput="faqSlots['+i+'].q=this.value"><textarea class="input" rows="2" placeholder="Jawaban" oninput="faqSlots['+i+'].a=this.value">'+esc(f.a)+'</textarea></div>'});$('faqWrap').innerHTML=h;}
 window.addFaq=()=>{faqSlots.push({q:'',a:''});renderFaq();};
-  // LOAD PRODUK - support kolom ID & EN
+  // LOAD PRODUK
 async function loadProducts(){
   const {data,error}=await supa.from('products').select('*').order('created_at',{ascending:false});
   if(error){$('list').innerHTML='Error: '+error.message;return;}
@@ -153,14 +163,59 @@ window.pilihOrigin=(id,label)=>{tokoOriginId=id;tokoOriginLabel=label;$('curOrig
 window.setManualOrigin=()=>{const id=$('manualOriginId').value.trim();const label=$('manualOriginLabel').value.trim();if(!id||!label){toast('Isi ID & Label',true);return;}tokoOriginId=id;tokoOriginLabel=label;$('curOrigin').innerText=label+' - '+id;toast('Manual disimpan');};
 $('filePC').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;const err=validateFile(f);if(err){toast(err,true);e.target.value='';return;}pcBase=await fileToBase64(f);$('prevPC').src=pcBase;$('prevPC').style.display='block';});
 $('fileHP').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;const err=validateFile(f);if(err){toast(err,true);e.target.value='';return;}hpBase=await fileToBase64(f);$('prevHP').src=hpBase;$('prevHP').style.display='block';});
-window.saveToko=async()=>{const btn=$('btnToko');if(btn.disabled)return;if(!tokoOriginId){toast('Pilih origin dulu',true);return;}setBtnLoading('btnToko','statusToko',true);try{const ups=[];if($('storeName').value)ups.push({key:'store_name',value:$('storeName').value.trim()});if($('waNumber').value)ups.push({key:'wa_number',value:$('waNumber').value.trim().replace(/[^0-9]/g,'')});ups.push({key:'toko_origin_id',value:tokoOriginId},{key:'toko_origin_label',value:tokoOriginLabel});await supa.from('settings').upsert(ups,{onConflict:'key'});$('adminLogo').innerText=$('storeName').value.trim();if(pcBase||hpBase){const toBlob=async b64=>(await fetch(b64)).blob();let pcUrl=null,hpUrl=null;if(pcBase){const b=await toBlob(pcBase);const fn='pc_'+Date.now()+'.jpg';await supa.storage.from('banners').upload(fn,b,{contentType:'image/jpeg',upsert:true});pcUrl=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}if(hpBase){const b=await toBlob(hpBase);const fn='hp_'+Date.now()+'.jpg';await supa.storage.from('banners').upload(fn,b,{contentType:'image/jpeg',upsert:true});hpUrl=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}if(!pcUrl)pcUrl=hpUrl;if(!hpUrl)hpUrl=pcUrl;await supa.from('banners').update({is_active:false}).eq('is_active',true);await supa.from('banners').insert({banner_pc_url:pcUrl,banner_hp_url:hpUrl,is_active:true});}$('statusToko').innerText='Berhasil';toast('Toko disimpan');loadBanners();}catch(e){$('statusToko').innerText=e.message;toast(e.message,true);}finally{setBtnLoading('btnToko','statusToko',false);}};
-window.saveKoleksi=async()=>{const list=koleksiSlots.filter(x=>x.url);if(!list.length){toast('Isi foto dulu',true);return;}try{let final=[];for(let i=0;i<list.length;i++){let url=list[i].url;if(String(url).startsWith('data:')){const blob=await (await fetch(url)).blob();const fn='k_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';await supa.storage.from('banners').upload(fn,blob);url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}final.push({url,title:list[i].title||''});}await supa.from('settings').upsert({key:'home_koleksi_terlaris',value:JSON.stringify(final)},{onConflict:'key'});toast('Best disimpan');}catch(e){toast(e.message,true)}};
+// SAVE TOKO + JUDUL BANNER
+window.saveToko=async()=>{
+const btn=$('btnToko');if(btn.disabled)return;if(!tokoOriginId){toast('Pilih origin dulu',true);return;}
+setBtnLoading('btnToko','statusToko',true);
+try{
+const ups=[];
+if($('storeName').value)ups.push({key:'store_name',value:$('storeName').value.trim()});
+if($('waNumber').value)ups.push({key:'wa_number',value:$('waNumber').value.trim().replace(/[^0-9]/g,'')});
+ups.push({key:'toko_origin_id',value:tokoOriginId},{key:'toko_origin_label',value:tokoOriginLabel});
+if($('bannerTitle').value)ups.push({key:'home_banner_title',value:$('bannerTitle').value.trim()});
+if($('bannerSubTitle').value)ups.push({key:'home_banner_subtitle',value:$('bannerSubTitle').value.trim()});
+await supa.from('settings').upsert(ups,{onConflict:'key'});
+$('adminLogo').innerText=$('storeName').value.trim();
+if(pcBase||hpBase){
+const toBlob=async b64=>(await fetch(b64)).blob();let pcUrl=null,hpUrl=null;
+if(pcBase){const b=await toBlob(pcBase);const fn='pc_'+Date.now()+'.jpg';await supa.storage.from('banners').upload(fn,b,{contentType:'image/jpeg',upsert:true});pcUrl=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}
+if(hpBase){const b=await toBlob(hpBase);const fn='hp_'+Date.now()+'.jpg';await supa.storage.from('banners').upload(fn,b,{contentType:'image/jpeg',upsert:true});hpUrl=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}
+if(!pcUrl)pcUrl=hpUrl;if(!hpUrl)hpUrl=pcUrl;
+await supa.from('banners').update({is_active:false}).eq('is_active',true);
+await supa.from('banners').insert({banner_pc_url:pcUrl,banner_hp_url:hpUrl,is_active:true,banner_title:$('bannerTitle').value.trim(),banner_subtitle:$('bannerSubTitle').value.trim()});
+}
+$('statusToko').innerText='✓ Berhasil - Banner + Judul tersimpan';toast('Toko + Judul Banner disimpan');loadBanners();
+}catch(e){$('statusToko').innerText='✗ '+e.message;toast(e.message,true);}finally{setBtnLoading('btnToko','statusToko',false);}};
+// SAVE BEST - FIX TOTAL
+window.saveKoleksi=async()=>{
+const btn=$('btnKoleksi');if(btn.disabled)return;
+setBtnLoading('btnKoleksi','statusKoleksi',true,'Upload Best...');
+try{
+const list=koleksiSlots.filter(x=>x.url && x.url.trim()!=='');
+if(!list.length)throw new Error('Isi foto Best dulu');
+let final=[];
+for(let i=0;i<list.length;i++){
+let url=list[i].url;
+if(String(url).startsWith('data:')){
+const blob=await (await fetch(url)).blob();
+const fn='k_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';
+const {error}=await supa.storage.from('banners').upload(fn,blob,{contentType:'image/jpeg',upsert:true});
+if(error)throw error;
+url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;
+}
+final.push({url:url,title:list[i].title||''});
+}
+const {error}=await supa.from('settings').upsert({key:'home_koleksi_terlaris',value:JSON.stringify(final)},{onConflict:'key'});
+if(error)throw error;
+$('statusKoleksi').innerText='✓ '+final.length+' Best tersimpan';toast('Best disimpan '+final.length);
+}catch(e){$('statusKoleksi').innerText='✗ '+e.message;toast(e.message,true);}finally{setBtnLoading('btnKoleksi','statusKoleksi',false);}};
+// SAVE UNDERTONE - DENGAN DESKRIPSI
 window.saveUndertone=async()=>{
   const btn=$('btnUnder'); if(btn.disabled) return;
-  setBtnLoading('btnUnder','statusUnder',true,'Upload...');
+  setBtnLoading('btnUnder','statusUnder',true,'Upload Undertone...');
   try{
     const list=undertoneSlots.filter(x=>x.url && x.url.trim()!=='');
-    if(!list.length) throw new Error('Isi foto dulu - upload di tab UNDERTONE');
+    if(!list.length) throw new Error('Isi foto Undertone dulu');
     let final=[];
     for(let i=0;i<list.length;i++){
       let url=list[i].url;
@@ -171,23 +226,26 @@ window.saveUndertone=async()=>{
         if(error) throw error;
         url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;
       }
-      // SIMPAN JUDUL + DESKRIPSI BARU
-      final.push({
-        url:url,
-        title:(list[i].title||'').toUpperCase(),
-        desc:list[i].desc||list[i].description||'',
-        description:list[i].desc||list[i].description||'',
-        caption:list[i].desc||list[i].description||''
-      });
+      final.push({url:url,title:(list[i].title||'').toUpperCase(),desc:list[i].desc||list[i].description||'',description:list[i].desc||list[i].description||'',caption:list[i].desc||list[i].description||''});
     }
     const {error}=await supa.from('settings').upsert({key:'home_undertone_images',value:JSON.stringify(final)},{onConflict:'key'});
     if(error) throw error;
-    toast('Undertone disimpan '+final.length+' - dengan deskripsi'); $('statusUnder').innerText='✓ '+final.length+' foto + deskripsi';
+    toast('Undertone disimpan '+final.length); $('statusUnder').innerText='✓ '+final.length+' foto + deskripsi';
   }catch(e){ toast(e.message,true); $('statusUnder').innerText='✗ '+e.message; }
   finally{ setBtnLoading('btnUnder','statusUnder',false); }
 };
-window.saveFaq=async()=>{const final=faqSlots.filter(x=>x.q&&x.a);if(!final.length){toast('Isi FAQ dulu',true);return;}await supa.from('settings').upsert({key:'home_faq_list',value:JSON.stringify(final)},{onConflict:'key'});toast('FAQ disimpan');};
-async function loadBanners(){const {data}=await supa.from('banners').select('*').order('created_at',{ascending:false});$('bannerList').innerHTML=(data||[]).slice(0,3).map(b=>{const url=b.banner_pc_url||b.image_url||'';return `<div style="border:1px solid var(--line);display:flex;gap:8px;padding:8px;margin-top:6px"><img src="${url}" style="width:56px;height:36px;object-fit:cover"><div style="flex:1;font-size:8px">${b.is_active?'AKTIF':''} - ${(b.created_at||'').slice(0,10)}</div></div>`;}).join('');}
+// SAVE FAQ - FIX TOTAL
+window.saveFaq=async()=>{
+const btn=$('btnFaq');if(btn.disabled)return;
+setBtnLoading('btnFaq','statusFaq',true,'Menyimpan FAQ...');
+try{
+const final=faqSlots.filter(x=>x.q&&x.a&&x.q.trim()&&x.a.trim());
+if(!final.length)throw new Error('Isi pertanyaan & jawaban FAQ dulu');
+const {error}=await supa.from('settings').upsert({key:'home_faq_list',value:JSON.stringify(final)},{onConflict:'key'});
+if(error)throw error;
+$('statusFaq').innerText='✓ '+final.length+' FAQ tersimpan';toast('FAQ disimpan '+final.length);
+}catch(e){$('statusFaq').innerText='✗ '+e.message;toast(e.message,true);}finally{setBtnLoading('btnFaq','statusFaq',false);}};
+async function loadBanners(){const {data}=await supa.from('banners').select('*').order('created_at',{ascending:false});$('bannerList').innerHTML=(data||[]).slice(0,3).map(b=>{const url=b.banner_pc_url||b.image_url||'';return `<div style="border:1px solid var(--line);display:flex;gap:8px;padding:8px;margin-top:6px"><img src="${url}" style="width:56px;height:36px;object-fit:cover"><div style="flex:1;font-size:8px">${b.is_active?'AKTIF':''} - ${(b.created_at||'').slice(0,10)}<br>${esc(b.banner_title||'')}</div></div>`;}).join('');}
 window.saveProd=async()=>{
  const btn=$('btnProd');if(btn.disabled)return;setBtnLoading('btnProd','saveStatus',true,'Menyimpan...');
  try{
