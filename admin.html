@@ -150,7 +150,30 @@ $('filePC').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)
 $('fileHP').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;const err=validateFile(f);if(err){toast(err,true);e.target.value='';return;}hpBase=await fileToBase64(f);$('prevHP').src=hpBase;$('prevHP').style.display='block';});
 window.saveToko=async()=>{const btn=$('btnToko');if(btn.disabled)return;if(!tokoOriginId){toast('Pilih origin dulu',true);return;}setBtnLoading('btnToko','statusToko',true);try{const ups=[];if($('storeName').value)ups.push({key:'store_name',value:$('storeName').value.trim()});if($('waNumber').value)ups.push({key:'wa_number',value:$('waNumber').value.trim().replace(/[^0-9]/g,'')});ups.push({key:'toko_origin_id',value:tokoOriginId},{key:'toko_origin_label',value:tokoOriginLabel});await supa.from('settings').upsert(ups,{onConflict:'key'});$('adminLogo').innerText=$('storeName').value.trim();if(pcBase||hpBase){const toBlob=async b64=>(await fetch(b64)).blob();let pcUrl=null,hpUrl=null;if(pcBase){const b=await toBlob(pcBase);const fn='pc_'+Date.now()+'.jpg';await supa.storage.from('banners').upload(fn,b,{contentType:'image/jpeg',upsert:true});pcUrl=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}if(hpBase){const b=await toBlob(hpBase);const fn='hp_'+Date.now()+'.jpg';await supa.storage.from('banners').upload(fn,b,{contentType:'image/jpeg',upsert:true});hpUrl=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}if(!pcUrl)pcUrl=hpUrl;if(!hpUrl)hpUrl=pcUrl;await supa.from('banners').update({is_active:false}).eq('is_active',true);await supa.from('banners').insert({banner_pc_url:pcUrl,banner_hp_url:hpUrl,is_active:true});}$('statusToko').innerText='Berhasil';toast('Toko disimpan');loadBanners();}catch(e){$('statusToko').innerText=e.message;toast(e.message,true);}finally{setBtnLoading('btnToko','statusToko',false);}};
 window.saveKoleksi=async()=>{const list=koleksiSlots.filter(x=>x.url);if(!list.length){toast('Isi foto dulu',true);return;}try{let final=[];for(let i=0;i<list.length;i++){let url=list[i].url;if(String(url).startsWith('data:')){const blob=await (await fetch(url)).blob();const fn='k_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';await supa.storage.from('banners').upload(fn,blob);url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}final.push({url,title:list[i].title||''});}await supa.from('settings').upsert({key:'home_koleksi_terlaris',value:JSON.stringify(final)},{onConflict:'key'});toast('Best disimpan');}catch(e){toast(e.message,true)}};
-window.saveUndertone=async()=>{const list=undertoneSlots.filter(x=>x.url);if(!list.length){toast('Isi foto dulu',true);return;}try{let final=[];for(let i=0;i<list.length;i++){let url=list[i].url;if(String(url).startsWith('data:')){const blob=await (await fetch(url)).blob();const fn='u_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';await supa.storage.from('banners').upload(fn,blob);url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}final.push({url,title:list[i].title||''});}await supa.from('settings').upsert({key:'home_undertone_images',value:JSON.stringify(final)},{onConflict:'key'});toast('Undertone disimpan');}catch(e){toast(e.message,true)}};
+window.saveUndertone=async()=>{
+  const btn=$('btnUnder'); if(btn.disabled) return;
+  setBtnLoading('btnUnder','statusUnder',true,'Upload...');
+  try{
+    const list=undertoneSlots.filter(x=>x.url && x.url.trim()!=='');
+    if(!list.length) throw new Error('Isi foto dulu - upload di tab UNDERTONE');
+    let final=[];
+    for(let i=0;i<list.length;i++){
+      let url=list[i].url;
+      if(String(url).startsWith('data:')){
+        const blob=await (await fetch(url)).blob();
+        const fn='u_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';
+        const {error}=await supa.storage.from('banners').upload(fn,blob,{contentType:'image/jpeg',upsert:true});
+        if(error) throw error;
+        url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;
+      }
+      final.push({url,title:(list[i].title||'').toUpperCase()});
+    }
+    const {error}=await supa.from('settings').upsert({key:'home_undertone_images',value:JSON.stringify(final)},{onConflict:'key'});
+    if(error) throw error;
+    toast('Undertone disimpan '+final.length); $('statusUnder').innerText='✓ '+final.length+' foto';
+  }catch(e){ toast(e.message,true); $('statusUnder').innerText='✗ '+e.message; }
+  finally{ setBtnLoading('btnUnder','statusUnder',false); }
+};
 window.saveFaq=async()=>{const final=faqSlots.filter(x=>x.q&&x.a);if(!final.length){toast('Isi FAQ dulu',true);return;}await supa.from('settings').upsert({key:'home_faq_list',value:JSON.stringify(final)},{onConflict:'key'});toast('FAQ disimpan');};
 async function loadBanners(){const {data}=await supa.from('banners').select('*').order('created_at',{ascending:false});$('bannerList').innerHTML=(data||[]).slice(0,3).map(b=>{const url=b.banner_pc_url||b.image_url||'';return `<div style="border:1px solid var(--line);display:flex;gap:8px;padding:8px;margin-top:6px"><img src="${url}" style="width:56px;height:36px;object-fit:cover"><div style="flex:1;font-size:8px">${b.is_active?'AKTIF':''} - ${(b.created_at||'').slice(0,10)}</div></div>`;}).join('');}
 
