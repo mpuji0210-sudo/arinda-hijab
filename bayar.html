@@ -1,9 +1,14 @@
-<!DOCTYPE html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bayar - ARINDA HIJAB PREMIUM - SECURE V10</title>
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bayar - Loading...</title>
 <meta name="robots" content="noindex, nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ANTI KEDIP - STORE NAME & WA DARI CACHE DULU
+const STORE_CACHE = localStorage.getItem('store_name_cache') || 'ARINDA';
+const WA_CACHE = localStorage.getItem('wa_number_cache') || '6285178098354';
+document.title = 'Bayar - ' + STORE_CACHE;
+</script>
 <style>
 body{margin:0;background:#FFFCF9;color:#111;font-family:'Inter',sans-serif}
 .wrap{max-width:480px;margin:0 auto;padding:18px 14px 60px}
@@ -19,99 +24,94 @@ body{margin:0;background:#FFFCF9;color:#111;font-family:'Inter',sans-serif}
 </head><body>
 <div class="wrap">
   <div style="text-align:center;padding:16px 0 10px">
-    <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:22px">ARINDA</div>
-    <div style="font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM - SECURE V10</div>
+    <div id="storeLogo" style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:22px">LOADING</div>
+    <div style="font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM - PEMBAYARAN AMAN</div>
   </div>
   <div class="card" style="padding:14px 16px;margin-top:12px">
-    <div style="font-size:8px;letter-spacing:3px;opacity:.4">TOTAL PEMBAYARAN - RESET 0</div>
+    <div style="font-size:8px;letter-spacing:3px;opacity:.4">TOTAL PEMBAYARAN</div>
     <div id="totalBox" style="font-family:'Cormorant Garamond';font-size:28px;margin-top:6px">Rp -</div>
     <div id="orderInfo" style="font-size:10px;opacity:.6;margin-top:8px;line-height:1.6;background:#FAF7F2;padding:8px 10px;border:1px dashed #E8E0D0"></div>
   </div>
   <div style="margin-top:18px;display:flex;justify-content:space-between"><div style="font-family:'Cormorant Garamond';font-size:18px">Metode Pembayaran</div><div style="font-size:8px;opacity:.4" id="payCount"></div></div>
   <div id="payList" style="margin-top:10px"><div style="border:1px dashed #E9E9E9;padding:30px;text-align:center;font-size:11px;opacity:.4">Memuat rekening...</div></div>
   <div style="margin-top:22px;display:flex;flex-direction:column;gap:10px">
-    <button onclick="confirmWA()" class="btn-wa">💬 KONFIRMASI PEMBAYARAN VIA WA</button>
+    <button onclick="confirmWA()" class="btn-wa">💬 KONFIRMASI VIA WA</button>
     <button onclick="location.href='index.html'" class="btn-white">KEMBALI KE BERANDA</button>
-    <div style="text-align:center;font-size:8px;letter-spacing:2px;opacity:.35">WA ADMIN 085178098354</div>
+    <div style="text-align:center;font-size:8px;letter-spacing:2px;opacity:.35">WA ADMIN <span id="waAdminView">-</span></div>
   </div>
 </div>
 <div id="toast"></div>
 <script>
-// === SECURE V10 - RESET 0 - BAYAR.HTML HANYA BACA PAYMENT_METHODS ===
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
-const WA_ADMIN = '6285178098354';
+let WA_ADMIN = WA_CACHE;
+let STORE_NAME = STORE_CACHE;
 let lastTotal='-'; let lastMethods=[]; let lastCustomer={};
 function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function toast(t){ const el=document.getElementById('toast'); el.innerText=t; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2200); }
 function copyText(txt,bank){ navigator.clipboard.writeText(txt).then(()=>toast(bank+' '+txt+' disalin')).catch(()=>{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast(bank+' '+txt+' disalin');}); }
 
+async function loadStoreConfig(){
+  document.getElementById('storeLogo').innerText = STORE_CACHE.toUpperCase();
+  document.getElementById('waAdminView').innerText = WA_CACHE.replace('62','0');
+  try{
+    const {data}=await supa.from('settings').select('*').in('key',['store_name','wa_number']);
+    if(data){
+      const g=k=>data.find(s=>s.key===k)?.value;
+      if(g('store_name')){ STORE_NAME=g('store_name'); localStorage.setItem('store_name_cache', STORE_NAME); document.getElementById('storeLogo').innerText=STORE_NAME.toUpperCase(); document.title='Bayar - '+STORE_NAME; }
+      if(g('wa_number')){ WA_ADMIN=g('wa_number'); localStorage.setItem('wa_number_cache', WA_ADMIN); document.getElementById('waAdminView').innerText=WA_ADMIN.replace('62','0'); }
+    }
+  }catch(e){}
+}
+
 function getCustomerFromStorage(){
-  const keysToTry = ['arinda_customer','arinda_last_customer','arinda_checkout','checkoutData','customerData','arinda_order','order_data','arinda_form'];
+  const keysToTry=['arinda_customer','arinda_last_customer','arinda_checkout','checkoutData','customerData','arinda_order','order_data','arinda_form'];
   for(let k of keysToTry){
     try{
-      const raw = localStorage.getItem(k) || sessionStorage.getItem(k);
-      if(!raw) continue;
-      const obj = JSON.parse(raw);
-      if(obj && (obj.name||obj.customer_name||obj.wa)){
-        return {
-          name: obj.name||obj.customer_name||obj.nama||'',
-          wa: obj.wa||obj.phone||obj.no_wa||obj.whatsapp||'',
-          alamat: obj.alamat||obj.address||obj.alamat_lengkap||'',
-          kota: obj.kota||obj.city||'',
-          total: obj.total||''
-        };
-      }
+      const raw=localStorage.getItem(k)||sessionStorage.getItem(k); if(!raw) continue;
+      const obj=JSON.parse(raw);
+      if(obj&&(obj.name||obj.customer_name||obj.wa)){ return {name:obj.name||obj.customer_name||obj.nama||'', wa:obj.wa||obj.phone||obj.no_wa||obj.whatsapp||'', alamat:obj.alamat||obj.address||obj.alamat_lengkap||'', kota:obj.kota||obj.city||'', total:obj.total||''};}
     }catch(e){}
   }
-  return {
-    name: localStorage.getItem('customer_name')||localStorage.getItem('nama')||localStorage.getItem('name')||sessionStorage.getItem('customer_name')||'',
-    wa: localStorage.getItem('wa')||localStorage.getItem('no_wa')||localStorage.getItem('phone')||sessionStorage.getItem('wa')||'',
-    alamat: localStorage.getItem('alamat')||localStorage.getItem('address')||sessionStorage.getItem('alamat')||'',
-    kota: localStorage.getItem('kota')||sessionStorage.getItem('kota')||''
-  };
+  return {name:localStorage.getItem('customer_name')||'', wa:localStorage.getItem('wa')||'', alamat:localStorage.getItem('alamat')||'', kota:localStorage.getItem('kota')||''};
+}
+
+function getTotal(){
+  // 1. dari URL ?total=99000 (dari checkout.html)
+  const urlParams=new URLSearchParams(window.location.search);
+  const urlTotal=urlParams.get('total')||urlParams.get('t')||'';
+  if(urlTotal){ const n=urlTotal.replace(/[^0-9]/g,''); if(n) return n; }
+  // 2. dari localStorage
+  const tryKeys=['arinda_total','total','arinda_checkout_total','checkout_total','cart_total','arinda_last_total'];
+  for(let k of tryKeys){ const v=localStorage.getItem(k)||sessionStorage.getItem(k); if(v&&v!=='-'){ const n=String(v).replace(/[^0-9]/g,''); if(n) return n; } }
+  return '-';
 }
 
 function confirmWA(){
-  const c = lastCustomer;
-  const total = lastTotal;
-  const rekText = lastMethods.map(m=>`- ${m.bank} ${m.no_rek} a.n ${m.atas_nama}`).join('%0A');
-  const alamatFull = [c.alamat, c.kota].filter(Boolean).join(', ') || '-';
-  const msg = `Halo kak ARINDA HIJAB %F0%9F%91%8B%0A%0ASaya sudah transfer ya kak:%0A%0A*Total:* Rp${Number(total||0).toLocaleString('id-ID')}%0A*Nama:* ${esc(c.name||'-')}%0A*WA:* ${esc(c.wa||'-')}%0A*Alamat:* ${esc(alamatFull)}%0A%0A*Rekening Tujuan:*%0A${esc(rekText)}%0A%0AMohon dicek, saya kirim bukti di sini. Terima kasih %F0%9F%99%8F`;
-  window.open(`https://wa.me/${WA_ADMIN}?text=${msg}`,'_blank');
+  const c=lastCustomer;
+  const total=lastTotal;
+  const rekLines=lastMethods.map(m=>`- ${m.bank} ${m.no_rek} a.n ${m.atas_nama}`).join('\n');
+  const alamatFull=[c.alamat,c.kota].filter(Boolean).join(', ')||'-';
+  const rawMsg=`Halo kak ${STORE_NAME} 👋\n\nSaya sudah transfer ya kak:\n\nTotal: Rp${Number(total||0).toLocaleString('id-ID')}\nNama: ${c.name||'-'}\nWA: ${c.wa||'-'}\nAlamat: ${alamatFull}\n\nRekening Tujuan:\n${rekLines}\n\nMohon dicek, saya kirim bukti di sini. Terima kasih 🙏`;
+  const url=`https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(rawMsg)}`;
+  window.open(url,'_blank');
 }
 
 async function loadPay(){
-  // 1. total dari localStorage saja - ANTI BOCOR DATA ORDER
-  const tryKeys=['arinda_total','total','arinda_checkout_total','checkout_total','cart_total','arinda_last_total'];
-  for(let k of tryKeys){ const v=localStorage.getItem(k)||sessionStorage.getItem(k); if(v&&v!=='-'){ lastTotal=String(v).replace(/[^0-9]/g,''); break; } }
-  
-  // 2. customer dari localStorage saja
-  lastCustomer = getCustomerFromStorage();
-  document.getElementById('orderInfo').innerHTML = `Nama: <b>${esc(lastCustomer.name||'-')}</b> • WA: ${esc(lastCustomer.wa||'-')}<br>Alamat: ${esc(lastCustomer.alamat||'-')} ${esc(lastCustomer.kota||'')}`;
-  document.getElementById('totalBox').innerText = lastTotal==='-'? 'Rp -' : 'Rp'+Number(lastTotal||0).toLocaleString('id-ID');
-
-  // 3. payment methods - ini satu-satunya yang boleh dibaca public
+  await loadStoreConfig();
+  lastTotal=getTotal();
+  lastCustomer=getCustomerFromStorage();
+  document.getElementById('orderInfo').innerHTML=`Nama: <b>${esc(lastCustomer.name||'-')}</b> • WA: ${esc(lastCustomer.wa||'-')}<br>Alamat: ${esc(lastCustomer.alamat||'-')} ${esc(lastCustomer.kota||'')}`;
+  document.getElementById('totalBox').innerText=lastTotal==='-'?'Rp -':'Rp'+Number(lastTotal||0).toLocaleString('id-ID');
   try{
     const {data}=await supa.from('settings').select('value').eq('key','payment_methods').maybeSingle();
-    let methods=data?.value; if(typeof methods==='string'){ try{ methods=JSON.parse(methods);}catch(e){methods=[]} }
-    lastMethods = (methods||[]).filter(m=>m.aktif);
-    document.getElementById('payCount').innerText = lastMethods.length+' METODE';
-    if(!lastMethods.length){
-      document.getElementById('payList').innerHTML='<div style="border:1px dashed #E9E9E9;padding:30px;text-align:center;font-size:11px;opacity:.4">Belum ada rekening - set di admin-orders.html</div>';
-      return;
-    }
-    document.getElementById('payList').innerHTML = lastMethods.map(m=>`
-      <div class="pay-card">
-        <div style="display:flex;justify-content:space-between"><div><b style="font-size:12px">${esc(m.bank)}</b><div style="font-size:10px;opacity:.5">a.n ${esc(m.atas_nama)}</div></div></div>
-        <div style="margin-top:10px;padding:10px;background:#FAFAFA;border:1px dashed #E9E9E9">No: <b>${esc(m.no_rek)}</b></div>
-        ${m.qr_url?`<img src="${esc(m.qr_url)}" class="qr" onerror="this.style.display='none'">`:''}
-        <div style="display:flex;gap:8px;margin-top:10px"><button class="btn-white" onclick="copyText('${esc(m.no_rek)}','${esc(m.bank)}')">SALIN</button><button class="btn" onclick="copyText('${esc(m.no_rek)}','${esc(m.bank)}')">SALIN & BAYAR</button></div>
-      </div>`).join('');
-  }catch(err){
-    document.getElementById('payList').innerHTML='Gagal: '+esc(err.message);
-  }
+    let methods=data?.value; if(typeof methods==='string'){try{methods=JSON.parse(methods);}catch(e){methods=[]}}
+    lastMethods=(methods||[]).filter(m=>m.aktif);
+    document.getElementById('payCount').innerText=lastMethods.length+' METODE';
+    if(!lastMethods.length){document.getElementById('payList').innerHTML='<div style="border:1px dashed #E9E9E9;padding:30px;text-align:center;font-size:11px;opacity:.4">Belum ada rekening - set di admin-order.html</div>'; return;}
+    document.getElementById('payList').innerHTML=lastMethods.map(m=>`<div class="pay-card"><div style="display:flex;justify-content:space-between"><div><b style="font-size:12px">${esc(m.bank)}</b><div style="font-size:10px;opacity:.5">a.n ${esc(m.atas_nama)}</div></div></div><div style="margin-top:10px;padding:10px;background:#FAFAFA;border:1px dashed #E9E9E9">No: <b>${esc(m.no_rek)}</b></div>${m.qr_url?`<img src="${esc(m.qr_url)}" class="qr" onerror="this.style.display='none'">`:''}<div style="display:flex;gap:8px;margin-top:10px"><button class="btn-white" onclick="copyText('${esc(m.no_rek)}','${esc(m.bank)}')">SALIN</button><button class="btn" onclick="copyText('${esc(m.no_rek)}','${esc(m.bank)}')">SALIN & BAYAR</button></div></div>`).join('');
+  }catch(err){document.getElementById('payList').innerHTML='Gagal: '+esc(err.message);}
 }
 loadPay();
 </script>
