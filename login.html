@@ -1,48 +1,105 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LOGIN - ARINDA</title>
+<title>LOGIN - Loading...</title>
+<script>const STORE_CACHE=localStorage.getItem('store_name_cache')||'ARINDA'; document.title='LOGIN - '+STORE_CACHE;</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>:root{--bg:#FFFCF9;--line:#F2EFEA;--black:#111}*{box-sizing:border-box}body{margin:0;background:var(--bg);display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Inter',sans-serif;color:var(--black)}.card{background:#fff;border:1px solid var(--line);padding:32px 26px;width:360px}.logo{font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:20px;text-align:center}.label{font-size:8px;letter-spacing:3px;opacity:.4;margin-top:16px;display:block}.input{width:100%;padding:11px 0;border:none;border-bottom:1px solid var(--black);background:transparent;outline:none;font-size:12px;letter-spacing:.5px;margin-top:6px}.btn{width:100%;background:var(--black);color:#fff;border:none;padding:13px;margin-top:22px;font-size:9px;letter-spacing:3px;cursor:pointer}.small{font-size:8px;letter-spacing:2px;opacity:.4;text-align:center;margin-top:14px}</style>
 </head><body>
 <div class="card">
-<div class="logo">ARINDA<span style="display:block;font-size:7px;letter-spacing:5px;opacity:.4;margin-top:6px">ADMIN SECURE V10</span></div>
+<div class="logo" id="storeLogo">LOADING<span style="display:block;font-size:7px;letter-spacing:5px;opacity:.4;margin-top:6px">ADMIN SECURE V11 - ANTI BYPASS</span></div>
 <label class="label">EMAIL ADMIN</label>
-<input id="email" class="input" value="admin@arinda.id">
+<input id="email" class="input" placeholder="admin@arinda.id" autocomplete="email">
 <label class="label">PASSWORD</label>
-<input id="pass" class="input" type="password" placeholder="••••••••" autofocus>
+<input id="pass" class="input" type="password" placeholder="••••••••" autofocus autocomplete="current-password">
 <button class="btn" onclick="doLogin()" id="btn">LOGIN AMAN</button>
 <div id="msg" class="small" style="color:#B42318;opacity:1;display:none"></div>
-<div class="small">Hanya admin@arinda.id • Anti bypass aktif</div>
+<div class="small">Hanya email whitelist • Anti bypass aktif<br><span id="storeHint" style="opacity:.6"></span></div>
 </div>
 <script>
 const supa = window.supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
+const DEFAULT_ADMIN = 'admin@arinda.id';
+let ALLOWED_EMAILS = [DEFAULT_ADMIN];
+let STORE_NAME = STORE_CACHE;
 
-// AUTO-CHECK: kalau udah login pakai admin@arinda.id, langsung ke admin
+function initCache(){
+  document.getElementById('storeLogo').childNodes[0].textContent = STORE_CACHE.toUpperCase();
+  document.getElementById('storeHint').innerText = STORE_CACHE.toUpperCase();
+  document.getElementById('email').value = localStorage.getItem('last_admin_email') || DEFAULT_ADMIN;
+}
+
+async function loadConfig(){
+  try{
+    const {data}=await supa.from('settings').select('key,value').in('key',['store_name','admin_emails']).limit(5);
+    const get=k=>data?.find(s=>s.key===k)?.value||'';
+    const sName=get('store_name');
+    if(sName){ STORE_NAME=sName; localStorage.setItem('store_name_cache',sName); document.getElementById('storeLogo').childNodes[0].textContent=sName.toUpperCase(); document.title='LOGIN - '+sName; document.getElementById('storeHint').innerText=sName.toUpperCase(); }
+    const adminEmails=get('admin_emails');
+    if(adminEmails){
+      try{
+        const arr=typeof adminEmails==='string'?JSON.parse(adminEmails):adminEmails;
+        if(Array.isArray(arr) && arr.length){ ALLOWED_EMAILS = [...new Set([DEFAULT_ADMIN,...arr.map(e=>e.toLowerCase().trim())])]; }
+      }catch(e){}
+    }
+  }catch(e){ console.log('load config skip',e.message); }
+}
+
+function isAllowed(email){
+  return ALLOWED_EMAILS.includes(email.toLowerCase().trim());
+}
+
+// AUTO-CHECK: sudah login?
 (async()=>{
+  initCache();
+  await loadConfig();
   const {data:{session}} = await supa.auth.getSession();
   if(session){
-    document.getElementById('btn').innerText = 'SUDAH LOGIN...';
-    location.href='admin.html';
+    const email = session.user?.email||'';
+    if(!isAllowed(email)){
+      await supa.auth.signOut();
+      document.getElementById('msg').style.display='block';
+      document.getElementById('msg').innerText='AKSES DITOLAK: '+email+' bukan admin. Silakan login dengan email admin.';
+      return;
+    }
+    document.getElementById('btn').innerText='SUDAH LOGIN, MASUK ADMIN...';
+    localStorage.setItem('arinda_admin_ok','1');
+    setTimeout(()=>location.href='admin.html',400);
   }
 })();
 
 async function doLogin(){
   const b=document.getElementById('btn'), m=document.getElementById('msg');
-  m.style.display='none'; b.innerText='CEK...'; b.disabled=true;
+  const emailEl=document.getElementById('email');
+  m.style.display='none'; b.innerText='CEK WHITELIST...'; b.disabled=true;
   try{
-    const email = document.getElementById('email').value.trim();
+    await loadConfig(); // refresh whitelist terbaru
+    const email = emailEl.value.trim().toLowerCase();
     const password = document.getElementById('pass').value.trim();
-    if(!email || !password) throw new Error('Isi email & password');
+    if(!email ||!password) throw new Error('Isi email & password');
+    if(!isAllowed(email)) throw new Error('Email '+email+' tidak terdaftar sebagai admin. Hubungi owner.');
+
+    b.innerText='CEK PASSWORD...';
     const { data, error } = await supa.auth.signInWithPassword({email, password});
     if(error) throw error;
     if(!data.session) throw new Error('Session gagal');
-    b.innerText='BERHASIL...';
-    location.href='admin.html';
-  }catch(e){ 
-    m.style.display='block'; 
-    m.innerText='GAGAL: '+e.message; 
-    b.innerText='LOGIN AMAN'; 
-    b.disabled=false; 
+
+    // Double check lagi setelah login
+    const loggedEmail = data.session.user?.email?.toLowerCase()||'';
+    if(!isAllowed(loggedEmail)){
+      await supa.auth.signOut();
+      throw new Error('Login berhasil tapi '+loggedEmail+' bukan admin - akses ditolak');
+    }
+
+    localStorage.setItem('last_admin_email', email);
+    localStorage.setItem('arinda_admin_ok','1');
+    sessionStorage.setItem('arinda_admin','1');
+    b.innerText='BERHASIL, MASUK ADMIN...';
+    setTimeout(()=>location.href='admin.html',400);
+  }catch(e){
+    m.style.display='block';
+    m.innerText='GAGAL: '+e.message;
+    b.innerText='LOGIN AMAN';
+    b.disabled=false;
+    try{ await supa.auth.signOut(); }catch(_e){}
   }
 }
 document.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
