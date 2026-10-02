@@ -1,12 +1,15 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KATEGORI - ARINDA HIJAB PREMIUM</title>
+<title>KATEGORI - Loading...</title>
 <link rel="preconnect" href="https://qjgevvizqeebtdqcbqmt.supabase.co" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<script>
+// ANTI KEDIP
+const STORE_CACHE = localStorage.getItem('store_name_cache') || 'ARINDA';
+document.title = 'KATEGORI - ' + STORE_CACHE;
+</script>
 <style>
-/* CLEAN LV PATCH */
 :root{--black:#000;--line:#E9E9E9;--bg:#FFFFFF}
-*{box-sizing:border-box}body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;font-weight:300;letter-spacing:0.2px;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased}
 nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9}
 .nav-top{max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px}.logo span{display:block;font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px}
@@ -16,66 +19,99 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-f
 .sec-head h2{font-family:'Cormorant Garamond';font-size:20px;letter-spacing:3px;font-weight:300;margin:0}
 .sec-head span{font-size:9px;letter-spacing:3px;opacity:.4}
 .k-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#E9E9E9;border:1px solid #E9E9E9}
-@media(min-width:700px){.k-grid{grid-template-columns:repeat(3,1fr);gap:1px}}
-.k-card{background:#fff;border:none;border-radius:0px;padding:18px 16px;cursor:pointer;position:relative;transition:.15s}
+@media(min-width:700px){.k-grid{grid-template-columns:repeat(3,1fr)}}
+.k-card{background:#fff;padding:18px 16px;cursor:pointer;position:relative;transition:.15s}
 .k-card:hover{background:#FAFAFA}
 .k-card b{display:block;font-size:11px;letter-spacing:2px;font-weight:400;line-height:1.4}
 .k-card small{display:block;margin-top:6px;font-size:8px;letter-spacing:2px;opacity:.45}
 .k-count{position:absolute;top:12px;right:12px;background:#000;color:#fff;font-size:8px;min-width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0 6px}
-.k-icon{width:36px;height:36px;border-radius:50%;background:#FFFFFF;border:1px solid #E9E9E9;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:14px}
+.k-icon{width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid #E9E9E9;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:14px}
 </style></head><body>
-<nav><div class="nav-top"><div class="logo">ARINDA<span>HIJAB PREMIUM</span></div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a class="active">KATEGORI</a></div></div></nav>
-
+<nav><div class="nav-top"><div class="logo" id="storeLogo">LOADING<span id="storeSub">HIJAB PREMIUM</span></div></div><div class="nav-menu"><div class="menu"><a href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a class="active">KATEGORI</a></div></div></nav>
 <main class="section">
-  <div class="sec-head"><h2>JENIS PRODUK</h2><span id="countJenis">0 KATEGORI</span></div>
-  <div class="k-grid" id="gridJenis"></div>
-
-  <div class="sec-head"><h2>JENIS BAHAN</h2><span id="countBahan">0 BAHAN</span></div>
-  <div class="k-grid" id="gridBahan"></div>
+  <div class="sec-head"><h2>JENIS PRODUK</h2><span id="countJenis">...</span></div>
+  <div class="k-grid" id="gridJenis"><div style="padding:20px;font-size:10px;opacity:.4">Memuat...</div></div>
+  <div class="sec-head"><h2>JENIS BAHAN</h2><span id="countBahan">...</span></div>
+  <div class="k-grid" id="gridBahan"><div style="padding:20px;font-size:10px;opacity:.4">Memuat...</div></div>
 </main>
-
-<footer style="margin-top:0px;padding:36px 16px 28px;text-align:center;border-top:1px solid #E9E9E9;background:#FFFFFF"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px">ARINDA</div><div style="font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM</div><div style="margin-top:14px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 ARINDA HIJAB PREMIUM</div></footer>
-
+<footer style="margin-top:0;padding:36px 16px 28px;text-align:center;border-top:1px solid #E9E9E9;background:#fff"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:14px" id="footLogo">ARINDA</div><div style="font-family:'Inter';font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM</div><div style="margin-top:14px;font-size:8px;letter-spacing:3px;opacity:.3">© 2026 <span id="footYear">ARINDA</span> HIJAB PREMIUM</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = supabase.createClient(SUPA_URL,SUPA_KEY);
+function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+async function initStore(){
+  const logo=document.getElementById('storeLogo');
+  const foot=document.getElementById('footLogo');
+  const footY=document.getElementById('footYear');
+  logo.childNodes[0].textContent = STORE_CACHE.toUpperCase();
+  foot.innerText = STORE_CACHE.toUpperCase();
+  footY.innerText = STORE_CACHE.toUpperCase();
+  try{
+    const {data}=await supa.from('settings').select('value').eq('key','store_name').maybeSingle();
+    if(data?.value){ const n=data.value; localStorage.setItem('store_name_cache',n); logo.childNodes[0].textContent=n.toUpperCase(); foot.innerText=n.toUpperCase(); footY.innerText=n.toUpperCase(); document.title='KATEGORI - '+n; }
+  }catch(e){}
+}
 
 async function loadKategori(){
-  const {data:products} = await supa.from('products').select('id,name,category').limit(100);
-  let jenisMap={}, bahanMap={};
+  await initStore();
+  try{
+    // 1. Ambil master jenis & bahan dari tabel admin (tanpa ngoding)
+    const [jenisRes, catRes, prodRes] = await Promise.all([
+      supa.from('jenis_produk').select('*').order('name'),
+      supa.from('categories').select('*').order('name'),
+      supa.from('products').select('id,name,category,product_type').limit(1000)
+    ]);
+    let jenisList = (jenisRes.data||[]).map(j=>j.name||j.title).filter(Boolean);
+    let bahanList = (catRes.data||[]).map(c=>c.name||c.title).filter(Boolean);
+    let products = prodRes.data||[];
 
-  (products||[]).forEach(p=>{
-    let name = (p.name||'').toUpperCase();
-    let cat = (p.category||'').toUpperCase();
-    let jenis = 'SEGI EMPAT';
-    if(name.includes('PASHMINA') || cat.includes('PASHMINA')) jenis='PASHMINA';
-    else if(name.includes('SEGI EMPAT') || cat.includes('SEGI')) jenis='SEGI EMPAT';
-    else if(name.includes('HIJAB PARIS') || cat.includes('PARIS')) jenis='SEGI EMPAT PARIS';
-    jenisMap[jenis]=(jenisMap[jenis]||0)+1;
+    // Fallback kalau tabel masih kosong (toko baru)
+    if(!jenisList.length){ jenisList=['SEGI EMPAT','PASHMINA','SEGI EMPAT PARIS','BERGO']; }
+    if(!bahanList.length){ bahanList=['VOAL PREMIUM','CERUTY BABYDOLL','VUAL ULTRA FINE','PARIS PREMIUM']; }
 
-    let bahan='VOAL PREMIUM';
-    if(cat.includes('CERUTY') || name.includes('CERUTY')) bahan='CERUTY BABYDOLL';
-    else if(cat.includes('VUAL') || cat.includes('PARIS') || name.includes('VUAL')) bahan='VUAL ULTRA FINE / PARIS ULTRA FINE';
-    else if(cat.includes('VOAL') || name.includes('VOAL')) bahan='VOAL PREMIUM';
-    bahanMap[bahan]=(bahanMap[bahan]||0)+1;
-  });
+    // 2. Hitung jumlah produk per jenis (cocok product_type atau nama)
+    const countJenis = {};
+    jenisList.forEach(j=> countJenis[j]=0 );
+    products.forEach(p=>{
+      const pt=(p.product_type||'').toUpperCase();
+      const nm=(p.name||'').toUpperCase();
+      let matched=false;
+      for(let j of jenisList){ if(pt.includes(j.toUpperCase()) || nm.includes(j.toUpperCase())){ countJenis[j]++; matched=true; break; } }
+      if(!matched){ // default masuk SEGI EMPAT kalau gak ketemu
+        if(countJenis['SEGI EMPAT']!==undefined) countJenis['SEGI EMPAT']++;
+      }
+    });
 
-  if(Object.keys(jenisMap).length===0) jenisMap={'SEGI EMPAT':1,'PASHMINA':1};
-  if(Object.keys(bahanMap).length===0) bahanMap={'CERUTY BABYDOLL':1,'VOAL PREMIUM':1,'VUAL ULTRA FINE / PARIS ULTRA FINE':1};
+    // 3. Hitung per bahan (cocok category)
+    const countBahan = {};
+    bahanList.forEach(b=> countBahan[b]=0 );
+    products.forEach(p=>{
+      const cat=(p.category||'').toUpperCase();
+      const nm=(p.name||'').toUpperCase();
+      let matched=false;
+      for(let b of bahanList){ if(cat.includes(b.toUpperCase()) || nm.includes(b.toUpperCase())){ countBahan[b]++; matched=true; break; } }
+      if(!matched && countBahan[bahanList[0]]!==undefined){ countBahan[bahanList[0]]++; }
+    });
 
-  document.getElementById('countJenis').innerText=Object.keys(jenisMap).length+' KATEGORI';
-  document.getElementById('countBahan').innerText=Object.keys(bahanMap).length+' BAHAN';
+    document.getElementById('countJenis').innerText = Object.keys(countJenis).length+' KATEGORI';
+    document.getElementById('countBahan').innerText = Object.keys(countBahan).length+' BAHAN';
 
-  document.getElementById('gridJenis').innerHTML=Object.entries(jenisMap).map(([k,v])=>{
-    let icon = k.includes('PASHMINA')? '🧣' : '◫';
-    return `<div class="k-card" onclick="location.href='produk.html?kategori=${encodeURIComponent(k)}'"><div class="k-icon">${icon}</div><b>${k}</b><small>${v} PRODUK READY</small><span class="k-count">${v}</span></div>`
-  }).join('');
+    document.getElementById('gridJenis').innerHTML = Object.entries(countJenis).map(([k,v])=>{
+      const icon = k.includes('PASHMINA')?'🧣':k.includes('BERGO')?'🧕':'◫';
+      return `<div class="k-card" onclick="location.href='produk.html?kategori=${encodeURIComponent(k)}'"><div class="k-icon">${icon}</div><b>${esc(k)}</b><small>${v} PRODUK READY</small><span class="k-count">${v}</span></div>`;
+    }).join('') || '<div style="padding:20px;font-size:10px;opacity:.4">Belum ada kategori</div>';
 
-  document.getElementById('gridBahan').innerHTML=Object.entries(bahanMap).map(([k,v])=>{
-    return `<div class="k-card" onclick="location.href='produk.html?bahan=${encodeURIComponent(k)}'"><div class="k-icon">✦</div><b>${k}</b><small>BAHAN ${v} PRODUK</small><span class="k-count">${v}</span></div>`
-  }).join('');
+    document.getElementById('gridBahan').innerHTML = Object.entries(countBahan).map(([k,v])=>{
+      return `<div class="k-card" onclick="location.href='produk.html?bahan=${encodeURIComponent(k)}'"><div class="k-icon">✦</div><b>${esc(k)}</b><small>BAHAN • ${v} PRODUK</small><span class="k-count">${v}</span></div>`;
+    }).join('') || '<div style="padding:20px;font-size:10px;opacity:.4">Belum ada bahan</div>';
+
+  }catch(e){
+    document.getElementById('gridJenis').innerHTML='<div style="padding:20px;color:#B42318;font-size:10px">Gagal: '+esc(e.message)+'</div>';
+    document.getElementById('gridBahan').innerHTML='<div style="padding:20px;color:#B42318;font-size:10px">Gagal: '+esc(e.message)+'</div>';
+  }
 }
 loadKategori();
 </script>
