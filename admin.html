@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADMIN TOKO</title>
+<title>ADMIN TOKO - V17 UNDERTONE</title>
 <meta name="robots" content="noindex, nofollow">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
@@ -32,6 +32,7 @@ textarea.input{border:1px solid var(--line);padding:10px;background:var(--bg);re
 #confirmModal{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}#confirmModal.open{display:flex}
 .confirm-box{background:#fff;padding:24px;max-width:360px;width:100%;border:1px solid var(--line)}
 .save-status{font-size:9px;letter-spacing:2px;text-align:center;margin-top:8px;opacity:.7;color:#111;min-height:14px}
+.under-select{width:100%;padding:8px;border:1px solid var(--black);background:#fff;font-size:10px;margin-top:6px}
 </style></head><body>
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
@@ -50,27 +51,27 @@ const supaGuard=window.supabase.createClient(SUPA_URL,SUPA_KEY);
 <div class="tabs"><div class="tab active" onclick="openTab('toko',this)">TOKO & BANNER</div><div class="tab" onclick="openTab('koleksi',this)">BEST</div><div class="tab" onclick="openTab('undertone',this)">UNDERTONE</div><div class="tab" onclick="openTab('faq',this)">FAQ KONTAK</div><div class="tab" onclick="openTab('produk',this)">PRODUK</div></div>
 <div class="wrap">
 <div id="tab-toko"><div class="card">
-<h3>SETTING TOKO - TANPA NGODING V16</h3>
-<div style="background:#111;color:#fff;padding:10px;font-size:8px;letter-spacing:2px">GANTI NAMA TOKO = OTOMATIS GANTI LOGO, FOOTER, WA, JUDUL, HERO - VALIDASI ANTI NGAWUR</div>
+<h3>SETTING TOKO - V17 ID RAJAONGKIR ≠ KODE POS</h3>
+<div style="background:#111;color:#fff;padding:10px;font-size:8px;letter-spacing:2px">ID = ID RAJAONGKIR (17523) | LABEL = BOLEH PAKAI KODE POS (CENGKARENG BARAT 11730)</div>
 <input id="storeName" class="input" placeholder="NAMA TOKO min 3 huruf contoh: AENI HIJAB" maxlength="40">
-<input id="waNumber" class="input" placeholder="NO WA 08xxx / 62xxx 10-13 digit contoh: 6285178098354" maxlength="15" inputmode="numeric">
-<div style="font-size:9px;letter-spacing:2px;margin-top:16px;opacity:.8">ORIGIN PENGIRIMAN SAAT INI (WAJIB):</div>
+<input id="waNumber" class="input" placeholder="NO WA 08xxx / 62xxx 10-13 digit" maxlength="15" inputmode="numeric">
+<div style="font-size:9px;letter-spacing:2px;margin-top:16px;opacity:.8">ORIGIN PENGIRIMAN SAAT INI (WAJIB - ID RAJAONGKIR):</div>
 <div style="font-size:11px;font-weight:700;margin:4px 0" id="curOrigin">- BELUM DIPILIH -</div>
-<div style="display:flex;gap:8px"><input id="originSearch" class="input" placeholder="CARI KECAMATAN: Kembangan, Surabaya..."><button class="btn" style="width:80px;margin:0" onclick="cariOrigin()">CARI</button></div>
+<div style="display:flex;gap:8px"><input id="originSearch" class="input" placeholder="CARI KECAMATAN SAJA: Kembangan, Sirampog, Sridadi (jangan pakai kalimat panjang)" maxlength="40"><button class="btn" style="width:80px;margin:0" onclick="cariOrigin()">CARI</button></div>
 <div id="originList"></div>
-<div style="margin-top:10px;border-top:1px dashed var(--line);padding-top:10px"><div style="font-size:7px;letter-spacing:2px;opacity:.5">FALLBACK MANUAL JIKA API MATI:</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input id="manualOriginId" class="input" placeholder="ID: 11730"><input id="manualOriginLabel" class="input" placeholder="LABEL: KEMBANGAN"></div><button class="btn-light" onclick="setManualOrigin()">PAKAI MANUAL</button></div>
+<div style="margin-top:10px;border-top:1px dashed var(--line);padding-top:10px"><div style="font-size:7px;letter-spacing:2px;opacity:.5">FALLBACK MANUAL: ID = ID RAJAONGKIR, LABEL = Boleh tambah kode pos</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input id="manualOriginId" class="input" placeholder="ID RAJAONGKIR: 17523 / 72843"><input id="manualOriginLabel" class="input" placeholder="LABEL: CENGKARENG BARAT 11730 / SRIDADI 52272"></div><button class="btn-light" onclick="setManualOrigin()">PAKAI MANUAL</button></div>
 <hr style="border:none;border-top:1px solid var(--line);margin:16px 0">
 <div style="font-size:8px;letter-spacing:2px;opacity:.6">BANNER TOKO (max 5MB per file)</div>
 <input type="file" id="filePC" accept="image/*" style="display:none"><label for="filePC" class="file-btn">BANNER PC (1920x800)</label><img id="prevPC" style="width:100%;height:180px;object-fit:cover;display:none;margin-top:8px;border:1px solid var(--line)">
 <input type="file" id="fileHP" accept="image/*" style="display:none"><label for="fileHP" class="file-btn" style="margin-top:12px">BANNER HP (800x1000)</label><img id="prevHP" style="width:100%;height:180px;object-fit:cover;display:none;margin-top:8px;border:1px solid var(--line)">
 <div id="bannerList" style="margin-top:12px"></div>
-<button class="btn" id="btnToko" onclick="saveToko()">SIMPAN SEMUA - KONEK KE TOKO</button><div id="statusToko" class="save-status">Isi nama toko (min 3 huruf), WA format 08/62, origin wajib, banner max 5MB</div>
+<button class="btn" id="btnToko" onclick="saveToko()">SIMPAN SEMUA - KONEK KE TOKO</button><div id="statusToko" class="save-status">ID = 17523 itu ID ongkir, bukan kode pos. Kode pos 11730 tulis di LABEL</div>
 </div></div>
 <div id="tab-koleksi" class="hidden"><div class="card"><h3>BEST SELLER - MAX 9 FOTO</h3><input type="file" id="koleksiGaleri" accept="image/*" multiple style="display:none"><label for="koleksiGaleri" class="file-btn">+ GALERI (MULTI max 5MB)</label><div id="koleksi4Wrap" style="margin-top:10px"></div><button class="btn-line" onclick="addKoleksi()">+ SLOT</button><button class="btn" id="btnKoleksi" onclick="saveKoleksi()">SIMPAN BEST</button><div id="statusKoleksi" class="save-status"></div></div></div>
-<div id="tab-undertone" class="hidden"><div class="card"><h3>UNDERTONE - 4 FOTO</h3><input type="file" id="underGaleri" accept="image/*" multiple style="display:none"><label for="underGaleri" class="file-btn">+ GALERI (MULTI max 5MB)</label><div id="undertoneWrap" style="margin-top:10px"></div><button class="btn-line" onclick="addUndertone()">+ SLOT</button><button class="btn" id="btnUnder" onclick="saveUndertone()">SIMPAN UNDERTONE</button><div id="statusUnder" class="save-status"></div></div></div>
+<div id="tab-undertone" class="hidden"><div class="card"><h3>UNDERTONE - 4 FOTO - INI UNTUK FILTER BERANDA</h3><div style="background:#FFF8E7;border:1px solid #E8E0D0;padding:10px;font-size:9px;line-height:1.6;margin-bottom:10px">Foto di sini akan muncul di beranda sebagai tombol filter. Klik di beranda = otomatis ke <b>produk.html?undertone=WARM</b><br>Label harus: WARM, COOL, NEUTRAL</div><input type="file" id="underGaleri" accept="image/*" multiple style="display:none"><label for="underGaleri" class="file-btn">+ GALERI (MULTI max 5MB)</label><div id="undertoneWrap" style="margin-top:10px"></div><button class="btn-line" onclick="addUndertone()">+ SLOT</button><button class="btn" id="btnUnder" onclick="saveUndertone()">SIMPAN UNDERTONE</button><div id="statusUnder" class="save-status"></div></div></div>
 <div id="tab-faq" class="hidden"><div class="card"><h3>FAQ - TAMPIL DI KONTAK.HTML</h3><div id="faqWrap"></div><button class="btn-line" onclick="addFaq()">+ FAQ</button><button class="btn" id="btnFaq" onclick="saveFaq()">SIMPAN FAQ</button><div id="statusFaq" class="save-status"></div></div></div>
 <div id="tab-produk" class="hidden">
-<div class="card" style="border-color:var(--black)"><h3>PRODUK - FIX EDIT LENGKAP V16</h3>
+<div class="card" style="border-color:var(--black)"><h3>PRODUK - V17 FIX UNDERTONE PER WARNA</h3>
 <input type="hidden" id="editId"><input id="pName" class="input" placeholder="NAMA PRODUK min 3 huruf" maxlength="80">
 <input id="pPrice" type="number" class="input" placeholder="HARGA 1000 - 10jt ex: 99000" min="1000" max="10000000">
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
@@ -84,8 +85,8 @@ const supaGuard=window.supabase.createClient(SUPA_URL,SUPA_KEY);
 <input id="pMaterialDetail" class="input" placeholder="DETAIL BAHAN ex: Paris Premium adem" maxlength="100">
 <textarea id="pDesc" class="input" rows="4" placeholder="DESKRIPSI min 10 huruf" maxlength="500"></textarea>
 <div id="varInputs" style="margin-top:12px"></div>
-<button class="btn-line" onclick="addVarRow()">+ WARNA + STOK + FOTO (foto max 5MB)</button>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><button class="btn-light" onclick="resetProd()">RESET FORM</button><button class="btn" id="btnProd" onclick="saveProd()">SIMPAN PRODUK</button></div><div id="saveStatus" class="save-status">Nama min 3 huruf, harga 1rb-10jt, stok >=0, foto max 5MB</div>
+<button class="btn-line" onclick="addVarRow()">+ WARNA + STOK + UNDERTONE + FOTO (foto max 5MB)</button>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><button class="btn-light" onclick="resetProd()">RESET FORM</button><button class="btn" id="btnProd" onclick="saveProd()">SIMPAN PRODUK</button></div><div id="saveStatus" class="save-status">Warna wajib pilih undertone WARM/COOL/NEUTRAL biar filter beranda jalan</div>
 </div>
 <div class="card"><h3>DAFTAR (<span id="prodCount">0</span>)</h3><div id="list" class="grid">Loading</div></div>
 </div>
@@ -130,7 +131,7 @@ async function init(){
       const g=k=>data.find(s=>s.key===k)?.value;
       if(g('store_name')){$('storeName').value=g('store_name'); $('adminLogo').innerText=g('store_name'); document.title='ADMIN - '+g('store_name');}
       if(g('wa_number'))$('waNumber').value=g('wa_number');
-      if(g('toko_origin_id')){tokoOriginId=g('toko_origin_id'); tokoOriginLabel=g('toko_origin_label')||''; $('curOrigin').innerText=tokoOriginLabel+' - '+tokoOriginId;}
+      if(g('toko_origin_id')){tokoOriginId=g('toko_origin_id'); tokoOriginLabel=g('toko_origin_label')||''; $('curOrigin').innerText=tokoOriginLabel+' - ID RAJAONGKIR: '+tokoOriginId;}
       if(g('home_koleksi_terlaris')){try{const p=JSON.parse(g('home_koleksi_terlaris'));if(p.length)koleksiSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}
       if(g('home_undertone_images')){try{const p=JSON.parse(g('home_undertone_images'));if(p.length)undertoneSlots=p.map(x=>({url:x.url||x||'',title:x.title||''}))}catch(e){}}
       if(g('home_faq_list')){try{faqSlots=JSON.parse(g('home_faq_list'))}catch(e){}}
@@ -139,11 +140,30 @@ async function init(){
   await loadJenis();await loadCats();await loadProducts();await loadBanners();initVar();renderKoleksi();renderUnder();renderFaq();
 }
 function initVar(){ const el=$('varInputs'); if(!el) return; el.innerHTML=''; addVarRow(); }
-function addVarRow(c,img,stock,avail){
+
+// V17: TAMBAH UNDERTONE PER WARNA
+function addVarRow(c,img,stock,avail, undertone){
  c=c||'';img=img||'';stock=stock!=null?stock:10;avail=avail!=null?avail:true;
+ undertone=undertone||'NEUTRAL';
+ if(Array.isArray(undertone)) undertone=undertone[0]||'NEUTRAL';
  var id='vf_'+Date.now()+'_'+Math.random().toString(36).slice(2);
  var d=document.createElement('div');d.className='slot';
- var h=`<div style="display:flex;gap:6px;align-items:center"><input class="input var-color" placeholder="WARNA ex: PUTIH min 2 huruf" value="${esc(c)}" style="flex:1;margin:0" maxlength="30"><input class="input var-stock" type="number" value="${stock}" style="width:70px;margin:0" min="0" max="9999"><label style="font-size:8px;display:flex;align-items:center;gap:4px"><input type="checkbox" class="var-avail" ${avail?'checked':''}>READY</label><div class="x" onclick="this.parentElement.parentElement.remove()">x</div></div>`;
+ var selW = undertone.toUpperCase().includes('WARM')? 'selected' : '';
+ var selC = undertone.toUpperCase().includes('COOL')? 'selected' : '';
+ var selN = undertone.toUpperCase()==='NEUTRAL'? 'selected' : '';
+ if(undertone.toUpperCase().includes('WARM') && undertone.toUpperCase().includes('NEUTRAL')) selN='';
+ var h=`<div style="display:grid;grid-template-columns:1.2fr 70px 1fr auto;gap:6px;align-items:end">
+   <div><label style="font-size:7px">WARNA</label><input class="input var-color" placeholder="GREY min 2 huruf" value="${esc(c)}" style="flex:1;margin:0" maxlength="30"></div>
+   <div><label style="font-size:7px">STOK</label><input class="input var-stock" type="number" value="${stock}" style="margin:0" min="0" max="9999"></div>
+   <div><label style="font-size:7px">UNDERTONE WAJIB</label>
+     <select class="under-select var-under">
+       <option value="NEUTRAL" ${selN}>NEUTRAL - Semua kulit</option>
+       <option value="WARM" ${selW}>WARM - Kuning langsat sawo matang</option>
+       <option value="COOL" ${selC}>COOL - Putih pink cerah</option>
+     </select>
+   </div>
+   <div style="display:flex;flex-direction:column;gap:4px"><label style="font-size:7px"><input type="checkbox" class="var-avail" ${avail?'checked':''}>READY</label><div class="x" style="position:static" onclick="this.closest('.slot').remove()">x</div></div>
+ </div>`;
  if(img){ h+=`<img src="${img}" class="preview-img">`; }
  h+=`<input type="file" class="var-file" accept="image/*" style="display:none" id="${id}" onchange="prevVar(this)"><label for="${id}" class="file-btn">FOTO WARNA (max 5MB)</label><input type="hidden" class="var-old-url" value="${img}">`;
  d.innerHTML=h; $('varInputs').appendChild(d);
@@ -158,7 +178,7 @@ async function loadCats(){const {data}=await supa.from('categories').select('*')
 function renderKoleksi(){let h='';koleksiSlots.forEach((it,i)=>{h+='<div class="slot"><div class="x" onclick="koleksiSlots.splice('+i+',1);if(!koleksiSlots.length)koleksiSlots=[{url:\'\'}];renderKoleksi()">x</div>'+(it.url?'<img src="'+it.url+'">':'')+'<input type="file" style="display:none" id="kf'+i+'" accept="image/*" onchange="changeKoleksi('+i+',this)"><label for="kf'+i+'" class="file-btn">FILE max 5MB</label><input class="input" placeholder="JUDUL ex: PUTIH BEST min 2 huruf" value="'+esc(it.title)+'" oninput="koleksiSlots['+i+'].title=this.value" maxlength="30"></div>'});$('koleksi4Wrap').innerHTML=h;}
 window.changeKoleksi=async(i,inp)=>{const f=inp.files[0];if(!f)return;const err=validateFile(f); if(err){toast(err,true); return;} koleksiSlots[i].url=await fileToBase64(f);renderKoleksi();};
 window.addKoleksi=()=>{if(koleksiSlots.length>=9){toast('MAX 9 FOTO BEST',true);return;} koleksiSlots.push({url:"",title:""});renderKoleksi();};
-function renderUnder(){let h='';undertoneSlots.forEach((it,i)=>{h+='<div class="slot"><div class="x" onclick="undertoneSlots.splice('+i+',1);if(!undertoneSlots.length)undertoneSlots=[{url:\'\'}];renderUnder()">x</div>'+(it.url?'<img src="'+it.url+'">':'')+'<input type="file" style="display:none" id="uf'+i+'" accept="image/*" onchange="changeUnder('+i+',this)"><label for="uf'+i+'" class="file-btn">FILE max 5MB</label><input class="input" placeholder="LABEL ex: COOL" value="'+esc(it.title)+'" oninput="undertoneSlots['+i+'].title=this.value" maxlength="20"></div>'});$('undertoneWrap').innerHTML=h;}
+function renderUnder(){let h='';undertoneSlots.forEach((it,i)=>{h+='<div class="slot"><div class="x" onclick="undertoneSlots.splice('+i+',1);if(!undertoneSlots.length)undertoneSlots=[{url:\'\'}];renderUnder()">x</div>'+(it.url?'<img src="'+it.url+'">':'')+'<input type="file" style="display:none" id="uf'+i+'" accept="image/*" onchange="changeUnder('+i+',this)"><label for="uf'+i+'" class="file-btn">FILE max 5MB</label><input class="input" placeholder="LABEL WAJIB: WARM / COOL / NEUTRAL" value="'+esc(it.title)+'" oninput="undertoneSlots['+i+'].title=this.value.toUpperCase()" maxlength="20"></div>'});$('undertoneWrap').innerHTML=h;}
 window.changeUnder=async(i,inp)=>{const f=inp.files[0];if(!f)return;const err=validateFile(f); if(err){toast(err,true); return;} undertoneSlots[i].url=await fileToBase64(f);renderUnder();};
 window.addUndertone=()=>{if(undertoneSlots.length>=6){toast('MAX 6 FOTO UNDERTONE',true);return;} undertoneSlots.push({url:"",title:""});renderUnder();};
 function renderFaq(){let h='';faqSlots.forEach((f,i)=>{h+='<div class="slot"><div class="x" onclick="faqSlots.splice('+i+',1);renderFaq()">x</div><input class="input" placeholder="PERTANYAAN min 5 huruf" value="'+esc(f.q)+'" oninput="faqSlots['+i+'].q=this.value" maxlength="100"><textarea class="input" rows="2" placeholder="JAWABAN min 5 huruf" oninput="faqSlots['+i+'].a=this.value" maxlength="300">'+esc(f.a)+'</textarea></div>'});$('faqWrap').innerHTML=h;}
@@ -172,35 +192,41 @@ window.editP=async(id)=>{
   $('pMaterialDetail').value=p.material_detail||''; $('pDesc').value=p.description||'';
   const {data:vars}=await supa.from('product_variants').select('*').eq('product_id',id);
   $('varInputs').innerHTML='';
-  if(vars&&vars.length){vars.forEach(v=>{addVarRow(v.color_name,v.image_url,v.stock,v.is_available)});}else{addVarRow();}
+  if(vars&&vars.length){vars.forEach(v=>{
+    let under = v.undertone;
+    if(Array.isArray(under)) under=under[0];
+    else if(typeof under==='string' && under.startsWith('[')){ try{under=JSON.parse(under)[0]}catch(e){} }
+    addVarRow(v.color_name,v.image_url,v.stock,v.is_available, under||'NEUTRAL');
+  });}else{addVarRow();}
   openTab('produk',document.querySelectorAll('.tab')[4]); window.scrollTo(0,0);
-  toast('EDIT MODE: '+p.name);
+  toast('EDIT MODE: '+p.name+' - undertone ke-load');
 };
 window.hapusP=(id)=>{showConfirm('HAPUS PRODUK?','Produk dan varian warna akan terhapus permanen',async()=>{await supa.from('product_variants').delete().eq('product_id',id);await supa.from('products').delete().eq('id',id);toast('PRODUK DIHAPUS');loadProducts();});};
 window.resetProd=()=>{$('editId').value='';$('pName').value='';$('pPrice').value='';$('pCat').value='';$('pJenis').value='';$('pSize').value='110x110cm';$('pFinish').value='Laser Cut';$('pMaterialDetail').value='';$('pDesc').value='';$('varInputs').innerHTML='';addVarRow();toast('FORM RESET');};
 async function cariOrigin(){
-  const q=$('originSearch').value.trim();if(!q){toast('KETIK KECAMATAN DULU',true);return;}
-  $('originList').innerHTML='<div style="padding:10px;font-size:10px;opacity:.5">MENCARI...</div>';
+  const q=$('originSearch').value.trim();
+  if(!q){toast('KETIK KECAMATAN DULU - contoh: Kembangan atau Sirampog',true);return;}
+  if(q.length<3){toast('Ketik minimal 3 huruf',true);return;}
+  $('originList').innerHTML='<div style="padding:10px;font-size:10px;opacity:.5">MENCARI ID RAJAONGKIR... (bukan kode pos)</div>';
   try{
     const r=await fetch('/api/search?q='+encodeURIComponent(q));
     if(!r.ok) throw new Error('API mati');
     const j=await r.json();
-    if(!j.data||!j.data.length){$('originList').innerHTML='<div style="padding:10px;font-size:10px">GAK KETEMU, PAKAI MANUAL DI BAWAH</div>';return;}
-    $('originList').innerHTML=j.data.map(d=>'<div style="padding:10px;border-bottom:1px solid var(--line);cursor:pointer;font-size:11px" onclick="pilihOrigin(\''+d.id+'\',\''+d.label.replace(/'/g,"")+'\')">'+d.label+' - '+d.id+'</div>').join('');
-  }catch(e){$('originList').innerHTML='<div style="padding:10px;font-size:10px;color:#B42318">API SEARCH MATI, PAKAI MANUAL DI BAWAH YA KAK</div>';}
+    if(!j.data||!j.data.length){$('originList').innerHTML='<div style="padding:10px;font-size:10px">GAK KETEMU, PAKAI MANUAL DI BAWAH - ID = ID RajaOngkir, LABEL = boleh tulis kode pos 52272</div>';return;}
+    $('originList').innerHTML=j.data.map(d=>'<div style="padding:10px;border-bottom:1px solid var(--line);cursor:pointer;font-size:11px" onclick="pilihOrigin(\''+d.id+'\',\''+d.label.replace(/'/g,"")+'\')"><b>'+d.label+'</b><br><span style="opacity:.6">ID RajaOngkir: '+d.id+' | Kode pos asli beda, tulis manual di LABEL nanti</span></div>').join('');
+  }catch(e){$('originList').innerHTML='<div style="padding:10px;font-size:10px;color:#B42318">API SEARCH MATI, PAKAI MANUAL: ID = ID RajaOngkir (contoh 72843), LABEL = SRIDADI 52272</div>';}
 }
-window.pilihOrigin=(id,label)=>{tokoOriginId=id;tokoOriginLabel=label;$('curOrigin').innerText=label+' - '+id;$('originList').innerHTML=''; $('manualOriginId').value=id; $('manualOriginLabel').value=label; toast('ORIGIN DIPILIH: '+label);};
-window.setManualOrigin=()=>{const id=$('manualOriginId').value.trim();const label=$('manualOriginLabel').value.trim();if(!id||!label){toast('ISI ID & LABEL MANUAL',true);return;}tokoOriginId=id;tokoOriginLabel=label;$('curOrigin').innerText=label+' - '+id;toast('MANUAL ORIGIN: '+label);};
+window.pilihOrigin=(id,label)=>{tokoOriginId=id;tokoOriginLabel=label;$('curOrigin').innerText=label+' - ID RAJAONGKIR: '+id+' (kode pos tulis di LABEL)';$('originList').innerHTML=''; $('manualOriginId').value=id; $('manualOriginLabel').value=label; toast('ORIGIN DIPILIH: '+label+' ID:'+id);};
+window.setManualOrigin=()=>{const id=$('manualOriginId').value.trim();const label=$('manualOriginLabel').value.trim();if(!id||!label){toast('ISI ID & LABEL MANUAL',true);return;}tokoOriginId=id;tokoOriginLabel=label;$('curOrigin').innerText=label+' - ID RAJAONGKIR: '+id;toast('MANUAL ORIGIN: '+label+' ID:'+id);};
 $('filePC').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;const err=validateFile(f); if(err){toast(err,true); e.target.value=''; return;} pcBase=await fileToBase64(f);$('prevPC').src=pcBase;$('prevPC').style.display='block';});
 $('fileHP').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;const err=validateFile(f); if(err){toast(err,true); e.target.value=''; return;} hpBase=await fileToBase64(f);$('prevHP').src=hpBase;$('prevHP').style.display='block';});
 window.saveToko=async()=>{
   const btn=$('btnToko'); if(btn.disabled) return;
-  // VALIDASI V16
   const errStore=isValidStoreName($('storeName').value);
   if(errStore){toast(errStore,true); $('storeName').classList.add('err'); return;} else $('storeName').classList.remove('err');
   const errWA=isValidWAAdmin($('waNumber').value);
   if(errWA){toast(errWA,true); $('waNumber').classList.add('err'); return;} else $('waNumber').classList.remove('err');
-  if(!tokoOriginId ||!tokoOriginLabel){toast('PILIH ORIGIN DULU - CARI KECAMATAN',true); return;}
+  if(!tokoOriginId ||!tokoOriginLabel){toast('PILIH ORIGIN DULU - ID RAJAONGKIR',true); return;}
   setBtnLoading('btnToko','statusToko',true);
   try{
     const ups=[];
@@ -218,8 +244,8 @@ window.saveToko=async()=>{
       await supa.from('banners').update({is_active:false}).eq('is_active',true);
       await supa.from('banners').insert({banner_pc_url:pcUrl,banner_hp_url:hpUrl,is_active:true});
     }
-    $('statusToko').innerText='✅ BERHASIL - TOKO KONEK: '+$('storeName').value.toUpperCase()+' | ORIGIN: '+tokoOriginLabel;
-    toast('TOKO '+$('storeName').value.toUpperCase()+' AKTIF');
+    $('statusToko').innerText='✅ BERHASIL - TOKO: '+$('storeName').value.toUpperCase()+' | ORIGIN ID: '+tokoOriginId+' LABEL: '+tokoOriginLabel;
+    toast('TOKO '+$('storeName').value.toUpperCase()+' AKTIF - ID:'+tokoOriginId);
     loadBanners();
     pcBase='';hpBase='';$('filePC').value='';$('fileHP').value='';$('prevPC').style.display='none';$('prevHP').style.display='none';
     localStorage.removeItem('store_name_cache');localStorage.removeItem('store_origin_label');localStorage.removeItem('store_origin_id');localStorage.removeItem('wa_number_cache');
@@ -228,11 +254,13 @@ window.saveToko=async()=>{
 window.saveKoleksi=async()=>{
   const list=koleksiSlots.filter(x=>x.url); if(!list.length){toast('ISI FOTO BEST DULU',true);return;}
   if(list.length>9){toast('MAX 9 FOTO BEST',true);return;}
-  // validasi judul
-  for(let x of list){ if(!x.title || x.title.trim().length<2){toast('JUDUL BEST minimal 2 huruf: '+ (x.url.slice(0,20)),true); return;} }
+  for(let x of list){ if(!x.title || x.title.trim().length<2){toast('JUDUL BEST minimal 2 huruf',true); return;} }
   try{let final=[];for(let i=0;i<list.length;i++){let url=list[i].url; if(String(url).startsWith('data:')){const blob=await (await fetch(url)).blob(); if(blob.size>5*1024*1024){toast('BEST foto '+ (i+1)+' >5MB',true); return;} const fn='k_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';await supa.storage.from('banners').upload(fn,blob); url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}final.push({url,title:list[i].title||''});}await supa.from('settings').upsert({key:'home_koleksi_terlaris',value:JSON.stringify(final)},{onConflict:'key'});toast('BEST SAVED - '+final.length+' FOTO');}catch(e){toast(e.message,true)}
 };
-window.saveUndertone=async()=>{const list=undertoneSlots.filter(x=>x.url); if(!list.length){toast('ISI FOTO UNDERTONE DULU',true);return;} if(list.length>6){toast('MAX 6',true);return;} try{let final=[];for(let i=0;i<list.length;i++){let url=list[i].url; if(String(url).startsWith('data:')){const blob=await (await fetch(url)).blob(); if(blob.size>5*1024*1024){toast('UNDERTONE foto >5MB',true);return;} const fn='u_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';await supa.storage.from('banners').upload(fn,blob); url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}final.push({url,title:list[i].title||''});}await supa.from('settings').upsert({key:'home_undertone_images',value:JSON.stringify(final)},{onConflict:'key'});toast('UNDERTONE SAVED - '+final.length+' FOTO');}catch(e){toast(e.message,true)}};
+window.saveUndertone=async()=>{
+  const list=undertoneSlots.filter(x=>x.url); if(!list.length){toast('ISI FOTO UNDERTONE DULU',true);return;} if(list.length>6){toast('MAX 6',true);return;}
+  for(let x of list){ if(!x.title ||!['WARM','COOL','NEUTRAL'].includes(x.title.toUpperCase())){toast('Label undertone harus WARM / COOL / NEUTRAL - kamu isi: '+x.title,true); return;} }
+  try{let final=[];for(let i=0;i<list.length;i++){let url=list[i].url; if(String(url).startsWith('data:')){const blob=await (await fetch(url)).blob(); if(blob.size>5*1024*1024){toast('UNDERTONE foto >5MB',true);return;} const fn='u_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg';await supa.storage.from('banners').upload(fn,blob); url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;}final.push({url,title:list[i].title.toUpperCase()||''});}await supa.from('settings').upsert({key:'home_undertone_images',value:JSON.stringify(final)},{onConflict:'key'});toast('UNDERTONE SAVED - '+final.length+' FOTO - filter beranda jalan');}catch(e){toast(e.message,true)}};
 window.saveFaq=async()=>{
   const final=faqSlots.filter(x=>x.q&&x.a);
   if(!final.length){toast('ISI FAQ DULU',true);return;}
@@ -249,8 +277,8 @@ window.saveProd=async()=>{
   if(!price || price < 1000){toast('HARGA minimal 1000',true);throw new Error('harga min 1000');}
   if(price > 10000000){toast('HARGA max 10jt, cek lagi',true);throw new Error('harga max 10jt');}
   if($('pDesc').value.trim().length>0 && $('pDesc').value.trim().length<10){toast('DESKRIPSI minimal 10 huruf',true);throw new Error('deskripsi pendek');}
-  // FIX BUG V16: pakai spasi #varInputs.slot
-  const slots=[...document.querySelectorAll('#varInputs.slot')];
+  // FIX BUG V16: dulu #varInputs.slot salah, harus #varInputs.slot
+  const slots=[...document.querySelectorAll('#varInputs .slot')];
   let finalVars=[];
   for(let r of slots){
    const col=r.querySelector('.var-color')?.value.trim();
@@ -260,22 +288,23 @@ window.saveProd=async()=>{
    if(stock < 0){toast('STOK '+col+' tidak boleh minus',true); throw new Error('stok minus');}
    if(stock > 9999){toast('STOK '+col+' max 9999',true); throw new Error('stok max');}
    const avail=r.querySelector('.var-avail')?.checked;
+   const underVal=r.querySelector('.var-under')?.value||'NEUTRAL'; // V17 UNDERTONE
    const file=r.querySelector('.var-file')?.files[0];
    if(file){ const err=validateFile(file); if(err){toast(err,true); throw new Error(err);} }
    let oldUrl=r.querySelector('.var-old-url')?.value||'';
    let url=oldUrl;
    if(file){const fn='var_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.jpg'; await supa.storage.from('products').upload(fn,file); url=supa.storage.from('products').getPublicUrl(fn).data.publicUrl;}
    if(!url){toast('FOTO WARNA '+col+' BELUM ADA',true); throw new Error('foto kosong '+col);}
-   finalVars.push({color_name:col,image_url:url,stock,is_available:avail});
+   finalVars.push({color_name:col,image_url:url,stock,is_available:avail,undertone:[underVal]}); // V17 simpan undertone sebagai array
   }
   if(!finalVars.length){toast('TAMBAH WARNA MIN 1',true);throw new Error('varian kosong');}
   if(finalVars.length>30){toast('MAX 30 WARNA',true);throw new Error('max 30');}
   let pid=$('editId').value;
-  let payload={name,price,image_url:finalVars[0].image_url,category:$('pCat').value,product_type:$('pJenis').value,size:$('pSize').value,finishing:$('pFinish').value,material_detail:$('pMaterialDetail').value,description:$('pDesc').value,colors:finalVars.map(v=>v.color_name)};
+  let payload={name,price,image_url:finalVars[0].image_url,category:$('pCat').value,product_type:$('pJenis').value,size:$('pSize').value,finishing:$('pFinish').value,material_detail:$('pMaterialDetail').value,description:$('pDesc').value,colors:finalVars.map(v=>v.color_name),undertone:finalVars[0].undertone};
   if(pid){await supa.from('products').update(payload).eq('id',pid); await supa.from('product_variants').delete().eq('product_id',pid);}
   else{const {data}=await supa.from('products').insert(payload).select().single(); pid=data.id;}
-  await supa.from('product_variants').insert(finalVars.map(v=>({product_id:pid,color_name:v.color_name,image_url:v.image_url,stock:v.stock,is_available:v.is_available})));
-  toast('PRODUK TERSIMPAN - '+name); $('saveStatus').innerText='✅ '+name+' TERSIMPAN'; loadProducts(); resetProd();
+  await supa.from('product_variants').insert(finalVars.map(v=>({product_id:pid,color_name:v.color_name,image_url:v.image_url,stock:v.stock,is_available:v.is_available,undertone:v.undertone})));
+  toast('PRODUK TERSIMPAN - '+name+' UNDERTONE:'+finalVars[0].undertone); $('saveStatus').innerText='✅ '+name+' TERSIMPAN - Filter beranda WARM/COOL/NEUTRAL jalan'; loadProducts(); resetProd();
  }catch(e){$('saveStatus').innerText='❌ '+e.message; toast(e.message,true);} finally {setBtnLoading('btnProd','saveStatus',false);}
 };
 $('koleksiGaleri').addEventListener('change',async e=>{for(let f of e.target.files){ const err=validateFile(f); if(err){toast(err,true); continue;} if(koleksiSlots.length>=9){toast('MAX 9',true); break;} koleksiSlots.push({url:await fileToBase64(f),title:''}); } renderKoleksi(); e.target.value='';});
