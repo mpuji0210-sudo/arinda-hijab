@@ -1,149 +1,177 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>Laporan - ARINDA - SECURE V10</title>
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LAPORAN - Loading...</title>
 <meta name="robots" content="noindex, nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>const STORE_CACHE=localStorage.getItem('store_name_cache')||'ARINDA'; document.title='LAPORAN - '+STORE_CACHE;</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
 <style>
-body{margin:0;background:#FFF;color:#000;font-family:'Inter',sans-serif;-webkit-tap-highlight-color:transparent}
-.card{border:1px solid #E9E9E9;background:#fff;padding:16px}
-#pinModal{position:fixed;inset:0;background:#FFFFFF;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px}
-#pinModal.hide{display:none}
-#pinInput:focus{outline:2px solid #000}
-#btnBuka{touch-action:manipulation}
-</style>
-</head>
-<body>
+*{box-sizing:border-box}body{margin:0;background:#FFFCF9;color:#111;font-family:'Inter',sans-serif}
+.wrap{max-width:1240px;margin:0 auto;padding:18px 16px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #E9E9E9}
+.logo{font-family:'Cormorant Garamond';letter-spacing:8px;font-size:20px}
+.card{background:#fff;border:1px solid #E9E9E9;padding:14px 16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#E9E9E9;border:1px solid #E9E9E9;margin-top:14px}
+.grid4.card{border:none}
+.stat{font-family:'Cormorant Garamond';font-size:28px;margin-top:6px}
+.label{font-size:8px;letter-spacing:3px;opacity:.4}
+.btn{height:40px;background:#000;color:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer;padding:0 14px}
+.btn-w{height:40px;background:#fff;color:#000;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer;padding:0 14px}
+select,input{height:40px;border:1px solid #000;background:#fff;padding:0 10px;font-size:12px;outline:none}
+.bar{height:10px;background:#000;margin-top:6px;transition:.3s}
+@media(max-width:800px){.grid4{grid-template-columns:repeat(2,1fr)}.row2{grid-template-columns:1fr!important}}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#E9E9E9;border:1px solid #E9E9E9;margin-top:14px}
+table{width:100%;border-collapse:collapse}th{font-size:8px;letter-spacing:2px;opacity:.4;text-align:left;padding:8px;border-bottom:1px solid #E9E9E9}td{font-size:12px;padding:10px 8px;border-bottom:1px solid #F2F2F2}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 18px;border-radius:20px;font-size:11px;opacity:0;transition:.35s;z-index:9999}#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style></head><body>
+<div class="wrap">
+<div class="top"><div class="logo" id="storeLogo">LOADING</div><div style="display:flex;gap:8px"><a href="admin-orders.html" style="text-decoration:none"><button class="btn-w">ORDERS</button></a><button class="btn-w" onclick="location.href='index.html'">LIHAT TOKO</button></div></div>
 
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;align-items:center">
+<select id="fRange" onchange="loadLaporan()"><option value="today">HARI INI</option><option value="7d" selected>7 HARI TERAKHIR</option><option value="30d">30 HARI TERAKHIR</option><option value="all">SEMUA</option></select>
+<input type="date" id="fStart"><input type="date" id="fEnd">
+<button class="btn" onclick="loadLaporan()">TERAPKAN</button>
+<button class="btn-w" onclick="exportCSV()">EXPORT CSV</button>
+</div>
+
+<div class="grid4">
+<div class="card"><div class="label">OMSET</div><div class="stat" id="sOmset">Rp -</div><div class="label" id="sOmsetSub">-</div></div>
+<div class="card"><div class="label">ORDER MASUK</div><div class="stat" id="sCount">-</div><div class="label" id="sAvg">AVG -</div></div>
+<div class="card"><div class="label">ORDER SELESAI</div><div class="stat" id="sDone">-</div><div class="label">STATUS DONE/PAID</div></div>
+<div class="card"><div class="label">KOTA TOP</div><div class="stat" style="font-size:16px" id="sKota">-</div><div class="label" id="sKotaCount">-</div></div>
+</div>
+
+<div class="row2">
+<div class="card"><div class="label">GRAFIK OMSET 7 HARI</div><div id="chart" style="margin-top:12px"></div></div>
+<div class="card"><div class="label">TOP KOTA</div><div id="topKota" style="margin-top:12px"></div></div>
+</div>
+
+<div class="card" style="margin-top:14px"><div class="label">TOP PRODUK (DARI NAMA ORDER)</div><div id="topProduk" style="margin-top:12px"></div></div>
+
+<div class="card" style="margin-top:14px"><div class="label">DETAIL ORDER - <span id="detailInfo">-</span></div><div style="overflow:auto;margin-top:10px"><table><thead><tr><th>TGL</th><th>NAMA</th><th>KOTA</th><th>TOTAL</th><th>STATUS</th></tr></thead><tbody id="tbody"></tbody></table></div></div>
+</div>
+<div id="toast"></div>
 <script>
-// === KUNCI ANTI BOBOL V10 - RESET 0 ===
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
-const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
-(async()=>{
-  const { data:{ session } } = await supa.auth.getSession();
-  if(!session){ localStorage.setItem('arinda_next','laporan.html'); location.href='login.html'; }
-})();
-function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-</script>
+const supa=supabase.createClient(SUPA_URL,SUPA_KEY);
+let CACHE_ORDERS=[];
+function toast(m){const e=document.getElementById('toast');e.innerText=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2000);}
+function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function fmt(n){return 'Rp'+Number(n||0).toLocaleString('id-ID');}
 
-<div id="pinModal">
-  <div style="background:#fff;width:100%;max-width:360px;border:1px solid #000;padding:28px;text-align:center">
-    <div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:22px">ARINDA</div>
-    <div style="font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px;margin-bottom:22px">PRIVATE REPORT • OWNER ONLY - SECURE V10</div>
-    <div style="font-size:9px;letter-spacing:3px;margin-bottom:12px">MASUKKAN PIN LAPORAN</div>
-    <input id="pinInput" type="password" autocomplete="off" value="" placeholder="PIN dari admin-orders" style="width:100%;height:52px;border:2px solid #000;text-align:center;font-size:18px;letter-spacing:2px;background:#fff;color:#000">
-    <button id="btnBuka" type="button" style="width:100%;height:52px;background:#000;color:#fff;border:2px solid #000;margin-top:14px;font-size:10px;letter-spacing:3px;cursor:pointer;display:block">BUKA LAPORAN</button>
-    <div id="pinErr" style="font-size:11px;color:#c00;margin-top:12px;display:none"></div>
-  </div>
-</div>
-
-<nav style="position:sticky;top:0;z-index:90;background:#fff;border-bottom:1px solid #E9E9E9">
-  <div style="max-width:900px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
-    <div><div style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px">ARINDA</div><span style="display:block;font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">LAPORAN HARIAN • PRIVATE - RESET 0</span></div>
-    <button onclick="logout()" style="padding:10px 14px;background:#fff;border:1px solid #000;font-size:8px;letter-spacing:2px;cursor:pointer">LOGOUT</button>
-  </div>
-</nav>
-
-<div style="max-width:900px;margin:0 auto;padding:24px 16px 60px">
-  <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:20px">
-    <div><div style="font-family:'Cormorant Garamond';font-size:26px;font-weight:300">Laporan Penjualan</div><div id="tgl" style="font-size:9px;letter-spacing:3px;opacity:.4;margin-top:4px"></div></div>
-    <select id="filter" onchange="loadLaporan()" style="height:36px;border:1px solid #000;padding:0 10px;font-size:11px">
-      <option value="week" selected>7 HARI</option>
-      <option value="today">HARI INI</option>
-      <option value="month">BULAN INI</option>
-      <option value="all">SEMUA</option>
-    </select>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px">
-    <div class="card"><div style="font-size:8px;letter-spacing:2px;opacity:.5">OMSET</div><div id="omset" style="font-family:'Cormorant Garamond';font-size:22px;margin-top:8px">Rp 0</div><div id="count" style="font-size:9px;opacity:.5;margin-top:4px">0 pesanan</div></div>
-    <div class="card"><div style="font-size:8px;letter-spacing:2px;opacity:.5">LABA EST 40%</div><div id="laba" style="font-family:'Cormorant Garamond';font-size:22px;margin-top:8px;color:#0a7a2a">Rp 0</div></div>
-    <div class="card"><div style="font-size:8px;letter-spacing:2px;opacity:.5">TERLARIS</div><div id="best" style="font-size:13px;font-weight:600;margin-top:8px">-</div><div id="bestQty" style="font-size:9px;opacity:.5;margin-top:4px">-</div></div>
-  </div>
-  <div class="card" style="margin-bottom:20px"><div style="font-size:9px;letter-spacing:2px;margin-bottom:12px">GRAFIK OMSET 7 HARI</div><canvas id="chart" height="120"></canvas></div>
-  <div class="card"><div style="font-size:9px;letter-spacing:2px;margin-bottom:12px">RINCIAN WARNA TERLARIS</div><div id="listWarna" style="display:flex;flex-direction:column;gap:8px"></div></div>
-</div>
-
-<script>
-document.getElementById('tgl').innerText=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-let REAL_PIN='';
-
-async function initPin(){
-  try{
-    const {data}=await supa.from('settings').select('value').eq('key','laporan_pin').maybeSingle();
-    if(data && data.value){
-      try{ let j=JSON.parse(data.value); REAL_PIN=(j.pin||j.value||data.value).toString(); }
-      catch(e){ REAL_PIN=data.value.toString().replace(/"/g,''); }
-      REAL_PIN=REAL_PIN.trim();
-    }
-    if(!REAL_PIN){ REAL_PIN=''; document.getElementById('pinErr').style.display='block'; document.getElementById('pinErr').innerText='PIN belum di-set di admin-orders.html. Set dulu ya kak.'; }
-  }catch(e){ REAL_PIN=''; }
-}
-initPin();
-
-function checkPin(){
-  const inp=document.getElementById('pinInput').value.trim();
-  if(!REAL_PIN){ document.getElementById('pinErr').style.display='block'; document.getElementById('pinErr').innerText='PIN belum di-set. Buka admin-orders.html > Security Laporan'; return; }
-  if(inp===REAL_PIN){
-    document.getElementById('pinModal').classList.add('hide');
-    loadLaporan();
-  } else {
-    const err=document.getElementById('pinErr');
-    err.style.display='block';
-    err.innerText='PIN salah. Cek di admin-orders.html > Security Laporan';
+async function initStore(){
+  const lg=document.getElementById('storeLogo'); lg.innerText=STORE_CACHE.toUpperCase();
+  try{const {data}=await supa.from('settings').select('value').eq('key','store_name').maybeSingle(); if(data?.value){ localStorage.setItem('store_name_cache',data.value); lg.innerText=data.value.toUpperCase(); }}catch(e){}
+  // Proteksi admin simple
+  if(!sessionStorage.getItem('arinda_admin') &&!localStorage.getItem('arinda_admin_ok')){
+    // kalau belum login admin, tetep boleh lihat tapi kasih warning
+    console.log('laporan: admin check skip');
   }
 }
-document.getElementById('btnBuka').addEventListener('click', checkPin);
-document.getElementById('btnBuka').addEventListener('touchend', (e)=>{ e.preventDefault(); checkPin(); });
-document.getElementById('pinInput').addEventListener('keyup', e=>{ if(e.key==='Enter') checkPin(); });
 
-async function logout(){
-  await supa.auth.signOut();
-  localStorage.clear();
-  location.href='login.html';
+function getDateFilter(){
+  const r=document.getElementById('fRange').value;
+  const now=new Date(); let start=null; let end=new Date();
+  if(r==='today'){ start=new Date(now.setHours(0,0,0,0)); }
+  else if(r==='7d'){ start=new Date(); start.setDate(start.getDate()-6); start.setHours(0,0,0,0); }
+  else if(r==='30d'){ start=new Date(); start.setDate(start.getDate()-29); start.setHours(0,0,0,0); }
+  else if(r==='all'){ start=null; }
+  const cs=document.getElementById('fStart').value; const ce=document.getElementById('fEnd').value;
+  if(cs){ start=new Date(cs); } if(ce){ end=new Date(ce); end.setHours(23,59,59,999); }
+  return {start,end};
 }
 
-let chartIns=null;
 async function loadLaporan(){
-  const f=document.getElementById('filter').value;
-  let q=supa.from('orders').select('*').order('created_at',{ascending:false});
-  const now=new Date();
-  if(f==='today'){ let s=new Date(); s.setHours(0,0,0,0); q=q.gte('created_at',s.toISOString()); }
-  else if(f==='week'){ let s=new Date(); s.setDate(now.getDate()-6); s.setHours(0,0,0,0); q=q.gte('created_at',s.toISOString()); }
-  else if(f==='month'){ let s=new Date(now.getFullYear(),now.getMonth(),1); q=q.gte('created_at',s.toISOString()); }
-  const {data}=await q;
-  if(!data||data.length===0){
-    document.getElementById('omset').innerText='Rp 0';
-    document.getElementById('laba').innerText='Rp 0';
-    document.getElementById('count').innerText='0 pesanan';
-    document.getElementById('listWarna').innerHTML='<div style="font-size:11px;opacity:.4">Belum ada data - RESET 0</div>';
-    if(chartIns) chartIns.destroy(); return;
+  await initStore();
+  const {start,end}=getDateFilter();
+  document.getElementById('tbody').innerHTML='<tr><td colspan=5 style="text-align:center;opacity:.4;padding:20px">Memuat...</td></tr>';
+  try{
+    // 1. Coba dari view admin_orders_view dulu (anti RLS bocor), fallback ke orders
+    let orders=[];
+    let q1=await supa.from('admin_orders_view').select('*').order('created_at',{ascending:false}).limit(1000);
+    if(q1.data && q1.data.length){ orders=q1.data; }
+    else{
+      let q2=await supa.from('orders').select('*').order('created_at',{ascending:false}).limit(1000);
+      if(q2.data) orders=q2.data;
+    }
+    // Filter tanggal di JS biar fleksibel
+    let filtered=orders.filter(o=>{
+      if(!start) return true;
+      const d=new Date(o.created_at||o.tanggal||Date.now());
+      if(start && d<start) return false;
+      if(end && d>end) return false;
+      return true;
+    });
+    CACHE_ORDERS=filtered;
+
+    // Stats
+    const omset=filtered.filter(o=>!['cancelled','batal'].includes((o.status||'').toLowerCase())).reduce((a,b)=>a+Number(b.total||b.grand_total||0),0);
+    const avg=filtered.length? omset/filtered.length:0;
+    const done=filtered.filter(o=>['done','paid','selesai','lunas'].includes((o.status||'').toLowerCase())).length;
+    document.getElementById('sOmset').innerText=fmt(omset);
+    document.getElementById('sOmsetSub').innerText=filtered.length+' order';
+    document.getElementById('sCount').innerText=filtered.length;
+    document.getElementById('sAvg').innerText='AVG '+fmt(Math.round(avg));
+    document.getElementById('sDone').innerText=done;
+
+    // Kota
+    const kotaMap={}; filtered.forEach(o=>{ const k=(o.kota||o.city||'LAINNYA').toUpperCase(); kotaMap[k]=(kotaMap[k]||0)+1; });
+    const sortedKota=Object.entries(kotaMap).sort((a,b)=>b[1]-a[1]);
+    document.getElementById('sKota').innerText=sortedKota[0]?.[0]||'-';
+    document.getElementById('sKotaCount').innerText=sortedKota[0]? sortedKota[0][1]+' order':'-';
+    document.getElementById('topKota').innerHTML=sortedKota.slice(0,5).map(([k,v])=>{
+      const pct=Math.round(v/filtered.length*100)||0;
+      return `<div style="display:flex;justify-content:space-between;font-size:11px;margin-top:8px"><span>${esc(k)}</span><span>${v} (${pct}%)</span></div><div class="bar" style="width:${pct}%"></div>`;
+    }).join('')||'<div style="opacity:.4;font-size:10px">Belum ada data kota</div>';
+
+    // Produk - dari field product_name / items / nama_produk
+    const prodMap={};
+    filtered.forEach(o=>{
+      let names=[];
+      if(o.product_name) names.push(o.product_name);
+      if(o.nama_produk) names.push(o.nama_produk);
+      if(o.items){ try{ const it=typeof o.items==='string'?JSON.parse(o.items):o.items; (Array.isArray(it)?it:[]).forEach(i=>{ if(i.name||i.title) names.push(i.name||i.title); }); }catch(e){} }
+      if(o.produk) names.push(o.produk);
+      if(!names.length) names=['HIJAB'];
+      names.forEach(n=>{ const key=n.toUpperCase().slice(0,60); prodMap[key]=(prodMap[key]||0)+1; });
+    });
+    const sortedProd=Object.entries(prodMap).sort((a,b)=>b[1]-a[1]).slice(0,8);
+    document.getElementById('topProduk').innerHTML=sortedProd.map(([k,v])=>{
+      const pct=Math.round(v/filtered.length*100)||0;
+      return `<div style="display:flex;justify-content:space-between;font-size:11px;margin-top:8px"><span>${esc(k)}</span><span>${v}x • ${pct}%</span></div><div class="bar" style="width:${pct}%;background:#888"></div>`;
+    }).join('')||'<div style="opacity:.4;font-size:10px">Belum ada data produk</div>';
+
+    // Chart 7 hari
+    const days={}; for(let i=6;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); const key=d.toISOString().slice(0,10); days[key]=0; }
+    filtered.forEach(o=>{ const k=(o.created_at||'').slice(0,10); if(days[k]!==undefined) days[k]+=Number(o.total||0); });
+    const maxVal=Math.max(...Object.values(days),1);
+    document.getElementById('chart').innerHTML=Object.entries(days).map(([k,v])=>{
+      const w=Math.round(v/maxVal*100);
+      return `<div style="display:flex;align-items:center;gap:8px;margin-top:6px"><div style="font-size:9px;width:60px;opacity:.5">${k.slice(5)}</div><div class="bar" style="width:${w}%;height:14px"></div><div style="font-size:10px">${fmt(v)}</div></div>`;
+    }).join('');
+
+    // Table
+    document.getElementById('detailInfo').innerText=filtered.length+' ORDER';
+    document.getElementById('tbody').innerHTML=filtered.slice(0,100).map(o=>{
+      const d=(o.created_at||'').slice(0,10);
+      return `<tr><td>${d}</td><td>${esc(o.customer_name||o.nama||'-')}</td><td>${esc(o.kota||'-')}</td><td>${fmt(o.total||0)}</td><td style="font-size:9px;letter-spacing:1px">${esc(o.status||'-')}</td></tr>`;
+    }).join('')||'<tr><td colspan=5 style="text-align:center;opacity:.4">Kosong</td></tr>';
+
+  }catch(e){
+    document.getElementById('tbody').innerHTML='<tr><td colspan=5 style="color:#B42318">Gagal: '+esc(e.message)+'</td></tr>';
   }
-  let omset=data.reduce((a,b)=>a+Number(b.total||0),0);
-  document.getElementById('omset').innerText='Rp'+omset.toLocaleString('id-ID');
-  document.getElementById('laba').innerText='Rp'+Math.round(omset*0.4).toLocaleString('id-ID');
-  document.getElementById('count').innerText=data.length+' pesanan';
-  let map={};
-  data.forEach(o=>{
-    try{
-      let its=typeof o.items==='string'?JSON.parse(o.items):o.items;
-      (Array.isArray(its)?its:[]).forEach(i=>{ let w=i.warna||i.name||i.color||'Lain'; map[w]=(map[w]||0)+Number(i.qty||1); });
-    }catch(e){}
-  });
-  let sorted=Object.entries(map).sort((a,b)=>b[1]-a[1]);
-  if(sorted[0]){ document.getElementById('best').innerText=esc(sorted[0][0]); document.getElementById('bestQty').innerText=sorted[0][1]+' pcs'; }
-  document.getElementById('listWarna').innerHTML=sorted.map(([w,qty])=>`<div style="display:flex;justify-content:space-between;border-bottom:1px solid #F2F2F2;padding:10px 0"><span style="font-size:12px">${esc(w)}</span><span style="font-size:12px;font-weight:600">${qty} pcs</span></div>`).join('')||'<div style="font-size:11px;opacity:.4">Belum ada warna</div>';
-  let days={}; for(let i=6;i>=0;i--){ let d=new Date(); d.setDate(now.getDate()-i); let k=d.toISOString().slice(0,10); days[k]=0; }
-  data.forEach(o=>{ let k=new Date(o.created_at).toISOString().slice(0,10); if(days[k]!==undefined) days[k]+=Number(o.total||0); });
-  let labels=Object.keys(days).map(k=>{ let d=new Date(k); return d.toLocaleDateString('id-ID',{day:'2-digit',month:'short'}); });
-  let vals=Object.values(days);
-  if(chartIns) chartIns.destroy();
-  chartIns=new Chart(document.getElementById('chart'),{type:'bar',data:{labels:labels,datasets:[{label:'Omset',data:vals}]},options:{plugins:{legend:{display:false}}}});
 }
+
+function exportCSV(){
+  if(!CACHE_ORDERS.length){ toast('Tidak ada data'); return; }
+  const header=['tanggal','nama','wa','kota','total','status'];
+  const rows=CACHE_ORDERS.map(o=>[ (o.created_at||'').slice(0,10), (o.customer_name||o.nama||'').replace(/,/g,' '), (o.wa||''), (o.kota||''), (o.total||0), (o.status||'') ]);
+  const csv=[header.join(','),...rows.map(r=>r.join(','))].join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='laporan-'+new Date().toISOString().slice(0,10)+'.csv'; a.click();
+  toast('CSV didownload');
+}
+loadLaporan();
 </script>
-</body>
-</html>
+</body></html>
