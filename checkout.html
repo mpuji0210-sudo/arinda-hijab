@@ -1,33 +1,33 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Checkout</title>
+<title>Checkout - Loading...</title>
 <meta name="robots" content="noindex, nofollow">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-<style>body{font-family:'Inter',sans-serif;background:#fff;color:#000}.font-serif{font-family:'Cormorant Garamond',serif}.input-clean{border:1px solid #000;background:#fff}.input-clean:focus{outline:none}</style>
-</head><body>
+<style>body{font-family:'Inter',sans-serif;background:#fff;color:#000}.font-serif{font-family:'Cormorant Garamond',serif}.input-clean{border:1px solid #000;background:#fff}.input-clean.input-err{border-color:#B42318!important;background:#FFF5F5!important}.input-clean:focus{outline:none}.err{font-size:10px;color:#B42318;margin-top:4px;display:none}</style>
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-// ANTI-KEDIP STORE
-const STORE_CACHED = localStorage.getItem('store_name_cache') || localStorage.getItem('checkout_store') || 'ARINDA';
+const STORE_CACHED = localStorage.getItem('store_name_cache') || 'ARINDA';
 document.title='Checkout - '+STORE_CACHED;
 </script>
+</head><body>
 <nav style="position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9">
   <div style="max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between">
     <div><div id="navLogo" style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:21px">LOADING</div><span style="display:block;font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM</span></div>
+    <div id="originBadge" style="font-size:8px;letter-spacing:2px;opacity:.5;margin-top:8px">KIRIM DARI -</div>
   </div>
 </nav>
 <div style="max-width:480px;margin:0 auto;padding:24px 16px 40px">
   <div id="ringkasan" style="border:1px solid #E9E9E9;padding:16px;background:#fff"></div>
   <div style="margin-top:24px">
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <input id="nama" placeholder="Nama Lengkap" maxlength="80" class="input-clean" style="width:100%;height:52px;padding:0 16px;font-size:13px">
-      <input id="wa" placeholder="No WA 08xxxx" maxlength="15" class="input-clean" style="width:100%;height:52px;padding:0 16px;font-size:13px">
-      <input id="kota" placeholder="Kota / Kecamatan" maxlength="60" class="input-clean" style="width:100%;height:52px;padding:0 16px;font-size:13px">
-      <textarea id="alamat" placeholder="Alamat Lengkap" maxlength="200" class="input-clean" style="width:100%;padding:14px 16px;font-size:13px;height:100px;resize:none"></textarea>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div><input id="nama" placeholder="Nama Lengkap (min 3 huruf)" maxlength="80" class="input-clean" style="width:100%;height:52px;padding:0 16px;font-size:13px"><div class="err" id="e-nama"></div></div>
+      <div><input id="wa" placeholder="No WA aktif 08xxxxxxxx (WA asli ya kak)" maxlength="15" inputmode="numeric" class="input-clean" style="width:100%;height:52px;padding:0 16px;font-size:13px"><div class="err" id="e-wa"></div><div style="font-size:9px;opacity:.4;margin-top:4px">Format: 08xxxxxxxxxx (10-13 digit). Kami akan konfirmasi via WA ini.</div></div>
+      <div><input id="kota" placeholder="Kota / Kecamatan - WAJIB dari hasil Cek Ongkir" maxlength="60" class="input-clean" style="width:100%;height:52px;padding:0 16px;font-size:13px;background:#FAFAFA" readonly><div class="err" id="e-kota"></div><div style="font-size:9px;opacity:.5;margin-top:4px">Otomatis terisi dari pilihan ongkir di produk. <a href="produk.html" style="text-decoration:underline">Cek ongkir dulu</a> jika kosong.</div></div>
+      <div><textarea id="alamat" placeholder="Alamat Lengkap (min 15 huruf, 3 kata, ada RT/RW atau patokan)" maxlength="200" class="input-clean" style="width:100%;padding:14px 16px;font-size:13px;height:100px;resize:none"></textarea><div class="err" id="e-alamat"></div></div>
     </div>
     <p id="errorMsg" style="display:none;margin-top:12px;text-align:center;font-size:11px;color:#B42318;background:#FFF5F5;border:1px solid #FECDCA;padding:10px"></p>
     <button id="mainBtn" onclick="bukaModal()" style="width:100%;margin-top:16px;height:52px;background:#000;color:#fff;border:none;font-size:10px;letter-spacing:3px">LANJUT KE PEMBAYARAN →</button>
@@ -45,7 +45,6 @@ document.title='Checkout - '+STORE_CACHED;
 </div>
 <script>
 const cart = JSON.parse(localStorage.getItem('arinda_cart2')||'[]');
-// BACA ONGKIR BARU + LAMA BIAR KOMPATIBEL
 let ongkirData=null; try{ ongkirData=JSON.parse(localStorage.getItem('checkout_ongkir')||'null'); }catch(e){}
 const ongkir = Number(ongkirData?.cost || localStorage.getItem('selectedOngkirCost')||localStorage.getItem('arinda_ongkir_cost')||0);
 const kotaOngkir = ongkirData?.service? (ongkirData.service+' - '+ongkirData.city) : (localStorage.getItem('selectedOngkirCity')||localStorage.getItem('arinda_ongkir_service')||'');
@@ -54,12 +53,12 @@ let subtotal=0; cart.forEach(i=>subtotal+= Number(i.harga||0)*Number(i.qty||0));
 let total=subtotal+ongkir;
 const formatRp=n=>'Rp'+Number(n||0).toLocaleString('id-ID');
 
-// APPLY STORE NAME DARI CACHE + SUPABASE
 function applyStore(name){
   if(!name) return;
   const up=name.toUpperCase();
   document.getElementById('navLogo').innerText=up;
   document.getElementById('footLogo').innerText=up;
+  document.getElementById('originBadge').innerText='KIRIM DARI '+originLabel;
   document.title='Checkout - '+name;
 }
 applyStore(STORE_CACHED);
@@ -72,14 +71,53 @@ applyStore(STORE_CACHED);
 
 document.getElementById('ringkasan').innerHTML=`
   <div style="font-size:9px;letter-spacing:3px;opacity:.4;margin-bottom:12px">${cart.length} ITEM - dari ${esc(originLabel)}</div>
-  <div style="display:flex;flex-direction:column;gap:8px;font-size:12px">${cart.map(i=>`<div style="display:flex;justify-content:space-between"><span>${esc(i.warna)} x${Number(i.qty)}</span><span>${formatRp(Number(i.harga)*Number(i.qty))}</span></div>`).join('') || '<div style="opacity:.4">Keranjang kosong</div>'}</div>
+  <div style="display:flex;flex-direction:column;gap:8px;font-size:12px">${cart.map(i=>`<div style="display:flex;justify-content:space-between"><span>${esc(i.warna)} x${Number(i.qty)}</span><span>${formatRp(Number(i.harga)*Number(i.qty))}</span></div>`).join('') || '<div style="opacity:.4">Keranjang kosong - <a href="produk.html" style="text-decoration:underline">belanja dulu</a></div>'}</div>
   <div style="border-top:1px solid #E9E9E9;margin-top:12px;padding-top:12px;display:flex;flex-direction:column;gap:4px;font-size:11px">
     <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Subtotal</span><span>${formatRp(subtotal)}</span></div>
-    <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Ongkir ${esc(kotaOngkir||'')}</span><span>${formatRp(ongkir)}</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="opacity:.5">Ongkir ${esc(kotaOngkir||'(belum cek ongkir)')}</span><span>${formatRp(ongkir)}</span></div>
     <div style="display:flex;justify-content:space-between;font-weight:700;font-size:14px;margin-top:8px"><span>TOTAL</span><span>${formatRp(total)}</span></div>
   </div>
 `;
 document.getElementById('modalTotal').innerText=formatRp(total);
+// AUTO-ISI KOTA DARI ONGKIR
+document.getElementById('kota').value = localStorage.getItem('arinda_last_city') || localStorage.getItem('selectedOngkirCity') || kotaOngkir || '';
+
+// VALIDASI BARU ANTI NGAWUR
+function isValidWA(wa){
+  const c = wa.replace(/[^0-9]/g,'');
+  if(c.length < 10 || c.length > 13) return {ok:false, msg:'WA harus 10-13 digit'};
+  if(!/^(08|62|628)/.test(c)) return {ok:false, msg:'WA harus diawali 08 / 62 (contoh: 0812xxxx)'};
+  if(/^(\d)\1{6,}$/.test(c)) return {ok:false, msg:'WA tidak boleh angka berulang (000000...)'};
+  if(/^(012345|123456|00000|11111)/.test(c)) return {ok:false, msg:'WA tidak valid (angka berurutan / ngawur)'};
+  return {ok:true, clean:c};
+}
+function isValidNama(n){
+  if(n.length < 3) return {ok:false, msg:'Nama minimal 3 huruf'};
+  if(n.length < 5 &&!n.includes(' ')) return {ok:false, msg:'Tulis nama lengkap ya kak'};
+  if(/^(a|aa|aaa|asd|qwerty|test)/i.test(n)) return {ok:false, msg:'Nama jangan ngawur ya kak 😊'};
+  return {ok:true};
+}
+function isValidAlamat(a){
+  if(a.length < 15) return {ok:false, msg:'Alamat minimal 15 huruf, tulis lengkap + patokan'};
+  if(a.split(/\s+/).filter(Boolean).length < 3) return {ok:false, msg:'Alamat minimal 3 kata (jalan, RT/RW, patokan)'};
+  if(/^(a+|asd|qwerty|test|ngawur)/i.test(a)) return {ok:false, msg:'Alamat jangan ngawur ya kak'};
+  return {ok:true};
+}
+function isValidKota(k){
+  if(!k) return {ok:false, msg:'Kota wajib dari hasil cek ongkir di halaman produk'};
+  if(k.length < 3) return {ok:false, msg:'Kota tidak valid'};
+  if(!ongkir || ongkir===0) return {ok:false, msg:'Wajib cek ongkir dulu di halaman produk sebelum checkout'};
+  // Harus ada history cek ongkir
+  const hasOngkirHistory = localStorage.getItem('selectedOngkirCost') || localStorage.getItem('arinda_ongkir_cost') || ongkirData;
+  if(!hasOngkirHistory) return {ok:false, msg:'Silakan cek ongkir dulu di halaman produk'};
+  return {ok:true};
+}
+function showErr(id,msg){
+  const el=document.getElementById(id); const inputId=id.replace('e-','');
+  const inp=document.getElementById(inputId);
+  if(msg){ el.innerText=msg; el.style.display='block'; inp.classList.add('input-err'); }
+  else{ el.style.display='none'; inp.classList.remove('input-err'); }
+}
 let tempData={};
 async function validasiStok(){
   const err=document.getElementById('errorMsg');
@@ -98,20 +136,31 @@ async function validasiStok(){
 }
 async function bukaModal(){
   const nama=document.getElementById('nama').value.trim();
-  const wa=document.getElementById('wa').value.trim().replace(/[^0-9]/g,'');
-  const kota=document.getElementById('kota').value.trim() || ongkirData?.city || '';
+  const waRaw=document.getElementById('wa').value.trim();
+  const kota=document.getElementById('kota').value.trim();
   const alamat=document.getElementById('alamat').value.trim();
   const err=document.getElementById('errorMsg');
-  if(!nama||!wa||!kota||!alamat){ err.innerText='Lengkapi Nama, WA, Kota, Alamat dulu kak'; err.style.display='block'; return; }
-  if(wa.length<10){ err.innerText='No WA minimal 10 angka'; err.style.display='block'; return; }
-  if(cart.length===0){ err.innerText='Keranjang kosong'; err.style.display='block'; return; }
+
+  // Reset err
+  showErr('e-nama',''); showErr('e-wa',''); showErr('e-kota',''); showErr('e-alamat',''); err.style.display='none';
+
+  let hasErr=false;
+  const vNama=isValidNama(nama); if(!vNama.ok){ showErr('e-nama',vNama.msg); hasErr=true; }
+  const vWA=isValidWA(waRaw); if(!vWA.ok){ showErr('e-wa',vWA.msg); hasErr=true; }
+  const vKota=isValidKota(kota); if(!vKota.ok){ showErr('e-kota',vKota.msg); hasErr=true; }
+  const vAlamat=isValidAlamat(alamat); if(!vAlamat.ok){ showErr('e-alamat',vAlamat.msg); hasErr=true; }
+
+  if(cart.length===0){ err.innerText='Keranjang kosong - belanja dulu kak'; err.style.display='block'; return; }
+  if(ongkir===0){ err.innerText='Wajib cek ongkir dulu di halaman produk, baru bisa checkout'; err.style.display='block'; return; }
+  if(hasErr) return;
+
   document.getElementById('mainBtn').innerText='CEK STOK...';
   let ok = await validasiStok();
   document.getElementById('mainBtn').innerText='LANJUT KE PEMBAYARAN →';
   if(!ok) return;
-  err.style.display='none';
-  tempData={nama,wa,kota,alamat};
-  document.getElementById('modalContent').innerHTML=`<div style="font-size:12px;display:flex;flex-direction:column;gap:8px"><div style="display:flex;justify-content:space-between"><span style="opacity:.5">Nama</span><b>${esc(nama)}</b></div><div style="display:flex;justify-content:space-between"><span style="opacity:.5">WA</span><b>${esc(wa)}</b></div><div style="display:flex;justify-content:space-between"><span style="opacity:.5">Kota</span><b>${esc(kota)}</b></div><div style="display:flex;justify-content:space-between"><span style="opacity:.5">Alamat</span><b style="text-align:right;max-width:60%">${esc(alamat)}</b></div><div style="display:flex;justify-content:space-between"><span style="opacity:.5">Origin</span><b>${esc(originLabel)}</b></div></div>`;
+
+  tempData={nama,wa:vWA.clean,kota,alamat};
+  document.getElementById('modalContent').innerHTML=`<div style="font-size:12px;display:flex;flex-direction:column;gap:8px"><div style="display:flex;justify-content:space-between"><span style="opacity:.5">Nama</span><b>${esc(nama)}</b></div><div style="display:flex;justify-content:space-between"><span style="opacity:.5">WA</span><b>${esc(vWA.clean)}</b></div><div style="display:flex;justify-content:space-between"><span style="opacity:.5">Kota</span><b>${esc(kota)}</b></div><div style="display:flex;justify-content:space-between"><span style="opacity:.5">Alamat</span><b style="text-align:right;max-width:60%">${esc(alamat)}</b></div><div style="display:flex;justify-content:space-between"><span style="opacity:.5">Ongkir</span><b>${esc(kotaOngkir||'')} - ${formatRp(ongkir)}</b></div></div>`;
   document.getElementById('modalCheckout').style.display='flex';
 }
 function tutupModal(){document.getElementById('modalCheckout').style.display='none';}
