@@ -248,8 +248,9 @@ const {error}=await supa.from('settings').upsert({key:'home_faq_list',value:JSON
 if(error)throw error;
 $('statusFaq').innerText='✓ '+final.length+' FAQ tersimpan';toast('FAQ disimpan '+final.length);
 }catch(e){$('statusFaq').innerText='✗ '+e.message;toast(e.message,true);}finally{setBtnLoading('btnFaq','statusFaq',false);}};
-async function loadBanners(){const {data}=await supa.from('banners').select('*').order('created_at',{ascending:false});$('bannerList').innerHTML=(data||[]).slice(0,3).map(b=>{const url=b.banner_pc_url||b.image_url||'';return `<div style="border:1px solid var(--line);display:flex;gap:8px;padding:8px;margin-top:6px"><img src="${url}" style="width:56px;height:36px;object-fit:cover"><div style="flex:1;font-size:8px">${b.is_active?'AKTIF':''} - ${(b.created_at||'').slice(0,10)}<br>${esc(b.banner_title||'')}</div></div>`;}).join('');}
-window.saveProd=async()=>{
+async function loadBanners(){const {data}=await supa.from('banners').select('*').order('created_at',{ascending:false});$('bannerList').innerHTML=(data||[]).slice(0,10).map(b=>{const url=b.banner_pc_url||b.image_url||'';return `<div style="border:1px solid var(--line);display:flex;gap:8px;padding:8px;margin-top:6px;align-items:center"><img src="${url}" style="width:56px;height:36px;object-fit:cover"><div style="flex:1;font-size:8px">${b.is_active?'AKTIF':''} - ${(b.created_at||'').slice(0,10)}<br>${esc(b.banner_title||'')}</div><button onclick="hapusBanner('${b.id}')" style="background:#fff;border:1px solid #B42318;color:#B42318;padding:6px 10px;font-size:8px;letter-spacing:2px;cursor:pointer">HAPUS</button></div>`;}).join('');}
+window.hapusBanner=async(id)=>{showConfirm('Hapus Banner?','Banner tanggal ini akan hilang permanen dari halaman depan',async()=>{try{const {error}=await supa.from('banners').delete().eq('id',id);if(error)throw error;toast('Banner dihapus');loadBanners();}catch(e){toast(e.message,true);}});};
+  window.saveProd=async()=>{
  const btn=$('btnProd');if(btn.disabled)return;setBtnLoading('btnProd','saveStatus',true,'Menyimpan...');
  try{
   const name=$('pName').value.trim();const price=Number($('pPrice').value);
