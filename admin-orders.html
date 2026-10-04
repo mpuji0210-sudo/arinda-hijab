@@ -3,6 +3,20 @@
 <meta name="robots" content="noindex, nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(async()=>{
+  const supa = window.supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
+  const {data:{session}} = await supa.auth.getSession();
+  if(!session){ location.href='login-order.html'; return; }
+  const {data} = await supa.from('settings').select('value').eq('key','order_admin_emails').maybeSingle();
+  let allowed=[]; try{allowed=JSON.parse(data.value);}catch(e){}
+  if(!allowed.map(e=>e.toLowerCase()).includes(session.user.email.toLowerCase())){
+    await supa.auth.signOut();
+    alert('Akses ditolak untuk '+session.user.email+'\nHalaman ini khusus ADMIN ORDER');
+    location.href='login-order.html';
+  }
+})();
+</script>
 <style>
 body{margin:0;background:#FFFCF9;color:#000;font-family:'Inter',sans-serif}
 .card{border:1px solid #E9E9E9;background:#fff;padding:16px}
@@ -18,22 +32,16 @@ const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-(async()=>{
-  const { data:{ session } } = await supa.auth.getSession();
-  if(!session){ location.href='login.html'; return; }
-  if(session.user.email!=='admin@arinda.id'){ await supa.auth.signOut(); location.href='login.html'; return; }
-})();
 </script>
 
 <nav style="position:sticky;top:0;z-index:99;background:#fff;border-bottom:1px solid #E9E9E9">
   <div style="max-width:800px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
     <div id="adminLogo" style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:22px">ARINDA</div>
-    <div style="display:flex;gap:8px"><a href="ad.html" style="padding:10px 14px;border:1px solid #000;font-size:9px;text-decoration:none;color:#000;letter-spacing:2px">TOKO</a><button onclick="logout()" style="padding:10px 14px;background:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px">LOGOUT</button></div>
+    <div style="display:flex;gap:8px"><a href="admin.html" style="padding:10px 14px;border:1px solid #000;font-size:9px;text-decoration:none;color:#000;letter-spacing:2px">TOKO</a><button onclick="logout()" style="padding:10px 14px;background:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px">LOGOUT</button></div>
   </div>
 </nav>
 
 <div style="max-width:800px;margin:0 auto;padding:24px 16px 60px">
-  <!-- REKENING CLEAN V21 -->
   <div class="card" style="margin-bottom:20px">
     <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-family:'Cormorant Garamond';font-size:20px">Rekening</div><button onclick="loadPayments()" class="btn-white" style="height:32px;padding:0 14px">REFRESH</button></div>
     <div id="payListAdmin" style="margin-top:16px;display:flex;flex-direction:column;gap:8px"></div>
@@ -93,7 +101,6 @@ async function loadPayments(){
     const {data}=await supa.from('settings').select('value').eq('key','payment_methods').maybeSingle();
     let v=data?.value;
     if(typeof v==='string') try{v=JSON.parse(v)}catch(_){}
-    // FIX: support double stringify
     if(typeof v==='string') try{v=JSON.parse(v)}catch(_){}
     if(Array.isArray(v)) payMethods=v;
     else if(v) payMethods=[v];
@@ -101,7 +108,6 @@ async function loadPayments(){
   }catch(e){payMethods=[]}
   if(payMethods.length===0) payMethods=[{bank:'BCA',no_rek:'8740376161',atas_nama:'ARINDA ADMIN',qr_url:'',aktif:true}];
   renderPayments(); document.getElementById('payStatus').innerText=payMethods.length+' metode tersimpan';
-  // LOGO DINAMIS
   try{
     const {data:s}=await supa.from('settings').select('value').eq('key','store_name').maybeSingle();
     let nm=s?.value; if(typeof nm==='string') try{nm=JSON.parse(nm)}catch(_){}
@@ -125,7 +131,6 @@ async function savePayments(){
   if(!payMethods.length){ openApp({title:'Kosong',msg:'Minimal 1 rekening'}); return; }
   if(!payMethods.some(m=>m.aktif)){ openApp({title:'Harus aktif',msg:'Aktifkan 1 rekening'}); return; }
   document.getElementById('payStatus').innerText='Menyimpan...';
-  // FIX PENTING: simpan sebagai JSON, bukan string double
   const {error}=await supa.from('settings').upsert({key:'payment_methods',value:payMethods},{onConflict:'key'});
   if(error){ openApp({title:'Gagal',msg:error.message}); document.getElementById('payStatus').innerText='Gagal'; }
   else { document.getElementById('payStatus').innerText='✓ Tersimpan! bayar.html auto update'; openApp({title:'Berhasil',msg:payMethods.length+' rekening tersimpan, bayar.html langsung update'}); }
@@ -170,6 +175,6 @@ function openDel(id,nama,st){ if(['LUNAS','KIRIM'].includes(st)){ openApp({title
 function closeDel(){delId=null;document.getElementById('delModal').classList.remove('show');}
 async function confirmDel(){ if(!delId) return; await supa.from('orders').delete().eq('id',delId); closeDel(); loadOrders(); }
 function waCustomer(id){ const o=allOrders.find(x=>String(x.id)===String(id)); if(!o) return; let n=(o.wa||'').replace(/[^0-9]/g,''); if(n.startsWith('0')) n='62'+n.slice(1); const resi=o.resi||o.no_resi||''; const msg=resi? `Halo ${o.customer_name}, pesanan sudah KIRIM. Resi: ${resi}` : `Halo ${o.customer_name}, pesanan diterima. Total Rp${Number(o.total||0).toLocaleString('id-ID')}`; window.open(`https://wa.me/${n}?text=${encodeURIComponent(msg)}`,'_blank'); }
-async function logout(){await supa.auth.signOut(); localStorage.clear(); location.href='login.html';}
+async function logout(){await supa.auth.signOut(); localStorage.clear(); location.href='login-order.html';}
 loadPayments(); loadOrders();
 </script></body></html>
