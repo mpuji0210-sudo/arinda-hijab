@@ -153,8 +153,10 @@ function flyToCart(imgUrl,startEl){
   const cartIcon=document.getElementById('cartIcon');
   if(!cartIcon) return;
   const cartRect=cartIcon.getBoundingClientRect();
-  const targetX = cartRect.left + 4;
-  const targetY = cartRect.top + 2;
+  // FIX: geser kiri 12px + atas 10px biar pas di tengah logo tas, gak ke kanan bawah lagi
+  const targetX = cartRect.left + cartRect.width/2 - 34 - 12;
+  const targetY = cartRect.top + cartRect.height/2 - 34 - 10;
+
   let startRect = startEl? startEl.getBoundingClientRect() : null;
   if(!startRect || startRect.width===0){ startRect={left:innerWidth/2-34, top:innerHeight/2-34, width:68, height:68}; }
   const fly=document.createElement('img');
@@ -167,8 +169,8 @@ function flyToCart(imgUrl,startEl){
   requestAnimationFrame(()=>{requestAnimationFrame(()=>{
     fly.style.left=targetX+'px';
     fly.style.top=targetY+'px';
-    fly.style.transform='scale(0.10)';
-    fly.style.opacity='0.15';
+    fly.style.transform='scale(0.14)';
+    fly.style.opacity='0.2';
   });});
   setTimeout(()=>{
     fly.remove();
@@ -178,7 +180,7 @@ function flyToCart(imgUrl,startEl){
     setTimeout(()=>cartIcon.classList.remove('cart-boom'),450);
   },720);
 }
-async function quickAdd(title,img,el,idx){
+  async function quickAdd(title,img,el,idx){
   const imgEl=document.getElementById('img-best-'+idx) || (el?el.closest('.k-card')?.querySelector('img'):null);
   if(imgEl) flyToCart(imgEl.src||img, imgEl);
   let price=99000;
