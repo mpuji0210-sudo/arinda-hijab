@@ -56,7 +56,7 @@ function doSearch(){
 function renderProducts(list,q=''){
   const el=document.getElementById('list');
   const readyOnly=(list||[]).filter(p=>hasReady(p.id));
-  if(!readyOnly.length){el.innerHTML='<div style="grid-column:1/-1;padding:40px;text-align:center;opacity:.4">TIDAK ADA PRODUK READY UNTUK "'+esc(q||lastQuery)+'"</div>';document.getElementById('prodCount').innerText='0 PRODUK';return;}
+  if(!readyOnly.length){el.innerHTML='<div style="grid-column:1/-1;padding:40px;text-align:center;border:1px solid #E9E9E9"><div style="font-size:11px;letter-spacing:2px">TIDAK ADA PRODUK READY UNTUK "'+esc(q||lastQuery||'KATEGORI INI')+'"</div><div style="font-size:9px;opacity:.4;margin-top:8px">Belum ada produk di kategori ini</div><a href="produk.html" style="display:inline-block;margin-top:14px;padding:10px 18px;border:1px solid #000;font-size:9px;text-decoration:none;color:#000;letter-spacing:2px">LIHAT SEMUA PRODUK</a></div>';document.getElementById('prodCount').innerText='0 PRODUK';return;}
   const query = q || lastQuery || '';
   el.innerHTML=readyOnly.map((p,i)=>{
     const m=getMatchedVariant(p.id,query)||{image_url:p.image_url,color_name:p.name,stock:1,undertone:p.undertone};
@@ -74,7 +74,6 @@ async function openProd(id,colorName){
   if(!curVariants.length){document.getElementById('pBox').innerHTML='<div style="padding:40px;text-align:center">HABIS</div>';return;}
   let initial=curVariants.find(v=>v.color_name===colorName)||getMatchedVariant(id,colorName)||curVariants[0];
   curColor=initial.color_name;curImg=initial.image_url;
-  // === UDAH DIHAPUS SISA PCS & SISA DI BUTTON ===
   document.getElementById('pBox').innerHTML=`<div class="p-gallery"><div class="p-main"><img id="bigImg" src="${getOptImg(curImg,600)}"></div><div class="p-thumbs">${curVariants.map((v,i)=>`<div style="position:relative"><img src="${getOptImg(v.image_url,80)}" class="${v.image_url===curImg?'active':''}" onclick="pickColorByIdx(${i})"><span style="position:absolute;bottom:2px;left:2px;background:#000;color:#fff;font-size:5px;padding:2px 3px">SISA ${v.stock??0}</span></div>`).join('')}</div></div><div class="p-info"><div style="font-size:22px;font-family:'Cormorant Garamond'">${esc(p.name)}</div><div style="margin-top:6px">${underBadgeHtml(initial.undertone||p.undertone||[])}</div><div style="font-size:20px;margin-top:6px">Rp${Number(p.price).toLocaleString('id-ID')}</div><div style="margin-top:14px;font-size:8px;letter-spacing:2px">PILIH WARNA: <b id="selCol">${esc(curColor)}</b></div><div class="variant-wrap">${curVariants.map((v,i)=>`<button id="btn-${i}" class="${v.image_url===curImg?'active':''}" onclick="pickColorByIdx(${i})">${esc(v.color_name)}</button>`).join('')}</div><div style="margin-top:16px;background:#FAFAFA;border:1px solid #F0EBE3;padding:10px"><div style="display:flex;gap:6px"><input id="destSearchProd" placeholder="Kota tujuan" style="flex:1;padding:11px;border:1px solid #111;background:#fff;font-size:12px"><button onclick="searchDestProd()" style="padding:11px 14px;background:#000;color:#fff;border:none;font-size:8px">CEK</button></div><div id="destListProd" style="display:none;margin-top:8px;max-height:100px;overflow:auto;background:#fff;border:1px solid #E9E9E9"></div><div style="display:flex;gap:6px;margin-top:8px"><select id="courierSelectProd" style="flex:1;padding:10px;border:1px solid #E9E9E9;font-size:11px"><option value="jne">JNE</option><option value="jnt">J&T</option><option value="sicepat">SiCepat</option><option value="pos">POS</option></select><button onclick="cekOngkirProd()" style="flex:1;padding:10px;background:#fff;border:1px solid #000;font-size:8px">CEK ONGKIR</button></div><div id="ongkirResultProd" style="margin-top:8px"></div><div id="ongkirSelectedProd" style="margin-top:8px;font-size:10px;font-weight:600"></div></div><div style="display:flex;gap:8px;margin-top:16px"><button class="btn" style="background:#fff;color:#000;border:1px solid #000" onclick="addToCartFromModal()">+ KERANJANG</button><button class="btn" onclick="buyFromModal()">BELI SEKARANG</button></div></div>`;
 }
 function pickColorByIdx(idx){const v=curVariants[idx];if(!v)return;curColor=v.color_name;curImg=v.image_url;const big=document.getElementById('bigImg');if(big)big.src=getOptImg(v.image_url,600);document.getElementById('selCol').innerText=v.color_name;document.querySelectorAll('.p-thumbs img').forEach((el,j)=>el.classList.toggle('active',j===idx));document.querySelectorAll('.variant-wrap button').forEach((b,j)=>b.classList.toggle('active',j===idx));}
@@ -107,13 +106,39 @@ function checkoutWA(){const c=getCart();if(!c.length){showToast('Keranjang koson
   document.getElementById('footLogo').innerText=(storeName||'TOKO').toUpperCase();
   document.title='PRODUK - '+(storeName||'TOKO').toUpperCase();
   localStorage.setItem('store_name_cache',storeName);
-  const {data:all}=await supabaseClient.from('products').select('id,name,price,image_url,undertone').order('id',{ascending:false}).limit(100);
+  // FIXED: ambil semua kolom biar kategori & bahan kebaca
+  const {data:all}=await supabaseClient.from('products').select('*').order('id',{ascending:false}).limit(100);
   const {data:vars}=await supabaseClient.from('product_variants').select('product_id,color_name,image_url,stock,is_available,undertone').limit(800);
   allProducts=all||[];window._varMap={};(vars||[]).forEach(v=>{const key=(v.color_name||'').toLowerCase().trim()+'|'+(v.image_url||'');if(!window._varMap[v.product_id]){window._varMap[v.product_id]=[];window._varMap[v.product_id]._seen=new Set();}if(window._varMap[v.product_id]._seen.has(key))return;window._varMap[v.product_id]._seen.add(key);window._varMap[v.product_id].push(v);});
   const params=new URLSearchParams(location.search);
+  const kat=params.get('kategori');
+  const bah=params.get('bahan');
   const qParam=params.get('warna')||params.get('q')||'';
-  if(qParam){document.getElementById('q').value=qParam;lastQuery=qParam.toLowerCase();}
-  renderProducts(allProducts,lastQuery);
+  if(kat){
+    lastQuery=kat.toLowerCase(); document.getElementById('q').value=kat;
+    const KU=kat.toUpperCase().trim();
+    // FIX: exact match, kalau 0 ya 0 jangan fallback ke produk lain
+    const filtered=allProducts.filter(p=>{
+      const pt=(p.product_type||'').toUpperCase().trim();
+      const jn=(p.jenis||'').toUpperCase().trim();
+      return pt===KU || jn===KU;
+    });
+    renderProducts(filtered, kat);
+  }else if(bah){
+    lastQuery=bah.toLowerCase(); document.getElementById('q').value=bah;
+    const BU=bah.toUpperCase().trim();
+    const filtered=allProducts.filter(p=>{
+      const cat=(p.category||'').toUpperCase().trim();
+      const bhn=(p.bahan||'').toUpperCase().trim();
+      return cat===BU || bhn===BU;
+    });
+    renderProducts(filtered, bah);
+  }else if(qParam){
+    document.getElementById('q').value=qParam;lastQuery=qParam.toLowerCase();
+    renderProducts(allProducts,lastQuery);
+  }else{
+    renderProducts(allProducts,'');
+  }
   updateCount();renderCart();
 })();
 </script></body></html>
