@@ -4,15 +4,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+// KUNCI ORDER - CUMA order@arinda.id
 (async()=>{
   const supa = window.supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
   const {data:{session}} = await supa.auth.getSession();
   if(!session){ location.href='login-order.html'; return; }
   const {data} = await supa.from('settings').select('value').eq('key','order_admin_emails').maybeSingle();
-  let allowed=[]; try{allowed=JSON.parse(data.value);}catch(e){}
-  if(!allowed.map(e=>e.toLowerCase()).includes(session.user.email.toLowerCase())){
+  let allowed=["order@arinda.id"];
+  try{
+    let v=data?.value; if(typeof v==='string') try{v=JSON.parse(v)}catch(e){}; 
+    if(Array.isArray(v)) allowed=v.map(e=>String(e).toLowerCase());
+  }catch(e){}
+  if(!allowed.includes(session.user.email.toLowerCase())){
     await supa.auth.signOut();
-    alert('Akses ditolak untuk '+session.user.email+'\nHalaman ini khusus ADMIN ORDER');
+    alert('Akses ditolak untuk '+session.user.email);
     location.href='login-order.html';
   }
 })();
@@ -36,8 +41,8 @@ function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&l
 
 <nav style="position:sticky;top:0;z-index:99;background:#fff;border-bottom:1px solid #E9E9E9">
   <div style="max-width:800px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
-    <div id="adminLogo" style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:22px">ARINDA</div>
-    <div style="display:flex;gap:8px"><a href="admin.html" style="padding:10px 14px;border:1px solid #000;font-size:9px;text-decoration:none;color:#000;letter-spacing:2px">TOKO</a><button onclick="logout()" style="padding:10px 14px;background:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px">LOGOUT</button></div>
+    <div id="adminLogo" style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:22px">ARINDA ORDER</div>
+    <button onclick="logout()" style="padding:10px 14px;background:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer">LOGOUT</button>
   </div>
 </nav>
 
@@ -64,7 +69,7 @@ function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&l
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-bottom:12px"><div style="font-family:'Cormorant Garamond';font-size:22px">Pesanan</div><div id="count" style="font-size:9px;opacity:.4">0</div></div>
-  <div id="list" style="display:flex;flex-direction:column;gap:12px"></div>
+  <div id="list" style="display:flex;flex-direction:column;gap:12px">Loading...</div>
 </div>
 
 <div id="delModal" onclick="if(event.target.id==='delModal')closeDel()"><div style="background:#fff;width:100%;max-width:380px;border:1px solid #000;padding:20px"><div style="font-family:'Cormorant Garamond';font-size:18px">Hapus?</div><div id="delInfo" style="font-size:11px;opacity:.6;margin-top:6px"></div><div style="display:flex;gap:8px;margin-top:16px"><button onclick="closeDel()" class="btn-white" style="flex:1">BATAL</button><button onclick="confirmDel()" id="btnDel" class="btn-black" style="flex:1">YA, HAPUS</button></div></div></div>
@@ -95,24 +100,24 @@ document.getElementById('qrFile').addEventListener('change', async e=>{
   qrUploadUrl=url; document.getElementById('p_qr').value=url;
   document.getElementById('qrPrev').src=url; document.getElementById('qrPrev').style.display='block';
 });
+function parseSettingsValue(v){
+  try{
+    if(typeof v==='string'){ try{v=JSON.parse(v)}catch(e){} }
+    if(typeof v==='string'){ try{v=JSON.parse(v)}catch(e){} }
+    return v;
+  }catch(e){ return null; }
+}
 async function loadPayments(){
   document.getElementById('payStatus').innerText='Loading...';
   try{
     const {data}=await supa.from('settings').select('value').eq('key','payment_methods').maybeSingle();
-    let v=data?.value;
-    if(typeof v==='string') try{v=JSON.parse(v)}catch(_){}
-    if(typeof v==='string') try{v=JSON.parse(v)}catch(_){}
+    let v=parseSettingsValue(data?.value);
     if(Array.isArray(v)) payMethods=v;
     else if(v) payMethods=[v];
     else payMethods=[];
   }catch(e){payMethods=[]}
   if(payMethods.length===0) payMethods=[{bank:'BCA',no_rek:'8740376161',atas_nama:'ARINDA ADMIN',qr_url:'',aktif:true}];
-  renderPayments(); document.getElementById('payStatus').innerText=payMethods.length+' metode tersimpan';
-  try{
-    const {data:s}=await supa.from('settings').select('value').eq('key','store_name').maybeSingle();
-    let nm=s?.value; if(typeof nm==='string') try{nm=JSON.parse(nm)}catch(_){}
-    if(nm){ localStorage.setItem('store_name_cache',nm); document.getElementById('adminLogo').innerText=String(nm).toUpperCase(); document.title='Admin Order - '+nm; }
-  }catch(e){}
+  renderPayments(); document.getElementById('payStatus').innerText=payMethods.length+' metode';
 }
 function renderPayments(){
   const el=document.getElementById('payListAdmin');
@@ -131,33 +136,38 @@ async function savePayments(){
   if(!payMethods.length){ openApp({title:'Kosong',msg:'Minimal 1 rekening'}); return; }
   if(!payMethods.some(m=>m.aktif)){ openApp({title:'Harus aktif',msg:'Aktifkan 1 rekening'}); return; }
   document.getElementById('payStatus').innerText='Menyimpan...';
-  const {error}=await supa.from('settings').upsert({key:'payment_methods',value:payMethods},{onConflict:'key'});
+  const {error}=await supa.from('settings').upsert({key:'payment_methods',value:JSON.stringify(payMethods)},{onConflict:'key'});
   if(error){ openApp({title:'Gagal',msg:error.message}); document.getElementById('payStatus').innerText='Gagal'; }
-  else { document.getElementById('payStatus').innerText='✓ Tersimpan! bayar.html auto update'; openApp({title:'Berhasil',msg:payMethods.length+' rekening tersimpan, bayar.html langsung update'}); }
+  else { document.getElementById('payStatus').innerText='✓ Tersimpan!'; openApp({title:'Berhasil',msg:payMethods.length+' rekening tersimpan'}); }
 }
 async function loadOrders(){
-  const {data}=await supa.from('orders').select('*').order('created_at',{ascending:false});
-  allOrders=data||[];
-  let total=0,todayTotal=0; const today=new Date().toISOString().slice(0,10);
-  allOrders.forEach(o=>{total+=Number(o.total||0); if((o.created_at||'').slice(0,10)===today) todayTotal+=Number(o.total||0);});
-  document.getElementById('statTotal').innerText=allOrders.length;
-  document.getElementById('statOmset').innerText='Rp'+total.toLocaleString('id-ID');
-  document.getElementById('statToday').innerText='Rp'+todayTotal.toLocaleString('id-ID');
-  renderOrderList(allOrders);
+  try{
+    const {data,error}=await supa.from('orders').select('*').order('created_at',{ascending:false});
+    if(error) throw error;
+    allOrders=data||[];
+    let total=0,todayTotal=0; const today=new Date().toISOString().slice(0,10);
+    allOrders.forEach(o=>{total+=Number(o.total||0); if((o.created_at||'').slice(0,10)===today) todayTotal+=Number(o.total||0);});
+    document.getElementById('statTotal').innerText=allOrders.length;
+    document.getElementById('statOmset').innerText='Rp'+total.toLocaleString('id-ID');
+    document.getElementById('statToday').innerText='Rp'+todayTotal.toLocaleString('id-ID');
+    renderOrderList(allOrders);
+  }catch(e){
+    document.getElementById('list').innerHTML='<div style="padding:20px;border:1px solid #E9E9E9;color:#B42318">Error load orders: '+esc(e.message)+'<br><small>Cek RLS policies di Supabase > orders harus allow select untuk authenticated</small></div>';
+  }
 }
 function renderOrderList(data){
   const list=document.getElementById('list'),count=document.getElementById('count');
   if(!data.length){count.innerText='0'; list.innerHTML='<div style="text-align:center;padding:40px;border:1px solid #E9E9E9">Belum ada pesanan</div>'; return;}
   count.innerText=data.length;
   list.innerHTML=data.map(o=>{
-    const items=o.items? (typeof o.items==='string'? JSON.parse(o.items): o.items):[];
-    const itemText=Array.isArray(items)? items.map(i=>`${esc(i.warna||i.name)} x${i.qty||1}`).join(', '): esc(o.produk||'-');
+    let items=o.items; try{ if(typeof items==='string') items=JSON.parse(items); }catch(e){}
+    const itemText=Array.isArray(items)? items.map(i=>`${esc(i.warna||i.name||'')} x${i.qty||1}`).join(', '): esc(o.produk||'-');
     const st=(o.status||'BARU').toUpperCase();
     const stColor=st==='LUNAS'?'#0A7A42':st==='KIRIM'?'#1D4ED8':'#000';
     const resi=o.resi||o.no_resi||'';
     return `<div class="card"><div style="display:flex;justify-content:space-between"><div><div style="font-size:13px;font-weight:600">${esc(o.customer_name||'-')} - ${esc(o.kota_tujuan||o.kota||'-')}</div><div style="font-size:10px;opacity:.5;margin-top:2px">${esc(new Date(o.created_at).toLocaleString('id-ID'))} • ${esc(o.wa||'')}</div></div><select onchange="updateStatus('${o.id}',this.value,this)" style="font-size:10px;padding:4px;border:1px solid ${stColor};color:${stColor};font-weight:700" data-prev="${st}"><option ${st==='BARU'?'selected':''}>BARU</option><option ${st==='LUNAS'?'selected':''}>LUNAS</option><option ${st==='KIRIM'?'selected':''}>KIRIM</option><option ${st==='SELESAI'?'selected':''}>SELESAI</option></select></div>
     <div style="margin-top:10px;font-size:11px;line-height:1.6;border-top:1px solid #F2F2F2;padding-top:10px">Alamat: ${esc(o.alamat||'-')}<br>Tujuan: ${esc(o.destination_label||o.kota_tujuan||'-')}<br>Ongkir: Rp${Number(o.ongkir||0).toLocaleString('id-ID')}<br>Produk: ${itemText}<div style="display:flex;justify-content:space-between;font-weight:700;margin-top:8px"><span>TOTAL</span><span>Rp${Number(o.total||0).toLocaleString('id-ID')}</span></div>
-    <div style="margin-top:10px"><input id="resi_${o.id}" class="input" style="height:36px" placeholder="No Resi" value="${esc(resi)}"><div style="display:flex;gap:6px;margin-top:6px"><button onclick="saveResi('${o.id}')" class="btn-white" style="flex:1;height:36px">SIMPAN RESI</button><button onclick="waCustomer('${o.id}')" class="btn-white" style="flex:1;height:36px">WA</button></div></div></div><div style="display:flex;gap:8px;margin-top:10px"><button onclick="openDel('${o.id}','${esc(o.customer_name||'')}','${st}')" class="btn-black" style="flex:1">HAPUS</button></div></div>`;
+    <div style="margin-top:10px"><input id="resi_${o.id}" class="input" style="height:36px" placeholder="No Resi" value="${esc(resi)}"><div style="display:flex;gap:6px;margin-top:6px"><button onclick="saveResi('${o.id}')" class="btn-white" style="flex:1;height:36px">SIMPAN RESI</button><button onclick="waCustomer('${o.id}')" class="btn-white" style="flex:1;height:36px">WA</button></div></div></div><div style="display:flex;gap:8px;margin-top:10px"><button onclick="openDel('${o.id}','${esc((o.customer_name||'').replace(/'/g,''))}','${st}')" class="btn-black" style="flex:1">HAPUS</button></div></div>`;
   }).join('');
 }
 function filterOrders(){ const q=document.getElementById('searchOrder').value.toLowerCase(); if(!q) renderOrderList(allOrders); else renderOrderList(allOrders.filter(o=> (o.customer_name||'').toLowerCase().includes(q)||(o.wa||'').toLowerCase().includes(q)||(o.kota_tujuan||'').toLowerCase().includes(q))); }
