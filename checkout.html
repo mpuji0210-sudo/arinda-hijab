@@ -1,115 +1,95 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Checkout - ARINDA V18 FIX</title>
+<title>Checkout - ARINDA</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-<style>body{font-family:'Inter',sans-serif;background:#fff;color:#000;margin:0}.input-clean{border:1px solid #000;background:#fff}.err{font-size:10px;color:#B42318;margin-top:4px;display:none}</style>
+<style>body{font-family:'Inter',sans-serif;background:#fff;color:#000;margin:0}.input-clean{border:1px solid #000;background:#fff}</style>
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 </script></head><body>
-<nav style="position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);border-bottom:1px solid #E9E9E9"><div style="max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center"><div style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:21px">ARINDA</div><div id="originBadge" style="font-size:8px;letter-spacing:2px;opacity:.5;max-width:180px;text-align:right;line-height:1.3">KIRIM DARI -</div></div></nav>
+<nav style="position:sticky;top:0;z-index:99;background:#fff;border-bottom:1px solid #E9E9E9"><div style="max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center"><div id="storeLogo" style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:21px">ARINDA</div><div style="font-size:8px;letter-spacing:2px;opacity:.4">CHECKOUT</div></div></nav>
+
 <div style="max-width:480px;margin:0 auto;padding:24px 16px 40px">
 <div id="ringkasan" style="border:1px solid #E9E9E9;padding:16px"></div>
+
 <div style="margin-top:24px;display:flex;flex-direction:column;gap:14px">
 <input id="nama" placeholder="Nama Lengkap" class="input-clean" style="width:100%;height:52px;padding:0 16px">
 <input id="wa" placeholder="No WA 08xx" class="input-clean" style="width:100%;height:52px;padding:0 16px" inputmode="numeric">
-<input id="kota" placeholder="Kota / Kecamatan Tujuan" class="input-clean" style="width:100%;height:auto;min-height:52px;padding:12px 16px;background:#F9F6F1;white-space:normal;word-break:break-word;line-height:1.4" readonly>
-<div style="font-size:9px;opacity:.5">✅ Otomatis dari ongkir yang kamu pilih. <a href="produk.html" style="text-decoration:underline">Ganti ongkir</a></div>
+<input id="kota" placeholder="Kecamatan Tujuan" class="input-clean" style="width:100%;min-height:52px;padding:12px 16px;background:#F9F6F1;font-weight:600" readonly>
 <textarea id="alamat" placeholder="Alamat lengkap + RT/RW + Patokan" class="input-clean" style="width:100%;padding:14px 16px;height:110px"></textarea>
 </div>
+
 <p id="errorMsg" style="display:none;margin-top:12px;text-align:center;font-size:11px;color:#B42318;background:#FFF5F5;border:1px solid #FECDCA;padding:10px"></p>
 <button id="mainBtn" onclick="bukaModal()" style="width:100%;margin-top:16px;height:52px;background:#000;color:#fff;border:none;font-size:10px;letter-spacing:3px;cursor:pointer">LANJUT KE PEMBAYARAN →</button>
 </div>
+
 <div id="modalCheckout" style="position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:99;padding:16px">
 <div style="background:#fff;width:100%;max-width:400px;padding:20px"><div style="display:flex;justify-content:space-between"><b>KONFIRMASI</b><button onclick="tutupModal()" style="border:none;background:none;font-size:20px">×</button></div><div id="modalContent" style="margin-top:12px;border:1px solid #F2F2F2;padding:12px;background:#FAFAFA"></div><div style="margin-top:12px;display:flex;justify-content:space-between;font-weight:600"><span>TOTAL</span><span id="modalTotal"></span></div><div style="display:flex;gap:8px;margin-top:16px"><button onclick="tutupModal()" style="flex:1;height:44px;background:#fff;border:1px solid #000">KEMBALI</button><button onclick="prosesCheckout()" id="btnKonfirm" style="flex:1;height:44px;background:#000;color:#fff">YA, BAYAR</button></div></div></div>
+
 <script>
 const cart=JSON.parse(localStorage.getItem('arinda_cart2')||'[]');
-
-// V18 FIX: Baca dari sessionStorage dulu (punya pembeli itu sendiri), baru backup
 let ongkirData=null;
 try{
   ongkirData=JSON.parse(sessionStorage.getItem('checkout_ongkir')||'null');
-  if(!ongkirData ||!ongkirData.city){
-    ongkirData=JSON.parse(localStorage.getItem('checkout_ongkir_backup')||'null');
-  }
-  if(!ongkirData){
-    ongkirData=JSON.parse(localStorage.getItem('checkout_ongkir')||'null');
-  }
+  if(!ongkirData?.city) ongkirData=JSON.parse(localStorage.getItem('checkout_ongkir_backup')||'null');
 }catch(e){}
-
-let ongkir=Number(ongkirData?.cost||ongkirData?.ongkir||0);
-const kotaOngkir=ongkirData?.city||''; // SRIDADI, SIRAMPOG... (TUJUAN)
-const originLabel=ongkirData?.origin||localStorage.getItem('store_origin_label')||'CENGKARENG BARAT, CENGKARENG, JAKARTA BARAT - DKI JAKARTA';
-const originId=ongkirData?.origin_id||localStorage.getItem('toko_origin_id')||'17523';
+let ongkir=Number(ongkirData?.cost||0);
+const kotaOngkir=ongkirData?.city||'';
+const originLabel=ongkirData?.origin||'';
+const originId=ongkirData?.origin_id||'';
 const destId=ongkirData?.destination_id||'';
 const serviceLabel=ongkirData?.service||'';
-
 let subtotal=0;cart.forEach(i=>subtotal+=Number(i.harga||0)*Number(i.qty||0));
 const formatRp=n=>'Rp'+Number(n||0).toLocaleString('id-ID');
-document.getElementById('originBadge').innerText='KIRIM DARI '+originLabel;
+
+// LOGO DINAMIS DARI SUPA (bukan stuck)
+(async()=>{
+  try{
+    const {data:cfg}=await supa.from('settings').select('key,value').in('key',['store_name']).limit(2);
+    const sName=cfg?.find(s=>s.key==='store_name')?.value;
+    if(sName) document.getElementById('storeLogo').innerText=sName.toUpperCase();
+  }catch(e){}
+})();
 
 function renderRingkasan(){
   let sub=0;cart.forEach(i=>sub+=Number(i.harga||0)*Number(i.qty||0));
   let tot=sub+ongkir;
-  document.getElementById('ringkasan').innerHTML=`<div style="font-size:9px;letter-spacing:3px;opacity:.4">${cart.length} ITEM - dari ${esc(originLabel)}</div><div style="display:flex;flex-direction:column;gap:8px;font-size:12px;margin-top:8px">${cart.map(i=>`<div style="display:flex;justify-content:space-between"><span>${esc(i.warna)} x${i.qty}</span><span>${formatRp(Number(i.harga)*Number(i.qty))}</span></div>`).join('')}</div><div style="border-top:1px solid #E9E9E9;margin-top:12px;padding-top:12px;font-size:11px"><div style="display:flex;justify-content:space-between"><span>Subtotal</span><span>${formatRp(sub)}</span></div><div style="display:flex;justify-content:space-between"><span>Ongkir ${esc(kotaOngkir)} ${esc(serviceLabel)}</span><span>${formatRp(ongkir)}</span></div><div style="display:flex;justify-content:space-between;font-weight:700;font-size:14px;margin-top:8px"><span>TOTAL</span><span>${formatRp(tot)}</span></div></div>`;
+  document.getElementById('ringkasan').innerHTML=`<div style="font-size:9px;letter-spacing:2px;opacity:.4;margin-bottom:8px">${cart.length} ITEM</div>${cart.map(i=>`<div style="display:flex;justify-content:space-between;font-size:12px;margin-top:6px"><span>${esc(i.warna)} x${i.qty}</span><span>${formatRp(Number(i.harga)*Number(i.qty))}</span></div>`).join('')}<div style="border-top:1px solid #E9E9E9;margin-top:12px;padding-top:12px;font-size:11px"><div style="display:flex;justify-content:space-between"><span>Subtotal</span><span>${formatRp(sub)}</span></div><div style="display:flex;justify-content:space-between;margin-top:4px"><span>Ongkir ${esc(kotaOngkir)} ${esc(serviceLabel)}</span><span>${formatRp(ongkir)}</span></div><div style="display:flex;justify-content:space-between;font-weight:700;font-size:15px;margin-top:10px"><span>TOTAL</span><span>${formatRp(tot)}</span></div></div>`;
   document.getElementById('modalTotal').innerText=formatRp(tot);
 }
 renderRingkasan();
-
-// FIX UTAMA: Kota = tujuan, bukan toko!
 document.getElementById('kota').value=kotaOngkir;
-document.getElementById('alamat').value='';
-document.getElementById('alamat').placeholder='Alamat lengkap + RT/RW di ' + (kotaOngkir||'tujuan') + ' - contoh: Jl Mawar No 10 RT02 RW03 dekat masjid';
+document.getElementById('alamat').placeholder='Alamat lengkap + RT/RW di ' + (kotaOngkir||'tujuan');
 
 if(!kotaOngkir){
-  document.getElementById('errorMsg').innerText='Kota tujuan belum kebaca, silakan cek ongkir dulu di halaman produk';
+  document.getElementById('errorMsg').innerText='Kota tujuan belum kebaca, cek ongkir lagi di produk.html';
   document.getElementById('errorMsg').style.display='block';
   document.getElementById('mainBtn').disabled=true;
-  document.getElementById('mainBtn').style.opacity='.5';
 }
-
 let tempData={};
-async function bukaModal(){
+function bukaModal(){
  const nama=document.getElementById('nama').value.trim();
  const wa=document.getElementById('wa').value.trim().replace(/[^0-9]/g,'');
  const kota=document.getElementById('kota').value.trim();
  const alamat=document.getElementById('alamat').value.trim();
- if(!nama||nama.length<3){document.getElementById('errorMsg').innerText='Nama minimal 3 huruf';document.getElementById('errorMsg').style.display='block';return;}
- if(!wa||wa.length<10){document.getElementById('errorMsg').innerText='WA minimal 10 digit';document.getElementById('errorMsg').style.display='block';return;}
- if(!kota){document.getElementById('errorMsg').innerText='Wajib cek ongkir dulu di produk.html';document.getElementById('errorMsg').style.display='block';return;}
- if(!alamat||alamat.length<10){document.getElementById('errorMsg').innerText='Alamat minimal 10 huruf';document.getElementById('errorMsg').style.display='block';return;}
- if(cart.length===0){document.getElementById('errorMsg').innerText='Keranjang kosong';document.getElementById('errorMsg').style.display='block';return;}
+ if(!nama||nama.length<3||!wa||wa.length<10||!kota||!alamat||alamat.length<10||cart.length===0){document.getElementById('errorMsg').innerText='Lengkapi Nama, WA, dan Alamat (min 10 huruf)';document.getElementById('errorMsg').style.display='block';return;}
  document.getElementById('errorMsg').style.display='none';
- let sub=0;cart.forEach(i=>sub+=Number(i.harga||0)*Number(i.qty||0));let tot=sub+ongkir;
- tempData={nama,wa,kota,alamat,total:tot,subtotal:sub};
- document.getElementById('modalContent').innerHTML=`<div style="font-size:12px;display:flex;flex-direction:column;gap:8px"><div><span style="opacity:.5">Nama</span> <b>${esc(nama)}</b></div><div><span style="opacity:.5">WA</span> <b>${esc(wa)}</b></div><div><span style="opacity:.5">Kota Tujuan</span> <b>${esc(kota)}</b></div><div><span style="opacity:.5">Alamat</span> <b>${esc(alamat)}</b></div><div><span style="opacity:.5">Ongkir</span> <b>${formatRp(ongkir)} ${esc(serviceLabel)}</b></div></div>`;
+ let sub=0;cart.forEach(i=>sub+=Number(i.harga||0)*Number(i.qty||0));
+ tempData={nama,wa,kota,alamat,total:sub+ongkir,subtotal:sub};
+ document.getElementById('modalContent').innerHTML=`<div style="font-size:12px;display:flex;flex-direction:column;gap:6px"><div>Nama <b>${esc(nama)}</b></div><div>WA <b>${esc(wa)}</b></div><div>Tujuan <b>${esc(kota)}</b></div><div>Alamat <b>${esc(alamat)}</b></div></div>`;
  document.getElementById('modalCheckout').style.display='flex';
 }
 function tutupModal(){document.getElementById('modalCheckout').style.display='none';}
 async function prosesCheckout(){
  const {nama,wa,kota,alamat,total,subtotal}=tempData;
  const btn=document.getElementById('btnKonfirm');btn.innerText='MENYIMPAN...';btn.disabled=true;
- const orderData={
-   customer_name: nama, nama: nama,
-   customer_phone: wa, wa: wa, no_wa: wa,
-   alamat: alamat, alamat_lengkap: alamat, alamat_tujuan: alamat,
-   kota: kota, kota_tujuan: kotaOngkir||kota, kota_kab: kota, kecamatan: kota,
-   total: total, subtotal: subtotal,
-   ongkir: ongkir, shipping_cost: ongkir,
-   items: cart, status: 'MENUNGGU_BAYAR',
-   origin_label: originLabel, origin_id: originId,
-   destination_label: kotaOngkir||kota, destination_id: destId,
-   service: serviceLabel
- };
  try{
-   const {data,error}=await supa.from('orders').insert([orderData]).select();if(error)throw error;
+   const {data,error}=await supa.from('orders').insert([{customer_name:nama,nama:nama,customer_phone:wa,wa:wa,no_wa:wa,alamat:alamat,alamat_lengkap:alamat,kota:kota,kota_tujuan:kotaOngkir,total:total,subtotal:subtotal,ongkir:ongkir,shipping_cost:ongkir,items:cart,status:'MENUNGGU_BAYAR',origin_label:originLabel,origin_id:originId,destination_label:kotaOngkir,destination_id:destId,service:serviceLabel}]).select();
+   if(error)throw error;
    if(data&&data[0])localStorage.setItem('arinda_last_order_id',data[0].id);
-   localStorage.setItem('arinda_customer',JSON.stringify({name:nama,wa:wa,alamat:alamat,kota:kota,total:total}));
-   localStorage.setItem('arinda_total',String(total));
-   sessionStorage.removeItem('checkout_ongkir');
    window.location.href='bayar.html';
- }catch(e){document.getElementById('errorMsg').innerText='Gagal simpan: '+e.message;document.getElementById('errorMsg').style.display='block';btn.innerText='YA, BAYAR';btn.disabled=false;console.error(e);}
+ }catch(e){document.getElementById('errorMsg').innerText='Gagal: '+e.message;document.getElementById('errorMsg').style.display='block';btn.innerText='YA, BAYAR';btn.disabled=false;}
 }
 </script></body></html>
