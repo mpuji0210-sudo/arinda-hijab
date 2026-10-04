@@ -1,18 +1,16 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Admin Order - Loading...</title>
+<title>Admin Order - ARINDA</title>
 <meta name="robots" content="noindex, nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-body{margin:0;background:#FFFFFF;color:#000;font-family:'Inter',sans-serif}
-.card{border:1px solid #E9E9E9;background:#fff}
+body{margin:0;background:#FFFCF9;color:#000;font-family:'Inter',sans-serif}
+.card{border:1px solid #E9E9E9;background:#fff;padding:16px}
 .btn-black{height:44px;background:#000;color:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
 .btn-white{height:44px;background:#fff;color:#000;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
-.btn-black:disabled,.btn-white:disabled{opacity:.5}
-#delModal,#appModal{display:none;position:fixed;inset:0;background:rgba(17,17,17,0.45);backdrop-filter:blur(14px);z-index:9999;align-items:center;justify-content:center;padding:20px}
+.input{height:44px;padding:0 12px;border:1px solid #000;font-size:12px;width:100%;outline:none;background:#fff;box-sizing:border-box}
+#delModal,#appModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(12px);z-index:9999;align-items:center;justify-content:center;padding:20px}
 #delModal.show,#appModal.show{display:flex}
-.input{height:40px;padding:0 10px;border:1px solid #000;font-size:11px;width:100%;outline:none;background:#fff}
-.input.err{border-color:#B42318!important;background:#FFF5F5}
 </style>
 </head><body>
 <script>
@@ -20,56 +18,50 @@ const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
 function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-const STORE_CACHE = localStorage.getItem('store_name_cache') || 'ARINDA';
-document.title='Admin Order - '+STORE_CACHE;
 (async()=>{
   const { data:{ session } } = await supa.auth.getSession();
   if(!session){ location.href='login.html'; return; }
-  if(session.user.email!== 'admin@arinda.id'){ await supa.auth.signOut(); location.href='login.html'; return; }
-  try{
-    const {data}=await supa.from('settings').select('value').eq('key','store_name').single();
-    if(data?.value){ localStorage.setItem('store_name_cache', data.value); document.title='Admin Order - '+data.value; const l=document.getElementById('adminLogo'); if(l) l.innerText=data.value; }
-  }catch(e){}
+  if(session.user.email!=='admin@arinda.id'){ await supa.auth.signOut(); location.href='login.html'; return; }
 })();
 </script>
-<nav style="position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E9E9E9">
-  <div style="max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
-    <div><div id="adminLogo" style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:21px">LOADING</div><span style="display:block;font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM - ADMIN ORDER V17</span></div>
-    <div style="display:flex;gap:8px"><a href="ad.html" style="padding:10px 14px;border:1px solid #000;font-size:8px;letter-spacing:2px;text-decoration:none;color:#000">TOKO</a><button onclick="logout()" style="padding:10px 18px;background:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer">LOGOUT</button></div>
+
+<nav style="position:sticky;top:0;z-index:99;background:#fff;border-bottom:1px solid #E9E9E9">
+  <div style="max-width:800px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+    <div id="adminLogo" style="font-family:'Cormorant Garamond';letter-spacing:8px;font-size:22px">ARINDA</div>
+    <div style="display:flex;gap:8px"><a href="ad.html" style="padding:10px 14px;border:1px solid #000;font-size:9px;text-decoration:none;color:#000;letter-spacing:2px">TOKO</a><button onclick="logout()" style="padding:10px 14px;background:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px">LOGOUT</button></div>
   </div>
 </nav>
+
 <div style="max-width:800px;margin:0 auto;padding:24px 16px 60px">
-  <div class="card" style="padding:16px;margin-bottom:20px">
-    <div style="display:flex;justify-content:space-between"><div style="font-family:'Cormorant Garamond';font-size:18px">Kelola Rekening & QRIS - VALIDASI V17</div><button onclick="loadPayments()" class="btn-white" style="height:32px;padding:0 12px">REFRESH</button></div>
-    <div style="font-size:9px;letter-spacing:2px;opacity:.5;margin-top:6px">Bank min 2 huruf, No Rek 8-20 digit angka, Atas Nama min 3 huruf, QR max 5MB</div>
-    <div id="payListAdmin" style="margin-top:14px;display:flex;flex-direction:column;gap:8px"></div>
-    <div style="border-top:1px solid #F2F2F2;margin-top:16px;padding-top:14px">
-      <div style="font-size:9px;letter-spacing:2px;margin-bottom:8px">TAMBAH METODE BARU</div>
+  <!-- REKENING CLEAN V21 -->
+  <div class="card" style="margin-bottom:20px">
+    <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-family:'Cormorant Garamond';font-size:20px">Rekening</div><button onclick="loadPayments()" class="btn-white" style="height:32px;padding:0 14px">REFRESH</button></div>
+    <div id="payListAdmin" style="margin-top:16px;display:flex;flex-direction:column;gap:8px"></div>
+    <div style="border-top:1px solid #F2F2F2;margin-top:18px;padding-top:16px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        <input id="p_bank" class="input" placeholder="BANK min 2 huruf: BCA / QRIS / DANA" maxlength="20">
-        <input id="p_rek" class="input" placeholder="NO REK 8-20 digit angka" maxlength="20" inputmode="numeric">
-        <input id="p_nama" class="input" placeholder="ATAS NAMA min 3 huruf" maxlength="40">
-        <input id="p_qr" class="input" placeholder="LINK QR (auto dari upload)">
+        <input id="p_bank" class="input" placeholder="BANK: BCA" maxlength="20">
+        <input id="p_rek" class="input" placeholder="NO REK: 8740376161" maxlength="20" inputmode="numeric">
+        <input id="p_nama" class="input" placeholder="ATAS NAMA" maxlength="40" style="grid-column:1/-1">
+        <input id="p_qr" class="input" placeholder="LINK QR (opsional)" style="grid-column:1/-1">
       </div>
-      <div style="margin-top:8px"><input type="file" id="qrFile" accept="image/*" style="display:none"><label for="qrFile" class="btn-white" style="display:flex;align-items:center;justify-content:center;height:40px;cursor:pointer">+ UPLOAD FILE QR (max 5MB JPG/PNG)</label><img id="qrPrev" style="width:100%;max-height:200px;object-fit:contain;display:none;margin-top:8px;border:1px solid #E9E9E9"><div id="qrFileName" style="font-size:8px;opacity:.5;margin-top:4px"></div></div>
-      <div style="display:flex;gap:8px;margin-top:10px"><button onclick="addPayMethod()" class="btn-black" style="flex:1">+ TAMBAH KE DAFTAR</button><button onclick="savePayments()" class="btn-white" style="flex:1">SIMPAN KE DATABASE</button></div>
+      <div style="margin-top:10px"><input type="file" id="qrFile" accept="image/*" style="display:none"><label for="qrFile" class="btn-white" style="display:flex;align-items:center;justify-content:center;height:40px;cursor:pointer">+ UPLOAD QR</label><img id="qrPrev" style="width:100%;max-height:180px;object-fit:contain;display:none;margin-top:8px;border:1px solid #eee"></div>
+      <div style="display:flex;gap:8px;margin-top:12px"><button onclick="addPayMethod()" class="btn-black" style="flex:1">+ TAMBAH</button><button onclick="savePayments()" class="btn-white" style="flex:1">SIMPAN</button></div>
       <div id="payStatus" style="font-size:10px;opacity:.5;margin-top:8px"></div>
     </div>
   </div>
-  <div class="card" style="padding:16px;margin-bottom:20px;border:1px dashed #000">
-    <div style="display:flex;justify-content:space-between"><div style="font-family:'Cormorant Garamond';font-size:18px">🔒 PIN Laporan (4-6 digit angka)</div><button onclick="loadLaporanPin()" class="btn-white" style="height:32px;padding:0 12px">CEK</button></div>
-    <div style="display:flex;gap:8px;margin-top:14px"><input id="new_pin" type="text" inputmode="numeric" placeholder="PIN 4-6 digit angka" class="input" maxlength="6" style="flex:1"><button onclick="saveLaporanPin()" class="btn-black" style="padding:0 20px">SIMPAN PIN</button></div>
-    <div id="pinStatus" style="font-size:10px;opacity:.6;margin-top:8px">Memuat...</div>
+
+  <div class="card" style="padding:14px;margin-bottom:18px;background:#FAFAFA">
+    <div style="display:flex;gap:16px;font-size:11px"><div>TOTAL <b id="statTotal">0</b></div><div>OMSET <b id="statOmset">Rp0</b></div><div>HARI INI <b id="statToday">Rp0</b></div></div>
+    <input id="searchOrder" class="input" placeholder="Cari nama / WA / kota..." style="margin-top:12px;background:#fff" oninput="filterOrders()">
   </div>
-  <div class="card" style="padding:12px;margin-bottom:16px;background:#FAFAFA">
-    <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:10px"><div>TOTAL: <b id="statTotal">0</b></div><div>OMSET: <b id="statOmset">Rp0</b></div><div>HARI INI: <b id="statToday">Rp0</b></div></div>
-    <input id="searchOrder" class="input" placeholder="CARI NAMA / WA / KOTA..." style="margin-top:10px" oninput="filterOrders()">
-  </div>
-  <div style="display:flex;justify-content:space-between;margin-bottom:12px"><div style="font-family:'Cormorant Garamond';font-size:22px">Pesanan Masuk</div><div id="count" style="font-size:9px;opacity:.4">0 PESANAN</div></div>
+
+  <div style="display:flex;justify-content:space-between;margin-bottom:12px"><div style="font-family:'Cormorant Garamond';font-size:22px">Pesanan</div><div id="count" style="font-size:9px;opacity:.4">0</div></div>
   <div id="list" style="display:flex;flex-direction:column;gap:12px"></div>
 </div>
-<div id="delModal" onclick="if(event.target.id==='delModal')closeDel()"><div style="background:#FFFEFB;width:100%;max-width:400px;border-radius:32px;border:1px solid #EFE9E0;padding:24px"><div style="font-family:'Cormorant Garamond';font-size:20px">Hapus pesanan?</div><div style="font-size:11px;opacity:.6;margin-top:8px" id="delInfo"></div><div style="display:flex;gap:10px;margin-top:20px"><button onclick="closeDel()" style="flex:1;height:44px;background:#fff;border:1px solid #111">BATAL</button><button onclick="confirmDel()" id="btnDel" style="flex:1;height:44px;background:#111;color:#fff">YA, HAPUS</button></div></div></div>
-<div id="appModal" onclick="if(event.target.id==='appModal')closeApp()"><div style="background:#FFFEFB;width:100%;max-width:380px;border-radius:28px;border:1px solid #EFE9E0;padding:24px"><div id="appTitle" style="font-family:'Cormorant Garamond';font-size:18px">Perhatian</div><div id="appMsg" style="font-size:12px;opacity:.65;margin-top:8px"></div><div style="display:flex;gap:10px;margin-top:18px"><button id="appCancel" onclick="closeApp()" style="flex:1;height:44px;background:#fff;border:1px solid #111;display:none">BATAL</button><button id="appOk" onclick="closeApp()" style="flex:1;height:44px;background:#111;color:#fff">OKE</button></div></div></div>
+
+<div id="delModal" onclick="if(event.target.id==='delModal')closeDel()"><div style="background:#fff;width:100%;max-width:380px;border:1px solid #000;padding:20px"><div style="font-family:'Cormorant Garamond';font-size:18px">Hapus?</div><div id="delInfo" style="font-size:11px;opacity:.6;margin-top:6px"></div><div style="display:flex;gap:8px;margin-top:16px"><button onclick="closeDel()" class="btn-white" style="flex:1">BATAL</button><button onclick="confirmDel()" id="btnDel" class="btn-black" style="flex:1">YA, HAPUS</button></div></div></div>
+<div id="appModal" onclick="if(event.target.id==='appModal')closeApp()"><div style="background:#fff;width:100%;max-width:380px;border:1px solid #000;padding:20px"><div id="appTitle" style="font-family:'Cormorant Garamond';font-size:16px">Info</div><div id="appMsg" style="font-size:12px;opacity:.7;margin-top:8px"></div><div style="display:flex;gap:8px;margin-top:16px"><button id="appCancel" onclick="closeApp()" class="btn-white" style="flex:1;display:none">BATAL</button><button id="appOk" onclick="closeApp()" class="btn-black" style="flex:1">OKE</button></div></div></div>
+
 <script>
 let delId=null,pendingDeletePayIndex=null,payMethods=[],allOrders=[],qrUploadUrl='';
 function openApp({title,msg,showCancel=false,okText='OKE',onOk=null}){
@@ -78,69 +70,65 @@ function openApp({title,msg,showCancel=false,okText='OKE',onOk=null}){
   document.getElementById('appModal').classList.add('show');
   document.getElementById('appOk').onclick=()=>{closeApp(); if(onOk) onOk();};
 }
-function closeApp(){document.getElementById('appModal').classList.remove('show'); pendingDeletePayIndex=null;}
+function closeApp(){document.getElementById('appModal').classList.remove('show');}
 function validatePay(bank,rek,nama){
-  if(!bank || bank.trim().length<2) return 'Bank minimal 2 huruf (contoh: BCA, QRIS)';
-  if(/^(a|aa|asd|test)$/i.test(bank.trim())) return 'Bank jangan ngawur';
-  if(!/^\d{8,20}$/.test(rek.trim())) return 'No Rek harus 8-20 digit angka saja, contoh: 8740376161';
-  if(!nama || nama.trim().length<3) return 'Atas Nama minimal 3 huruf';
-  if(/^(a|asd|test)$/i.test(nama.trim())) return 'Atas Nama jangan ngawur';
+  if(!bank||bank.length<2) return 'Bank minimal 2 huruf';
+  if(!/^\d{8,20}$/.test(rek)) return 'No Rek 8-20 digit angka';
+  if(!nama||nama.length<3) return 'Atas nama min 3 huruf';
   return '';
 }
 document.getElementById('qrFile').addEventListener('change', async e=>{
   const f=e.target.files[0]; if(!f) return;
-  if(f.size>5*1024*1024){ openApp({title:'File kebesaran',msg:'QR max 5MB, file kamu '+(f.size/1024/1024).toFixed(1)+'MB'}); e.target.value=''; return; }
-  if(!f.type.startsWith('image/')){ openApp({title:'Harus gambar',msg:'Upload JPG/PNG saja'}); return; }
-  document.getElementById('qrFileName').innerText='Uploading... '+f.name;
+  if(f.size>5*1024*1024){ openApp({title:'File besar',msg:'Max 5MB'}); return; }
   const fn='qr_'+Date.now()+'.jpg';
-  const {error}=await supa.storage.from('banners').upload(fn,f,{upsert:true,contentType:'image/jpeg'});
-  if(error){ document.getElementById('qrFileName').innerText='Gagal: '+error.message; return; }
+  const {error}=await supa.storage.from('banners').upload(fn,f,{upsert:true});
+  if(error){ openApp({title:'Gagal',msg:error.message}); return; }
   const url=supa.storage.from('banners').getPublicUrl(fn).data.publicUrl;
   qrUploadUrl=url; document.getElementById('p_qr').value=url;
   document.getElementById('qrPrev').src=url; document.getElementById('qrPrev').style.display='block';
-  document.getElementById('qrFileName').innerText='✅ QR terupload';
 });
 async function loadPayments(){
   document.getElementById('payStatus').innerText='Loading...';
-  const {data}=await supa.from('settings').select('value').eq('key','payment_methods').maybeSingle();
-  if(data?.value){ try{payMethods=JSON.parse(data.value);}catch(e){payMethods=[];} } else { payMethods=[{bank:'BCA',no_rek:'8740376161',atas_nama:'ARINDA ADMIN',qr_url:'',aktif:true}]; }
-  renderPayments(); document.getElementById('payStatus').innerText=payMethods.length+' metode';
+  try{
+    const {data}=await supa.from('settings').select('value').eq('key','payment_methods').maybeSingle();
+    let v=data?.value;
+    if(typeof v==='string') try{v=JSON.parse(v)}catch(_){}
+    // FIX: support double stringify
+    if(typeof v==='string') try{v=JSON.parse(v)}catch(_){}
+    if(Array.isArray(v)) payMethods=v;
+    else if(v) payMethods=[v];
+    else payMethods=[];
+  }catch(e){payMethods=[]}
+  if(payMethods.length===0) payMethods=[{bank:'BCA',no_rek:'8740376161',atas_nama:'ARINDA ADMIN',qr_url:'',aktif:true}];
+  renderPayments(); document.getElementById('payStatus').innerText=payMethods.length+' metode tersimpan';
+  // LOGO DINAMIS
+  try{
+    const {data:s}=await supa.from('settings').select('value').eq('key','store_name').maybeSingle();
+    let nm=s?.value; if(typeof nm==='string') try{nm=JSON.parse(nm)}catch(_){}
+    if(nm){ localStorage.setItem('store_name_cache',nm); document.getElementById('adminLogo').innerText=String(nm).toUpperCase(); document.title='Admin Order - '+nm; }
+  }catch(e){}
 }
 function renderPayments(){
   const el=document.getElementById('payListAdmin');
-  if(!payMethods.length){el.innerHTML='<div style="font-size:11px;opacity:.4;color:#B42318">⚠️ Belum ada rekening - bayar.html akan error!</div>'; return;}
-  el.innerHTML=payMethods.map((m,i)=>`<div style="border:1px solid #E9E9E9;padding:10px;display:flex;justify-content:space-between;background:${m.aktif?'#fff':'#FAFAFA'}"><div><div style="font-size:11px;font-weight:600">${esc(m.bank)} - ${esc(m.no_rek)}</div><div style="font-size:10px;opacity:.5">a.n ${esc(m.atas_nama)} ${m.qr_url?' • QR OK':''}</div></div><div style="display:flex;gap:6px"><button onclick="togglePay(${i})" style="font-size:8px;padding:6px 8px;border:1px solid #000;background:${m.aktif?'#000':'#fff'};color:${m.aktif?'#fff':'#000'}">${m.aktif?'AKTIF':'OFF'}</button><button onclick="removePay(${i})" style="font-size:8px;padding:6px 8px;border:1px solid #000;background:#fff">HAPUS</button></div></div>`).join('');
+  el.innerHTML=payMethods.map((m,i)=>`<div style="border:1px solid ${m.aktif?'#000':'#E9E9E9'};padding:12px;display:flex;justify-content:space-between;background:#fff"><div><b style="font-size:12px">${esc(m.bank)} - ${esc(m.no_rek)}</b><div style="font-size:10px;opacity:.6">a.n ${esc(m.atas_nama)} ${m.qr_url?'• QR OK':''}</div></div><div style="display:flex;gap:6px"><button onclick="togglePay(${i})" style="font-size:9px;padding:6px 10px;border:1px solid #000;background:${m.aktif?'#000':'#fff'};color:${m.aktif?'#fff':'#000'}">${m.aktif?'AKTIF':'OFF'}</button><button onclick="removePay(${i})" style="font-size:9px;padding:6px 10px;border:1px solid #000;background:#fff">HAPUS</button></div></div>`).join('');
 }
 function addPayMethod(){
   const b=document.getElementById('p_bank').value.trim(),r=document.getElementById('p_rek').value.trim(),n=document.getElementById('p_nama').value.trim(),q=document.getElementById('p_qr').value.trim()||qrUploadUrl;
-  const err=validatePay(b,r,n); if(err){ openApp({title:'Validasi',msg:err}); return; }
-  if(payMethods.some(m=>m.no_rek===r)){ openApp({title:'Duplikat',msg:'No Rek '+r+' sudah ada'}); return; }
+  const err=validatePay(b,r,n); if(err){ openApp({title:'Cek lagi',msg:err}); return; }
+  if(payMethods.some(m=>m.no_rek===r)){ openApp({title:'Duplikat',msg:'No Rek sudah ada'}); return; }
   payMethods.push({bank:b.toUpperCase(),no_rek:r,atas_nama:n.toUpperCase(),qr_url:q,aktif:true}); renderPayments();
-  document.getElementById('p_bank').value='';document.getElementById('p_rek').value='';document.getElementById('p_nama').value='';document.getElementById('p_qr').value='';qrUploadUrl='';document.getElementById('qrPrev').style.display='none';document.getElementById('qrFile').value='';document.getElementById('qrFileName').innerText='';
+  document.getElementById('p_bank').value='';document.getElementById('p_rek').value='';document.getElementById('p_nama').value='';document.getElementById('p_qr').value='';qrUploadUrl='';document.getElementById('qrPrev').style.display='none';
 }
-function removePay(i){pendingDeletePayIndex=i; const m=payMethods[i]; openApp({title:'Hapus rekening?',msg:`Hapus ${m.bank} - ${m.no_rek} a.n ${m.atas_nama}?`,showCancel:true,okText:'YA, HAPUS',onOk:()=>{payMethods.splice(pendingDeletePayIndex,1);renderPayments();}});}
+function removePay(i){ pendingDeletePayIndex=i; const m=payMethods[i]; openApp({title:'Hapus?',msg:`Hapus ${m.bank} ${m.no_rek}?`,showCancel:true,okText:'HAPUS',onOk:()=>{payMethods.splice(pendingDeletePayIndex,1);renderPayments();}}); }
 function togglePay(i){payMethods[i].aktif=!payMethods[i].aktif; renderPayments();}
 async function savePayments(){
-  if(!payMethods.length){ openApp({title:'Gak boleh kosong',msg:'Minimal 1 rekening aktif, kalau kosong bayar.html error'}); return; }
-  if(!payMethods.some(m=>m.aktif)){ openApp({title:'Harus ada yang aktif',msg:'Aktifkan minimal 1 rekening'}); return; }
+  if(!payMethods.length){ openApp({title:'Kosong',msg:'Minimal 1 rekening'}); return; }
+  if(!payMethods.some(m=>m.aktif)){ openApp({title:'Harus aktif',msg:'Aktifkan 1 rekening'}); return; }
   document.getElementById('payStatus').innerText='Menyimpan...';
-  const {error}=await supa.from('settings').upsert({key:'payment_methods',value:JSON.stringify(payMethods)},{onConflict:'key'});
-  if(error){openApp({title:'Gagal',msg:error.message}); document.getElementById('payStatus').innerText='Gagal';}
-  else {document.getElementById('payStatus').innerText='✓ Tersimpan! bayar.html auto update'; openApp({title:'Berhasil',msg:'Rekening update'});}
-}
-async function loadLaporanPin(){
-  document.getElementById('pinStatus').innerText='Loading...';
-  const {data}=await supa.from('settings').select('value').eq('key','laporan_pin').maybeSingle();
-  if(data?.value){let p;try{p=JSON.parse(data.value).pin||data.value;}catch(e){p=data.value;} p=String(p).replace(/"/g,''); document.getElementById('pinStatus').innerText='PIN: '+p; document.getElementById('new_pin').value=p;}
-  else document.getElementById('pinStatus').innerText='Default: 1234';
-}
-async function saveLaporanPin(){
-  const pin=document.getElementById('new_pin').value.trim();
-  if(!/^\d{4,6}$/.test(pin)){openApp({title:'PIN harus angka',msg:'PIN 4-6 digit angka saja, contoh: 1234 atau 123456'});return;}
-  if(/^(\d)\1{3,}$/.test(pin)){openApp({title:'PIN ngawur',msg:'Jangan angka berulang seperti 1111'});return;}
-  document.getElementById('pinStatus').innerText='Menyimpan...';
-  const {error}=await supa.from('settings').upsert({key:'laporan_pin',value:JSON.stringify({pin})},{onConflict:'key'});
-  if(error) document.getElementById('pinStatus').innerText='Gagal'; else {document.getElementById('pinStatus').innerText='✓ PIN: '+pin; openApp({title:'Berhasil',msg:'PIN: '+pin});}
+  // FIX PENTING: simpan sebagai JSON, bukan string double
+  const {error}=await supa.from('settings').upsert({key:'payment_methods',value:payMethods},{onConflict:'key'});
+  if(error){ openApp({title:'Gagal',msg:error.message}); document.getElementById('payStatus').innerText='Gagal'; }
+  else { document.getElementById('payStatus').innerText='✓ Tersimpan! bayar.html auto update'; openApp({title:'Berhasil',msg:payMethods.length+' rekening tersimpan, bayar.html langsung update'}); }
 }
 async function loadOrders(){
   const {data}=await supa.from('orders').select('*').order('created_at',{ascending:false});
@@ -154,82 +142,34 @@ async function loadOrders(){
 }
 function renderOrderList(data){
   const list=document.getElementById('list'),count=document.getElementById('count');
-  if(!data.length){count.innerText='0 PESANAN'; list.innerHTML='<div style="text-align:center;padding:60px 20px;border:1px solid #E9E9E9;background:#FAFAFA">Belum ada pesanan</div>'; return;}
-  count.innerText=data.length+' PESANAN';
+  if(!data.length){count.innerText='0'; list.innerHTML='<div style="text-align:center;padding:40px;border:1px solid #E9E9E9">Belum ada pesanan</div>'; return;}
+  count.innerText=data.length;
   list.innerHTML=data.map(o=>{
     const items=o.items? (typeof o.items==='string'? JSON.parse(o.items): o.items):[];
-    const itemText=Array.isArray(items)? items.map(i=>`${esc(i.warna||i.name)} x${esc(i.qty||1)}`).join(', '): esc(o.produk||'-');
+    const itemText=Array.isArray(items)? items.map(i=>`${esc(i.warna||i.name)} x${i.qty||1}`).join(', '): esc(o.produk||'-');
     const st=(o.status||'BARU').toUpperCase();
-    const stColor=st==='LUNAS'?'#0A7A42':st==='KIRIM'?'#1D4ED8':st==='SELESAI'?'#6B7280':'#000';
+    const stColor=st==='LUNAS'?'#0A7A42':st==='KIRIM'?'#1D4ED8':'#000';
     const resi=o.resi||o.no_resi||'';
-    return `<div class="card" style="padding:16px"><div style="display:flex;justify-content:space-between"><div><div style="font-size:13px;font-weight:600">${esc(o.customer_name||'-')} - ${esc(o.kota||'-')}</div><div style="font-size:10px;opacity:.5;margin-top:4px">${esc(new Date(o.created_at).toLocaleString('id-ID'))} • WA: ${esc(o.wa||'-')}</div></div><select onchange="updateStatus('${o.id}',this.value,this)" style="font-size:9px;padding:4px 6px;border:1px solid ${stColor};color:${stColor};font-weight:700" data-prev="${st}"><option ${st==='BARU'?'selected':''}>BARU</option><option ${st==='LUNAS'?'selected':''}>LUNAS</option><option ${st==='KIRIM'?'selected':''}>KIRIM</option><option ${st==='SELESAI'?'selected':''}>SELESAI</option></select></div>
-    <div style="margin-top:10px;font-size:11px;line-height:1.6;border-top:1px solid #F2F2F2;padding-top:10px"><div>Alamat: ${esc(o.alamat||'-')}</div><div style="margin-top:4px">Produk: ${itemText}</div><div style="margin-top:8px;display:flex;justify-content:space-between;font-weight:700"><span>TOTAL</span><span>Rp${Number(o.total||0).toLocaleString('id-ID')}</span></div>
-    <div style="margin-top:10px"><div style="font-size:8px;letter-spacing:2px;opacity:.5">NO RESI (wajib jika KIRIM)</div><div style="display:flex;gap:6px;margin-top:4px"><input id="resi_${o.id}" class="input" placeholder="Resi min 8 huruf angka" value="${esc(resi)}" style="flex:1;height:36px"><button onclick="saveResi('${o.id}')" class="btn-white" style="height:36px;padding:0 12px">SIMPAN RESI</button></div></div>
-    </div><div style="display:flex;gap:8px;margin-top:12px"><button onclick="waCustomer('${o.id}')" class="btn-white" style="flex:1">CHAT WA</button><button onclick="openDel('${o.id}','${esc(o.customer_name||'').replace(/'/g,'')}','${st}')" class="btn-black" style="flex:1">HAPUS</button></div></div>`;
+    return `<div class="card"><div style="display:flex;justify-content:space-between"><div><div style="font-size:13px;font-weight:600">${esc(o.customer_name||'-')} - ${esc(o.kota_tujuan||o.kota||'-')}</div><div style="font-size:10px;opacity:.5;margin-top:2px">${esc(new Date(o.created_at).toLocaleString('id-ID'))} • ${esc(o.wa||'')}</div></div><select onchange="updateStatus('${o.id}',this.value,this)" style="font-size:10px;padding:4px;border:1px solid ${stColor};color:${stColor};font-weight:700" data-prev="${st}"><option ${st==='BARU'?'selected':''}>BARU</option><option ${st==='LUNAS'?'selected':''}>LUNAS</option><option ${st==='KIRIM'?'selected':''}>KIRIM</option><option ${st==='SELESAI'?'selected':''}>SELESAI</option></select></div>
+    <div style="margin-top:10px;font-size:11px;line-height:1.6;border-top:1px solid #F2F2F2;padding-top:10px">Alamat: ${esc(o.alamat||'-')}<br>Tujuan: ${esc(o.destination_label||o.kota_tujuan||'-')}<br>Ongkir: Rp${Number(o.ongkir||0).toLocaleString('id-ID')}<br>Produk: ${itemText}<div style="display:flex;justify-content:space-between;font-weight:700;margin-top:8px"><span>TOTAL</span><span>Rp${Number(o.total||0).toLocaleString('id-ID')}</span></div>
+    <div style="margin-top:10px"><input id="resi_${o.id}" class="input" style="height:36px" placeholder="No Resi" value="${esc(resi)}"><div style="display:flex;gap:6px;margin-top:6px"><button onclick="saveResi('${o.id}')" class="btn-white" style="flex:1;height:36px">SIMPAN RESI</button><button onclick="waCustomer('${o.id}')" class="btn-white" style="flex:1;height:36px">WA</button></div></div></div><div style="display:flex;gap:8px;margin-top:10px"><button onclick="openDel('${o.id}','${esc(o.customer_name||'')}','${st}')" class="btn-black" style="flex:1">HAPUS</button></div></div>`;
   }).join('');
 }
-function filterOrders(){
-  const q=document.getElementById('searchOrder').value.toLowerCase();
-  if(!q) {renderOrderList(allOrders); return;}
-  const f=allOrders.filter(o=> (o.customer_name||'').toLowerCase().includes(q) || (o.wa||'').toLowerCase().includes(q) || (o.kota||'').toLowerCase().includes(q) );
-  renderOrderList(f);
-}
-async function saveResi(id){
-  const inp=document.getElementById('resi_'+id);
-  const resi=inp.value.trim();
-  if(!resi || resi.length<8){ openApp({title:'Resi pendek',msg:'Resi minimal 8 karakter (contoh: JNE123456789)'}); inp.classList.add('err'); return; }
-  if(!/^[A-Z0-9-]{8,30}$/i.test(resi)){ openApp({title:'Resi invalid',msg:'Resi cuma huruf, angka, strip. Minimal 8'}); inp.classList.add('err'); return; }
-  inp.classList.remove('err');
-  const {error}=await supa.from('orders').update({resi:resi, no_resi:resi}).eq('id',id);
-  if(error) openApp({title:'Gagal',msg:error.message});
-  else { openApp({title:'Resi tersimpan',msg:'Resi '+resi+' tersimpan'}); const idx=allOrders.findIndex(x=>String(x.id)===String(id)); if(idx>-1){ allOrders[idx].resi=resi; allOrders[idx].no_resi=resi; } }
-}
+function filterOrders(){ const q=document.getElementById('searchOrder').value.toLowerCase(); if(!q) renderOrderList(allOrders); else renderOrderList(allOrders.filter(o=> (o.customer_name||'').toLowerCase().includes(q)||(o.wa||'').toLowerCase().includes(q)||(o.kota_tujuan||'').toLowerCase().includes(q))); }
+async function saveResi(id){ const resi=document.getElementById('resi_'+id).value.trim(); if(!resi||resi.length<8){ openApp({title:'Resi',msg:'Min 8 karakter'}); return; } await supa.from('orders').update({resi:resi,no_resi:resi}).eq('id',id); openApp({title:'OK',msg:'Resi '+resi+' tersimpan'}); }
 async function updateStatus(id,st,el){
-  const prev = el? el.dataset.prev : 'BARU';
-  const order = allOrders.find(o=>String(o.id)===String(id));
-  const nama = order?.customer_name||'-';
-  // VALIDASI STATUS V17
-  if(st==='KIRIM'){
-    const resiVal = document.getElementById('resi_'+id)?.value.trim() || order?.resi || order?.no_resi || '';
-    if(!resiVal || resiVal.length<8){
-      openApp({title:'Resi wajib',msg:'Isi No Resi dulu sebelum ganti ke KIRIM. Minimal 8 karakter.'});
-      if(el) el.value=prev;
-      return;
-    }
+  const prev=el?.dataset.prev||'BARU'; const order=allOrders.find(o=>String(o.id)===String(id));
+  if(st==='KIRIM'){ const rv=document.getElementById('resi_'+id)?.value.trim()||order?.resi||''; if(!rv||rv.length<8){ openApp({title:'Resi wajib',msg:'Isi resi dulu'}); if(el) el.value=prev; return; } }
+  if(['LUNAS','KIRIM','SELESAI'].includes(st)){
+    openApp({title:`Ubah ke ${st}?`,msg:`Yakin ubah ${order?.customer_name||''} ke ${st}?`,showCancel:true,okText:`YA, ${st}`,onOk:async()=>{ await supa.from('orders').update({status:st}).eq('id',id); const idx=allOrders.findIndex(x=>String(x.id)===String(id)); if(idx>-1) allOrders[idx].status=st; if(el) el.dataset.prev=st; }});
+    if(el) el.value=prev; return;
   }
-  if(st==='LUNAS' || st==='KIRIM' || st==='SELESAI'){
-    openApp({title:`Ubah ke ${st}?`,msg:`Yakin ubah pesanan ${nama} dari ${prev} ke ${st}? Pastikan sudah cek transferan.`,showCancel:true,okText:`YA, ${st}`,onOk:async()=>{
-      await supa.from('orders').update({status:st}).eq('id',id);
-      const idx=allOrders.findIndex(x=>String(x.id)===String(id)); if(idx>-1) allOrders[idx].status=st;
-      if(el) el.dataset.prev=st;
-    }});
-    if(el) el.value=prev;
-    return;
-  }
-  await supa.from('orders').update({status:st}).eq('id',id);
-  const idx=allOrders.findIndex(x=>String(x.id)===String(id)); if(idx>-1) allOrders[idx].status=st;
-  if(el) el.dataset.prev=st;
+  await supa.from('orders').update({status:st}).eq('id',id); if(el) el.dataset.prev=st;
 }
-function openDel(id,nama,st){
-  if(st==='LUNAS' || st==='KIRIM'){
-    openApp({title:'Tidak bisa hapus',msg:`Order ${nama} status ${st}. Ganti ke SELESAI dulu kalau mau hapus, atau hubungi superadmin.`});
-    return;
-  }
-  delId=id;
-  document.getElementById('delInfo').innerText=`Hapus pesanan ${nama} (${st})? Aksi permanen.`;
-  document.getElementById('delModal').classList.add('show');
-}
+function openDel(id,nama,st){ if(['LUNAS','KIRIM'].includes(st)){ openApp({title:'Tidak bisa',msg:`Status ${st} tidak bisa hapus`}); return; } delId=id; document.getElementById('delInfo').innerText=`Hapus ${nama} (${st})?`; document.getElementById('delModal').classList.add('show'); }
 function closeDel(){delId=null;document.getElementById('delModal').classList.remove('show');}
-async function confirmDel(){if(!delId) return; document.getElementById('btnDel').innerText='MENGHAPUS...'; await supa.from('orders').delete().eq('id',delId); closeDel(); loadOrders(); document.getElementById('btnDel').innerText='YA, HAPUS';}
-function waCustomer(orderId){
-  const o=allOrders.find(x=>String(x.id)===String(orderId)); if(!o) return;
-  let n=(o.wa||'').replace(/[^0-9]/g,''); if(n.startsWith('0')) n='62'+n.slice(1);
-  const resi=o.resi||o.no_resi||'';
-  const msg=resi? `Halo ${o.customer_name}, pesanan ${STORE_CACHE} sudah KIRIM ya kak. Resi: ${resi} - Terima kasih 🙏` : `Halo ${o.customer_name}, pesanan ${STORE_CACHE} sudah kami terima ya kak. Total Rp${Number(o.total||0).toLocaleString('id-ID')}`;
-  window.open(`https://wa.me/${n}?text=${encodeURIComponent(msg)}`,'_blank');
-}
+async function confirmDel(){ if(!delId) return; await supa.from('orders').delete().eq('id',delId); closeDel(); loadOrders(); }
+function waCustomer(id){ const o=allOrders.find(x=>String(x.id)===String(id)); if(!o) return; let n=(o.wa||'').replace(/[^0-9]/g,''); if(n.startsWith('0')) n='62'+n.slice(1); const resi=o.resi||o.no_resi||''; const msg=resi? `Halo ${o.customer_name}, pesanan sudah KIRIM. Resi: ${resi}` : `Halo ${o.customer_name}, pesanan diterima. Total Rp${Number(o.total||0).toLocaleString('id-ID')}`; window.open(`https://wa.me/${n}?text=${encodeURIComponent(msg)}`,'_blank'); }
 async function logout(){await supa.auth.signOut(); localStorage.clear(); location.href='login.html';}
-loadPayments(); loadLaporanPin(); loadOrders();
-document.getElementById('adminLogo').innerText=STORE_CACHE;
-</script>
-</body></html>
+loadPayments(); loadOrders();
+</script></body></html>
