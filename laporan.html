@@ -1,177 +1,92 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LAPORAN - Loading...</title>
+<title id="pageTitle">Laporan - ARINDA</title>
 <meta name="robots" content="noindex, nofollow">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-<script>const STORE_CACHE=localStorage.getItem('store_name_cache')||'ARINDA'; document.title='LAPORAN - '+STORE_CACHE;</script>
+<script>const STORE_CACHE=localStorage.getItem('store_name_cache')||'ARINDA';</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}body{margin:0;background:#FFFCF9;color:#111;font-family:'Inter',sans-serif}
-.wrap{max-width:1240px;margin:0 auto;padding:18px 16px 60px}
-.top{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #E9E9E9}
-.logo{font-family:'Cormorant Garamond';letter-spacing:8px;font-size:20px}
-.card{background:#fff;border:1px solid #E9E9E9;padding:14px 16px}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#E9E9E9;border:1px solid #E9E9E9;margin-top:14px}
-.grid4.card{border:none}
-.stat{font-family:'Cormorant Garamond';font-size:28px;margin-top:6px}
-.label{font-size:8px;letter-spacing:3px;opacity:.4}
-.btn{height:40px;background:#000;color:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer;padding:0 14px}
-.btn-w{height:40px;background:#fff;color:#000;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer;padding:0 14px}
-select,input{height:40px;border:1px solid #000;background:#fff;padding:0 10px;font-size:12px;outline:none}
-.bar{height:10px;background:#000;margin-top:6px;transition:.3s}
-@media(max-width:800px){.grid4{grid-template-columns:repeat(2,1fr)}.row2{grid-template-columns:1fr!important}}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#E9E9E9;border:1px solid #E9E9E9;margin-top:14px}
-table{width:100%;border-collapse:collapse}th{font-size:8px;letter-spacing:2px;opacity:.4;text-align:left;padding:8px;border-bottom:1px solid #E9E9E9}td{font-size:12px;padding:10px 8px;border-bottom:1px solid #F2F2F2}
-#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 18px;border-radius:20px;font-size:11px;opacity:0;transition:.35s;z-index:9999}#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+*{box-sizing:border-box}body{margin:0;background:#FAFAF9;color:#111;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:8px 0 20px}
+.logo{font-family:'Cormorant Garamond';letter-spacing:10px;font-size:22px;font-weight:300}
+.top-actions{display:flex;gap:10px}
+.btn{height:42px;padding:0 20px;background:#111;color:#fff;border:1px solid #111;font-size:10px;letter-spacing:2px;cursor:pointer;border-radius:2px}
+.btn-w{height:42px;padding:0 20px;background:#fff;color:#111;border:1px solid #111;font-size:10px;letter-spacing:2px;cursor:pointer;border-radius:2px}
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px;background:#fff;border:1px solid #EDE9E3;padding:12px;border-radius:12px}
+.filters select,.filters input{height:44px;border:1px solid #E5E0D8;background:#FFFEFB;border-radius:8px;padding:0 12px;font-size:13px;outline:none;min-width:140px}
+.filters select:focus,.filters input:focus{border-color:#111}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(min-width:600px){.grid4{grid-template-columns:repeat(4,1fr)}}
+.card{background:#fff;border:1px solid #EDE9E3;border-radius:16px;padding:18px 16px}
+.stat{font-family:'Inter';font-size:22px;font-weight:600;margin-top:8px;letter-spacing:-.5px;line-height:1}
+.label{font-size:9px;letter-spacing:2.8px;opacity:.4;text-transform:uppercase;font-weight:600}
+.bar{height:8px;background:#111;border-radius:99px;margin-top:8px}
+.section{margin-top:14px}
+.row2{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+@media(min-width:700px){.row2{grid-template-columns:1fr 1fr}}
+.empty{opacity:.4;font-size:12px;padding:12px 0}
+table{width:100%;border-collapse:collapse}th{font-size:9px;letter-spacing:2px;opacity:.35;text-align:left;padding:10px 8px;border-bottom:1px solid #EDE9E3}td{font-size:12px;padding:12px 8px;border-bottom:1px solid #F3F1EC}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 18px;border-radius:999px;font-size:11px;opacity:0;transition:.35s;z-index:9999}#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style></head><body>
 <div class="wrap">
-<div class="top"><div class="logo" id="storeLogo">LOADING</div><div style="display:flex;gap:8px"><a href="admin-orders.html" style="text-decoration:none"><button class="btn-w">ORDERS</button></a><button class="btn-w" onclick="location.href='index.html'">LIHAT TOKO</button></div></div>
+<div class="top"><div class="logo" id="storeLogo">ARINDA</div><div class="top-actions"><a href="admin-orders.html" style="text-decoration:none"><button class="btn-w">ORDERS</button></a><button class="btn-w" onclick="location.href='index.html'">TOKO</button></div></div>
 
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;align-items:center">
-<select id="fRange" onchange="loadLaporan()"><option value="today">HARI INI</option><option value="7d" selected>7 HARI TERAKHIR</option><option value="30d">30 HARI TERAKHIR</option><option value="all">SEMUA</option></select>
+<div class="filters">
+<select id="fRange" onchange="loadLaporan()"><option value="today">Hari ini</option><option value="7d" selected>7 hari terakhir</option><option value="30d">30 hari terakhir</option><option value="all">Semua</option></select>
 <input type="date" id="fStart"><input type="date" id="fEnd">
 <button class="btn" onclick="loadLaporan()">TERAPKAN</button>
 <button class="btn-w" onclick="exportCSV()">EXPORT CSV</button>
 </div>
 
 <div class="grid4">
-<div class="card"><div class="label">OMSET</div><div class="stat" id="sOmset">Rp -</div><div class="label" id="sOmsetSub">-</div></div>
-<div class="card"><div class="label">ORDER MASUK</div><div class="stat" id="sCount">-</div><div class="label" id="sAvg">AVG -</div></div>
-<div class="card"><div class="label">ORDER SELESAI</div><div class="stat" id="sDone">-</div><div class="label">STATUS DONE/PAID</div></div>
-<div class="card"><div class="label">KOTA TOP</div><div class="stat" style="font-size:16px" id="sKota">-</div><div class="label" id="sKotaCount">-</div></div>
+<div class="card"><div class="label">Omset</div><div class="stat" id="sOmset">Rp 0</div><div class="label" id="sOmsetSub" style="margin-top:6px">0 order</div></div>
+<div class="card"><div class="label">Order Masuk</div><div class="stat" id="sCount">0</div><div class="label" id="sAvg" style="margin-top:6px">AVG Rp 0</div></div>
+<div class="card"><div class="label">Order Selesai</div><div class="stat" id="sDone">0</div><div class="label" style="margin-top:6px">Done / Paid</div></div>
+<div class="card"><div class="label">Kota Top</div><div class="stat" style="font-size:16px" id="sKota">-</div><div class="label" id="sKotaCount" style="margin-top:6px">-</div></div>
 </div>
 
 <div class="row2">
-<div class="card"><div class="label">GRAFIK OMSET 7 HARI</div><div id="chart" style="margin-top:12px"></div></div>
-<div class="card"><div class="label">TOP KOTA</div><div id="topKota" style="margin-top:12px"></div></div>
+<div class="card"><div class="label">Grafik Omset 7 Hari</div><div id="chart" style="margin-top:14px"></div></div>
+<div class="card"><div class="label">Top Kota</div><div id="topKota" style="margin-top:14px"></div></div>
 </div>
 
-<div class="card" style="margin-top:14px"><div class="label">TOP PRODUK (DARI NAMA ORDER)</div><div id="topProduk" style="margin-top:12px"></div></div>
+<div class="card section"><div class="label">Top Produk (dari nama order)</div><div id="topProduk" style="margin-top:14px"></div></div>
 
-<div class="card" style="margin-top:14px"><div class="label">DETAIL ORDER - <span id="detailInfo">-</span></div><div style="overflow:auto;margin-top:10px"><table><thead><tr><th>TGL</th><th>NAMA</th><th>KOTA</th><th>TOTAL</th><th>STATUS</th></tr></thead><tbody id="tbody"></tbody></table></div></div>
+<div class="card section"><div class="label">Detail Order - <span id="detailInfo" style="opacity:1">-</span></div><div style="overflow:auto;margin-top:12px"><table><thead><tr><th>TGL</th><th>NAMA</th><th>KOTA</th><th>TOTAL</th><th>STATUS</th></tr></thead><tbody id="tbody"></tbody></table></div></div>
 </div>
 <div id="toast"></div>
 <script>
-const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
-const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
-const supa=supabase.createClient(SUPA_URL,SUPA_KEY);
+const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';const supa=supabase.createClient(SUPA_URL,SUPA_KEY);
 let CACHE_ORDERS=[];
 function toast(m){const e=document.getElementById('toast');e.innerText=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2000);}
 function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function fmt(n){return 'Rp'+Number(n||0).toLocaleString('id-ID');}
-
-async function initStore(){
-  const lg=document.getElementById('storeLogo'); lg.innerText=STORE_CACHE.toUpperCase();
-  try{const {data}=await supa.from('settings').select('value').eq('key','store_name').maybeSingle(); if(data?.value){ localStorage.setItem('store_name_cache',data.value); lg.innerText=data.value.toUpperCase(); }}catch(e){}
-  // Proteksi admin simple
-  if(!sessionStorage.getItem('arinda_admin') &&!localStorage.getItem('arinda_admin_ok')){
-    // kalau belum login admin, tetep boleh lihat tapi kasih warning
-    console.log('laporan: admin check skip');
-  }
-}
-
-function getDateFilter(){
-  const r=document.getElementById('fRange').value;
-  const now=new Date(); let start=null; let end=new Date();
-  if(r==='today'){ start=new Date(now.setHours(0,0,0,0)); }
-  else if(r==='7d'){ start=new Date(); start.setDate(start.getDate()-6); start.setHours(0,0,0,0); }
-  else if(r==='30d'){ start=new Date(); start.setDate(start.getDate()-29); start.setHours(0,0,0,0); }
-  else if(r==='all'){ start=null; }
-  const cs=document.getElementById('fStart').value; const ce=document.getElementById('fEnd').value;
-  if(cs){ start=new Date(cs); } if(ce){ end=new Date(ce); end.setHours(23,59,59,999); }
-  return {start,end};
-}
-
+(function(){const up=STORE_CACHE.toUpperCase();document.getElementById('storeLogo').innerText=up;document.getElementById('pageTitle').innerText='Laporan - '+up;document.title='Laporan - '+up;})();
+async function initStore(){try{const {data}=await supa.from('settings').select('value').eq('key','store_name').maybeSingle(); if(data?.value){ localStorage.setItem('store_name_cache',data.value); const up=data.value.toUpperCase(); document.getElementById('storeLogo').innerText=up; }}catch(e){}}
+function getDateFilter(){const r=document.getElementById('fRange').value;const now=new Date(); let start=null; let end=new Date(); if(r==='today'){ start=new Date(now.setHours(0,0,0,0)); }else if(r==='7d'){ start=new Date(); start.setDate(start.getDate()-6); start.setHours(0,0,0,0); }else if(r==='30d'){ start=new Date(); start.setDate(start.getDate()-29); start.setHours(0,0,0,0); }else if(r==='all'){ start=null; }const cs=document.getElementById('fStart').value; const ce=document.getElementById('fEnd').value; if(cs){ start=new Date(cs); } if(ce){ end=new Date(ce); end.setHours(23,59,59,999); }return {start,end};}
 async function loadLaporan(){
   await initStore();
   const {start,end}=getDateFilter();
   document.getElementById('tbody').innerHTML='<tr><td colspan=5 style="text-align:center;opacity:.4;padding:20px">Memuat...</td></tr>';
   try{
-    // 1. Coba dari view admin_orders_view dulu (anti RLS bocor), fallback ke orders
-    let orders=[];
-    let q1=await supa.from('admin_orders_view').select('*').order('created_at',{ascending:false}).limit(1000);
-    if(q1.data && q1.data.length){ orders=q1.data; }
-    else{
-      let q2=await supa.from('orders').select('*').order('created_at',{ascending:false}).limit(1000);
-      if(q2.data) orders=q2.data;
-    }
-    // Filter tanggal di JS biar fleksibel
-    let filtered=orders.filter(o=>{
-      if(!start) return true;
-      const d=new Date(o.created_at||o.tanggal||Date.now());
-      if(start && d<start) return false;
-      if(end && d>end) return false;
-      return true;
-    });
+    let orders=[];let q1=await supa.from('admin_orders_view').select('*').order('created_at',{ascending:false}).limit(1000);if(q1.data && q1.data.length){ orders=q1.data; }else{let q2=await supa.from('orders').select('*').order('created_at',{ascending:false}).limit(1000);if(q2.data) orders=q2.data;}
+    let filtered=orders.filter(o=>{ if(!start) return true; const d=new Date(o.created_at||o.tanggal||Date.now()); if(start && d<start) return false; if(end && d>end) return false; return true; });
     CACHE_ORDERS=filtered;
-
-    // Stats
     const omset=filtered.filter(o=>!['cancelled','batal'].includes((o.status||'').toLowerCase())).reduce((a,b)=>a+Number(b.total||b.grand_total||0),0);
-    const avg=filtered.length? omset/filtered.length:0;
-    const done=filtered.filter(o=>['done','paid','selesai','lunas'].includes((o.status||'').toLowerCase())).length;
-    document.getElementById('sOmset').innerText=fmt(omset);
-    document.getElementById('sOmsetSub').innerText=filtered.length+' order';
-    document.getElementById('sCount').innerText=filtered.length;
-    document.getElementById('sAvg').innerText='AVG '+fmt(Math.round(avg));
-    document.getElementById('sDone').innerText=done;
-
-    // Kota
+    const avg=filtered.length? omset/filtered.length:0; const done=filtered.filter(o=>['done','paid','selesai','lunas'].includes((o.status||'').toLowerCase())).length;
+    document.getElementById('sOmset').innerText=fmt(omset);document.getElementById('sOmsetSub').innerText=filtered.length+' order';document.getElementById('sCount').innerText=filtered.length;document.getElementById('sAvg').innerText='AVG '+fmt(Math.round(avg));document.getElementById('sDone').innerText=done;
     const kotaMap={}; filtered.forEach(o=>{ const k=(o.kota||o.city||'LAINNYA').toUpperCase(); kotaMap[k]=(kotaMap[k]||0)+1; });
-    const sortedKota=Object.entries(kotaMap).sort((a,b)=>b[1]-a[1]);
-    document.getElementById('sKota').innerText=sortedKota[0]?.[0]||'-';
-    document.getElementById('sKotaCount').innerText=sortedKota[0]? sortedKota[0][1]+' order':'-';
-    document.getElementById('topKota').innerHTML=sortedKota.slice(0,5).map(([k,v])=>{
-      const pct=Math.round(v/filtered.length*100)||0;
-      return `<div style="display:flex;justify-content:space-between;font-size:11px;margin-top:8px"><span>${esc(k)}</span><span>${v} (${pct}%)</span></div><div class="bar" style="width:${pct}%"></div>`;
-    }).join('')||'<div style="opacity:.4;font-size:10px">Belum ada data kota</div>';
-
-    // Produk - dari field product_name / items / nama_produk
-    const prodMap={};
-    filtered.forEach(o=>{
-      let names=[];
-      if(o.product_name) names.push(o.product_name);
-      if(o.nama_produk) names.push(o.nama_produk);
-      if(o.items){ try{ const it=typeof o.items==='string'?JSON.parse(o.items):o.items; (Array.isArray(it)?it:[]).forEach(i=>{ if(i.name||i.title) names.push(i.name||i.title); }); }catch(e){} }
-      if(o.produk) names.push(o.produk);
-      if(!names.length) names=['HIJAB'];
-      names.forEach(n=>{ const key=n.toUpperCase().slice(0,60); prodMap[key]=(prodMap[key]||0)+1; });
-    });
-    const sortedProd=Object.entries(prodMap).sort((a,b)=>b[1]-a[1]).slice(0,8);
-    document.getElementById('topProduk').innerHTML=sortedProd.map(([k,v])=>{
-      const pct=Math.round(v/filtered.length*100)||0;
-      return `<div style="display:flex;justify-content:space-between;font-size:11px;margin-top:8px"><span>${esc(k)}</span><span>${v}x • ${pct}%</span></div><div class="bar" style="width:${pct}%;background:#888"></div>`;
-    }).join('')||'<div style="opacity:.4;font-size:10px">Belum ada data produk</div>';
-
-    // Chart 7 hari
-    const days={}; for(let i=6;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); const key=d.toISOString().slice(0,10); days[key]=0; }
-    filtered.forEach(o=>{ const k=(o.created_at||'').slice(0,10); if(days[k]!==undefined) days[k]+=Number(o.total||0); });
-    const maxVal=Math.max(...Object.values(days),1);
-    document.getElementById('chart').innerHTML=Object.entries(days).map(([k,v])=>{
-      const w=Math.round(v/maxVal*100);
-      return `<div style="display:flex;align-items:center;gap:8px;margin-top:6px"><div style="font-size:9px;width:60px;opacity:.5">${k.slice(5)}</div><div class="bar" style="width:${w}%;height:14px"></div><div style="font-size:10px">${fmt(v)}</div></div>`;
-    }).join('');
-
-    // Table
+    const sortedKota=Object.entries(kotaMap).sort((a,b)=>b[1]-a[1]);document.getElementById('sKota').innerText=sortedKota[0]?.[0]||'-';document.getElementById('sKotaCount').innerText=sortedKota[0]? sortedKota[0][1]+' order':'-';
+    document.getElementById('topKota').innerHTML=sortedKota.slice(0,5).map(([k,v])=>{const pct=Math.round(v/filtered.length*100)||0;return `<div style="display:flex;justify-content:space-between;font-size:12px;margin-top:10px"><span>${esc(k)}</span><span style="opacity:.6">${v} • ${pct}%</span></div><div class="bar" style="width:${pct}%"></div>`;}).join('')||'<div class="empty">Belum ada data kota</div>';
+    const prodMap={};filtered.forEach(o=>{let names=[];if(o.product_name) names.push(o.product_name);if(o.nama_produk) names.push(o.nama_produk);if(o.items){ try{ const it=typeof o.items==='string'?JSON.parse(o.items):o.items; (Array.isArray(it)?it:[]).forEach(i=>{ if(i.name||i.title) names.push(i.name||i.title); }); }catch(e){} }if(o.produk) names.push(o.produk);if(!names.length) names=['HIJAB'];names.forEach(n=>{ const key=n.toUpperCase().slice(0,60); prodMap[key]=(prodMap[key]||0)+1; });});
+    const sortedProd=Object.entries(prodMap).sort((a,b)=>b[1]-a[1]).slice(0,8);document.getElementById('topProduk').innerHTML=sortedProd.map(([k,v])=>{const pct=Math.round(v/filtered.length*100)||0;return `<div style="display:flex;justify-content:space-between;font-size:12px;margin-top:10px"><span>${esc(k)}</span><span style="opacity:.6">${v}x • ${pct}%</span></div><div class="bar" style="width:${pct}%;background:#999"></div>`;}).join('')||'<div class="empty">Belum ada data produk</div>';
+    const days={}; for(let i=6;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); const key=d.toISOString().slice(0,10); days[key]=0; }filtered.forEach(o=>{ const k=(o.created_at||'').slice(0,10); if(days[k]!==undefined) days[k]+=Number(o.total||0); });const maxVal=Math.max(...Object.values(days),1);
+    document.getElementById('chart').innerHTML=Object.entries(days).map(([k,v])=>{const w=Math.round(v/maxVal*100)||4;return `<div style="display:flex;align-items:center;gap:10px;margin-top:10px"><div style="font-size:10px;width:44px;opacity:.5">${k.slice(5)}</div><div style="flex:1;background:#F0EDE7;border-radius:99px;height:10px"><div class="bar" style="width:${w}%;height:10px;margin-top:0"></div></div><div style="font-size:11px;min-width:70px;text-align:right">${fmt(v)}</div></div>`;}).join('');
     document.getElementById('detailInfo').innerText=filtered.length+' ORDER';
-    document.getElementById('tbody').innerHTML=filtered.slice(0,100).map(o=>{
-      const d=(o.created_at||'').slice(0,10);
-      return `<tr><td>${d}</td><td>${esc(o.customer_name||o.nama||'-')}</td><td>${esc(o.kota||'-')}</td><td>${fmt(o.total||0)}</td><td style="font-size:9px;letter-spacing:1px">${esc(o.status||'-')}</td></tr>`;
-    }).join('')||'<tr><td colspan=5 style="text-align:center;opacity:.4">Kosong</td></tr>';
-
-  }catch(e){
-    document.getElementById('tbody').innerHTML='<tr><td colspan=5 style="color:#B42318">Gagal: '+esc(e.message)+'</td></tr>';
-  }
+    document.getElementById('tbody').innerHTML=filtered.slice(0,100).map(o=>{const d=(o.created_at||'').slice(0,10);return `<tr><td>${d}</td><td>${esc(o.customer_name||o.nama||'-')}</td><td>${esc(o.kota||'-')}</td><td>${fmt(o.total||0)}</td><td style="font-size:9px;letter-spacing:1px">${esc(o.status||'-')}</td></tr>`;}).join('')||'<tr><td colspan=5 style="text-align:center;opacity:.4">Kosong</td></tr>';
+  }catch(e){document.getElementById('tbody').innerHTML='<tr><td colspan=5 style="color:#B42318">Gagal: '+esc(e.message)+'</td></tr>';}
 }
-
-function exportCSV(){
-  if(!CACHE_ORDERS.length){ toast('Tidak ada data'); return; }
-  const header=['tanggal','nama','wa','kota','total','status'];
-  const rows=CACHE_ORDERS.map(o=>[ (o.created_at||'').slice(0,10), (o.customer_name||o.nama||'').replace(/,/g,' '), (o.wa||''), (o.kota||''), (o.total||0), (o.status||'') ]);
-  const csv=[header.join(','),...rows.map(r=>r.join(','))].join('\n');
-  const blob=new Blob([csv],{type:'text/csv'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download='laporan-'+new Date().toISOString().slice(0,10)+'.csv'; a.click();
-  toast('CSV didownload');
-}
+function exportCSV(){if(!CACHE_ORDERS.length){ toast('Tidak ada data'); return; }const header=['tanggal','nama','wa','kota','total','status'];const rows=CACHE_ORDERS.map(o=>[ (o.created_at||'').slice(0,10), (o.customer_name||o.nama||'').replace(/,/g,' '), (o.wa||''), (o.kota||''), (o.total||0), (o.status||'') ]);const csv=[header.join(','),...rows.map(r=>r.join(','))].join('\n');const blob=new Blob([csv],{type:'text/csv'});const url=URL.createObjectURL(blob);const a=document.createElement('a'); a.href=url; a.download='laporan-'+STORE_CACHE.toLowerCase()+'-'+new Date().toISOString().slice(0,10)+'.csv'; a.click(); toast('CSV didownload');}
 loadLaporan();
 </script>
 </body></html>
