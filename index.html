@@ -22,18 +22,38 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-f
 #searchBox.show{display:flex}
 #searchBox input{flex:1;padding:12px 14px;border:1px solid #111;outline:none;font-size:13px}
 .s-btn{background:#111;color:#fff;border:none;padding:12px 18px;font-size:9px;letter-spacing:2px;cursor:pointer}
-/* HERO V22 - MOBILE CLEAN */
+
+/* HERO V22.2 */
 .hero{position:relative;width:100%;background:#F6F1EB;overflow:hidden;min-height:72vh;height:72vh;display:flex}
 @media(min-width:800px){.hero{min-height:78vh;height:78vh;max-height:780px}}
 .hero picture{width:100%;display:flex}
 .hero img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 28%!important;display:block}
-.hero-content{position:absolute;inset:0;z-index:3;padding:0 18px 22px;max-width:1240px;margin:0 auto;display:flex;flex-direction:column;justify-content:flex-end}
+.hero-content{position:absolute;inset:0;z-index:3;padding:0 18px 26px;max-width:1240px;margin:0 auto;display:flex;flex-direction:column;justify-content:flex-end}
 @media(min-width:800px){.hero-content{padding:0 40px 40px}}
-.hero-eyebrow{font-size:7px;letter-spacing:4px;color:#fff;opacity:.9;text-transform:uppercase;text-shadow:0 1px 10px rgba(0,0,0,.5);margin-bottom:12px}
-.hero-main-title{font-family:'Cormorant Garamond';font-size:34px;font-weight:300;letter-spacing:1.5px;color:#fff;line-height:.9;text-shadow:0 2px 18px rgba(0,0,0,.45);margin:0}
+.hero-eyebrow{font-size:7px;letter-spacing:4.2px;color:#fff;opacity:.85;text-transform:uppercase;margin-bottom:12px;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.hero-main-title{font-family:'Cormorant Garamond';font-size:34px;font-weight:300;letter-spacing:1.5px;color:#fff;line-height:.92;text-shadow:0 2px 16px rgba(0,0,0,.4);margin:0}
 .hero-main-title span{display:block}
 @media(min-width:700px){.hero-main-title{font-size:64px}}
-.btn-hero{margin-top:16px;background:transparent!important;border:none!important;border-bottom:1px solid rgba(255,255,255,.85)!important;color:#fff!important;padding:0 0 6px 0!important;font-size:9px!important;letter-spacing:3.5px!important;display:inline-flex!important;gap:8px!important}
+/* CTA 1 GARIS - BEDA WARNA & TEBAL */
+.btn-hero{
+  margin-top:20px!important;
+  background:transparent!important;
+  border:none!important;
+  border-bottom:1px solid rgba(255,255,255,.7)!important;
+  color:rgba(255,255,255,.9)!important;
+  padding:0 0 7px 0!important;
+  font-family:'Inter'!important;
+  font-size:8.5px!important;
+  font-weight:400!important;
+  letter-spacing:4.5px!important;
+  opacity:.9!important;
+  display:inline-flex!important;
+  gap:8px!important;
+  width:fit-content!important;
+  text-decoration:none!important;
+  cursor:pointer;
+}
+
 .section{max-width:1240px;margin:0 auto;padding:28px 10px 0;background:#FFFEFB}
 .best-title{font-family:'Cormorant Garamond';font-size:16px;letter-spacing:4px;font-weight:300;margin-bottom:16px;padding-left:2px}
 .colors{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:8px!important;margin-top:10px}
@@ -49,14 +69,18 @@ nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-f
 .under-title{font-family:'Cormorant Garamond';font-size:16px;letter-spacing:4px;margin:0 0 14px;font-weight:300}
 .under-grid-clean{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 @media(min-width:700px){.under-grid-clean{grid-template-columns:repeat(4,1fr);gap:12px}}
-.u-item{cursor:pointer}
 .u-photo-box{background:#fff;border:1px solid #EEE}
 .u-head{font-size:9px;letter-spacing:3px;text-align:center;padding:10px 4px;border-bottom:1px solid #F5F1EB;font-weight:600}
 .u-photo-box img{width:100%;height:165px;object-fit:cover;display:block}
 @media(min-width:700px){.u-photo-box img{height:280px}}
 .u-desc-outside{font-size:7px!important;line-height:1.6!important;color:#888!important;padding:8px 6px!important;text-align:center!important;text-transform:uppercase!important;min-height:56px!important}
 .u-cta-outside{font-size:8px!important;letter-spacing:2px!important;text-align:center!important;padding:8px 4px!important;font-weight:600!important}
-.fly-img{position:fixed;z-index:99999;width:56px;height:56px;object-fit:cover;border-radius:50%;pointer-events:none;box-shadow:0 12px 24px rgba(0,0,0,.18);border:2px solid #fff;transition:all.7s cubic-bezier(.4,0,.2,1)}
+
+/* ANIMASI FLY + BOOM FIX */
+@keyframes cartBoom{0%{transform:scale(1)}30%{transform:scale(1.35)}60%{transform:scale(0.9)}100%{transform:scale(1)}}
+.cart-boom{animation:cartBoom.38s cubic-bezier(.34,1.56,.64,1)!important}
+.fly-img{position:fixed;left:0;top:0;z-index:99999;width:68px;height:68px;object-fit:cover;border-radius:50%;pointer-events:none;box-shadow:0 16px 32px rgba(0,0,0,.22);border:3px solid #fff;transition:all.75s cubic-bezier(.4,0,.2,1)}
+
 #cartToast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(80px);background:#111;color:#fff;padding:8px 14px;border-radius:20px;display:flex;gap:8px;align-items:center;transition:.35s;opacity:0;z-index:1000}
 #cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}
 #cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:2000;align-items:flex-end}
@@ -132,8 +156,48 @@ function addCart(n,p,i){let c=getCart();let idx=c.findIndex(a=>a.warna==n);if(id
 function showToast(t,i){document.getElementById('toastImg').src=i;document.getElementById('toastText').innerText=t;const el=document.getElementById('cartToast');el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2000);}
 function getOptImg(url,w=300){if(!url)return url;if(!url.includes('supabase.co/storage/v1/object/public/'))return url;try{const path=url.split('/object/public/')[1];return `${SUPA_URL}/storage/v1/render/image/public/${path}?width=${w}&height=${w}&quality=75&format=webp&resize=contain`;}catch(e){return url;}}
 function getBannerImg(url,w=800){if(!url)return url;if(!url.includes('supabase.co/storage/v1/object/public/'))return url;try{const path=url.split('/object/public/')[1];return `${SUPA_URL}/storage/v1/render/image/public/${path}?width=${w}&quality=80&format=webp&resize=contain`;}catch(e){return url;}}
-function flyToCart(imgUrl,startEl){const cartIcon=document.getElementById('cartIcon');if(!cartIcon)return;const cartRect=cartIcon.getBoundingClientRect();const fly=document.createElement('img');fly.src=getOptImg(imgUrl,120);fly.className='fly-img';const s=startEl?startEl.getBoundingClientRect():{left:innerWidth/2,top:innerHeight/2,width:60,height:60};fly.style.left=(s.left+s.width/2-28)+'px';fly.style.top=(s.top+s.height/2-28)+'px';document.body.appendChild(fly);requestAnimationFrame(()=>{fly.style.left=(cartRect.left+8)+'px';fly.style.top=(cartRect.top+8)+'px';fly.style.transform='scale(0.2)';fly.style.opacity='0.2';});setTimeout(()=>fly.remove(),700);}
-async function quickAdd(title,img,el,idx){const imgEl=document.getElementById('img-best-'+idx)||el?.closest('.k-card')?.querySelector('img');if(imgEl)flyToCart(imgEl.src||img,imgEl);let price=99000;try{const warnaOnly=title.split(' - ')[0].trim();const{data:variant}=await supabaseClient.from('product_variants').select('product_id').ilike('color_name','%'+warnaOnly+'%').limit(1).maybeSingle();if(variant){const{data:prod}=await supabaseClient.from('products').select('price').eq('id',variant.product_id).single();if(prod)price=Number(prod.price);}}catch(e){}addCart(title,price,img);showToast(title+' DITAMBAHKAN',getOptImg(img,80));}
+// FLY + BOOM FIX V22.2
+function flyToCart(imgUrl,startEl){
+  document.querySelectorAll('.fly-img').forEach(e=>e.remove());
+  const cartIcon=document.getElementById('cartIcon');
+  if(!cartIcon) return;
+  const cartRect=cartIcon.getBoundingClientRect();
+  const targetX=cartRect.left + cartRect.width/2 - 18;
+  const targetY=cartRect.top + cartRect.height/2 - 18;
+  let startRect = startEl? startEl.getBoundingClientRect() : null;
+  if(!startRect || startRect.width===0){ startRect={left:innerWidth/2-34, top:innerHeight/2-34, width:68, height:68}; }
+  const fly=document.createElement('img');
+  fly.src=getOptImg(imgUrl,120);
+  fly.className='fly-img';
+  fly.style.left=(startRect.left+startRect.width/2-34)+'px';
+  fly.style.top=(startRect.top+startRect.height/2-34)+'px';
+  fly.style.opacity='1';
+  document.body.appendChild(fly);
+  requestAnimationFrame(()=>{requestAnimationFrame(()=>{
+    fly.style.left=targetX+'px';
+    fly.style.top=targetY+'px';
+    fly.style.transform='scale(0.12)';
+    fly.style.opacity='0.2';
+  });});
+  setTimeout(()=>{
+    fly.remove();
+    cartIcon.classList.remove('cart-boom');
+    void cartIcon.offsetWidth;
+    cartIcon.classList.add('cart-boom');
+    setTimeout(()=>cartIcon.classList.remove('cart-boom'),450);
+  },720);
+}
+async function quickAdd(title,img,el,idx){
+  const imgEl=document.getElementById('img-best-'+idx) || (el?el.closest('.k-card')?.querySelector('img'):null);
+  if(imgEl) flyToCart(imgEl.src||img, imgEl);
+  let price=99000;
+  try{
+    const warnaOnly=title.split(' - ')[0].trim();
+    const{data:variant}=await supabaseClient.from('product_variants').select('product_id').ilike('color_name','%'+warnaOnly+'%').limit(1).maybeSingle();
+    if(variant){const{data:prod}=await supabaseClient.from('products').select('price').eq('id',variant.product_id).single();if(prod) price=Number(prod.price);}
+  }catch(e){}
+  setTimeout(()=>{addCart(title,price,img);showToast(title+' DITAMBAHKAN', getOptImg(img,80));},200);
+}
 const underFallback={cool:{title:'COOL',desc:'Pembuluh biru.',col:'COOL'},warm:{title:'WARM',desc:'Pembuluh hijau.',col:'WARM'},neutral:{title:'NEUTRAL',desc:'Biru-hijau.',col:'NEUTRAL'},olive:{title:'OLIVE',desc:'Hijau abu.',col:'OLIVE'}};
 function extractKey(t){const u=(t||'').toUpperCase();if(u.includes('COOL'))return'cool';if(u.includes('WARM'))return'warm';if(u.includes('OLIVE'))return'olive';return'neutral';}
 async function init(){
