@@ -1,90 +1,25 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title id="pageTitle">NOURA - Hijab Premium</title>
+<meta name="description" id="metaDesc" content="NOURA Hijab Premium - Koleksi voal premium warna lengkap">
+<meta name="keywords" content="hijab premium, hijab voal, noura hijab">
+<meta property="og:title" id="ogTitle" content="NOURA - Hijab Premium Voal">
+<meta property="og:description" id="ogDesc" content="Koleksi hijab voal premium terbaik">
+<meta property="og:image" content="https://qjgevvizqeebtdqcbqmt.supabase.co/storage/v1/object/public/banners/banner-default.jpg">
+<meta property="og:type" content="website"><meta property="og:url" content="https://arinda-hijab.vercel.app/">
+<meta property="og:site_name" id="ogSite" content="NOURA Hijab">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" id="twTitle" content="NOURA - Hijab Premium">
+<script>const STORE_CACHE=localStorage.getItem('store_name_cache')||'NOURA';const ORIGIN_LABEL_CACHE=localStorage.getItem('store_origin_label')||'Jakarta';</script>
 <link rel="preconnect" href="https://qjgevvizqeebtdqcbqmt.supabase.co" crossorigin>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box}body{margin:0;background:#FFFEFB;color:#111;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
-nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-bottom:1px solid #EFE9E0}
-.nav-top{max-width:1240px;margin:0 auto;padding:0 14px;height:56px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Cormorant Garamond',serif;letter-spacing:9px;font-size:17px;font-weight:300;color:#000;text-decoration:none;line-height:1}
-.logo span{display:block;font-size:6px;letter-spacing:4.5px;opacity:.45;margin-top:3px;font-family:'Inter'}
-.icons{display:flex;gap:8px;align-items:center}
-.icon-btn{background:none;border:none;cursor:pointer;position:relative;width:32px;height:32px;display:flex;align-items:center;justify-content:center}
-.icon-btn svg{width:17px;height:17px;stroke:#111;fill:none;stroke-width:1.3}
-.badge{position:absolute;top:0;right:0;background:#111;color:#fff;font-size:8px;min-width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.nav-menu{border-top:1px solid #F5F1EB;overflow-x:auto}
-.menu{max-width:1240px;margin:0 auto;padding:0 14px;display:flex;gap:26px}
-.menu a{font-size:9px;letter-spacing:3.5px;color:#111;text-decoration:none;padding:12px 0;opacity:.6;white-space:nowrap}
-.menu a.active{opacity:1;border-bottom:1px solid #111}
-@media(max-width:700px){.nav-menu{display:none}}
-#searchBox{display:none;max-width:1240px;margin:0 auto;padding:10px 14px;border-top:1px solid #EFE9E0;background:#fff;gap:8px}
-#searchBox.show{display:flex}
-#searchBox input{flex:1;padding:12px 14px;border:1px solid #111;outline:none;font-size:13px}
-.s-btn{background:#111;color:#fff;border:none;padding:12px 18px;font-size:9px;letter-spacing:2px;cursor:pointer}
-.hero{position:relative;width:100%;background:#F6F1EB;overflow:hidden;min-height:72vh;height:72vh;display:flex}
-@media(min-width:800px){.hero{min-height:78vh;height:78vh;max-height:780px}}
-.hero picture{width:100%;display:flex}
-.hero img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 28%!important;display:block}
-.hero-content{position:absolute;inset:0;z-index:3;padding:0 18px 26px;max-width:1240px;margin:0 auto;display:flex;flex-direction:column;justify-content:flex-end}
-@media(min-width:800px){.hero-content{padding:0 40px 40px}}
-.hero-eyebrow{font-size:7px;letter-spacing:4.2px;color:#fff;opacity:.85;text-transform:uppercase;margin-bottom:12px;text-shadow:0 1px 8px rgba(0,0,0,.4)}
-.hero-main-title{font-family:'Cormorant Garamond';font-size:34px;font-weight:300;letter-spacing:1.5px;color:#fff;line-height:.92;text-shadow:0 2px 16px rgba(0,0,0,.4);margin:0}
-.hero-main-title span{display:block}
-@media(min-width:700px){.hero-main-title{font-size:64px}}
-.btn-hero{margin-top:20px!important;background:transparent!important;border:none!important;border-bottom:1px solid rgba(255,255,255,.7)!important;color:rgba(255,255,255,.9)!important;padding:0 0 7px 0!important;font-family:'Inter'!important;font-size:8.5px!important;font-weight:400!important;letter-spacing:4.5px!important;opacity:.9!important;display:inline-flex!important;gap:8px!important;width:fit-content!important;text-decoration:none!important}
-.section{max-width:1240px;margin:0 auto;padding:28px 10px 0;background:#FFFEFB}
-.best-title{font-family:'Cormorant Garamond';font-size:16px;letter-spacing:4px;font-weight:300;margin-bottom:16px;padding-left:2px}
-.colors{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:8px!important;margin-top:10px}
-@media(min-width:500px){.colors{grid-template-columns:repeat(3,1fr)!important}}
-@media(min-width:800px){.colors{grid-template-columns:repeat(4,1fr)!important;gap:12px!important}}
-.k-card{background:#fff;cursor:pointer;position:relative;border:1px solid #F0EBE3;border-radius:2px}
-.k-card img{width:100%!important;height:165px!important;object-fit:cover!important;display:block!important}
-@media(min-width:700px){.k-card img{height:280px!important}}
-.heart-btn{position:absolute;top:8px;right:8px;width:28px;height:28px;background:rgba(255,255,255,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #EEE}
-.heart-btn svg{width:12px;height:12px;stroke:#111;fill:none}
-.k-title{padding:8px 6px 9px;font-size:9px;letter-spacing:1px;text-align:center;font-weight:400;text-transform:uppercase;line-height:1.4}
-.under-sec{max-width:1240px;margin:0 auto;padding:32px 10px 0;background:#FFFEFB}
-.under-title{font-family:'Cormorant Garamond';font-size:16px;letter-spacing:4px;margin:0 0 14px;font-weight:300}
-.under-grid-clean{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:stretch}
-@media(min-width:700px){.under-grid-clean{grid-template-columns:repeat(4,1fr);gap:12px}}
-.u-item{display:flex!important;flex-direction:column!important;cursor:pointer;background:#fff;border:1px solid #EEE}
-.u-photo-box{border-bottom:1px solid #F5F1EB}
-.u-head{font-size:9px;letter-spacing:3px;text-align:center;padding:10px 4px;font-weight:600;background:#fff}
-.u-photo-box img{width:100%;height:165px;object-fit:cover;display:block}
-@media(min-width:700px){.u-photo-box img{height:280px}}
-.u-desc-outside{font-size:7.2px!important;line-height:1.65!important;color:#777!important;padding:10px 8px 8px!important;text-align:center!important;text-transform:uppercase!important;min-height:78px!important;height:auto!important;white-space:normal!important;word-break:break-word!important;overflow:visible!important;display:block!important}
-.u-cta-outside{font-size:8px!important;letter-spacing:2px!important;text-align:center!important;padding:10px 4px 12px!important;font-weight:600!important;margin-top:auto!important;background:#fff}
-@keyframes cartBoom{0%{transform:scale(1)}30%{transform:scale(1.35)}60%{transform:scale(0.9)}100%{transform:scale(1)}}
-.cart-boom{animation:cartBoom.38s cubic-bezier(.34,1.56,.64,1)!important}
-.fly-img{position:fixed;left:0;top:0;z-index:99999;width:68px;height:68px;object-fit:cover;border-radius:50%;pointer-events:none;box-shadow:0 16px 32px rgba(0,0,0,.22);border:3px solid #fff;transition:all.75s cubic-bezier(.4,0,.2,1)}
-#cartToast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(80px);background:#111;color:#fff;padding:8px 14px;border-radius:20px;display:flex;gap:8px;align-items:center;transition:.35s;opacity:0;z-index:1000}
-#cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}
-#cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:2000;align-items:flex-end}
-#cartModal.open{display:flex}
-#cartBox{background:#fff;width:100%;max-width:440px;margin:0 auto;max-height:88vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px}
-.btn{width:100%;padding:12px;background:#111;color:#fff;border:1px solid #111;font-size:9px;letter-spacing:3px;cursor:pointer}
-.btn-light{width:100%;padding:11px;background:#fff;border:1px solid #DDD;font-size:9px;letter-spacing:2px;cursor:pointer;margin-top:8px}
-#confirmModal,#sideMenu{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:3000}
-#confirmModal.show,#sideMenu.open{display:flex}
-#sideBox{background:#FFFEFB;width:78%;max-width:300px;height:100%;padding:24px;overflow:auto}
-.side-link{display:block;padding:14px 0;border-bottom:1px solid #F2F2F2;font-size:10px;letter-spacing:3px;text-decoration:none;color:#111}
-.hamburger{width:32px;height:32px;display:flex;flex-direction:column;justify-content:center;gap:4px;background:none;border:none;cursor:pointer}
-.hamburger span{display:block;width:16px;height:1.2px;background:#111}
-@media(min-width:701px){.hamburger{display:none}}
-footer{margin-top:48px;padding:32px 14px;text-align:center;border-top:1px solid #EAE6E1;background:#FAF8F5}
-.footer-logo{font-family:'Cormorant Garamond';letter-spacing:9px;font-size:18px}
-.footer-tagline{font-size:7px;letter-spacing:3px;color:#999;margin-top:4px}
-.footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin:20px 0}
-.footer-nav a{font-size:8.5px;letter-spacing:2px;color:#555;text-decoration:none}
-.footer-copy{font-size:8px;letter-spacing:2.5px;color:#AAA;border-top:1px solid #EAE6E1;padding-top:16px;margin-top:16px}
-</style>
+<style>*{box-sizing:border-box}body{margin:0;background:#FFFEFB;color:#111;font-family:'Inter',sans-serif}nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-bottom:1px solid #EFE9E0}.nav-top{max-width:1240px;margin:0 auto;padding:0 14px;height:56px;display:flex;justify-content:space-between;align-items:center}.logo{font-family:'Cormorant Garamond',serif;letter-spacing:9px;font-size:17px;font-weight:300;color:#000;text-decoration:none;line-height:1}.logo span{display:block;font-size:6px;letter-spacing:4.5px;opacity:.45;margin-top:3px;font-family:'Inter'}.icons{display:flex;gap:8px;align-items:center}.icon-btn{background:none;border:none;cursor:pointer;position:relative;width:32px;height:32px;display:flex;align-items:center;justify-content:center}.icon-btn svg{width:17px;height:17px;stroke:#111;fill:none;stroke-width:1.3}.badge{position:absolute;top:0;right:0;background:#111;color:#fff;font-size:8px;min-width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center}.nav-menu{border-top:1px solid #F5F1EB;overflow-x:auto}.menu{max-width:1240px;margin:0 auto;padding:0 14px;display:flex;gap:26px}.menu a{font-size:9px;letter-spacing:3.5px;color:#111;text-decoration:none;padding:12px 0;opacity:.6;white-space:nowrap}.menu a.active{opacity:1;border-bottom:1px solid #111}@media(max-width:700px){.nav-menu{display:none}}#searchBox{display:none;max-width:1240px;margin:0 auto;padding:10px 14px;border-top:1px solid #EFE9E0;background:#fff;gap:8px}#searchBox.show{display:flex}#searchBox input{flex:1;padding:12px 14px;border:1px solid #111;outline:none;font-size:13px}.s-btn{background:#111;color:#fff;border:none;padding:12px 18px;font-size:9px;letter-spacing:2px;cursor:pointer}.hero{position:relative;width:100%;background:#F6F1EB;overflow:hidden;min-height:72vh;height:72vh;display:flex}@media(min-width:800px){.hero{min-height:78vh;height:78vh;max-height:780px}}.hero picture{width:100%;display:flex}.hero img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 28%!important;display:block}.hero-content{position:absolute;inset:0;z-index:3;padding:0 18px 26px;max-width:1240px;margin:0 auto;display:flex;flex-direction:column;justify-content:flex-end}@media(min-width:800px){.hero-content{padding:0 40px 40px}}.hero-eyebrow{font-size:7px;letter-spacing:4.2px;color:#fff;opacity:.85;text-transform:uppercase;margin-bottom:12px;text-shadow:0 1px 8px rgba(0,0,0,.4)}.hero-main-title{font-family:'Cormorant Garamond';font-size:34px;font-weight:300;letter-spacing:1.5px;color:#fff;line-height:.92;text-shadow:0 2px 16px rgba(0,0,0,.4);margin:0}.hero-main-title span{display:block}@media(min-width:700px){.hero-main-title{font-size:64px}}.btn-hero{margin-top:20px!important;background:transparent!important;border:none!important;border-bottom:1px solid rgba(255,255,255,.7)!important;color:rgba(255,255,255,.9)!important;padding:0 0 7px 0!important;font-family:'Inter'!important;font-size:8.5px!important;letter-spacing:4.5px!important;display:inline-flex!important;width:fit-content!important;text-decoration:none!important}.section{max-width:1240px;margin:0 auto;padding:28px 10px 0}.best-title{font-family:'Cormorant Garamond';font-size:16px;letter-spacing:4px;font-weight:300;margin-bottom:16px}.colors{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:8px!important;margin-top:10px}@media(min-width:800px){.colors{grid-template-columns:repeat(4,1fr)!important}}.k-card{background:#fff;cursor:pointer;position:relative;border:1px solid #F0EBE3}.k-card img{width:100%!important;height:165px!important;object-fit:cover!important;display:block!important}@media(min-width:700px){.k-card img{height:280px!important}}.heart-btn{position:absolute;top:8px;right:8px;width:28px;height:28px;background:rgba(255,255,255,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #EEE}.heart-btn svg{width:12px;height:12px;stroke:#111;fill:none}.k-title{padding:8px 6px 9px;font-size:9px;letter-spacing:1px;text-align:center;text-transform:uppercase}.under-sec{max-width:1240px;margin:0 auto;padding:32px 10px 0}.under-title{font-family:'Cormorant Garamond';font-size:16px;letter-spacing:4px;margin:0 0 14px;font-weight:300}.under-grid-clean{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(min-width:700px){.under-grid-clean{grid-template-columns:repeat(4,1fr)}.u-item{display:flex!important;flex-direction:column!important;cursor:pointer;background:#fff;border:1px solid #EEE}.u-photo-box{border-bottom:1px solid #F5F1EB}.u-head{font-size:9px;letter-spacing:3px;text-align:center;padding:10px 4px;font-weight:600}.u-photo-box img{width:100%;height:165px;object-fit:cover;display:block}@media(min-width:700px){.u-photo-box img{height:280px}}.u-desc-outside{font-size:7.2px!important;line-height:1.65!important;color:#777!important;padding:10px 8px 8px!important;text-align:center!important;text-transform:uppercase!important;min-height:78px!important}.u-cta-outside{font-size:8px!important;letter-spacing:2px!important;text-align:center!important;padding:10px 4px 12px!important;font-weight:600!important;margin-top:auto!important}@keyframes cartBoom{0%{transform:scale(1)}30%{transform:scale(1.35)}60%{transform:scale(0.9)}100%{transform:scale(1)}}.cart-boom{animation:cartBoom.38s cubic-bezier(.34,1.56,.64,1)!important}.fly-img{position:fixed;left:0;top:0;z-index:99999;width:68px;height:68px;object-fit:cover;border-radius:50%;pointer-events:none;box-shadow:0 16px 32px rgba(0,0,0,.22);border:3px solid #fff;transition:all.75s cubic-bezier(.4,0,.2,1)}#cartToast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(80px);background:#111;color:#fff;padding:8px 14px;border-radius:20px;display:flex;gap:8px;align-items:center;transition:.35s;opacity:0;z-index:1000}#cartToast.show{transform:translateX(-50%) translateY(0);opacity:1}#cartModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:2000;align-items:flex-end}#cartModal.open{display:flex}#cartBox{background:#fff;width:100%;max-width:440px;margin:0 auto;max-height:88vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px}.btn{width:100%;padding:12px;background:#111;color:#fff;border:1px solid #111;font-size:9px;letter-spacing:3px;cursor:pointer}.btn-light{width:100%;padding:11px;background:#fff;border:1px solid #DDD;font-size:9px;letter-spacing:2px;cursor:pointer;margin-top:8px}#confirmModal,#sideMenu{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:3000}#confirmModal.show,#sideMenu.open{display:flex}#sideBox{background:#FFFEFB;width:78%;max-width:300px;height:100%;padding:24px;overflow:auto}.side-link{display:block;padding:14px 0;border-bottom:1px solid #F2F2F2;font-size:10px;letter-spacing:3px;text-decoration:none;color:#111}.hamburger{width:32px;height:32px;display:flex;flex-direction:column;justify-content:center;gap:4px;background:none;border:none;cursor:pointer}.hamburger span{display:block;width:16px;height:1.2px;background:#111}@media(min-width:701px){.hamburger{display:none}}footer{margin-top:48px;padding:32px 14px;text-align:center;border-top:1px solid #EAE6E1;background:#FAF8F5}.footer-logo{font-family:'Cormorant Garamond';letter-spacing:9px;font-size:18px}.footer-tagline{font-size:7px;letter-spacing:3px;color:#999;margin-top:4px}.footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin:20px 0}.footer-nav a{font-size:8.5px;letter-spacing:2px;color:#555;text-decoration:none}.footer-copy{font-size:8px;letter-spacing:2.5px;color:#AAA;border-top:1px solid #EAE6E1;padding-top:16px;margin-top:16px}</style>
 </head><body>
 <nav>
 <div class="nav-top">
   <div style="display:flex;align-items:center;gap:8px">
     <button class="hamburger" onclick="openSideMenu()"><span></span><span></span><span></span></button>
-    <a href="index.html" class="logo" id="storeLogo">NOURA<span>HIJAB PREMIUM</span></a>
+    <a href="index.html" class="logo" id="storeLogo"></a>
   </div>
   <div class="icons">
     <button class="icon-btn" onclick="toggleSearch()"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="5.5"/><path d="M16 16L20 20"/></svg></button>
@@ -95,7 +30,7 @@ footer{margin-top:48px;padding:32px 14px;text-align:center;border-top:1px solid 
 <div class="nav-menu"><div class="menu"><a class="active" href="index.html">BERANDA</a><a href="produk.html">PRODUK</a><a href="kategori.html">KATEGORI</a><a href="kontak.html">KONTAK</a></div></div>
 <div id="searchBox"><input id="q" type="search" placeholder="CARI WARNA..." maxlength="30" onkeydown="if(event.key==='Enter') doSearch()"><button class="s-btn" onclick="doSearch()">CARI</button><button class="s-btn" style="background:#fff;color:#111;border:1px solid #111" onclick="toggleSearch()">X</button></div>
 </nav>
-<div id="sideMenu" onclick="if(event.target.id==='sideMenu')closeSideMenu()"><div id="sideBox"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><div style="font-family:'Cormorant Garamond';letter-spacing:7px;font-size:18px" id="sideLogo">NOURA</div><button onclick="closeSideMenu()" style="border:none;background:none;font-size:22px">×</button></div><a href="index.html" class="side-link">BERANDA</a><a href="produk.html" class="side-link">PRODUK</a><a href="kategori.html" class="side-link">KATEGORI</a><a href="kontak.html" class="side-link">KONTAK</a><a href="#" onclick="openCart();closeSideMenu();return false" class="side-link">KERANJANG (<span id="sideCartCount">0</span>)</a></div></div>
+<div id="sideMenu" onclick="if(event.target.id==='sideMenu')closeSideMenu()"><div id="sideBox"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><div style="font-family:'Cormorant Garamond';letter-spacing:7px;font-size:18px" id="sideLogo"></div><button onclick="closeSideMenu()" style="border:none;background:none;font-size:22px">×</button></div><a href="index.html" class="side-link">BERANDA</a><a href="produk.html" class="side-link">PRODUK</a><a href="kategori.html" class="side-link">KATEGORI</a><a href="kontak.html" class="side-link">KONTAK</a><a href="#" onclick="openCart();closeSideMenu();return false" class="side-link">KERANJANG (<span id="sideCartCount">0</span>)</a></div></div>
 <div class="hero" id="heroWrap">
   <picture><source id="bannerSourcePC" media="(min-width:801px)"><img id="bannerImg" alt="Banner"></picture>
   <div class="hero-content"><div><div class="hero-eyebrow" id="heroSub" style="display:none"></div><h1 class="hero-main-title" id="heroTitle" style="display:none"></h1></div><a href="produk.html" class="btn-hero" id="bannerLink">LIHAT KOLEKSI →</a></div>
@@ -103,29 +38,33 @@ footer{margin-top:48px;padding:32px 14px;text-align:center;border-top:1px solid 
 </div>
 <div class="under-sec"><div class="under-title">FIND YOUR UNDERTONE</div><div id="undertoneGrid" class="under-grid-clean"></div></div>
 <div class="section"><div class="best-title">THE BEST COLLECTION</div><div class="colors" id="koleksi4Grid"></div></div>
-<footer><div class="footer-logo" id="footerLogo">NOURA</div><div class="footer-tagline">PREMIUM VOAL COLLECTION</div><div class="footer-nav"><a href="index.html">Beranda</a><a href="produk.html">Koleksi</a><a href="kategori.html">Kategori</a><a href="kontak.html">Kontak</a></div><div class="footer-copy" id="footerCopy">© 2026 NOURA HIJAB.</div></footer>
-
-<!-- CART CLEAN TANPA TULISAN CENGKARENG & MIN 3 HURUF -->
-<div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()"><div id="cartBox">
-<div style="display:flex;justify-content:space-between"><b style="font-size:10px;letter-spacing:2px">KERANJANG (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:20px">×</button></div>
-<div id="cartList" style="margin-top:10px"></div>
-<div style="border-top:1px solid #EEE;margin-top:12px;padding-top:12px">
-<div style="background:#FAFAFA;border:1px solid #F0EBE3;padding:10px;margin-bottom:10px">
-<div style="display:flex;gap:6px"><input id="destCity" placeholder="Kota tujuan" style="flex:1;padding:12px;border:1px solid #111;outline:none;font-size:12px"><button onclick="cekOngkir()" id="btnCekOngkir" style="padding:12px 14px;background:#000;color:#fff;border:none;font-size:8px;letter-spacing:2px">CEK</button></div>
-<div id="ongkirOptions" style="display:none;margin-top:8px"></div>
-</div>
-<div style="display:flex;justify-content:space-between;font-size:10px"><span>SUBTOTAL</span><span id="cartSubtotal">Rp0</span></div>
-<div style="display:flex;justify-content:space-between;font-size:10px;margin-top:4px"><span>ONGKIR <small id="ongkirLabel"></small></span><span id="ongkirPriceCart">Rp0</span></div>
-<div style="display:flex;justify-content:space-between;margin-top:8px;font-size:13px;font-weight:600"><b>TOTAL</b><b id="cartTotalPrice">Rp0</b></div>
-<button onclick="checkoutWA()" class="btn" style="margin-top:12px">CHECKOUT →</button><button onclick="clearCart()" class="btn-light">KOSONGKAN</button>
-</div></div></div>
-
+<footer><div class="footer-logo" id="footerLogo"></div><div class="footer-tagline">PREMIUM VOAL COLLECTION</div><div class="footer-nav"><a href="index.html">Beranda</a><a href="produk.html">Koleksi</a><a href="kategori.html">Kategori</a><a href="kontak.html">Kontak</a></div><div class="footer-copy" id="footerCopy"></div></footer>
+<div id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()"><div id="cartBox"><div style="display:flex;justify-content:space-between"><b style="font-size:10px;letter-spacing:2px">KERANJANG (<span id="cartTotalQty">0</span>)</b><button onclick="closeCart()" style="border:none;background:none;font-size:20px">×</button></div><div id="cartList" style="margin-top:10px"></div><div style="border-top:1px solid #EEE;margin-top:12px;padding-top:12px"><div style="background:#FAFAFA;border:1px solid #F0EBE3;padding:10px;margin-bottom:10px"><div style="display:flex;gap:6px"><input id="destCity" placeholder="Kota tujuan" style="flex:1;padding:12px;border:1px solid #111;outline:none;font-size:12px"><button onclick="cekOngkir()" style="padding:12px 14px;background:#000;color:#fff;border:none;font-size:8px">CEK</button></div><div id="ongkirOptions" style="display:none;margin-top:8px"></div></div><div style="display:flex;justify-content:space-between;font-size:10px"><span>SUBTOTAL</span><span id="cartSubtotal">Rp0</span></div><div style="display:flex;justify-content:space-between;font-size:10px;margin-top:4px"><span>ONGKIR <small id="ongkirLabel"></small></span><span id="ongkirPriceCart">Rp0</span></div><div style="display:flex;justify-content:space-between;margin-top:8px;font-size:13px;font-weight:600"><b>TOTAL</b><b id="cartTotalPrice">Rp0</b></div><button onclick="checkoutWA()" class="btn" style="margin-top:12px">CHECKOUT →</button><button onclick="clearCart()" class="btn-light">KOSONGKAN</button></div></div></div>
 <div id="confirmModal" onclick="if(event.target.id==='confirmModal')closeConfirm()"><div style="background:#fff;width:100%;max-width:340px;border:1px solid #EEE;padding:20px;margin:auto"><div style="font-family:'Cormorant Garamond';font-size:18px">Kosongkan?</div><div style="display:flex;gap:8px;margin-top:16px"><button onclick="closeConfirm()" style="flex:1;padding:10px;background:#fff;border:1px solid #000;font-size:9px">BATAL</button><button onclick="doClearCart()" style="flex:1;padding:10px;background:#000;color:#fff;border:1px solid #000;font-size:9px">YA, HAPUS</button></div></div></div>
 <div id="cartToast"><img id="toastImg" style="width:22px;height:22px;border-radius:50%;object-fit:cover"><span id="toastText" style="font-size:9px"></span></div>
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';const supabaseClient=window.supabase.createClient(SUPA_URL,SUPA_KEY);
-let selectedOngkirCost=0,selectedService='';
+let selectedOngkirCost=0,selectedService='',tokoOriginLabel=ORIGIN_LABEL_CACHE;
 function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+// ANTI KEDIP - set langsung dari cache
+(function(){const up=STORE_CACHE.toUpperCase();document.getElementById('storeLogo').innerHTML=up+'<span>HIJAB PREMIUM</span>';document.getElementById('footerLogo').innerText=up;document.getElementById('sideLogo').innerText=up;document.getElementById('footerCopy').innerText='© 2026 '+up+' HIJAB.';document.getElementById('pageTitle').innerText=up+' - Hijab Premium';})();
+// DINAMIS META - biar link WA ikut ganti nama toko
+function updateMetaBrand(name,originLabel){
+  const up=name.toUpperCase();
+  document.getElementById('storeLogo').innerHTML=up+'<span>HIJAB PREMIUM</span>';
+  document.getElementById('footerLogo').innerText=up;
+  document.getElementById('sideLogo').innerText=up;
+  document.getElementById('footerCopy').innerText='© 2026 '+up+' HIJAB.';
+  document.getElementById('pageTitle').innerText=up+' - Hijab Premium';
+  document.title=up+' - Hijab Premium';
+  const d=document.getElementById('metaDesc'); if(d) d.setAttribute('content', up+' Hijab Premium - Koleksi voal premium warna lengkap, bahan adem tidak menerawang. Pengiriman dari '+(originLabel||tokoOriginLabel||'Jakarta')+'.');
+  const ogT=document.getElementById('ogTitle'); if(ogT) ogT.setAttribute('content', up+' - Hijab Premium Voal');
+  const ogS=document.getElementById('ogSite'); if(ogS) ogS.setAttribute('content', up+' Hijab');
+  const twT=document.getElementById('twTitle'); if(twT) twT.setAttribute('content', up+' - Hijab Premium');
+  const ogD=document.getElementById('ogDesc'); if(ogD) ogD.setAttribute('content','Koleksi '+up+' voal premium terbaik. Warna lengkap sesuai undertone.');
+  localStorage.setItem('store_name_cache',name);
+  if(originLabel){tokoOriginLabel=originLabel; localStorage.setItem('store_origin_label',originLabel);}
+}
 function shortDesc(t){if(!t)return 'Kombinasi warna pas sesuai rona kulitmu';t=t.replace(/CIRI KHAS VISUAL:/gi,'').trim();return t;}
 function toggleSearch(){const b=document.getElementById('searchBox');const sh=!b.classList.contains('show');b.classList.toggle('show',sh);b.style.display=sh?'flex':'none';if(sh)document.getElementById('q').focus();}
 function doSearch(){const v=document.getElementById('q').value.trim();if(!v)return;location.href='produk.html?warna='+encodeURIComponent(v.toLowerCase());}
@@ -148,63 +87,21 @@ function addCart(n,p,i){let c=getCart();let idx=c.findIndex(a=>a.warna==n);if(id
 function showToast(t,i){document.getElementById('toastImg').src=i;document.getElementById('toastText').innerText=t;const el=document.getElementById('cartToast');el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2000);}
 function getOptImg(url,w=300){if(!url)return url;if(!url.includes('supabase.co/storage/v1/object/public/'))return url;try{const path=url.split('/object/public/')[1];return `${SUPA_URL}/storage/v1/render/image/public/${path}?width=${w}&height=${w}&quality=75&format=webp&resize=contain`;}catch(e){return url;}}
 function getBannerImg(url,w=800){if(!url)return url;if(!url.includes('supabase.co/storage/v1/object/public/'))return url;try{const path=url.split('/object/public/')[1];return `${SUPA_URL}/storage/v1/render/image/public/${path}?width=${w}&quality=80&format=webp&resize=contain`;}catch(e){return url;}}
-function flyToCart(imgUrl,startEl){
-  document.querySelectorAll('.fly-img').forEach(e=>e.remove());
-  const cartIcon=document.getElementById('cartIcon');
-  if(!cartIcon) return;
-  const cartRect=cartIcon.getBoundingClientRect();
-  // FIX: geser kiri 12px + atas 10px biar pas di tengah logo tas, gak ke kanan bawah lagi
-  const targetX = cartRect.left + cartRect.width/2 - 34 - 4;
-  const targetY = cartRect.top + cartRect.height/2 - 34 - 6;
-
-  let startRect = startEl? startEl.getBoundingClientRect() : null;
-  if(!startRect || startRect.width===0){ startRect={left:innerWidth/2-34, top:innerHeight/2-34, width:68, height:68}; }
-  const fly=document.createElement('img');
-  fly.src=getOptImg(imgUrl,120);
-  fly.className='fly-img';
-  fly.style.left=(startRect.left+startRect.width/2-34)+'px';
-  fly.style.top=(startRect.top+startRect.height/2-34)+'px';
-  fly.style.opacity='1';
-  document.body.appendChild(fly);
-  requestAnimationFrame(()=>{requestAnimationFrame(()=>{
-    fly.style.left=targetX+'px';
-    fly.style.top=targetY+'px';
-    fly.style.transform='scale(0.14)';
-    fly.style.opacity='0.2';
-  });});
-  setTimeout(()=>{
-    fly.remove();
-    cartIcon.classList.remove('cart-boom');
-    void cartIcon.offsetWidth;
-    cartIcon.classList.add('cart-boom');
-    setTimeout(()=>cartIcon.classList.remove('cart-boom'),450);
-  },720);
-}
-  async function quickAdd(title,img,el,idx){
-  const imgEl=document.getElementById('img-best-'+idx) || (el?el.closest('.k-card')?.querySelector('img'):null);
-  if(imgEl) flyToCart(imgEl.src||img, imgEl);
-  let price=99000;
-  try{
-    const warnaOnly=title.split(' - ')[0].trim();
-    const{data:variant}=await supabaseClient.from('product_variants').select('product_id').ilike('color_name','%'+warnaOnly+'%').limit(1).maybeSingle();
-    if(variant){const{data:prod}=await supabaseClient.from('products').select('price').eq('id',variant.product_id).single();if(prod) price=Number(prod.price);}
-  }catch(e){}
-  setTimeout(()=>{addCart(title,price,img);showToast(title+' DITAMBAHKAN', getOptImg(img,80));},200);
-}
+function flyToCart(imgUrl,startEl){document.querySelectorAll('.fly-img').forEach(e=>e.remove());const cartIcon=document.getElementById('cartIcon');if(!cartIcon) return;const cartRect=cartIcon.getBoundingClientRect();const targetX = cartRect.left + cartRect.width/2 - 34 - 4;const targetY = cartRect.top + cartRect.height/2 - 34 - 6;let startRect = startEl? startEl.getBoundingClientRect() : null;if(!startRect || startRect.width===0){ startRect={left:innerWidth/2-34, top:innerHeight/2-34, width:68, height:68}; }const fly=document.createElement('img');fly.src=getOptImg(imgUrl,120);fly.className='fly-img';fly.style.left=(startRect.left+startRect.width/2-34)+'px';fly.style.top=(startRect.top+startRect.height/2-34)+'px';fly.style.opacity='1';document.body.appendChild(fly);requestAnimationFrame(()=>{requestAnimationFrame(()=>{fly.style.left=targetX+'px';fly.style.top=targetY+'px';fly.style.transform='scale(0.14)';fly.style.opacity='0.2';});});setTimeout(()=>{fly.remove();cartIcon.classList.remove('cart-boom');void cartIcon.offsetWidth;cartIcon.classList.add('cart-boom');setTimeout(()=>cartIcon.classList.remove('cart-boom'),450);},720);}
+async function quickAdd(title,img,el,idx){const imgEl=document.getElementById('img-best-'+idx) || (el?el.closest('.k-card')?.querySelector('img'):null);if(imgEl) flyToCart(imgEl.src||img, imgEl);let price=99000;try{const warnaOnly=title.split(' - ')[0].trim();const{data:variant}=await supabaseClient.from('product_variants').select('product_id').ilike('color_name','%'+warnaOnly+'%').limit(1).maybeSingle();if(variant){const{data:prod}=await supabaseClient.from('products').select('price').eq('id',variant.product_id).single();if(prod) price=Number(prod.price);}}catch(e){}setTimeout(()=>{addCart(title,price,img);showToast(title+' DITAMBAHKAN', getOptImg(img,80));},200);}
 const underFallback={cool:{title:'COOL',desc:'Pembuluh biru.',col:'COOL'},warm:{title:'WARM',desc:'Pembuluh hijau.',col:'WARM'},neutral:{title:'NEUTRAL',desc:'Biru-hijau.',col:'NEUTRAL'},olive:{title:'OLIVE',desc:'Hijau abu.',col:'OLIVE'}};
 function extractKey(t){const u=(t||'').toUpperCase();if(u.includes('COOL'))return'cool';if(u.includes('WARM'))return'warm';if(u.includes('OLIVE'))return'olive';return'neutral';}
 async function init(){
   try{
-    const cName=localStorage.getItem('store_name_cache');
-    if(cName){document.getElementById('storeLogo').innerHTML=cName.toUpperCase()+'<span>HIJAB PREMIUM</span>';document.getElementById('footerLogo').innerText=cName.toUpperCase();document.getElementById('sideLogo').innerText=cName.toUpperCase();document.getElementById('footerCopy').innerText='© 2026 '+cName.toUpperCase()+'.';}
-    const {data:settings}=await supabaseClient.from('settings').select('key,value').in('key',['store_name','home_koleksi_terlaris','home_undertone_images','home_banner_title','home_banner_subtitle']);
+    const {data:settings}=await supabaseClient.from('settings').select('key,value').in('key',['store_name','toko_origin_label','home_koleksi_terlaris','home_undertone_images','home_banner_title','home_banner_subtitle']);
     let bannerTitleFromSettings='', bannerSubFromSettings='';
     if(settings){
       const g=k=>settings.find(s=>s.key===k)?.value;
-      const sName=g('store_name');if(sName){const up=sName.toUpperCase();localStorage.setItem('store_name_cache',sName);document.getElementById('storeLogo').innerHTML=up+'<span>HIJAB PREMIUM</span>';document.getElementById('footerLogo').innerText=up;document.getElementById('sideLogo').innerText=up;document.getElementById('footerCopy').innerText='© 2026 '+up+'.';document.getElementById('pageTitle').innerText=up+' - Hijab Premium';}
+      const sName=g('store_name');const sOrigin=g('toko_origin_label');
+      if(sName){updateMetaBrand(sName,sOrigin);} // <-- DINAMIS DISINI
       bannerTitleFromSettings=g('home_banner_title')||'';bannerSubFromSettings=g('home_banner_subtitle')||'';
       try{let raw=JSON.parse(g('home_koleksi_terlaris')||'[]');if(raw.length){const grid=document.getElementById('koleksi4Grid');grid.innerHTML=raw.slice(0,8).map((v,i)=>{const url=typeof v==='string'?v:v.url;const rawTitle=(typeof v==='object'?v.title:'')||'';const upperTitle=esc(rawTitle.toUpperCase());const cleanColor=upperTitle.split('-')[0].replace(/BEST SELLER/g,'').trim()||'BEST';return `<div class="k-card" onclick="location.href='produk.html?warna=${esc(cleanColor.toLowerCase())}'"><img id="img-best-${i}" src="${getOptImg(url,400)}" alt="${upperTitle}" loading="lazy"><div class="heart-btn" onclick="event.stopPropagation(); quickAdd('${esc(cleanColor)}','${esc(url)}', this, ${i})"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div><div class="k-title">${upperTitle||'BEST SELLER'}</div></div>`}).join('');}}catch(e){}
-      try{let uImgs=JSON.parse(g('home_undertone_images')||'[]');const grid=document.getElementById('undertoneGrid');if(uImgs.length){grid.innerHTML=uImgs.slice(0,4).map((it,i)=>{const url=typeof it==='string'?it:it.url;let titleFromAdmin=(typeof it==='object'?(it.title||''):'').trim();let descFromAdmin=(typeof it==='object'?(it.desc||''):'').trim();let key=extractKey(titleFromAdmin)||['cool','warm','neutral','olive'][i]||'neutral';let fallback=underFallback[key];let finalTitle=titleFromAdmin?titleFromAdmin.toUpperCase():fallback.title;let finalDesc=descFromAdmin?shortDesc(descFromAdmin):fallback.desc;return `<div class="u-item" onclick="location.href='produk.html?undertone=${esc(fallback.col)}'"><div class="u-photo-box"><div class="u-head">${esc(finalTitle)}</div><img src="${getOptImg(url,400)}" loading="lazy"></div><div class="u-desc-outside">${esc(finalDesc)}</div><div class="u-cta-outside">LIHAT ${esc(fallback.col)} →</div></div>`}).join('');}}catch(e){}
+      try{let uImgs=JSON.parse(g('home_undertone_images')||'[]');const grid=document.getElementById('undertoneGrid');if(uImgs.length){grid.innerHTML=uImgs.slice(0,4).map((it,i)=>{const url=typeof it==='string'?it:it.url;let titleFromAdmin=(typeof it==='object'?(it.title||''):'').trim();let descFromAdmin=(typeof it==='object'?(it.desc||''):'').trim();let key=extractKey(titleFromAdmin)||['cool','warm','neutral','olive'][i]||'neutral';let fallback=underFallback[key];let finalTitle=titleFromAdmin?titleFromAdmin.toUpperCase():fallback.title;let finalDesc=descFromAdmin?shortDesc(descFromAdmin):fallback.desc;return `<div class="u-item" onclick="location.href='produk.html?undertone=${esc(fallback.col)}'"><div class="u-photo-box"><div class="u-head">${esc(finalTitle)}</div><img src="${getOptImg(url,400)}" loading="lazy" alt="${esc(finalTitle)}"></div><div class="u-desc-outside">${esc(finalDesc)}</div><div class="u-cta-outside">LIHAT ${esc(fallback.col)} →</div></div>`}).join('');}}catch(e){}
     }
     const {data:banners}=await supabaseClient.from('banners').select('banner_pc_url,banner_hp_url,banner_title,banner_subtitle').eq('is_active',true).order('created_at',{ascending:false}).limit(1);
     if(banners&&banners[0]){
@@ -213,9 +110,6 @@ async function init(){
       const bTitle=banners[0].banner_title||bannerTitleFromSettings||'Just For You';const bSub=banners[0].banner_subtitle||bannerSubFromSettings||'THE BEST COLLECTION FOR NOW';
       if(bSub){const el=document.getElementById('heroSub');el.innerText=bSub.toUpperCase();el.style.display='block';}
       if(bTitle){const el=document.getElementById('heroTitle');let words=bTitle.trim().split(/\s+/);if(words.length>=3){el.innerHTML=`<span>${esc(words[0])}</span><span>${esc(words[1])}</span><span>${esc(words.slice(2).join(' '))}</span>`;}else if(words.length==2){el.innerHTML=`<span>${esc(words[0])}</span><span>${esc(words[1])}</span>`;}else{el.innerHTML=`<span>${esc(bTitle)}</span>`;}el.style.display='block';}
-    }else{
-      if(bannerTitleFromSettings){const el=document.getElementById('heroTitle');let words=bannerTitleFromSettings.trim().split(/\s+/);el.innerHTML=words.map(w=>`<span>${esc(w)}</span>`).join('');el.style.display='block';}else{const el=document.getElementById('heroTitle');el.innerHTML='<span>Just</span><span>For</span><span>You</span>';el.style.display='block';}
-      if(bannerSubFromSettings){const el=document.getElementById('heroSub');el.innerText=bannerSubFromSettings.toUpperCase();el.style.display='block';}else{const el=document.getElementById('heroSub');el.innerText='THE BEST COLLECTION FOR NOW';el.style.display='block';}
     }
   }catch(e){console.log(e)}
   updateCount();
