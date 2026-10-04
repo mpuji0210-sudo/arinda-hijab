@@ -27,13 +27,18 @@ function isOut(v){if(v.is_available===false)return true;if(v.stock!=null)return 
 function hasReady(pid){const vars=window._varMap[pid]||[];return vars.some(v=>!isOut(v));}
 function getOptImg(u,w=300){if(!u) return ''; if(u.includes('/storage/v1/object/public/')){const p=u.split('/storage/v1/object/public/')[1]; return `${SUPA_URL}/storage/v1/render/image/public/${p}?width=${w}&height=${w}&quality=65&format=webp&resize=cover`;}return u;}
 function flyToCart(imgUrl,startEl){document.querySelectorAll('.fly-img').forEach(e=>e.remove());const cartIcon=document.getElementById('cartIcon');if(!cartIcon)return;const cartRect=cartIcon.getBoundingClientRect();const targetX=cartRect.left+cartRect.width/2-34-6;const targetY=cartRect.top+cartRect.height/2-34-4;let rect=startEl?startEl.getBoundingClientRect():{left:innerWidth/2-34,top:innerHeight/2-34,width:68,height:68};const fly=document.createElement('img');fly.src=getOptImg(imgUrl,120);fly.className='fly-img';fly.style.left=(rect.left+rect.width/2-34)+'px';fly.style.top=(rect.top+rect.height/2-34)+'px';document.body.appendChild(fly);requestAnimationFrame(()=>{requestAnimationFrame(()=>{fly.style.left=targetX+'px';fly.style.top=targetY+'px';fly.style.transform='scale(0.14)';fly.style.opacity='0.15';});});setTimeout(()=>{fly.remove();cartIcon.classList.remove('cart-boom');void cartIcon.offsetWidth;cartIcon.classList.add('cart-boom');setTimeout(()=>cartIcon.classList.remove('cart-boom'),420);},720);}
-function normalizeUnder(arr){if(!arr)return[];let a=Array.isArray(arr)?arr:[arr];try{if(typeof arr==='string'&&arr.startsWith('['))a=JSON.parse(arr);}catch(e){}return a.map(x=>String(x).toUpperCase());}
+function normalizeUnder(arr){if(!arr)return[];let a=Array.isArray(arr)?arr:[arr];try{if(typeof arr==='string'&&arr.startsWith('['))a=JSON.parse(arr);}catch(e){}return a.map(x=>String(x).toUpperCase().trim()).filter(Boolean);}
 function underBadgeHtml(arr){if(!arr||!arr.length)return'';return normalizeUnder(arr).map(u=>`<span class="under-badge">${u}</span>`).join('');}
+function isUnderMatch(v,target){return normalizeUnder(v.undertone||[]).includes(target.toUpperCase().trim());}
 function getMatchedVariant(pid,q){
   const vars=window._varMap[pid]||[];
   if(!vars.length) return null;
   if(q){
     let qq=q.toLowerCase().trim();
+    if(["cool","warm","neutral","olive"].includes(qq)){
+      let byUnder=vars.find(v=> isUnderMatch(v,qq) &&!isOut(v));
+      if(byUnder) return byUnder;
+    }
     let exact=vars.find(v=> (v.color_name||'').toLowerCase().trim()===qq);
     if(exact &&!isOut(exact)) return exact;
     let inc=vars.find(v=> (v.color_name||'').toLowerCase().includes(qq) &&!isOut(v));
@@ -49,7 +54,7 @@ function doSearch(){
   if(!raw){renderProducts(allProducts,'');return;}
   let filtered=allProducts.filter(p=>{
     const vars=window._varMap[p.id]||[];
-    return p.name.toLowerCase().includes(raw) || vars.some(v=>v.color_name.toLowerCase().includes(raw));
+    return p.name.toLowerCase().includes(raw) || vars.some(v=> v.color_name.toLowerCase().includes(raw) || normalizeUnder(v.undertone).join(' ').toLowerCase().includes(raw));
   });
   renderProducts(filtered,raw);
 }
@@ -106,32 +111,56 @@ function checkoutWA(){const c=getCart();if(!c.length){showToast('Keranjang koson
   document.getElementById('footLogo').innerText=(storeName||'TOKO').toUpperCase();
   document.title='PRODUK - '+(storeName||'TOKO').toUpperCase();
   localStorage.setItem('store_name_cache',storeName);
-  // FIXED: ambil semua kolom biar kategori & bahan kebaca
   const {data:all}=await supabaseClient.from('products').select('*').order('id',{ascending:false}).limit(100);
   const {data:vars}=await supabaseClient.from('product_variants').select('product_id,color_name,image_url,stock,is_available,undertone').limit(800);
   allProducts=all||[];window._varMap={};(vars||[]).forEach(v=>{const key=(v.color_name||'').toLowerCase().trim()+'|'+(v.image_url||'');if(!window._varMap[v.product_id]){window._varMap[v.product_id]=[];window._varMap[v.product_id]._seen=new Set();}if(window._varMap[v.product_id]._seen.has(key))return;window._varMap[v.product_id]._seen.add(key);window._varMap[v.product_id].push(v);});
   const params=new URLSearchParams(location.search);
   const kat=params.get('kategori');
   const bah=params.get('bahan');
+  const under=params.get('undertone');
   const qParam=params.get('warna')||params.get('q')||'';
-  if(kat){
+
+  if(under){
+    const U = under.toUpperCase().trim();
+    lastQuery=under.toLowerCase();
+    document.getElementById('q').value=under;
+    const titleEl=document.querySelector('h1');
+    if(titleEl) titleEl.innerText='PRODUK ' + U;
+    const el=document.getElementById('list');
+    let variantList=[];
+    allProducts.forEach(p=>{
+      (window._varMap[p.id]||[]).forEach(v=>{
+        if(!isOut(v) && normalizeUnder(v.undertone).includes(U)){
+          variantList.push({product:p, variant:v});
+        }
+      });
+    });
+    if(!variantList.length){
+      el.innerHTML='<div style="grid-column:1/-1;padding:40px;text-align:center;border:1px solid #E9E9E9"><div style="font-size:11px;letter-spacing:2px">TIDAK ADA WARNA UNTUK UNDERTONE "'+esc(under)+'"</div><a href="produk.html" style="display:inline-block;margin-top:14px;padding:10px 18px;border:1px solid #000;font-size:9px;text-decoration:none;color:#000;letter-spacing:2px">LIHAT SEMUA</a></div>';
+      document.getElementById('prodCount').innerText='0 PRODUK';
+    }else{
+      el.innerHTML=variantList.map(({product:p,variant:m},i)=>`
+        <div class="prod-card">
+          <div style="position:absolute;top:0;left:0;background:#000;color:#fff;font-size:7px;padding:4px 6px;z-index:2">SISA ${m.stock??0}</div>
+          <div class="heart-btn" onclick="event.stopPropagation();quickAdd('${p.id}',this,${i},'${esc(m.color_name)}')"><svg viewBox="0 0 24 24"><path d="M12 20l-1.5-1.3C5 14 2 11.2 2 7.8A4.3 4.3 0 0 1 6.3 3.5c1.3 0 2.6.6 3.7 1.6L12 7l2-1.9c1.1-1 2.4-1.6 3.7-1.6A4.3 4.3 0 0 1 22 7.8c0 3.4-3 5.8-8.5 10.4L12 20z"/></svg></div>
+          <img src="${getOptImg(m.image_url,400)}" loading="lazy" onclick="openProd('${p.id}','${esc(m.color_name)}')">
+          <div style="padding:8px;border-top:1px solid #F2F2F2" onclick="openProd('${p.id}','${esc(m.color_name)}')">
+            <div style="font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(m.color_name)}</div>
+            <div style="margin-top:2px">${underBadgeHtml(m.undertone)}</div>
+            <div style="font-size:10px;margin-top:3px;font-weight:600">Rp${Number(p.price).toLocaleString('id-ID')}</div>
+          </div>
+        </div>`).join('');
+      document.getElementById('prodCount').innerText=variantList.length+' WARNA';
+    }
+  }else if(kat){
     lastQuery=kat.toLowerCase(); document.getElementById('q').value=kat;
     const KU=kat.toUpperCase().trim();
-    // FIX: exact match, kalau 0 ya 0 jangan fallback ke produk lain
-    const filtered=allProducts.filter(p=>{
-      const pt=(p.product_type||'').toUpperCase().trim();
-      const jn=(p.jenis||'').toUpperCase().trim();
-      return pt===KU || jn===KU;
-    });
+    const filtered=allProducts.filter(p=> (p.product_type||'').toUpperCase()===KU || (p.jenis||'').toUpperCase()===KU);
     renderProducts(filtered, kat);
   }else if(bah){
     lastQuery=bah.toLowerCase(); document.getElementById('q').value=bah;
     const BU=bah.toUpperCase().trim();
-    const filtered=allProducts.filter(p=>{
-      const cat=(p.category||'').toUpperCase().trim();
-      const bhn=(p.bahan||'').toUpperCase().trim();
-      return cat===BU || bhn===BU;
-    });
+    const filtered=allProducts.filter(p=> (p.category||'').toUpperCase()===BU || (p.bahan||'').toUpperCase()===BU);
     renderProducts(filtered, bah);
   }else if(qParam){
     document.getElementById('q').value=qParam;lastQuery=qParam.toLowerCase();
