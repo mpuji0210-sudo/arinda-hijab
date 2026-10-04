@@ -154,8 +154,8 @@ function flyToCart(imgUrl,startEl){
   if(!cartIcon) return;
   const cartRect=cartIcon.getBoundingClientRect();
   // FIX: geser kiri 12px + atas 10px biar pas di tengah logo tas, gak ke kanan bawah lagi
-  const targetX = cartRect.left + cartRect.width/2 - 34 - 5;
-  const targetY = cartRect.top + cartRect.height/2 - 34 - 7;
+  const targetX = cartRect.left + cartRect.width/2 - 34 - 4;
+  const targetY = cartRect.top + cartRect.height/2 - 34 - 6;
 
   let startRect = startEl? startEl.getBoundingClientRect() : null;
   if(!startRect || startRect.width===0){ startRect={left:innerWidth/2-34, top:innerHeight/2-34, width:68, height:68}; }
