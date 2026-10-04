@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Checkout - ARINDA V20</title>
+<title>Checkout - ARINDA</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>body{font-family:'Inter',sans-serif;background:#fff;color:#000;margin:0}.input-clean{border:1px solid #000;background:#fff;outline:none}.input-clean:focus{border-color:#000}</style>
@@ -15,7 +15,7 @@ function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&l
 <div style="margin-top:24px;display:flex;flex-direction:column;gap:14px">
 <input id="nama" placeholder="Nama Lengkap" class="input-clean" style="width:100%;height:52px;padding:0 16px">
 <input id="wa" placeholder="No WA 08xx" class="input-clean" style="width:100%;height:52px;padding:0 16px" inputmode="numeric">
-<input id="kota" placeholder="Kecamatan Tujuan" class="input-clean" style="width:100%;min-height:52px;padding:12px 16px;background:#F9F6F1;font-weight:600;white-space:normal;word-break:break-word;line-height:1.4" readonly>
+<input id="kota" placeholder="Kota Tujuan" class="input-clean" style="width:100%;min-height:52px;padding:12px 16px;background:#F9F6F1;font-weight:600;white-space:normal;word-break:break-word;line-height:1.4" readonly>
 <textarea id="alamat" placeholder="Alamat lengkap + RT/RW + Patokan" class="input-clean" style="width:100%;padding:14px 16px;height:110px"></textarea>
 </div>
 <p id="errorMsg" style="display:none;margin-top:12px;text-align:center;font-size:11px;color:#B42318;background:#FFF5F5;border:1px solid #FECDCA;padding:10px"></p>
@@ -34,12 +34,13 @@ try{
 }catch(e){}
 let ongkir=Number(ongkirData?.cost||0);
 const kotaOngkir=ongkirData?.city||'';
-const originLabel=ongkirData?.origin||'CENGKARENG BARAT, CENGKARENG, JAKARTA BARAT - DKI JAKARTA';
+const originLabel=ongkirData?.origin||'CENGKARENG BARAT';
 const originId=ongkirData?.origin_id||localStorage.getItem('toko_origin_id')||'17523';
 const destId=ongkirData?.destination_id||'';
 const serviceLabel=ongkirData?.service||'REG';
 const formatRp=n=>'Rp'+Number(n||0).toLocaleString('id-ID');
 (async()=>{try{const {data:cfg}=await supa.from('settings').select('key,value').in('key',['store_name']);const sn=cfg?.find(s=>s.key==='store_name')?.value;if(sn)document.getElementById('storeLogo').innerText=sn.toUpperCase();}catch(e){}})();
+
 function renderRingkasan(){
   let sub=0;cart.forEach(i=>sub+=Number(i.harga||0)*Number(i.qty||0));
   let tot=sub+ongkir;
@@ -49,7 +50,7 @@ function renderRingkasan(){
 renderRingkasan();
 document.getElementById('kota').value=kotaOngkir;
 if(!kotaOngkir){
-  document.getElementById('errorMsg').innerText='Kecamatan belum kebaca, silakan cek ongkir lagi di produk.html';
+  document.getElementById('errorMsg').innerText='Kecamatan belum kebaca, silakan cek ongkir lagi di produk';
   document.getElementById('errorMsg').style.display='block';
   document.getElementById('mainBtn').disabled=true;
 }
@@ -71,6 +72,30 @@ function bukaModal(){
  document.getElementById('modalCheckout').style.display='flex';
 }
 function tutupModal(){document.getElementById('modalCheckout').style.display='none';}
+
+async function kurangiStokOtomatis(){
+  for(const item of cart){
+    try{
+      const parts = item.warna.split(' - ');
+      const productName = parts[0]?.trim() || '';
+      const colorName = parts[parts.length-1]?.trim() || item.warna;
+      let productId = null;
+      if(productName){
+        const {data: prod} = await supa.from('products').select('id').ilike('name', `%${productName}%`).limit(1).maybeSingle();
+        if(prod) productId = prod.id;
+      }
+      let query = supa.from('product_variants').select('id,stock');
+      if(productId) query = query.eq('product_id', productId);
+      query = query.ilike('color_name', `%${colorName}%`).limit(1);
+      const {data: varian} = await query.maybeSingle();
+      if(varian){
+        const newStock = Math.max(0, Number(varian.stock||0) - Number(item.qty||0));
+        await supa.from('product_variants').update({ stock: newStock }).eq('id', varian.id);
+      }
+    }catch(e){ console.log('skip stok', e.message); }
+  }
+}
+
 async function prosesCheckout(){
  const {nama,wa,kota,alamat,total,subtotal}=tempData;
  const btn=document.getElementById('btnKonfirm');btn.innerText='MENYIMPAN...';btn.disabled=true;
@@ -80,7 +105,7 @@ async function prosesCheckout(){
      customer_name:nama,nama:nama,
      customer_phone:wa,wa:wa,no_wa:wa,
      alamat:alamat,alamat_lengkap:alamat+', '+kotaOngkir,
-     kota:kotaOngkir,kota_tujuan:kotaOngkir,kota_kab:kotaOngkir,kecamatan:kotaOngkir,
+     kota:kotaOngkir,kota_tujuan:kotaOngkir,kecamatan:kotaOngkir,
      total:total,subtotal:subtotal,
      ongkir:ongkir,shipping_cost:ongkir,
      items:cart,status:'MENUNGGU_BAYAR',
@@ -88,9 +113,14 @@ async function prosesCheckout(){
      destination_label:destLengkap,destination_id:destId
    }]).select();
    if(error)throw error;
+
+   // AUTO KURANGI STOK DISINI
+   await kurangiStokOtomatis();
+
    if(data&&data[0])localStorage.setItem('arinda_last_order_id',data[0].id);
    localStorage.setItem('arinda_customer',JSON.stringify({name:nama,wa:wa,alamat:alamat,kota:kotaOngkir,service:serviceLabel,ongkir:ongkir,total:total,destLengkap:destLengkap}));
    localStorage.setItem('arinda_total',String(total));
+   localStorage.removeItem('arinda_cart2');
    window.location.href='bayar.html';
  }catch(e){
    document.getElementById('errorMsg').innerText='Gagal: '+e.message;
