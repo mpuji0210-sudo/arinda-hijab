@@ -17,9 +17,20 @@
   }catch(e){}
   if(!allowed.includes(session.user.email.toLowerCase())){
     await supa.auth.signOut();
-    alert('Akses ditolak untuk '+session.user.email);
-    location.href='login-order.html';
-  }
+  if(!allowed.includes(session.user.email.toLowerCase())){
+  await supa.auth.signOut();
+  // ganti alert jelek jadi modal cantik
+  document.body.insertAdjacentHTML('beforeend', `
+    <div id="prettyAlert" style="position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px">
+      <div style="background:#fff;max-width:360px;width:100%;padding:28px 24px;text-align:center;border:1px solid #E9E9E9">
+        <div style="width:44px;height:44px;border-radius:50%;border:1px solid #000;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">!</div>
+        <div style="font-family:'Cormorant Garamond';font-size:18px;letter-spacing:2px">AKSES DITOLAK</div>
+        <div style="font-size:11px;opacity:.6;margin-top:8px">Akses ditolak untuk <b>${session.user.email}</b><br>Silakan login dengan akun ORDER dulu ya kak</div>
+        <button onclick="location.href='login-order.html'" style="width:100%;margin-top:18px;padding:14px;background:#000;color:#fff;border:none;font-size:9px;letter-spacing:3px">OKE, LOGIN DULU</button>
+      </div>
+    </div>`);
+  return;
+}
 })();
 </script>
 <style>
