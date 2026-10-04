@@ -6,19 +6,34 @@
 </head><body>
 <div class="card">
 <div class="logo">ARINDA<br><span style="font-size:7px;letter-spacing:5px;opacity:.4">ADMIN ORDER</span></div>
-<label class="label">EMAIL ADMIN ORDER</label><input id="email" class="input" value="order@arinda.id">
+<label class="label">EMAIL</label><input id="email" class="input" value="order@arinda.id">
 <label class="label">PASSWORD</label><input id="pass" class="input" type="password" placeholder="••••••••" autofocus>
 <button class="btn" onclick="doLogin()" id="btn">LOGIN ORDER</button>
 <div id="msg" class="small" style="color:#B42318;display:none"></div>
-<div class="small">Hanya order@arinda.id • Masuk ke admin-orders</div>
 </div>
 <script>
 const supa = window.supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
-const KEY='order_admin_emails'; const REDIRECT='admin-orders.html'; const DEFAULT='order@arinda.id';
-let ALLOWED=[DEFAULT];
-async function loadConfig(){try{const {data}=await supa.from('settings').select('value').eq('key',KEY).maybeSingle(); let v=data?.value; if(typeof v==='string') try{v=JSON.parse(v)}catch(e){} if(Array.isArray(v)) ALLOWED=v.map(x=>x.toLowerCase());}catch(e){}}
-function isAllowed(e){return ALLOWED.includes(e.toLowerCase().trim());}
-(async()=>{await loadConfig(); const {data:{session}}=await supa.auth.getSession(); if(session&&isAllowed(session.user.email)) location.href=REDIRECT;})();
-async function doLogin(){const b=document.getElementById('btn'),m=document.getElementById('msg');m.style.display='none';b.innerText='CEK...';b.disabled=true;try{await loadConfig();const email=document.getElementById('email').value.trim().toLowerCase();const pw=document.getElementById('pass').value.trim();if(!isAllowed(email)) throw new Error(email+' bukan admin order');const {data,error}=await supa.auth.signInWithPassword({email,password:pw});if(error) throw error; if(!isAllowed(data.session.user.email)) throw new Error('Ditolak'); location.href=REDIRECT;}catch(e){m.style.display='block';m.innerText='GAGAL: '+e.message;b.innerText='LOGIN ORDER';b.disabled=false; await supa.auth.signOut();}}
+const REDIRECT='admin-orders.html';
+const ALLOWED=['order@arinda.id'];
+
+(async()=>{const {data:{session}}=await supa.auth.getSession(); if(session && ALLOWED.includes(session.user.email.toLowerCase())) location.href=REDIRECT;})();
+
+async function doLogin(){
+  const b=document.getElementById('btn'),m=document.getElementById('msg');
+  m.style.display='none'; b.innerText='CEK...'; b.disabled=true;
+  try{
+    const email=document.getElementById('email').value.trim().toLowerCase();
+    const pw=document.getElementById('pass').value;
+    if(!ALLOWED.includes(email)) throw new Error(email+' bukan admin order. Pakai order@arinda.id');
+    const {data,error}=await supa.auth.signInWithPassword({email,password:pw});
+    if(error) throw error;
+    if(!ALLOWED.includes(data.user.email.toLowerCase())) throw new Error('Ditolak');
+    location.href=REDIRECT;
+  }catch(e){
+    m.style.display='block'; m.innerText='GAGAL: '+e.message;
+    b.innerText='LOGIN ORDER'; b.disabled=false;
+    await supa.auth.signOut();
+  }
+}
 document.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 </script></body></html>
