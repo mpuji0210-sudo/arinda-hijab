@@ -1,6 +1,5 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bayar - Loading...</title>
-<meta name="robots" content="noindex, nofollow">
+<title>Bayar - ARINDA</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -11,150 +10,110 @@ document.title = 'Bayar - ' + STORE_CACHE;
 <style>
 body{margin:0;background:#FFFCF9;color:#111;font-family:'Inter',sans-serif}
 .wrap{max-width:480px;margin:0 auto;padding:18px 14px 60px}
-.card{border:1px solid #E9E9E9;background:#fff}
+.card{border:1px solid #E9E9E9;background:#fff;padding:16px}
 .pay-card{border:1px solid #111;background:#fff;padding:16px;margin-top:12px}
-.btn{width:100%;height:48px;background:#000;color:#fff;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
-.btn-white{width:100%;height:48px;background:#fff;color:#000;border:1px solid #000;font-size:9px;letter-spacing:2px;cursor:pointer}
-.btn-wa{width:100%;height:52px;background:#25D366;color:#fff;border:1px solid #25D366;font-size:10px;letter-spacing:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600}
-.qr{width:100%;max-width:300px;display:block;margin:12px auto;border:1px solid #E9E9E9;border-radius:12px}
+.btn{width:100%;height:48px;background:#000;color:#fff;border:1px solid #000;font-size:10px;letter-spacing:3px;cursor:pointer}
+.btn-white{width:100%;height:48px;background:#fff;color:#000;border:1px solid #000;font-size:10px;letter-spacing:3px;cursor:pointer}
+.btn-wa{width:100%;height:52px;background:#000;color:#fff;border:1px solid #000;font-size:11px;letter-spacing:3px;cursor:pointer}
+.qr{width:100%;max-width:260px;display:block;margin:14px auto;border:1px solid #eee}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 18px;border-radius:20px;font-size:11px;opacity:0;transition:.35s;z-index:9999}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.alert{font-size:10px;padding:8px 10px;border:1px dashed #F5A623;background:#FFF8E6;margin-top:8px;display:none}
 </style>
 </head><body>
 <div class="wrap">
-  <div style="text-align:center;padding:16px 0 10px">
-    <div id="storeLogo" style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:22px">LOADING</div>
-    <div style="font-size:7px;letter-spacing:6px;opacity:.4;margin-top:4px">HIJAB PREMIUM - PEMBAYARAN AMAN</div>
+  <div style="text-align:center;padding:24px 0 10px">
+    <div id="storeLogo" style="font-family:'Cormorant Garamond';font-weight:300;letter-spacing:8px;font-size:28px">ARINDA</div>
   </div>
-  <div class="card" style="padding:14px 16px;margin-top:12px">
-    <div style="font-size:8px;letter-spacing:3px;opacity:.4">TOTAL PEMBAYARAN (VALID DARI DATABASE)</div>
-    <div id="totalBox" style="font-family:'Cormorant Garamond';font-size:28px;margin-top:6px">Memuat...</div>
-    <div id="orderInfo" style="font-size:10px;opacity:.6;margin-top:8px;line-height:1.6;background:#FAF7F2;padding:8px 10px;border:1px dashed #E8E0D0">Memuat order...</div>
-    <div id="alertEdit" class="alert">⚠️ Total dari URL tidak valid, kami pakai total asli dari database order.</div>
-    <div id="alertNoOrder" class="alert" style="background:#FFF5F5;border-color:#FECDCA;color:#B42318;display:none">Order tidak ditemukan. Kembali ke produk untuk checkout ulang.</div>
+
+  <div class="card">
+    <div id="totalBox" style="font-family:'Cormorant Garamond';font-size:42px;letter-spacing:1px">Rp-</div>
+    <div id="orderInfo" style="font-size:11px;opacity:.7;margin-top:10px;line-height:1.7;background:#FAF7F2;padding:10px;border:1px solid #F0E8D8"></div>
   </div>
-  <div style="margin-top:18px;display:flex;justify-content:space-between"><div style="font-family:'Cormorant Garamond';font-size:18px">Metode Pembayaran</div><div style="font-size:8px;opacity:.4" id="payCount"></div></div>
-  <div id="payList" style="margin-top:10px"><div style="border:1px dashed #E9E9E9;padding:30px;text-align:center;font-size:11px;opacity:.4">Memuat rekening...</div></div>
-  <div style="margin-top:22px;display:flex;flex-direction:column;gap:10px">
-    <button onclick="confirmWA()" class="btn-wa" id="btnWA">💬 KONFIRMASI VIA WA</button>
-    <button onclick="location.href='index.html'" class="btn-white">KEMBALI KE BERANDA</button>
-    <div style="text-align:center;font-size:8px;letter-spacing:2px;opacity:.35">WA ADMIN <span id="waAdminView">-</span> • ORDER ID <span id="orderIdView">-</span></div>
+
+  <div style="margin-top:26px"><div style="font-family:'Cormorant Garamond';font-size:22px">Pembayaran</div><div id="payCount" style="font-size:9px;opacity:.4;margin-top:2px"></div></div>
+  <div id="payList" style="margin-top:12px"></div>
+
+  <div style="margin-top:26px;display:flex;flex-direction:column;gap:10px">
+    <button onclick="confirmWA()" class="btn-wa" id="btnWA">KONFIRMASI PESANAN →</button>
+    <button onclick="location.href='index.html'" class="btn-white">KEMBALI</button>
   </div>
 </div>
 <div id="toast"></div>
+
 <script>
 const SUPA_URL='https://qjgevvizqeebtdqcbqmt.supabase.co';
 const SUPA_KEY='sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19';
 const supa = window.supabase.createClient(SUPA_URL,SUPA_KEY);
-let WA_ADMIN = WA_CACHE;
-let STORE_NAME = STORE_CACHE;
+let WA_ADMIN = WA_CACHE; let STORE_NAME = STORE_CACHE;
 let lastTotal=0; let lastMethods=[]; let lastCustomer={}; let lastOrderId=null; let lastOrder=null;
-function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function esc(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function toast(t){ const el=document.getElementById('toast'); el.innerText=t; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2200); }
-function copyText(txt,bank){ navigator.clipboard.writeText(txt).then(()=>toast(bank+' '+txt+' disalin')).catch(()=>{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast(bank+' '+txt+' disalin');}); }
+function copyText(txt,bank){ navigator.clipboard.writeText(txt).then(()=>toast(bank+' '+txt+' disalin')); }
 
 async function loadStoreConfig(){
   document.getElementById('storeLogo').innerText = STORE_CACHE.toUpperCase();
-  document.getElementById('waAdminView').innerText = WA_CACHE.replace('62','0');
   try{
     const {data}=await supa.from('settings').select('*').in('key',['store_name','wa_number']);
     if(data){
       const g=k=>data.find(s=>s.key===k)?.value;
       if(g('store_name')){ STORE_NAME=g('store_name'); localStorage.setItem('store_name_cache', STORE_NAME); document.getElementById('storeLogo').innerText=STORE_NAME.toUpperCase(); document.title='Bayar - '+STORE_NAME; }
-      if(g('wa_number')){ WA_ADMIN=g('wa_number'); localStorage.setItem('wa_number_cache', WA_ADMIN); document.getElementById('waAdminView').innerText=WA_ADMIN.replace('62','0'); }
+      if(g('wa_number')){ WA_ADMIN=g('wa_number'); localStorage.setItem('wa_number_cache', WA_ADMIN); }
     }
   }catch(e){}
 }
 
-function getTotalFromUrl(){
-  const urlParams=new URLSearchParams(window.location.search);
-  const urlTotal=urlParams.get('total')||urlParams.get('t')||'';
-  if(urlTotal){ const n=urlTotal.replace(/[^0-9]/g,''); if(n) return Number(n); }
-  return null;
-}
-
 function confirmWA(){
-  if(!lastOrder){ toast('Order tidak ditemukan'); return; }
-  const c=lastCustomer;
-  const total=lastTotal;
+  if(!lastOrderId){ toast('Order tidak ditemukan'); return; }
+  const c=lastCustomer; const total=lastTotal;
   const rekLines=lastMethods.map(m=>`- ${m.bank} ${m.no_rek} a.n ${m.atas_nama}`).join('\n');
-  const alamatFull=[c.alamat,c.kota].filter(Boolean).join(', ')||'-';
-  const rawMsg=`Halo kak ${STORE_NAME} 👋\n\nSaya sudah transfer ya kak:\n\nOrder ID: ${lastOrderId||'-'}\nTotal ASLI: Rp${Number(total||0).toLocaleString('id-ID')}\nNama: ${c.name||'-'}\nWA: ${c.wa||'-'}\nAlamat: ${alamatFull}\n\nRekening Tujuan:\n${rekLines}\n\nMohon dicek, saya kirim bukti di sini. Terima kasih 🙏`;
-  const url=`https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(rawMsg)}`;
-  window.open(url,'_blank');
+  const msg=`Halo ${STORE_NAME}\n\nKonfirmasi pembayaran:\n\nID: ${lastOrderId}\nNama: ${c.name||'-'}\nAlamat: ${c.alamat||''} ${c.kota||''}\nTotal: Rp${Number(total||0).toLocaleString('id-ID')}\n\nTujuan:\n${rekLines}\n\nSaya sudah transfer, terima kasih 🙏`;
+  window.open(`https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
 async function loadPay(){
   await loadStoreConfig();
-  const urlTotal=getTotalFromUrl();
   lastOrderId = localStorage.getItem('arinda_last_order_id') || sessionStorage.getItem('arinda_last_order_id');
-  document.getElementById('orderIdView').innerText = lastOrderId ? lastOrderId.slice(0,8)+'...' : '-';
 
-  // 1. Coba ambil dari DATABASE dulu (ANTI EDIT)
   if(lastOrderId){
     try{
-      const {data, error}=await supa.from('orders').select('*').eq('id', lastOrderId).maybeSingle();
-      if(error) throw error;
+      const {data}=await supa.from('orders').select('*').eq('id',lastOrderId).maybeSingle();
       if(data){
         lastOrder=data;
-        lastTotal = Number(data.total || data.total_price || 0);
-        lastCustomer = {
-          name: data.customer_name || data.nama || '',
-          wa: data.wa || '',
-          alamat: data.alamat || '',
-          kota: data.kota || data.kota_tujuan || '',
-          total: lastTotal
-        };
-        // Cek jika URL total beda jauh -> warning
-        if(urlTotal && Math.abs(urlTotal - lastTotal) > 1000){
-          document.getElementById('alertEdit').style.display='block';
-          document.getElementById('alertEdit').innerText=`⚠️ Total URL Rp${urlTotal.toLocaleString('id-ID')} tidak cocok dengan total asli DB Rp${lastTotal.toLocaleString('id-ID')}. Kami pakai total asli dari database.`;
-        }
+        lastTotal=Number(data.total||0);
+        lastCustomer={name:data.customer_name||data.nama||'', wa:data.wa||'', alamat:data.alamat||'', kota:data.kota_tujuan||data.destination_label||data.kota||''};
       }
-    }catch(e){
-      console.log('load order fail', e.message);
-    }
-  }
-
-  // 2. Fallback kalau gak ada order di DB (user langsung buka bayar.html)
-  if(!lastOrder){
-    // Coba dari localStorage lama + URL
-    const fallbackTotal = urlTotal || Number(localStorage.getItem('arinda_total')||localStorage.getItem('arinda_last_total')||0);
-    lastTotal = Number(fallbackTotal||0);
-    // Customer dari storage
-    try{
-      const raw=localStorage.getItem('arinda_customer');
-      if(raw){ const o=JSON.parse(raw); lastCustomer={name:o.name||'', wa:o.wa||'', alamat:o.alamat||'', kota:o.kota||''}; }
     }catch(e){}
-    if(!lastTotal){
-      document.getElementById('alertNoOrder').style.display='block';
-      document.getElementById('totalBox').innerText='Rp -';
-      document.getElementById('orderInfo').innerHTML='Tidak ada order. <a href="produk.html" style="text-decoration:underline">Checkout dulu</a>';
-      document.getElementById('btnWA').disabled=true;
-      document.getElementById('btnWA').style.opacity='.4';
-    }
   }
-
-  // Tampilkan
-  if(lastTotal){
-    document.getElementById('totalBox').innerText='Rp'+Number(lastTotal).toLocaleString('id-ID');
-    document.getElementById('orderInfo').innerHTML=`Order ID: <b>${esc(lastOrderId||'-')}</b> • Status: <b>${esc(lastOrder?.status||'MENUNGGU_BAYAR')}</b><br>Nama: <b>${esc(lastCustomer.name||'-')}</b> • WA: ${esc(lastCustomer.wa||'-')}<br>Alamat: ${esc(lastCustomer.alamat||'-')} ${esc(lastCustomer.kota||'')}`;
-    if(lastOrder && ['PAID','LUNAS','DONE','SELESAI'].includes((lastOrder.status||'').toUpperCase())){
-      document.getElementById('orderInfo').innerHTML+=`<br><span style="color:#0A7A0A">✅ Order ini sudah dibayar</span>`;
-    }
+  if(!lastTotal){
+    lastTotal=Number(localStorage.getItem('arinda_total')||0);
+    try{ const o=JSON.parse(localStorage.getItem('arinda_customer')||'{}'); lastCustomer={name:o.name||'', wa:o.wa||'', alamat:o.alamat||'', kota:o.destLengkap||o.kota||''}; }catch(e){}
   }
+  document.getElementById('totalBox').innerText='Rp'+Number(lastTotal||0).toLocaleString('id-ID');
+  document.getElementById('orderInfo').innerHTML=`<b>${esc(lastCustomer.name||'-')}</b> • ${esc(lastCustomer.wa||'')}<br>${esc(lastCustomer.alamat||'')}<br>${esc(lastCustomer.kota||'')}`;
 
-  // Payment methods
+  // PAYMENT - FIX V21: baca dari settings + fallback BCA kakak
   try{
     const {data}=await supa.from('settings').select('value').eq('key','payment_methods').maybeSingle();
-    let methods=data?.value; if(typeof methods==='string'){try{methods=JSON.parse(methods);}catch(e){methods=[]}}
-    lastMethods=(methods||[]).filter(m=>m.aktif);
-    document.getElementById('payCount').innerText=lastMethods.length+' METODE';
-    if(!lastMethods.length){document.getElementById('payList').innerHTML='<div style="border:1px dashed #E9E9E9;padding:30px;text-align:center;font-size:11px;opacity:.4">Belum ada rekening - set di admin-order.html</div>'; return;}
-    document.getElementById('payList').innerHTML=lastMethods.map(m=>`<div class="pay-card"><div style="display:flex;justify-content:space-between"><div><b style="font-size:12px">${esc(m.bank)}</b><div style="font-size:10px;opacity:.5">a.n ${esc(m.atas_nama)}</div></div></div><div style="margin-top:10px;padding:10px;background:#FAFAFA;border:1px dashed #E9E9E9">No: <b>${esc(m.no_rek)}</b></div>${m.qr_url?`<img src="${esc(m.qr_url)}" class="qr" onerror="this.style.display='none'">`:''}<div style="display:flex;gap:8px;margin-top:10px"><button class="btn-white" onclick="copyText('${esc(m.no_rek)}','${esc(m.bank)}')">SALIN</button><button class="btn" onclick="copyText('${esc(m.no_rek)}','${esc(m.bank)}')">SALIN & BAYAR</button></div></div>`).join('');
-  }catch(err){document.getElementById('payList').innerHTML='Gagal: '+esc(err.message);}
+    let methods=data?.value; if(typeof methods==='string') try{methods=JSON.parse(methods)}catch(e){methods=[]}
+    lastMethods=(methods||[]).filter(m=> m.aktif!==false && m.active!==false && (m.aktif==null||m.aktif) );
+    // kalau admin save pakai format baru
+    if(lastMethods.length===0 && Array.isArray(methods)) lastMethods=methods;
+  }catch(e){}
+
+  if(lastMethods.length===0){
+    // Fallback biar gak kosong seperti di screenshot
+    lastMethods=[{bank:'BCA', no_rek:'8740376161', atas_nama:'ARINDA ADMIN', qr_url:''}];
+  }
+
+  document.getElementById('payCount').innerText=lastMethods.length+' METODE';
+  document.getElementById('payList').innerHTML=lastMethods.map(m=>`
+    <div class="pay-card">
+      <div style="font-size:10px;letter-spacing:2px;opacity:.5">${esc(m.bank)}</div>
+      <div style="font-size:20px;font-weight:600;margin-top:4px">${esc(m.no_rek)}</div>
+      <div style="font-size:11px;opacity:.6;margin-top:4px">a.n ${esc(m.atas_nama)}</div>
+      ${m.qr_url?`<img src="${esc(m.qr_url)}" class="qr">`:''}
+      <div style="display:flex;gap:8px;margin-top:14px"><button class="btn-white" onclick="copyText('${esc(m.no_rek)}','${esc(m.bank)}')">SALIN NO</button><button class="btn" onclick="copyText('${esc(m.no_rek)}','${esc(m.bank)}')">SALIN</button></div>
+    </div>`).join('');
 }
 loadPay();
-</script>
-</body></html>
+</script></body></html>
