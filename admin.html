@@ -3,6 +3,20 @@
 <title>ADMIN - ARINDA</title>
 <meta name="robots" content="noindex, nofollow">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+(async()=>{
+  const supa = window.supabase.createClient('https://qjgevvizqeebtdqcbqmt.supabase.co','sb_publishable_stWClQvunFQfTyT_5gpVYQ_klrTgW19');
+  const {data:{session}} = await supa.auth.getSession();
+  if(!session){ location.href='login-toko.html'; return; }
+  const {data} = await supa.from('settings').select('value').eq('key','admin_toko_emails').maybeSingle();
+  let allowed=[]; try{allowed=JSON.parse(data.value);}catch(e){}
+  if(!allowed.map(e=>e.toLowerCase()).includes(session.user.email.toLowerCase())){
+    await supa.auth.signOut();
+    alert('Akses ditolak untuk '+session.user.email+'\nHalaman ini khusus ADMIN TOKO');
+    location.href='login-toko.html';
+  }
+})();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#FFFCF9;--line:#EDE8E1;--black:#111}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--black);font-family:'Inter',sans-serif;font-weight:300}
